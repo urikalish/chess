@@ -10,15 +10,18 @@
 </head>
 <body>
   <main class="main">
-      <div class="header">
-          <label for="fen-text" class="fen-label">FEN:</label>
-          <input type="text" id="fen-text" spellcheck="false" class="fen-text" />
-          <div id="player-color-selector-white" class="player-color-selector white king selected"></div>
-          <div id="player-color-selector-black" class="player-color-selector black king"></div>
-          <button id="start-button" class="start-button">Start</button>
-      </div>
+      <div class="header"></div>
       <div class="center">
-          <div id="board-container" class="board-container hidden">
+          <div id="welcome-panel" class="welcome-panel">
+              <label for="fen-text" class="fen-label">FEN:</label>
+              <input type="text" id="fen-text" spellcheck="false" class="fen-text" />
+              <div class="player-color-selection">
+                <div id="player-color-selector-white" class="player-color-selector white king selected"></div>
+                <div id="player-color-selector-black" class="player-color-selector black king"></div>
+              </div>
+              <button id="start-button" class="start-button">Start</button>
+          </div>
+          <div id="board-container" class="board-container none">
             <div id="board" class="board"></div>
           </div>
       </div>

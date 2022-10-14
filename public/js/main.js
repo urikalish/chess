@@ -78,7 +78,8 @@ function handleStartGame() {
 	settings.flippedBoard = !settings.playerIsWhite;
 	game = new Game(settings);
 	createSquares(settings);
-	getElm('board-container').classList.remove('hidden');
+	getElm('board-container').classList.remove('none');
+	getElm('welcome-panel').classList.add('none');
 	game.start(startingFen, handleGameUpdate);
 }
 
