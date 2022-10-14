@@ -1,4 +1,5 @@
 import {Board} from "./board.js";
+import {Fen} from "./fen.js";
 
 export class Game {
 
@@ -8,7 +9,8 @@ export class Game {
 	}
 
 	start(startingFen, onGameUpdate) {
-		this.board.updatePieces(startingFen);
+		const fen = Fen.parseFenStr(startingFen);
+		this.board.updatePieces(fen.boardPieces);
 		onGameUpdate(this);
 	}
 }
