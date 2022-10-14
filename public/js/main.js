@@ -1,7 +1,8 @@
-import {PieceType} from "./piece-type.js";
-import {Settings} from "./settings.js";
-import {Game} from "./game.js";
 import {Fen} from "./fen.js";
+import {Settings} from "./settings.js";
+import {Piece} from "./piece.js";
+import {Board} from "./board.js";
+import {Game} from "./game.js";
 
 let settings = null;
 let game = null;
@@ -10,59 +11,34 @@ function getElm(id) {
 	return document.getElementById(id);
 }
 
-function createSquares(/*settings*/) {
+function createSquares(settings) {
 	const boardElm = getElm('board');
-	let count = 0;
+	let index = 0;
 	for (let r = 0; r < 8; r++) {
 		for (let c = 0; c < 8; c++) {
+			const modifiedIndex = settings.flippedBoard ? 63 - index : index;
+			const squareName = Board.getSquareNameByIndex(modifiedIndex);
 			const squareElm = document.createElement('div');
-			squareElm.classList.add('square');
-			squareElm.setAttribute('id', `square-${count}`);
+			squareElm.setAttribute('data-index', String(index));
+			squareElm.setAttribute('data-name', squareName);
 			boardElm.appendChild(squareElm);
-			count++;
+			index++;
 		}
 	}
 }
 
 function placePieces(board) {
 	for (let i = 0; i < 64; i++) {
-		const char = board.boardPieces[settings.flippedBoard ? 63 - i : i];
+		const squareElm = document.querySelector(`[data-index="${i}"]`);
+		squareElm.className = '';
+		const modifiedIndex = settings.flippedBoard ? 63 - i : i;
+		const char = board.boardPieces[modifiedIndex];
 		if (!char) {
+			squareElm.classList.add('square', 'empty');
 			continue;
 		}
-		const squareElm = getElm(`square-${i}`);
-		squareElm.classList.add(char === char.toLowerCase() ? 'black' : 'white');
-		let pieceClass = '';
-		switch (char.toLowerCase()) {
-			case 'p': {
-				pieceClass = PieceType.PAWN;
-				break;
-			}
-			case 'n': {
-				pieceClass = PieceType.KNIGHT;
-				break;
-			}
-			case 'b': {
-				pieceClass = PieceType.BISHOP;
-				break;
-			}
-			case 'r': {
-				pieceClass = PieceType.ROOK;
-				break;
-			}
-			case 'q': {
-				pieceClass = PieceType.QUEEN;
-				break;
-			}
-			case 'k': {
-				pieceClass = PieceType.KING;
-				break;
-			}
-			default: {
-				pieceClass = PieceType.NA;
-			}
-		}
-		squareElm.classList.add(pieceClass);
+		let pieceName = Piece.getNameFromOneLetter(char);
+		squareElm.classList.add('square', 'piece', char === char.toLowerCase() ? 'black' : 'white', pieceName);
 	}
 }
 
