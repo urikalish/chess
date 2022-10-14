@@ -23,6 +23,23 @@ function createSquares(settings) {
 	}
 }
 
+function createBoardMarkings(settings) {
+	const gutterElms = document.querySelectorAll('.board-markings-gutter');
+	for (let g = 0; g < 4; g++) {
+		for (let index = 0; index < 8; index++) {
+			const modifiedIndex = g < 2
+				? (settings.flippedBoard ? 7 - index : index)
+				: (settings.flippedBoard ? index + 1 : 8 - index);
+			const markElm = document.createElement('div');
+			markElm.classList.add('board-markings-label');
+			markElm.innerText = g < 2
+				? String.fromCharCode(97 + modifiedIndex)
+				: String(modifiedIndex);
+				gutterElms[g].appendChild(markElm);
+		}
+	}
+}
+
 function placePieces(board) {
 	for (let i = 0; i < 64; i++) {
 		const squareElm = document.querySelector(`[data-index="${i}"]`);
@@ -49,6 +66,7 @@ function handleStartGame() {
 	settings.flippedBoard = !settings.playerIsWhite;
 	game = new Game(settings);
 	createSquares(settings);
+	createBoardMarkings(settings);
 	getElm('board-container').classList.remove('none');
 	getElm('welcome-panel').classList.add('none');
 	game.start(startingFen, handleGameUpdate);
