@@ -29,10 +29,23 @@ body {
     display: flex;
     align-items: center;
 }
+.fen-label {
+    margin-left: 20px;
+}
+.fen-text {
+    margin-left: 10px;
+    height: 30px;
+    width: 430px;
+    font-size: 1.4rem;
+    border: 1px solid #666;
+    background-color: #333;
+    color: #3fc;
+}
 .start-button {
     margin-left: 20px;
     height: 30px;
     width: 80px;
+    cursor: pointer;
 }
 .center {
     display: flex;

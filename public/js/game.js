@@ -1,4 +1,3 @@
-import {Fen} from "./fen.js";
 import {Board} from "./board.js";
 
 export class Game {
@@ -8,8 +7,8 @@ export class Game {
 		this.board = new Board(settings);
 	}
 
-	start(onGameUpdate) {
-		this.board.updatePieces(Fen.default);
+	start(startingFen, onGameUpdate) {
+		this.board.updatePieces(startingFen);
 		onGameUpdate(this);
 	}
 }

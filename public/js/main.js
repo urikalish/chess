@@ -1,6 +1,7 @@
 import {PieceType} from "./piece-type.js";
 import {Settings} from "./settings.js";
 import {Game} from "./game.js";
+import {Fen} from "./fen.js";
 
 let settings = null;
 let game = null;
@@ -25,7 +26,7 @@ function createSquares(/*settings*/) {
 
 function placePieces(board) {
 	for (let i = 0; i < 64; i++) {
-		const char = board.boardPieces[i];
+		const char = board.boardPieces[settings.flippedBoard ? 63 - i : i];
 		if (!char) {
 			continue;
 		}
@@ -74,9 +75,15 @@ function handleStartGame() {
 	game = new Game(settings);
 	createSquares(settings);
 	getElm('board-container').classList.remove('hidden');
-	game.start(handleGameUpdate);
+	const startingFen = getElm('fen-text').value || Fen.default;
+	game.start(startingFen, handleGameUpdate);
 }
 
-getElm('start-button').addEventListener('click', () => {
-	handleStartGame();
-});
+function init() {
+	getElm('fen-text').value = Fen.default;
+	getElm('start-button').addEventListener('click', () => {
+		handleStartGame();
+	});
+}
+
+init();
