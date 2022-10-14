@@ -13,17 +13,13 @@ function getElm(id) {
 
 function createSquares(settings) {
 	const boardElm = getElm('board');
-	let index = 0;
-	for (let r = 0; r < 8; r++) {
-		for (let c = 0; c < 8; c++) {
-			const modifiedIndex = settings.flippedBoard ? 63 - index : index;
-			const squareName = Board.getSquareNameByIndex(modifiedIndex);
-			const squareElm = document.createElement('div');
-			squareElm.setAttribute('data-index', String(index));
-			squareElm.setAttribute('data-name', squareName);
-			boardElm.appendChild(squareElm);
-			index++;
-		}
+	for (let index = 0; index < 64; index++) {
+		const modifiedIndex = settings.flippedBoard ? 63 - index : index;
+		const squareName = Board.getSquareNameByIndex(modifiedIndex);
+		const squareElm = document.createElement('div');
+		squareElm.setAttribute('data-index', String(index));
+		squareElm.setAttribute('data-name', squareName);
+		boardElm.appendChild(squareElm);
 	}
 }
 
@@ -37,8 +33,7 @@ function placePieces(board) {
 			squareElm.classList.add('square', 'empty');
 			continue;
 		}
-		let pieceName = Piece.getNameFromOneLetter(char);
-		squareElm.classList.add('square', 'piece', char === char.toLowerCase() ? 'black' : 'white', pieceName);
+		squareElm.classList.add('square', 'piece', char === char.toLowerCase() ? 'black' : 'white', Piece.getNameFromOneLetter(char));
 	}
 }
 
