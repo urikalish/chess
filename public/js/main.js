@@ -72,15 +72,28 @@ function handleGameUpdate(game) {
 
 function handleStartGame() {
 	settings = new Settings();
+	const startingFen = getElm('fen-text').value || Fen.default;
+	const playerWhiteElm = getElm('player-color-selector-white');
+	settings.playerIsWhite = playerWhiteElm.classList.contains('selected');
+	settings.flippedBoard = !settings.playerIsWhite;
 	game = new Game(settings);
 	createSquares(settings);
 	getElm('board-container').classList.remove('hidden');
-	const startingFen = getElm('fen-text').value || Fen.default;
 	game.start(startingFen, handleGameUpdate);
 }
 
 function init() {
 	getElm('fen-text').value = Fen.default;
+	const playerWhiteElm = getElm('player-color-selector-white');
+	const playerBlackElm = getElm('player-color-selector-black');
+	playerWhiteElm.addEventListener('click', () => {
+		playerWhiteElm.classList.add('selected');
+		playerBlackElm.classList.remove('selected');
+	});
+	playerBlackElm.addEventListener('click', () => {
+		playerBlackElm.classList.add('selected');
+		playerWhiteElm.classList.remove('selected');
+	});
 	getElm('start-button').addEventListener('click', () => {
 		handleStartGame();
 	});
