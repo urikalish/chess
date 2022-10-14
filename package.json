@@ -1,0 +1,23 @@
+{
+  "name": "chess",
+  "version": "1.0.0",
+  "description": "",
+  "main": "public/js/main.js",
+  "scripts": {
+    "http-server": "http-server ./public --port 6464 --cors -c-1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urikalish/chess.git"
+  },
+  "author": "Uri Kalish",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/urikalish/chess/issues"
+  },
+  "homepage": "https://github.com/urikalish/chess#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
