@@ -1,13 +1,15 @@
-import { PlayerType } from './types.js';
+import { ColorType, PlayerType } from './types.js';
 
 export class Player {
 	index: number;
-	playerType: PlayerType;
+	color: ColorType;
+	type: PlayerType;
 	name: string;
 
-	constructor(index, playerType, name) {
+	constructor(index, type, name) {
 		this.index = index;
-		this.playerType = playerType;
+		this.color = index === 0 ? ColorType.WHITE : ColorType.BLACK;
+		this.type = type;
 		this.name = name;
 	}
 }
