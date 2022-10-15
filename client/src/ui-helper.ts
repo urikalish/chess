@@ -64,13 +64,7 @@ export class UIHelper {
 				continue;
 			}
 			const piece = square.piece;
-			squareElm.classList.add(
-				'square',
-				'occupied',
-				piece.armyIndex === 0 ? 'white' : 'black',
-				'piece',
-				piece.armyIndex === 0 ? piece.type.toUpperCase() : piece.type.toLowerCase(),
-			);
+			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', 'piece', piece.typeCased);
 		}
 	}
 }
