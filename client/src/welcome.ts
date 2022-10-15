@@ -1,5 +1,6 @@
 import { Fen } from './fen.js';
 import { UIHelper } from './ui-helper.js';
+import { PlayerType } from './types';
 
 export class Welcome {
 	static init(onWelcomeDone) {
@@ -24,8 +25,12 @@ export class Welcome {
 		startButtonElm.addEventListener('click', () => {
 			const fenStr = (fenTextElm as HTMLInputElement).value || Fen.default;
 			const playerName = (playerNameTextElm as HTMLInputElement).value || 'Player1';
-			const isWhite = playerWhiteElm.classList.contains('selected');
-			onWelcomeDone(fenStr, playerName, isWhite);
+			const isPlayerWhite = playerWhiteElm.classList.contains('selected');
+			if (isPlayerWhite) {
+				onWelcomeDone(fenStr, PlayerType.HUMAN, playerName, PlayerType.COMPUTER, 'Computer');
+			} else {
+				onWelcomeDone(fenStr, PlayerType.COMPUTER, 'Computer', PlayerType.HUMAN, playerName);
+			}
 		});
 	}
 }

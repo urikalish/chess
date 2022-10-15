@@ -1,5 +1,3 @@
-import { PlayerType } from './types.js';
-import { Player } from './player.js';
 import { Game } from './game.js';
 import { UIHelper } from './ui-helper.js';
 import { Welcome } from './welcome.js';
@@ -10,10 +8,9 @@ function handleGameUpdate(game) {
 	UIHelper.placePieces(game.board);
 }
 
-function handleWelcomeDone(fenStr, playerName, isWhite) {
-	const players = [new Player(0, PlayerType.HUMAN, playerName), new Player(1, PlayerType.COMPUTER, 'Computer')];
-	game = new Game(players);
-	UIHelper.createGameUI(isWhite);
+function handleWelcomeDone(fenStr, player0Type, player0Name, player1Type, player1Name) {
+	game = new Game(player0Type, player0Name, player1Type, player1Name);
+	UIHelper.createGameUI(player0Type, player1Type);
 	game.start(fenStr, handleGameUpdate);
 }
 
