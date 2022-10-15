@@ -67,7 +67,7 @@ function handleStartGame() {
 	game = new Game(settings);
 	createSquares(settings);
 	createBoardMarkings(settings);
-	getElm('board-container').classList.remove('none');
+	getElm('board-frame').classList.remove('none');
 	getElm('welcome-panel').classList.add('none');
 	game.start(startingFen, handleGameUpdate);
 }
