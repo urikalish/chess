@@ -1,10 +1,8 @@
 export class Player {
 
-	constructor(index, colorType, playerType, army, name) {
+	constructor(index, playerType, name) {
 		this.index = index;
-		this.colorType = colorType;
 		this.playerType = playerType;
-		this.army = army;
 		this.name = name;
 	}
 }

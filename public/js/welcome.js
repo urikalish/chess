@@ -17,8 +17,9 @@ export class Welcome {
 		});
 		UIHelper.getElm('welcome-start-button').addEventListener('click', () => {
 			const fenStr = UIHelper.getElm('welcome-fen-text').value || Fen.default;
+			const playerName = UIHelper.getElm('welcome-player-name-text').value || 'Player1';
 			const isWhite = UIHelper.getElm('welcome-player-color-selector-white').classList.contains('selected');
-			onWelcomeDone(fenStr, isWhite);
+			onWelcomeDone(fenStr, playerName, isWhite);
 		});
 	}
 }

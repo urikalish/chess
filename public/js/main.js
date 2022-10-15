@@ -1,4 +1,5 @@
-import {Settings} from "./settings.js";
+import {PlayerType} from "./types.js";
+import {Player} from "./player.js";
 import {Game} from "./game.js";
 import {UIHelper} from "./ui-helper.js";
 import {Welcome} from "./welcome.js";
@@ -9,17 +10,14 @@ function handleGameUpdate(game) {
 	UIHelper.placePieces(game.board);
 }
 
-function handleStartGame(fenStr, isWhite) {
-	Settings.isInteractive = true;
-	Settings.isPlayerWhite = isWhite;
-	Settings.isFlippedBoard = Settings.isInteractive && !isWhite;
-	game = new Game();
-	UIHelper.createGameUI();
+function handleWelcomeDone(fenStr, playerName, isWhite) {
+	const players = [
+		new Player(0, PlayerType.HUMAN, playerName),
+		new Player(1, PlayerType.COMPUTER, 'Computer'),
+	];
+	game = new Game(players);
+	UIHelper.createGameUI(isWhite);
 	game.start(fenStr, handleGameUpdate);
-}
-
-function handleWelcomeDone(fenStr, isWhite) {
-	handleStartGame(fenStr, isWhite);
 }
 
 function init() {

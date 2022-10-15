@@ -1,17 +1,17 @@
 export const PlayerType = {
-	NA: 'NA',
+	NA: '-',
 	HUMAN: 'h',
 	COMPUTER: 'c',
 }
 
 export const ColorType = {
-	NA: 'NA',
+	NA: '-',
 	WHITE: 'w',
 	BLACK: 'b',
 }
 
 export const PieceType = {
-	NA: 'NA',
+	NA: '-',
 	PAWN: 'p',
 	KNIGHT: 'n',
 	BISHOP: 'b',

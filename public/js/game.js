@@ -3,7 +3,8 @@ import {Fen} from "./fen.js";
 
 export class Game {
 
-	constructor() {
+	constructor(players) {
+		this.players = players;
 		this.board = new Board();
 	}
 

@@ -1,5 +1,5 @@
 import {Board} from "./board.js";
-import {Settings} from "./settings.js";
+import {UISettings} from "./ui-settings.js";
 
 export class UIHelper {
 
@@ -12,8 +12,8 @@ export class UIHelper {
 		for (let g = 0; g < 4; g++) {
 			for (let index = 0; index < 8; index++) {
 				const modifiedIndex = g % 2 === 0
-				? (Settings.isFlippedBoard ? 7 - index : index)
-				: (Settings.isFlippedBoard ? index + 1 : 8 - index);
+				? (UISettings.isFlippedBoard ? 7 - index : index)
+				: (UISettings.isFlippedBoard ? index + 1 : 8 - index);
 				const markElm = document.createElement('div');
 				markElm.classList.add('board-gutter-label');
 				markElm.innerText = g % 2 === 0
@@ -27,7 +27,7 @@ export class UIHelper {
 	static createBoardSquares() {
 		const boardElm = UIHelper.getElm('board-squares');
 		for (let index = 0; index < 64; index++) {
-			const modifiedIndex = Settings.isFlippedBoard ? 63 - index : index;
+			const modifiedIndex = UISettings.isFlippedBoard ? 63 - index : index;
 			const squareName = Board.getSquareNameByIndex(modifiedIndex);
 			const squareElm = document.createElement('div');
 			squareElm.setAttribute('data-index', String(index));
@@ -37,7 +37,8 @@ export class UIHelper {
 		}
 	}
 
-	static createGameUI() {
+	static createGameUI(isWhite) {
+		UISettings.isFlippedBoard = !isWhite;
 		UIHelper.createBoardMarkings();
 		UIHelper.createBoardSquares();
 		UIHelper.getElm('board-frame').classList.remove('none');
@@ -48,7 +49,7 @@ export class UIHelper {
 		for (let i = 0; i < 64; i++) {
 			const squareElm = document.querySelector(`.square[data-index="${i}"]`);
 			squareElm.className = '';
-			const modifiedIndex = Settings.isFlippedBoard ? 63 - i : i;
+			const modifiedIndex = UISettings.isFlippedBoard ? 63 - i : i;
 			const char = board.boardPieces[modifiedIndex];
 			if (!char) {
 				squareElm.classList.add('square', 'empty');
