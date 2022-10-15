@@ -27,7 +27,6 @@ export class Game {
 			const piece = this.armies[armyIndex].createAndAddPiece(char.toLowerCase());
 			this.board.placePiece(i, piece);
 		}
-		this.board.boardPieces = fen.boardPieces;
 	}
 
 	start(fen) {

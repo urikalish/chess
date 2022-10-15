@@ -51,19 +51,26 @@ export class UIHelper {
 	}
 
 	static placePieces(board) {
-		for (let i = 0; i < 64; i++) {
-			const squareElm = document.querySelector(`.square[data-index="${i}"]`);
+		for (let index = 0; index < 64; index++) {
+			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - index : index;
+			const squareElm = document.querySelector(`.square[data-index="${index}"]`);
 			if (!squareElm) {
 				return;
 			}
 			squareElm.className = '';
-			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - i : i;
-			const char = board.boardPieces[modifiedIndex];
-			if (!char) {
+			const square = board.squares[modifiedIndex];
+			if (square.isEmpty()) {
 				squareElm.classList.add('square', 'empty');
 				continue;
 			}
-			squareElm.classList.add('square', 'occupied', char === char.toLowerCase() ? 'black' : 'white', 'piece', char);
+			const piece = square.piece;
+			squareElm.classList.add(
+				'square',
+				'occupied',
+				piece.armyIndex === 0 ? 'white' : 'black',
+				'piece',
+				piece.armyIndex === 0 ? piece.type.toUpperCase() : piece.type.toLowerCase(),
+			);
 		}
 	}
 }
