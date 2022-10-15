@@ -1,12 +1,11 @@
-import {ColorType} from "./types.js";
+import { ColorType } from './types.js';
 
 export class Fen {
-
 	static default = `rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1`;
 
 	static parseFenStr(fenStr) {
 		const parts = fenStr.split(' ');
-		let boardPieces = [];
+		const boardPieces: string[] = [];
 		const rows = parts[0].split(`/`);
 		rows.forEach(row => {
 			for (let i = 0; i < row.length; i++) {
@@ -20,7 +19,7 @@ export class Fen {
 		const activeColor = parts[1] === 'b' ? ColorType.BLACK : ColorType.WHITE;
 		return {
 			boardPieces,
-			activeColor
-		}
+			activeColor,
+		};
 	}
 }

@@ -1,7 +1,8 @@
 export class Board {
+	boardPieces: string[];
 
 	static getSquareNameByIndex(index) {
-		return String.fromCharCode(97 + index % 8) + String(8 - Math.trunc(index / 8));
+		return String.fromCharCode(97 + (index % 8)) + String(8 - Math.trunc(index / 8));
 	}
 
 	constructor() {
@@ -11,5 +12,4 @@ export class Board {
 	updatePieces(boardPieces) {
 		this.boardPieces = boardPieces;
 	}
-
 }

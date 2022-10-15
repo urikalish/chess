@@ -1,0 +1,48 @@
+{
+  "name": "chess",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urikalish/chess.git"
+  },
+  "author": "Uri Kalish",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/urikalish/chess/issues"
+  },
+  "homepage": "https://github.com/urikalish/chess#readme",
+  "scripts": {
+    "post-checkout": "yarn && yarn build",
+    "post-merge": "yarn && yarn build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint --fix src/**/*.ts",
+    "clean": "rimraf public/js && rimraf tsc",
+    "tsc": "yarn clean && tsc",
+    "rollup-dev": "rollup -c --environment build:development",
+    "rollup-prod": "rollup -c --environment build:production",
+    "build": "yarn format && yarn lint && tsc && yarn rollup-dev && yarn rollup-dev",
+    "pre-commit": "yarn format && yarn lint && yarn build",
+    "http-server": "http-server ./public --port 6464 --cors -c-1"
+  },
+  "devDependencies": {
+    "@open-wc/building-rollup": "^2.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "concurrently": "^7.2.2",
+    "deepmerge": "^4.2.2",
+    "eslint": "^8.18.0",
+    "http-server": "^14.1.1",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.72.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  },
+  "resolutions": {
+    "terser": "^5.14.2",
+    "trim": "^0.0.3"
+  }
+}

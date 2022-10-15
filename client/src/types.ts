@@ -2,13 +2,13 @@ export const PlayerType = {
 	NA: '-',
 	HUMAN: 'h',
 	COMPUTER: 'c',
-}
+};
 
 export const ColorType = {
 	NA: '-',
 	WHITE: 'w',
 	BLACK: 'b',
-}
+};
 
 export const PieceType = {
 	NA: '-',
@@ -17,5 +17,5 @@ export const PieceType = {
 	BISHOP: 'b',
 	ROOK: 'r',
 	QUEEN: 'q',
-	KING: 'k'
-}
+	KING: 'k',
+};
