@@ -2,29 +2,25 @@
     font-family: 'Play';
     font-style: normal;
     font-weight: 400;
-    src: local(''),
-    url('../font/play-v12-latin-ext_latin-regular.woff2') format('woff2')
+    src: local(''), url('../font/play-v12-latin-ext_latin-regular.woff2') format('woff2')
 }
 @font-face {
     font-family: 'Play';
     font-style: normal;
     font-weight: 700;
-    src: local('Play'),
-    url('../font/play-v12-latin-ext_latin-700.woff2') format('woff2')
+    src: local('Play'), url('../font/play-v12-latin-ext_latin-700.woff2') format('woff2')
 }
 @font-face {
     font-family: 'Share Tech Mono';
     font-style: normal;
     font-weight: 400;
-    src: local('Share Tech Mono'),
-    url('../font/share-tech-mono-v10-latin-regular.woff2') format('woff2')
+    src: local('Share Tech Mono'), url('../font/share-tech-mono-v10-latin-regular.woff2') format('woff2')
 }
 @font-face {
     font-family: 'Aguafina Script';
     font-style: normal;
     font-weight: 400;
-    src: local('Aguafina Script'),
-    url('../font/aguafina-script-v9-latin-ext_latin-regular.woff2') format('woff2')
+    src: local('Aguafina Script'), url('../font/aguafina-script-v9-latin-ext_latin-regular.woff2') format('woff2')
 }
 
 *,
@@ -42,9 +38,6 @@
     --color--3: #3fc;
     --color--code-text: var(--color--2);
     --color--background: #111;
-    --color--welcome-background: #333;
-    --color--welcome-border-color: #666;
-    --color--welcome-selection-background: #666;
     --color--header-background: #222;
     --color--footer-background: #222;
     --color--board-frame-background: #333;
@@ -79,61 +72,6 @@ body {
     width: 100%;
     height: 6rem;
     background-color: var(--color--header-background);
-}
-.welcome-panel {
-    background-color: var(--color--welcome-background);
-    border: 1px solid var(--color--welcome-border-color);
-    border-radius: 0.8rem;
-    box-shadow: 0 0 2rem 2rem #000;
-    padding: 3rem;
-    user-select: none;
-}
-.welcome-fen-container {
-}
-.fen-label {
-    font-size: 1.4rem;
-    user-select: none;
-}
-.fen-text {
-    margin-left: 1rem;
-    height: 30px;
-    width: 430px;
-    font-family: var(--font-family--defalt);
-    font-size: 1.4rem;
-    border: 1px solid #666;
-    background-color: #222;
-    color: var(--color--code-text);
-}
-.player-color-selection {
-    margin-top: 3rem;
-    display: flex;
-}
-.player-color-selector {
-    background-size: cover;
-    height: 5rem;
-    width: 5rem;
-    border-radius: 0.4rem;
-    cursor: pointer;
-}
-.player-color-selector.white {
-}
-.player-color-selector.black {
-    margin-left: 1rem;
-}
-.player-color-selector.selected {
-    background-color: #666;
-    pointer-events: none;
-}
-.start-button {
-    margin-top: 6rem;
-    margin-left: 400px;
-    width: 80px;
-    height: 40px;
-    border-radius: 20px;
-    font-size: 1.6rem;
-    font-family: var(--font-family--defalt);
-    cursor: pointer;
-    user-select: none;
 }
 .center {
     display: flex;

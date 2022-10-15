@@ -1,0 +1,58 @@
+.welcome-panel {
+    --color--welcome-background: #333;
+    --color--welcome-border-color: #666;
+    --color--welcome-selection-background: #666;
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    grid-template-rows: auto 4rem 6rem 6rem;
+    grid-row-gap: 2rem;
+    background-color: var(--color--welcome-background);
+    border: 1px solid var(--color--welcome-border-color);
+    border-radius: 0.8rem;
+    box-shadow: 0 0 2rem 2rem #000;
+    padding: 3rem;
+    user-select: none;
+}
+.welcome-fen-container {
+}
+.welcome-fen-label {
+    font-size: 1.4rem;
+    user-select: none;
+}
+.welcome-fen-text {
+    height: 30px;
+    width: 430px;
+    font-family: var(--font-family--defalt);
+    font-size: 1.4rem;
+    border: 1px solid #666;
+    background-color: #222;
+    color: var(--color--code-text);
+}
+.welcome-player-color-selection {
+    display: flex;
+}
+.welcome-player-color-selector {
+    background-size: cover;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+.welcome-player-color-selector.white {
+}
+.welcome-player-color-selector.black {
+    margin-left: 1rem;
+}
+.welcome-player-color-selector.selected {
+    background-color: #666;
+    pointer-events: none;
+}
+.welcome-start-button {
+    width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 1.6rem;
+    font-family: var(--font-family--defalt);
+    cursor: pointer;
+    user-select: none;
+}
