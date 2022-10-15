@@ -1,5 +1,5 @@
-import { Board } from './board.js';
-import { PlayerType } from './types';
+import { PlayerType } from './types.js';
+import { Square } from './square.js';
 
 export class UIHelper {
 	static isBoardFlipped = false;
@@ -28,7 +28,7 @@ export class UIHelper {
 		}
 		for (let index = 0; index < 64; index++) {
 			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - index : index;
-			const squareName = Board.getSquareNameByIndex(modifiedIndex);
+			const squareName = Square.getSquareNameByIndex(modifiedIndex);
 			const squareElm = document.createElement('div');
 			squareElm.setAttribute('data-index', String(index));
 			squareElm.setAttribute('data-name', squareName);

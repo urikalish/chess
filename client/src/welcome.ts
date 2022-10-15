@@ -1,6 +1,6 @@
+import { PlayerType } from './types.js';
 import { Fen } from './fen.js';
 import { UIHelper } from './ui-helper.js';
-import { PlayerType } from './types';
 
 export class Welcome {
 	static init(onWelcomeDone) {

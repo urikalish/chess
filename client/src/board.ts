@@ -1,15 +1,26 @@
+import { Square } from './square.js';
+
 export class Board {
+	squares: Square[];
 	boardPieces: string[];
 
-	static getSquareNameByIndex(index) {
-		return String.fromCharCode(97 + (index % 8)) + String(8 - Math.trunc(index / 8));
-	}
-
 	constructor() {
+		this.squares = [];
+		for (let i = 0; i < 64; i++) {
+			this.addSquare(i);
+		}
 		this.boardPieces = new Array(64).fill('');
 	}
 
-	updatePieces(boardPieces) {
-		this.boardPieces = boardPieces;
+	addSquare(squareIndex): Square {
+		const square = new Square(squareIndex);
+		this.squares.push(square);
+		return square;
+	}
+
+	placePiece(squareIndex, piece): Square {
+		const square = this.squares[squareIndex];
+		square.placePiece(piece);
+		return square;
 	}
 }

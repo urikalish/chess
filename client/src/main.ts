@@ -1,3 +1,4 @@
+import { Fen } from './fen.js';
 import { Game } from './game.js';
 import { UIHelper } from './ui-helper.js';
 import { Welcome } from './welcome.js';
@@ -9,9 +10,10 @@ function handleGameUpdate(game) {
 }
 
 function handleWelcomeDone(fenStr, player0Type, player0Name, player1Type, player1Name) {
-	game = new Game(player0Type, player0Name, player1Type, player1Name);
+	const fen = Fen.parseFenStr(fenStr);
+	game = new Game(player0Type, player0Name, player1Type, player1Name, handleGameUpdate);
 	UIHelper.createGameUI(player0Type, player1Type);
-	game.start(fenStr, handleGameUpdate);
+	game.start(fen);
 }
 
 function init() {

@@ -1,4 +1,4 @@
-import { ColorType, PieceType, PlayerType } from './types';
+import { ColorType, PlayerType } from './types.js';
 import { Piece } from './piece.js';
 
 export class Army {
@@ -12,19 +12,11 @@ export class Army {
 		this.color = armyIndex === 0 ? ColorType.WHITE : ColorType.BLACK;
 		this.playerType = playerType;
 		this.pieces = [];
-		for (let i = 0; i < 8; i++) {
-			this.pieces.push(new Piece(armyIndex, PieceType.PAWN));
-		}
-		for (let i = 0; i < 2; i++) {
-			this.pieces.push(new Piece(armyIndex, PieceType.KNIGHT));
-		}
-		for (let i = 0; i < 2; i++) {
-			this.pieces.push(new Piece(armyIndex, PieceType.BISHOP));
-		}
-		for (let i = 0; i < 2; i++) {
-			this.pieces.push(new Piece(armyIndex, PieceType.ROOK));
-		}
-		this.pieces.push(new Piece(armyIndex, PieceType.QUEEN));
-		this.pieces.push(new Piece(armyIndex, PieceType.KING));
+	}
+
+	createAndAddPiece(pieceType): Piece {
+		const piece = new Piece(this.index, pieceType);
+		this.pieces.push(piece);
+		return piece;
 	}
 }

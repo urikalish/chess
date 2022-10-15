@@ -1,9 +1,14 @@
 import { ColorType } from './types.js';
 
+export interface FenObj {
+	boardPieces: string[];
+	activeColor: ColorType;
+}
+
 export class Fen {
 	static default = `rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1`;
 
-	static parseFenStr(fenStr) {
+	static parseFenStr(fenStr): FenObj {
 		const parts = fenStr.split(' ');
 		const boardPieces: string[] = [];
 		const rows = parts[0].split(`/`);
