@@ -1,6 +1,8 @@
+import { PlayerType } from './types.js';
+
 export class Player {
 	index: number;
-	playerType: string;
+	playerType: PlayerType;
 	name: string;
 
 	constructor(index, playerType, name) {

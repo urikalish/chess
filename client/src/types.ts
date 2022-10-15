@@ -1,21 +1,21 @@
-export const PlayerType = {
-	NA: '-',
-	HUMAN: 'h',
-	COMPUTER: 'c',
-};
+export enum PlayerType {
+	NA = '-',
+	HUMAN = 'h',
+	COMPUTER = 'c',
+}
 
-export const ColorType = {
-	NA: '-',
-	WHITE: 'w',
-	BLACK: 'b',
-};
+export enum ColorType {
+	NA = '-',
+	WHITE = 'w',
+	BLACK = 'b',
+}
 
-export const PieceType = {
-	NA: '-',
-	PAWN: 'p',
-	KNIGHT: 'n',
-	BISHOP: 'b',
-	ROOK: 'r',
-	QUEEN: 'q',
-	KING: 'k',
-};
+export enum PieceType {
+	NA = '-',
+	PAWN = 'p',
+	KNIGHT = 'n',
+	BISHOP = 'b',
+	ROOK = 'r',
+	QUEEN = 'q',
+	KING = 'k',
+}

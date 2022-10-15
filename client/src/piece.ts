@@ -1,6 +1,8 @@
+import { PieceType } from './types.js';
+
 export class Piece {
 	color: string;
-	type: string;
+	type: PieceType;
 
 	constructor(color, pieceType) {
 		this.color = color;
