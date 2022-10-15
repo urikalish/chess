@@ -45,7 +45,6 @@
     --color--welcome-background: #333;
     --color--welcome-border-color: #666;
     --color--welcome-selection-background: #666;
-    --color--welcome-selection-glow: var(--color--2);
     --color--header-background: #222;
     --color--footer-background: #222;
     --color--board-frame-background: #333;
@@ -89,6 +88,8 @@ body {
     padding: 3rem;
     user-select: none;
 }
+.welcome-fen-container {
+}
 .fen-label {
     font-size: 1.4rem;
     user-select: none;
@@ -104,14 +105,14 @@ body {
     color: var(--color--code-text);
 }
 .player-color-selection {
-    margin-top: 2rem;
+    margin-top: 3rem;
     display: flex;
 }
 .player-color-selector {
     background-size: cover;
     height: 5rem;
     width: 5rem;
-    border-radius: 0.8rem;
+    border-radius: 0.4rem;
     cursor: pointer;
 }
 .player-color-selector.white {
@@ -120,7 +121,6 @@ body {
     margin-left: 1rem;
 }
 .player-color-selector.selected {
-    box-shadow: 0 0 8px 4px var(--color--welcome-selection-glow);
     background-color: #666;
     pointer-events: none;
 }
