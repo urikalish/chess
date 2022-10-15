@@ -1,13 +1,13 @@
 import { ColorType, PieceType } from './types.js';
 
 export class Piece {
-	playerIndex: number;
+	armyIndex: number;
 	color: ColorType;
 	type: PieceType;
 
-	constructor(playerIndex, pieceType) {
-		this.playerIndex = playerIndex;
-		this.color = playerIndex === 0 ? ColorType.WHITE : ColorType.BLACK;
+	constructor(armyIndex, pieceType) {
+		this.armyIndex = armyIndex;
+		this.color = armyIndex === 0 ? ColorType.WHITE : ColorType.BLACK;
 		this.type = pieceType;
 	}
 }
