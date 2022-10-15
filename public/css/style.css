@@ -1,3 +1,32 @@
+@font-face {
+    font-family: 'Play';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('../font/play-v12-latin-ext_latin-regular.woff2') format('woff2')
+}
+@font-face {
+    font-family: 'Play';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Play'),
+    url('../font/play-v12-latin-ext_latin-700.woff2') format('woff2')
+}
+@font-face {
+    font-family: 'Share Tech Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Share Tech Mono'),
+    url('../font/share-tech-mono-v10-latin-regular.woff2') format('woff2')
+}
+@font-face {
+    font-family: 'Aguafina Script';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Aguafina Script'),
+    url('../font/aguafina-script-v9-latin-ext_latin-regular.woff2') format('woff2')
+}
+
 *,
 *::before,
 *::after {
@@ -8,9 +37,15 @@
     padding: 0;
     font-size: 62.5%;
     --color--text: #ccc;
+    --color--1: #d90;
+    --color--2: #bc3;
+    --color--3: #3fc;
+    --color--code-text: var(--color--2);
     --color--background: #111;
     --color--welcome-background: #333;
     --color--welcome-border-color: #666;
+    --color--welcome-selection-background: #666;
+    --color--welcome-selection-glow: var(--color--2);
     --color--header-background: #222;
     --color--footer-background: #222;
     --color--board-frame-background: #333;
@@ -18,6 +53,8 @@
     --color--board-frame-shadow: #000;
     --color--board-frame-text: #999;
     --board-frame-width: 3rem;
+    --font-family--defalt: Play, 'Helvetica Neue', Arial, sans-serif;
+    --font-family--code: 'Share Tech Mono', Consolas, 'Courier New', monospace;
 }
 body {
     height: 100vh;
@@ -27,7 +64,10 @@ body {
     background-color: var(--color--background);
     color: var(--color--text);
     font-size: 1.6rem;
-    font-family: helvetica, sans-serif;
+    font-family: var(--font-family--defalt);
+}
+.code {
+    font-family: var(--font-family--code);
 }
 .main {
     height: 100%;
@@ -46,7 +86,7 @@ body {
     border: 1px solid var(--color--welcome-border-color);
     border-radius: 0.8rem;
     box-shadow: 0 0 2rem 2rem #000;
-    padding: 2rem;
+    padding: 3rem;
     user-select: none;
 }
 .fen-label {
@@ -57,10 +97,11 @@ body {
     margin-left: 1rem;
     height: 30px;
     width: 430px;
+    font-family: var(--font-family--defalt);
     font-size: 1.4rem;
     border: 1px solid #666;
     background-color: #222;
-    color: #3fc;
+    color: var(--color--code-text);
 }
 .player-color-selection {
     margin-top: 2rem;
@@ -70,7 +111,7 @@ body {
     background-size: cover;
     height: 5rem;
     width: 5rem;
-    border-radius: 50%;
+    border-radius: 0.8rem;
     cursor: pointer;
 }
 .player-color-selector.white {
@@ -79,7 +120,8 @@ body {
     margin-left: 1rem;
 }
 .player-color-selector.selected {
-    box-shadow: 0 0 8px 4px #3fc;
+    box-shadow: 0 0 8px 4px var(--color--welcome-selection-glow);
+    background-color: #666;
     pointer-events: none;
 }
 .start-button {
@@ -89,6 +131,7 @@ body {
     height: 40px;
     border-radius: 20px;
     font-size: 1.6rem;
+    font-family: var(--font-family--defalt);
     cursor: pointer;
     user-select: none;
 }
@@ -192,7 +235,7 @@ body {
 }
 .board-markings-label {
     margin: auto;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     color: var(--color--board-frame-text);
 }
 .footer {
