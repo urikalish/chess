@@ -1,7 +1,7 @@
 .welcome-panel {
-    --color--welcome-background: #333;
-    --color--welcome-border-color: #666;
-    --color--welcome-selection-background: #666;
+    --color--welcome-background: var(--color--gray-darker);
+    --color--welcome-border-color: var(--color--gray-dark);
+    --color--welcome-selection-background: var(--color--gray-dark);
     display: grid;
     grid-template-columns: 10rem 1fr;
     grid-template-rows: repeat(4, auto);
@@ -27,9 +27,9 @@
     padding: 0.5rem;
     font-family: var(--font-family--defalt);
     font-size: 1.4rem;
-    border: 1px solid #666;
+    border: 1px solid var(--color--gray-dark);
     background-color: #222;
-    color: var(--color--code-text);
+    color: var(--color--1);
 }
 .welcome-player-color-selection {
     display: flex;
@@ -45,7 +45,7 @@
     margin-left: 1rem;
 }
 .welcome-player-color-selector.selected {
-    background-color: #666;
+    background-color: var(--color--gray-dark);
     pointer-events: none;
 }
 .welcome-start-button {
@@ -54,6 +54,7 @@
     width: 10rem;
     height: 4rem;
     border-radius: 2rem;
+    background-color: var(--color--gray-lighter);
     font-size: 1.6rem;
     font-family: var(--font-family--defalt);
     cursor: pointer;
