@@ -4,8 +4,7 @@ export class Board {
 		return String.fromCharCode(97 + index % 8) + String(8 - Math.trunc(index / 8));
 	}
 
-	constructor(settings) {
-		this.settings = settings;
+	constructor() {
 		this.boardPieces = new Array(64).fill('');
 	}
 

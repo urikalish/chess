@@ -3,9 +3,8 @@ import {Fen} from "./fen.js";
 
 export class Game {
 
-	constructor(settings) {
-		this.settings = settings;
-		this.board = new Board(settings);
+	constructor() {
+		this.board = new Board();
 	}
 
 	start(startingFen, onGameUpdate) {

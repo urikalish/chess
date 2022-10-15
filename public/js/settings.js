@@ -1,5 +1,6 @@
 export class Settings {
 
-	playerIsWhite = true;
-	flippedBoard = false;
+	static isInteractive = true;
+	static isPlayerWhite = true;
+	static isFlippedBoard = false;
 }

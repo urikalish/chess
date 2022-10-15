@@ -1,4 +1,4 @@
-import {ColorType} from "./color-type.js";
+import {ColorType} from "./types.js";
 
 export class Fen {
 
