@@ -2,7 +2,12 @@
   "name": "chess",
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "prepare": "husky install",
+    "post-checkout": "cd client && yarn post-checkout",
+    "post-merge": "cd client && yarn post-merge",
+    "pre-commit": "cd client && yarn pre-commit"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/urikalish/chess.git"
@@ -12,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/urikalish/chess/issues"
   },
-  "homepage": "https://github.com/urikalish/chess#readme"
+  "homepage": "https://github.com/urikalish/chess#readme",
+  "devDependencies": {
+    "husky": "^7.0.4"
+  }
 }

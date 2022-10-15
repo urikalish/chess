@@ -22,8 +22,8 @@
     "rollup-dev": "rollup -c --environment build:development",
     "rollup-prod": "rollup -c --environment build:production",
     "build": "yarn format && yarn lint && tsc && yarn rollup-dev && yarn rollup-dev",
-    "pre-commit": "yarn format && yarn lint && yarn build",
-    "http-server": "http-server ./public --port 6464 --cors -c-1"
+    "http-server": "http-server ./public --port 6464 --cors -c-1",
+    "pre-commit": "yarn build"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^2.0.1",
