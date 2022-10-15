@@ -10,11 +10,10 @@
     <link rel="stylesheet" href="css/welcome-style.css">
 </head>
 <body>
-  <main class="main">
-      <div class="header">
+      <header>
           <div class="page-title">NoobChess</div>
-      </div>
-      <div class="center">
+      </header>
+      <main>
           <div id="welcome-panel" class="welcome-panel">
               <label for="welcome-fen-text" class="welcome-fen-label">FEN:</label>
               <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-fen-text" />
@@ -22,25 +21,24 @@
               <input type="text" id="welcome-player-name-text" spellcheck="false" class="welcome-player-name-text" value="Player1" />
               <div class="welcome-color-label">Color:</div>
               <div class="welcome-player-color-selection">
-                <div id="welcome-player-color-selector-white" class="welcome-player-color-selector piece K selected"></div>
-                <div id="welcome-player-color-selector-black" class="welcome-player-color-selector piece k"></div>
+                  <div id="welcome-player-color-selector-white" class="welcome-player-color-selector piece K selected"></div>
+                  <div id="welcome-player-color-selector-black" class="welcome-player-color-selector piece k"></div>
               </div>
               <button id="welcome-start-button" class="welcome-start-button">Start</button>
           </div>
           <div id="board-frame" class="board-frame none">
               <div class="board">
                   <div id="board-gutters">
-                    <div class="board-gutter"></div>
-                    <div class="board-gutter"></div>
-                    <div class="board-gutter"></div>
-                    <div class="board-gutter"></div>
+                      <div class="board-gutter"></div>
+                      <div class="board-gutter"></div>
+                      <div class="board-gutter"></div>
+                      <div class="board-gutter"></div>
                   </div>
                   <div id="board-squares" class="board-squares"></div>
               </div>
           </div>
-      </div>
-      <div class="footer"></div>
-  </main>
+      </main>
+      <footer></footer>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
