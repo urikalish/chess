@@ -1,0 +1,25 @@
+:root {
+    --color--header-background: #000;
+    --color--page-title: #ddd;
+    --header-height: 8rem;
+}
+.header-band {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: var(--header-height);
+    background-color: var(--color--header-background);
+    opacity: 0.3;
+}
+header {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-title {
+    margin-top: 1.6rem;
+    color: var(--color--page-title);
+    font-family: var(--font-family--script);
+    font-size: 3.6rem;
+    text-shadow: 2px 2px #000;
+}

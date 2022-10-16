@@ -1,0 +1,14 @@
+:root {
+    --color--footer-background: #000;
+    --footer-height: 4rem;
+}
+.footer-band {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: var(--footer-height);
+    background-color: var(--color--footer-background);
+    opacity: 0.3;
+}
+footer {
+    height: var(--footer-height);
+}

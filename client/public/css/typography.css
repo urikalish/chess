@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Play';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''), url('../font/play-v12-latin-ext_latin-regular.woff2') format('woff2')
+}
+@font-face {
+    font-family: 'Play';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Play'), url('../font/play-v12-latin-ext_latin-700.woff2') format('woff2')
+}
+@font-face {
+    font-family: 'Share Tech Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Share Tech Mono'), url('../font/share-tech-mono-v10-latin-regular.woff2') format('woff2')
+}
+@font-face {
+    font-family: 'Aguafina Script';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Aguafina Script'), url('../font/aguafina-script-v9-latin-ext_latin-regular.woff2') format('woff2')
+}

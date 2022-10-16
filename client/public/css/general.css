@@ -1,0 +1,12 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.hidden {
+    visibility: hidden !important;
+}
+.none {
+    display: none !important;
+}

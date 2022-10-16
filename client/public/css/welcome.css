@@ -11,6 +11,7 @@
     border-radius: 0.8rem;
     box-shadow: 0 0 2rem 2rem #000;
     padding: 3rem;
+    opacity: 0.9;
     user-select: none;
 }
 .welcome-fen-label,

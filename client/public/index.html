@@ -6,39 +6,43 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="#">
     <title>Chess</title>
-    <link rel="stylesheet" href="css/main-style.css">
-    <link rel="stylesheet" href="css/welcome-style.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-      <header>
-          <div class="page-title">NoobChess</div>
-      </header>
-      <main>
-          <div id="welcome-panel" class="welcome-panel">
-              <label for="welcome-fen-text" class="welcome-fen-label">FEN:</label>
-              <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-fen-text" />
-              <label for="welcome-player-name-text" class="welcome-player-name-label">Name:</label>
-              <input type="text" id="welcome-player-name-text" spellcheck="false" class="welcome-player-name-text" value="Player1" />
-              <div class="welcome-color-label">Color:</div>
-              <div class="welcome-player-color-selection">
-                  <div id="welcome-player-color-selector-white" class="welcome-player-color-selector piece K selected"></div>
-                  <div id="welcome-player-color-selector-black" class="welcome-player-color-selector piece k"></div>
-              </div>
-              <button id="welcome-start-button" class="welcome-start-button" autofocus>Start</button>
-          </div>
-          <div id="board-frame" class="board-frame none">
-              <div class="board">
-                  <div id="board-gutters">
-                      <div class="board-gutter"></div>
-                      <div class="board-gutter"></div>
-                      <div class="board-gutter"></div>
-                      <div class="board-gutter"></div>
-                  </div>
-                  <div id="board-squares" class="board-squares"></div>
-              </div>
-          </div>
-      </main>
-      <footer></footer>
-  <script type="module" src="js/main.js"></script>
+    <div class="page-bg-img"></div>
+    <div class="header-band"></div>
+    <div class="footer-band"></div>
+    <div class="wrapper">
+        <header>
+            <div class="page-title">NoobChess</div>
+        </header>
+        <main>
+            <div id="welcome-panel" class="welcome-panel">
+                <label for="welcome-fen-text" class="welcome-fen-label">FEN:</label>
+                <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-fen-text" />
+                <label for="welcome-player-name-text" class="welcome-player-name-label">Name:</label>
+                <input type="text" id="welcome-player-name-text" spellcheck="false" class="welcome-player-name-text" value="Player1" />
+                <div class="welcome-color-label">Color:</div>
+                <div class="welcome-player-color-selection">
+                    <div id="welcome-player-color-selector-white" class="welcome-player-color-selector piece K selected"></div>
+                    <div id="welcome-player-color-selector-black" class="welcome-player-color-selector piece k"></div>
+                </div>
+                <button id="welcome-start-button" class="welcome-start-button" autofocus>Start</button>
+            </div>
+            <div id="board-frame" class="board-frame none">
+                <div class="board">
+                <div id="board-gutters">
+                    <div class="board-gutter"></div>
+                    <div class="board-gutter"></div>
+                    <div class="board-gutter"></div>
+                    <div class="board-gutter"></div>
+                </div>
+                <div id="board-squares" class="board-squares"></div>
+                </div>
+            </div>
+        </main>
+        <footer></footer>
+    </div>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
