@@ -12,4 +12,22 @@
     border-radius: 1rem;
     padding: 2rem;
     opacity: 0.9;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-row-gap: 0.5rem;
+}
+.info-player-color {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #666;
+}
+.info-player-name {
+    margin: auto 0 auto 0.5rem;
+}
+.info-log {
+    grid-column: 1 / span 2;
+    margin-top: 1rem;
+    overflow: auto;
+    color: var(--color--2);
 }

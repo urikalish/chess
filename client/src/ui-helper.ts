@@ -1,5 +1,7 @@
 import { PlayerType } from './types.js';
 import { Square } from './square.js';
+import { Player } from './player.js';
+import { Game } from './game.js';
 
 export class UIHelper {
 	static isBoardFlipped = false;
@@ -14,6 +16,15 @@ export class UIHelper {
 
 	static queryElms(selectors) {
 		return document.querySelectorAll(selectors);
+	}
+
+	static updatePlayersInfo(players: Player[]) {
+		const colorElms = UIHelper.queryElms('.info-player-color');
+		colorElms[0].style.backgroundColor = UIHelper.isBoardFlipped ? '#fff' : '#000';
+		colorElms[1].style.backgroundColor = UIHelper.isBoardFlipped ? '#000' : '#fff';
+		const nameElms = UIHelper.queryElms('.info-player-name');
+		nameElms[0].innerText = UIHelper.isBoardFlipped ? players[0].name : players[1].name;
+		nameElms[1].innerText = UIHelper.isBoardFlipped ? players[1].name : players[0].name;
 	}
 
 	static createBoardMarkings() {
@@ -45,10 +56,11 @@ export class UIHelper {
 		}
 	}
 
-	static createGameUI(player0Type, player1Type) {
-		UIHelper.isBoardFlipped = player0Type === PlayerType.COMPUTER && player1Type === PlayerType.HUMAN;
+	static createGameUI(game: Game) {
+		UIHelper.isBoardFlipped = game.players[0].type === PlayerType.COMPUTER && game.players[1].type === PlayerType.HUMAN;
 		UIHelper.createBoardMarkings();
 		UIHelper.createBoardSquares();
+		UIHelper.updatePlayersInfo(game.players);
 		const mainContentElm = UIHelper.getElm('main-content');
 		const welcomePanelElm = UIHelper.getElm('welcome-panel');
 		if (!mainContentElm || !welcomePanelElm) {

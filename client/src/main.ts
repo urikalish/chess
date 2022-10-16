@@ -12,7 +12,7 @@ function handleGameUpdate(game) {
 function handleWelcomeDone(fenStr, player0Type, player0Name, player1Type, player1Name) {
 	const fen = Fen.parseFenStr(fenStr);
 	game = new Game(player0Type, player0Name, player1Type, player1Name, handleGameUpdate);
-	UIHelper.createGameUI(player0Type, player1Type);
+	UIHelper.createGameUI(game);
 	game.start(fen);
 }
 
