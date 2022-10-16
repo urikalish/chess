@@ -58,5 +58,5 @@ main {
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: 1fr;
-    grid-column-gap: 6rem;
+    grid-column-gap: 3rem;
 }
