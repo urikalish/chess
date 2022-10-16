@@ -35,3 +35,9 @@ export enum PieceTypeCased {
 	BLACK_QUEEN = 'q',
 	BLACK_KING = 'k',
 }
+
+export enum UserMsgType {
+	REGULAR = 'msg-regular',
+	GAME_PHASE = 'msg-game-phase',
+	FEN_TEXT = 'msg-fen-text',
+}

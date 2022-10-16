@@ -32,3 +32,18 @@
     overflow: auto;
     color: var(--color--2);
 }
+.info-log-msg {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+.info-log-msg.msg-regular {
+
+}
+.info-log-msg.msg-game-phase {
+    color: var(--color--1);
+}
+.info-log-msg.msg-fen-text {
+    color: var(--color--2);
+}

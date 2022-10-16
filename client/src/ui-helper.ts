@@ -1,4 +1,4 @@
-import { PlayerType } from './types.js';
+import { PlayerType, UserMsgType } from './types.js';
 import { Square } from './square.js';
 import { Player } from './player.js';
 import { Game } from './game.js';
@@ -25,6 +25,18 @@ export class UIHelper {
 		const nameElms = UIHelper.queryElms('.info-player-name');
 		nameElms[0].innerText = UIHelper.isBoardFlipped ? players[0].name : players[1].name;
 		nameElms[1].innerText = UIHelper.isBoardFlipped ? players[1].name : players[0].name;
+	}
+
+	static logUserMessage(msg: string, type: UserMsgType) {
+		const panelElm = UIHelper.getElm('info-log');
+		if (!panelElm) {
+			return;
+		}
+		const msgElm = document.createElement('div');
+		msgElm.classList.add('info-log-msg', String(type));
+		msgElm.innerText = `- ${msg}`;
+		msgElm.setAttribute('title', msg);
+		panelElm.appendChild(msgElm);
 	}
 
 	static createBoardMarkings() {

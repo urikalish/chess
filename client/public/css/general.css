@@ -10,3 +10,9 @@
 .none {
     display: none !important;
 }
+
+.ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

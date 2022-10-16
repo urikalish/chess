@@ -2,6 +2,7 @@ import { Fen } from './fen.js';
 import { Game } from './game.js';
 import { UIHelper } from './ui-helper.js';
 import { Welcome } from './welcome.js';
+import { UserMsgType } from './types';
 
 let game: Game | null = null;
 
@@ -14,6 +15,8 @@ function handleWelcomeDone(fenStr, player0Type, player0Name, player1Type, player
 	game = new Game(player0Type, player0Name, player1Type, player1Name, handleGameUpdate);
 	UIHelper.createGameUI(game);
 	game.start(fen);
+	UIHelper.logUserMessage(`Load FEN: ${fenStr}`, UserMsgType.FEN_TEXT);
+	UIHelper.logUserMessage('Start game', UserMsgType.GAME_PHASE);
 }
 
 function init() {
