@@ -22,4 +22,5 @@ header {
     font-family: var(--font-family--script);
     font-size: 3.6rem;
     text-shadow: 2px 2px #000;
+    user-select: none;
 }

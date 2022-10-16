@@ -21,6 +21,7 @@
 .board-gutter {
     position: absolute;
     display: grid;
+    user-select: none;
 }
 .board-gutter:nth-child(1) {
     inset: calc(-1 * var(--board-frame-width)) 0 auto 0;

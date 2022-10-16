@@ -24,6 +24,7 @@
 }
 .info-player-name {
     margin: auto 0 auto 0.5rem;
+    user-select: none;
 }
 .info-log {
     grid-column: 1 / span 2;
