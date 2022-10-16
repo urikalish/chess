@@ -1,7 +1,7 @@
 :root {
-    --color--header-background: #000;
+    --color--header-background: #933;
     --color--page-title: #ddd;
-    --header-height: 8rem;
+    --header-height: 6rem;
 }
 .header-band {
     position: absolute;

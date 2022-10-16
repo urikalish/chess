@@ -40,7 +40,11 @@ body {
     height: 100vh;
     background-image: url("../img/bg.jpg");
     background-size: cover;
-    filter: blur(8px) grayscale(0.6) brightness(0.8);
+    filter: blur(0) grayscale(0.4) brightness(0.6);
+    /*transition: filter 5s ease-in-out;*/
+}
+.page-bg-img.game-on {
+    /*filter: blur(0) grayscale(0.4) brightness(0.6);*/
 }
 .wrapper {
     position: absolute;

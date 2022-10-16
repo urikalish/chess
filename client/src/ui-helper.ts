@@ -76,11 +76,13 @@ export class UIHelper {
 		UIHelper.createBoardMarkings();
 		UIHelper.createBoardSquares();
 		UIHelper.updatePlayersInfo(game.players);
+		const pageBgImageElm = UIHelper.getElm('page-bg-img');
 		const mainContentElm = UIHelper.getElm('main-content');
 		const welcomePanelElm = UIHelper.getElm('welcome-panel');
-		if (!mainContentElm || !welcomePanelElm) {
+		if (!pageBgImageElm || !mainContentElm || !welcomePanelElm) {
 			return;
 		}
+		pageBgImageElm.classList.add('game-on');
 		mainContentElm.classList.remove('none');
 		welcomePanelElm.classList.add('none');
 	}
