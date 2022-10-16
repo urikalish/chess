@@ -34,7 +34,7 @@ export class UIHelper {
 		}
 		const msgElm = document.createElement('div');
 		msgElm.classList.add('info-log-msg', String(type));
-		msgElm.innerText = `- ${msg}`;
+		msgElm.innerText = `${msg}`;
 		msgElm.setAttribute('title', msg);
 		panelElm.appendChild(msgElm);
 	}

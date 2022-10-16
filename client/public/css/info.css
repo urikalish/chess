@@ -1,10 +1,11 @@
 :root {
     --color--info-panel-background: #222;
     --color--info-panel-border: #444;
-    --info-panel-width: 40rem;
+    --info-panel-width: calc(50vh - 120px);
 }
 .info-panel {
     width: var(--info-panel-width);
+    min-width: 150px;
     height: 100%;
     overflow: auto;
     background-color: var(--color--info-panel-background);
@@ -26,24 +27,45 @@
     margin: auto 0 auto 0.5rem;
     user-select: none;
 }
-.info-log {
+.info-log-wrapper {
     grid-column: 1 / span 2;
     margin-top: 1rem;
+    overflow: hidden;
+    position: relative;
+    border-top: 1px solid #999;
+}
+.info-log {
+    position: absolute;
+    inset: 0;
     overflow: auto;
-    color: var(--color--2);
+    padding-top: 0.5rem;
+}
+.info-log::-webkit-scrollbar {
+    width: 12px;
+}
+.info-log::-webkit-scrollbar-track {
+    background-color: var(--color--info-panel-background);
+}
+.info-log::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    background-color: #666;
+    border: 2px solid var(--color--info-panel-background);
+}
+.info-log::-webkit-scrollbar-thumb:hover {
+    background-color: #777;
 }
 .info-log-msg {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
 }
 .info-log-msg.msg-regular {
-
+    color: var(--color--text);
 }
 .info-log-msg.msg-game-phase {
     color: var(--color--1);
 }
 .info-log-msg.msg-fen-text {
-    color: var(--color--2);
+    color: var(--color--text);
 }
