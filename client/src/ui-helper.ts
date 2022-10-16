@@ -8,8 +8,16 @@ export class UIHelper {
 		return document.getElementById(id);
 	}
 
+	static queryElm(selectors) {
+		return document.querySelector(selectors);
+	}
+
+	static queryElms(selectors) {
+		return document.querySelectorAll(selectors);
+	}
+
 	static createBoardMarkings() {
-		const gutterElms = document.querySelectorAll('.board-gutter');
+		const gutterElms = UIHelper.queryElms('.board-gutter');
 		for (let g = 0; g < 4; g++) {
 			for (let index = 0; index < 8; index++) {
 				const modifiedIndex = g % 2 === 0 ? (UIHelper.isBoardFlipped ? 7 - index : index) : UIHelper.isBoardFlipped ? index + 1 : 8 - index;
@@ -53,7 +61,7 @@ export class UIHelper {
 	static placePieces(board) {
 		for (let index = 0; index < 64; index++) {
 			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - index : index;
-			const squareElm = document.querySelector(`.square[data-index="${index}"]`);
+			const squareElm = UIHelper.queryElm(`.square[data-index="${index}"]`);
 			if (!squareElm) {
 				return;
 			}
