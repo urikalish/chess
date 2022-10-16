@@ -1,11 +1,12 @@
 :root {
     --color--info-panel-background: #222;
     --color--info-panel-border: #444;
-    --info-panel-width: calc(20vw);
+    --info-panel-width: 20vw;
+    --info-panel-min-width: 300px;
 }
 .info-panel {
     width: var(--info-panel-width);
-    min-width: 300px;
+    min-width: var(--info-panel-min-width);
     height: 100%;
     overflow: auto;
     background-color: var(--color--info-panel-background);

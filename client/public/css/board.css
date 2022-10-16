@@ -4,11 +4,11 @@
     --color--board-frame-shadow: #000;
     --color--board-frame-text: var(--color--gray-light);
     --board-gutter-width: 3rem;
+    --board-min-size: 300px;
     width: var(--main-content-height);
     height: var(--main-content-height);
-    min-width: 300px;
-    min-height: 300px;
-    /*box-shadow: 0 0 2rem 2rem var(--color--board-frame-shadow);*/
+    min-width: var(--board-min-size);
+    min-height: var(--board-min-size);
     border: 1px solid var(--color--board-frame-border);
     border-radius: 1rem;
     background-color: var(--color--board-frame-background);
