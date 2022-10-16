@@ -3,22 +3,13 @@
     --color--info-panel-border: #444;
     --info-panel-width: 40rem;
 }
-.info-panel-wrapper {
-    position: relative;
+.info-panel {
     width: var(--info-panel-width);
     height: 100%;
-}
-.info-panel-band {
-    height: 100%;
-    background: var(--color--info-panel-background);
-    opacity: 0.8;
-    border-radius: 1rem;
-}
-.info-panel {
-    position: absolute;
-    inset: 0;
     overflow: auto;
+    background-color: var(--color--info-panel-background);
     border: 1px solid var(--color--info-panel-border);
     border-radius: 1rem;
     padding: 2rem;
+    opacity: 0.9;
 }
