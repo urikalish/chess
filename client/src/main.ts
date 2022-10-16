@@ -18,8 +18,8 @@ function handleWelcomeDone(fenStr, player0Type, player0Name, player1Type, player
 	UIHelper.startTime = startTime;
 	UIHelper.createGameUI(game);
 	game.start(fen);
-	UIHelper.logUserMessage(`Load FEN: ${fenStr}`, UserMsgType.FEN_TEXT);
-	UIHelper.logUserMessage('Start game', UserMsgType.GAME_PHASE);
+	UIHelper.logUserMessage(`FEN loaded: ${fenStr}`, UserMsgType.FEN_TEXT);
+	UIHelper.logUserMessage('Game started', UserMsgType.GAME_PHASE);
 }
 
 function init() {
