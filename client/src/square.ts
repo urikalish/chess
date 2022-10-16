@@ -23,11 +23,16 @@ export class Square {
 		return !this.piece;
 	}
 
-	placePiece(piece) {
+	setPiece(piece) {
 		this.piece = piece;
+		piece.square = this;
 	}
 
-	removePiece() {
+	clearPiece() {
+		if (!this.piece) {
+			return;
+		}
+		this.piece.square = null;
 		this.piece = null;
 	}
 }

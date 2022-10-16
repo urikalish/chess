@@ -18,7 +18,7 @@ export class Board {
 
 	placePiece(squareIndex, piece): Square {
 		const square = this.squares[squareIndex];
-		square.placePiece(piece);
+		square.setPiece(piece);
 		return square;
 	}
 }
