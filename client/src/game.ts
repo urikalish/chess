@@ -7,6 +7,7 @@ export class Game {
 	players: Player[];
 	armies: Army[];
 	board: Board;
+	startTime = 0;
 	onGameUpdate: (Game) => void;
 
 	constructor(player0Type, player0Name, player1Type, player1Name, onGameUpdate) {
@@ -16,7 +17,7 @@ export class Game {
 		this.onGameUpdate = onGameUpdate;
 	}
 
-	placeFen(fen) {
+	applyFen(fen) {
 		for (let i = 0; i < 64; i++) {
 			const char = fen.boardPieces[i];
 			if (!char) {
@@ -30,7 +31,7 @@ export class Game {
 	}
 
 	start(fen) {
-		this.placeFen(fen);
+		this.applyFen(fen);
 		this.onGameUpdate(this);
 	}
 }

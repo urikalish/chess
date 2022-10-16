@@ -11,8 +11,11 @@ function handleGameUpdate(game) {
 }
 
 function handleWelcomeDone(fenStr, player0Type, player0Name, player1Type, player1Name) {
+	const startTime = new Date().getTime();
 	const fen = Fen.parseFenStr(fenStr);
 	game = new Game(player0Type, player0Name, player1Type, player1Name, handleGameUpdate);
+	game.startTime = startTime;
+	UIHelper.startTime = startTime;
 	UIHelper.createGameUI(game);
 	game.start(fen);
 	UIHelper.logUserMessage(`Load FEN: ${fenStr}`, UserMsgType.FEN_TEXT);

@@ -2,9 +2,11 @@ import { PlayerType, UserMsgType } from './types.js';
 import { Square } from './square.js';
 import { Player } from './player.js';
 import { Game } from './game.js';
+import { Helper } from './helper.js';
 
 export class UIHelper {
 	static isBoardFlipped = false;
+	static startTime = 0;
 
 	static getElm(id) {
 		return document.getElementById(id);
@@ -34,7 +36,7 @@ export class UIHelper {
 		}
 		const msgElm = document.createElement('div');
 		msgElm.classList.add('info-log-msg', String(type));
-		msgElm.innerText = `${msg}`;
+		msgElm.innerText = `${Helper.getTimeStr(new Date().getTime() - UIHelper.startTime)} - ${msg}`;
 		msgElm.setAttribute('title', msg);
 		panelElm.appendChild(msgElm);
 		panelElm.scrollTo(0, panelElm.scrollHeight);
