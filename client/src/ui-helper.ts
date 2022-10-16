@@ -37,6 +37,7 @@ export class UIHelper {
 		msgElm.innerText = `${msg}`;
 		msgElm.setAttribute('title', msg);
 		panelElm.appendChild(msgElm);
+		panelElm.scrollTo(0, panelElm.scrollHeight);
 	}
 
 	static createBoardMarkings() {
