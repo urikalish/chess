@@ -18,10 +18,10 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint --fix src/**/*.ts",
     "clean": "rimraf public/js && rimraf tsc",
-    "transpile": "tsc",
+    "compile": "tsc",
     "bundle-dev": "rollup -c --environment build:development",
     "bundle-prod": "rollup -c --environment build:production",
-    "build": "yarn format && yarn lint && yarn clean && yarn transpile && yarn bundle-dev",
+    "build": "yarn format && yarn lint && yarn clean && yarn compile && yarn bundle-dev",
     "http-server": "http-server ./public --port 6464 --cors -c-1",
     "pre-commit": "yarn build"
   },
