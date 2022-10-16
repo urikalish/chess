@@ -23,6 +23,7 @@
     --font-family--defalt: Play, 'Helvetica Neue', Arial, sans-serif;
     --font-family--script: 'Aguafina Script', serif;
     --font-family--code: 'Share Tech Mono', Consolas, 'Courier New', monospace;
+    --main-content-height: 80vh;
 }
 body {
     height: 100vh;
@@ -63,4 +64,5 @@ main {
     grid-template-columns: auto auto;
     grid-template-rows: 1fr;
     grid-column-gap: 3rem;
+    height: var(--main-content-height);
 }
