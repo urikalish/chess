@@ -49,12 +49,12 @@ export class UIHelper {
 		UIHelper.isBoardFlipped = player0Type === PlayerType.COMPUTER && player1Type === PlayerType.HUMAN;
 		UIHelper.createBoardMarkings();
 		UIHelper.createBoardSquares();
-		const boardFrameElm = UIHelper.getElm('board-frame');
+		const mainContentElm = UIHelper.getElm('main-content');
 		const welcomePanelElm = UIHelper.getElm('welcome-panel');
-		if (!boardFrameElm || !welcomePanelElm) {
+		if (!mainContentElm || !welcomePanelElm) {
 			return;
 		}
-		boardFrameElm.classList.remove('none');
+		mainContentElm.classList.remove('none');
 		welcomePanelElm.classList.add('none');
 	}
 

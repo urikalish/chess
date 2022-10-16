@@ -1,5 +1,5 @@
 .board-frame {
-    --color--board-frame-background: var(--color--gray-darker);
+    --color--board-frame-background: #222;
     --color--board-frame-border: #444;
     --color--board-frame-shadow: #000;
     --color--board-frame-text: var(--color--gray-light);
@@ -8,8 +8,9 @@
     height: calc(100vh - 24rem);
     min-width: 300px;
     min-height: 300px;
-    box-shadow: 0 0 2rem 2rem var(--color--board-frame-shadow);
+    /*box-shadow: 0 0 2rem 2rem var(--color--board-frame-shadow);*/
     border: 1px solid var(--color--board-frame-border);
+    border-radius: 1rem;
     background-color: var(--color--board-frame-background);
     padding: var(--board-frame-width);
 }

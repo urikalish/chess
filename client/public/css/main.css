@@ -4,6 +4,7 @@
 @import "./welcome.css";
 @import "./board.css";
 @import "./pieces.css";
+@import "./info.css";
 @import "./footer.css";
 
 :root {
@@ -52,4 +53,10 @@ body {
 main {
     display: grid;
     place-items: center;
+}
+.main-content {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr;
+    grid-column-gap: 6rem;
 }
