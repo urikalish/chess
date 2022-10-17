@@ -3,34 +3,62 @@
     --color--welcome-border-color: var(--color--gray-dark);
     --color--welcome-selection-background: var(--color--gray-dark);
     display: grid;
-    grid-template-columns: 10rem 1fr;
-    grid-template-rows: repeat(4, auto);
-    grid-row-gap: 2rem;
+    grid-template-columns: 26rem 29rem 29rem;
+    grid-template-rows: auto auto;
+    gap: 6rem 3rem;
     background-color: var(--color--welcome-background);
     border: 1px solid var(--color--welcome-border-color);
     border-radius: 1rem;
-    /*box-shadow: 0 0 2rem 2rem #000;*/
     padding: 3rem;
     opacity: 0.9;
     user-select: none;
 }
-.welcome-fen-label,
-.welcome-color-label,
-.welcome-player-name-label {
+.welcome-common-settings {
+    grid-column: 1 / span 3;
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    grid-template-rows: 1fr;
+}
+.welcome-option {
+    position: relative;
+    gap: 1rem 1rem;
+    padding-bottom: 12rem;
+}
+.welcome-option.human-vs-human {
+    display: grid;
+    grid-template-columns: 10rem 15rem;
+    grid-template-rows: 3rem 3rem 3rem;
+}
+.welcome-option.human-vs-machine {
+    display: grid;
+    grid-template-columns: 10rem 15rem;
+    grid-template-rows: 3rem 3rem 3rem;
+    padding-left: 3rem;
+    border-left: 1px solid #999;
+}
+.welcome-option.machine-vs-machine {
+    padding-left: 3rem;
+    border-left: 1px solid #999;
+}
+.welcome-section-text {
+    grid-column: 1 / span 2;
+    font-size: 2.4rem;
+    color: var(--color--1);
+}
+.welcome-label {
     margin: auto 0;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     user-select: none;
 }
 .welcome-fen-text,
 .welcome-player-name-text {
-    height: 30px;
-    width: 500px;
+    height: 3rem;
     padding: 0.5rem;
     font-family: var(--font-family--defalt);
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     border: 1px solid var(--color--gray-dark);
     background-color: #222;
-    color: var(--color--1);
+    color: #ccc;
 }
 .welcome-player-color-selection {
     display: flex;
@@ -50,8 +78,9 @@
     pointer-events: none;
 }
 .welcome-start-button {
-    grid-column: 1 / span 2;
-    margin-left: auto;
+    position: absolute;
+    right: 0;
+    bottom: 0;
     width: 10rem;
     height: 4rem;
     border-radius: 2rem;

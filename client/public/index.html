@@ -18,16 +18,34 @@
         </header>
         <main>
             <div id="welcome-panel" class="welcome-panel">
-                <label for="welcome-fen-text" class="welcome-fen-label">FEN:</label>
-                <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-fen-text" />
-                <label for="welcome-player-name-text" class="welcome-player-name-label">Name:</label>
-                <input type="text" id="welcome-player-name-text" spellcheck="false" class="welcome-player-name-text" value="Player1" />
-                <div class="welcome-color-label">Color:</div>
-                <div class="welcome-player-color-selection">
-                    <div id="welcome-player-color-selector-white" class="welcome-player-color-selector piece K selected"></div>
-                    <div id="welcome-player-color-selector-black" class="welcome-player-color-selector piece k"></div>
+                <div class="welcome-common-settings">
+                    <label for="welcome-fen-text" class="welcome-label">FEN:</label>
+                    <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-fen-text" />
                 </div>
-                <button id="welcome-start-button" class="welcome-start-button" autofocus>Start</button>
+                <div class="welcome-option human-vs-human">
+                    <div class="welcome-section-text">Human vs. Human</div>
+                    <label for="welcome-hvh-white-name-text" class="welcome-label">White Name:</label>
+                    <input type="text" id="welcome-hvh-white-name-text" spellcheck="false" class="welcome-player-name-text" value="Player1" />
+                    <label for="welcome-hvh-black-name-text" class="welcome-label">Black Name:</label>
+                    <input type="text" id="welcome-hvh-black-name-text" spellcheck="false" class="welcome-player-name-text" value="Player2" />
+                    <button id="welcome-hvh-start-button" class="welcome-start-button" autofocus>Start</button>
+                </div>
+                <div class="welcome-option human-vs-machine">
+                    <div class="welcome-section-text">Human vs. Machine</div>
+                    <label for="welcome-hvm-player-name-text" class="welcome-label">Player Name:</label>
+                    <input type="text" id="welcome-hvm-player-name-text" spellcheck="false" class="welcome-player-name-text" value="Player1" />
+                    <div class="welcome-label">Color:</div>
+                    <div class="welcome-player-color-selection">
+                        <div id="welcome-hvm-player-color-selector-white" class="welcome-player-color-selector piece K selected"></div>
+                        <div id="welcome-hvm-player-color-selector-black" class="welcome-player-color-selector piece k"></div>
+                    </div>
+                    <button id="welcome-hvm-start-button" class="welcome-start-button">Start</button>
+                </div>
+
+                <div class="welcome-option machine-vs-machine">
+                    <div class="welcome-section-text">Machine vs. Machine</div>
+                    <button id="welcome-mvm-start-button" class="welcome-start-button">Start</button>
+                </div>
             </div>
             <div id="main-content" class="main-content none">
                 <div id="board-frame" class="board-frame">
