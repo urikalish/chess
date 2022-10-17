@@ -22,17 +22,17 @@
 .welcome-option {
     position: relative;
     gap: 1rem 1rem;
-    padding-bottom: 10rem;
+    padding-bottom: 12rem;
 }
 .welcome-option.human-vs-human {
     display: grid;
     grid-template-columns: 10rem 15rem;
-    grid-template-rows: 5rem 3rem 3rem;
+    grid-template-rows: 6rem 3rem 3rem;
 }
 .welcome-option.human-vs-machine {
     display: grid;
     grid-template-columns: 10rem 15rem;
-    grid-template-rows: 5rem 3rem 3rem;
+    grid-template-rows: 6rem 3rem 3rem;
     padding-left: 3rem;
     border-left: 1px solid #999;
 }
@@ -42,8 +42,7 @@
 }
 .welcome-section-text {
     grid-column: 1 / span 2;
-    font-size: 2.4rem;
-    color: var(--color--1);
+    font-size: 3rem;
 }
 .welcome-label {
     margin: auto 0;
