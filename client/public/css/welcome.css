@@ -22,17 +22,17 @@
 .welcome-option {
     position: relative;
     gap: 1rem 1rem;
-    padding-bottom: 12rem;
+    padding-bottom: 10rem;
 }
 .welcome-option.human-vs-human {
     display: grid;
     grid-template-columns: 10rem 15rem;
-    grid-template-rows: 3rem 3rem 3rem;
+    grid-template-rows: 5rem 3rem 3rem;
 }
 .welcome-option.human-vs-machine {
     display: grid;
     grid-template-columns: 10rem 15rem;
-    grid-template-rows: 3rem 3rem 3rem;
+    grid-template-rows: 5rem 3rem 3rem;
     padding-left: 3rem;
     border-left: 1px solid #999;
 }
