@@ -2,7 +2,7 @@
     --color--board-frame-background: #222;
     --color--board-frame-border: #444;
     --color--board-frame-shadow: #000;
-    --color--board-frame-text: var(--color--gray-light);
+    --color--board-frame-text: #999;
     --board-gutter-width: 3rem;
     --board-min-size: 300px;
     width: var(--main-content-height);

@@ -1,7 +1,7 @@
 .welcome-panel {
-    --color--welcome-background: var(--color--gray-darker);
-    --color--welcome-border-color: var(--color--gray-dark);
-    --color--welcome-selection-background: var(--color--gray-dark);
+    --color--welcome-background: #222;
+    --color--welcome-border-color: #666;
+    --color--welcome-selection-background: #666;
     display: grid;
     grid-template-columns: 26rem 29rem 29rem;
     grid-template-rows: auto auto;
@@ -55,7 +55,7 @@
     padding: 0.5rem;
     font-family: var(--font-family--defalt);
     font-size: 1.6rem;
-    border: 1px solid var(--color--gray-dark);
+    border: 1px solid #666;
     background-color: #222;
     color: #ccc;
 }
@@ -73,7 +73,7 @@
     margin-left: 1rem;
 }
 .welcome-player-color-selector.selected {
-    background-color: var(--color--gray-dark);
+    background-color: #666;
     pointer-events: none;
 }
 .welcome-start-button {
@@ -83,7 +83,7 @@
     width: 10rem;
     height: 4rem;
     border-radius: 2rem;
-    background-color: var(--color--gray-lighter);
+    background-color: #999;
     font-size: 1.6rem;
     font-family: var(--font-family--defalt);
     cursor: pointer;
