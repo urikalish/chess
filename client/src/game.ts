@@ -30,8 +30,7 @@ export class Game {
 		}
 	}
 
-	start(fen) {
-		this.applyFen(fen);
+	start() {
 		this.onGameUpdate(this);
 	}
 }

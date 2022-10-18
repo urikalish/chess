@@ -1,5 +1,7 @@
 import { PlayerType, UserMsgType } from './types.js';
 import { Square } from './square.js';
+import { Board } from './board.js';
+import { Piece } from './piece';
 import { Player } from './player.js';
 import { Game } from './game.js';
 import { Helper } from './helper.js';
@@ -7,6 +9,7 @@ import { Helper } from './helper.js';
 export class UIHelper {
 	static isBoardFlipped = false;
 	static startTime = 0;
+	static pieceElms: HTMLElement[] = [];
 
 	static getElm(id) {
 		return document.getElementById(id);
@@ -64,18 +67,47 @@ export class UIHelper {
 			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - index : index;
 			const squareName = Square.getSquareNameByIndex(modifiedIndex);
 			const squareElm = document.createElement('div');
-			squareElm.setAttribute('data-index', String(index));
+			squareElm.setAttribute('id', String(index));
 			squareElm.setAttribute('data-name', squareName);
 			squareElm.classList.add('square', 'empty');
 			boardSquaresElm.appendChild(squareElm);
 		}
 	}
 
+	static createPieceElm(piece: Piece) {
+		const boardPiecesElm = document.getElementById('board-pieces');
+		if (!boardPiecesElm) {
+			return;
+		}
+		const pieceElm = document.createElement('div');
+		pieceElm.setAttribute('data-name', piece.name);
+		pieceElm.classList.add('piece', piece.typeCased);
+		boardPiecesElm.appendChild(pieceElm);
+		UIHelper.pieceElms.push(pieceElm);
+		return pieceElm;
+	}
+
+	static createPieceElms(board: Board) {
+		const boardSquaresElm = UIHelper.getElm('board-squares');
+		if (!boardSquaresElm) {
+			return;
+		}
+		for (let index = 0; index < 64; index++) {
+			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - index : index;
+			const square = board.squares[modifiedIndex];
+			if (!square.piece) {
+				continue;
+			}
+			UIHelper.createPieceElm(square.piece);
+		}
+	}
+
 	static createGameUI(game: Game) {
 		UIHelper.isBoardFlipped = game.players[0].type === PlayerType.COMPUTER && game.players[1].type === PlayerType.HUMAN;
+		UIHelper.updatePlayersInfo(game.players);
 		UIHelper.createBoardMarkings();
 		UIHelper.createBoardSquares();
-		UIHelper.updatePlayersInfo(game.players);
+		UIHelper.createPieceElms(game.board);
 		const pageBgImageElm = UIHelper.getElm('page-bg-img');
 		const mainContentElm = UIHelper.getElm('main-content');
 		const welcomePanelElm = UIHelper.getElm('welcome-panel');
@@ -90,7 +122,7 @@ export class UIHelper {
 	static placePieces(board) {
 		for (let index = 0; index < 64; index++) {
 			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - index : index;
-			const squareElm = UIHelper.queryElm(`.square[data-index="${index}"]`);
+			const squareElm = UIHelper.getElm(index);
 			if (!squareElm) {
 				return;
 			}
@@ -101,7 +133,12 @@ export class UIHelper {
 				continue;
 			}
 			const piece = square.piece;
-			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', 'piece', piece.typeCased);
+			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
+			const pieceElm = UIHelper.pieceElms.find(pe => pe.getAttribute('data-name') === piece.name);
+			if (!pieceElm) {
+				return;
+			}
+			pieceElm.style.transform = `translate(${index % 8}00%, ${Math.trunc(index / 8)}00%)`;
 		}
 	}
 }
