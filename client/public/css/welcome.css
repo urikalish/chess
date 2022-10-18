@@ -12,6 +12,7 @@
     padding: 3rem;
     opacity: 0.9;
     user-select: none;
+
 }
 .welcome-common-settings {
     grid-column: 1 / span 3;

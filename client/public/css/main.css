@@ -31,6 +31,7 @@ body {
     color: var(--color--text);
     font-family: var(--font-family--defalt);
     font-size: 1.6rem;
+    animation: fade-in-animation 1s;
 }
 .page-bg-img {
     width: 100vw;
@@ -61,4 +62,5 @@ main {
     grid-template-rows: 1fr;
     grid-column-gap: 3rem;
     height: var(--main-content-height);
+    animation: fade-in-animation 1s;
 }
