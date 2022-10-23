@@ -15,7 +15,7 @@ export class Piece {
 		this.color = armyIndex === 0 ? ColorType.WHITE : ColorType.BLACK;
 		this.type = pieceType;
 		this.typeCased = armyIndex === 0 ? (pieceType.toUpperCase() as PieceTypeCased) : (pieceType.toLowerCase() as PieceTypeCased);
-		this.name = `${this.typeCased}.${Helper.getRandomNumber(11111, 99999)}`;
+		this.name = `${this.typeCased}.${Helper.getRandomNumber(111111, 999999)}`;
 	}
 
 	isPlaced() {

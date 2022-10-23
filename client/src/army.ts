@@ -19,4 +19,8 @@ export class Army {
 		this.pieces.push(piece);
 		return piece;
 	}
+
+	getPiece(name) {
+		return this.pieces.find(p => p.name === name);
+	}
 }

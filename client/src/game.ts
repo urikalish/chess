@@ -33,4 +33,8 @@ export class Game {
 	start() {
 		this.onGameUpdate(this);
 	}
+
+	getPiece(name) {
+		return this.armies[0].getPiece(name) || this.armies[1].getPiece(name) || null;
+	}
 }

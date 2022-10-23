@@ -15,7 +15,7 @@ function handleWelcomeDone(fenStr, player0Type, player0Name, player1Type, player
 	const fen = Fen.parseFenStr(fenStr);
 	game = new Game(player0Type, player0Name, player1Type, player1Name, handleGameUpdate);
 	game.startTime = startTime;
-	UIHelper.startTime = startTime;
+	UIHelper.game = game;
 	game.applyFen(fen);
 	UIHelper.logUserMessage(`FEN loaded: ${fenStr}`, UserMsgType.FEN_TEXT);
 	UIHelper.createGameUI(game);

@@ -64,3 +64,6 @@
 .square {
     background-repeat: no-repeat;
 }
+.square.selected-square {
+    background-color: var(--color--3);
+}
