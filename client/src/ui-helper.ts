@@ -1,7 +1,6 @@
-import { PlayerType, UserMsgType } from './types.js';
+import { PlayerType } from './types.js';
 import { Piece } from './piece';
 import { Game } from './game.js';
-import { Helper } from './helper.js';
 import { UIInit } from './ui-init.js';
 
 export class UIHelper {
@@ -19,19 +18,6 @@ export class UIHelper {
 
 	static queryElms(selectors) {
 		return document.querySelectorAll(selectors);
-	}
-
-	static logUserMessage(msg: string, type: UserMsgType) {
-		const panelElm = UIHelper.getElm('info-log');
-		if (!panelElm) {
-			return;
-		}
-		const msgElm = document.createElement('div');
-		msgElm.classList.add('info-log-msg', String(type));
-		msgElm.innerText = `${Helper.getTimeStr(new Date().getTime() - UIHelper.game.startTime)} - ${msg}`;
-		msgElm.setAttribute('title', msg);
-		panelElm.appendChild(msgElm);
-		panelElm.scrollTo(0, panelElm.scrollHeight);
 	}
 
 	static goMove(srcSquareIndex: number, dstSquareIndex: number) {
