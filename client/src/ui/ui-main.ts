@@ -1,6 +1,6 @@
-import { PlayerType } from './types.js';
-import { Piece } from './piece';
-import { Game } from './game.js';
+import { PlayerType } from '../types.js';
+import { Piece } from '../piece';
+import { Game } from '../game.js';
 import { UiHelper } from './ui-helper.js';
 import { UIInit } from './ui-init.js';
 

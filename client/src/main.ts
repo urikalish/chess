@@ -1,9 +1,9 @@
+import { UserMsgType } from './types';
 import { Fen } from './fen.js';
 import { Game } from './game.js';
-import { UiMain } from './ui-main.js';
-import { UiWelcome } from './ui-welcome.js';
-import { UserMsgType } from './types';
-import { UILog } from './ui-log';
+import { UILog } from './ui/ui-log';
+import { UiMain } from './ui/ui-main.js';
+import { UiWelcome } from './ui/ui-welcome.js';
 
 let game: Game | null = null;
 

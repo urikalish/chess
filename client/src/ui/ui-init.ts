@@ -1,7 +1,7 @@
-import { Player } from './player.js';
-import { Piece } from './piece';
-import { Square } from './square.js';
-import { Board } from './board.js';
+import { Player } from '../player.js';
+import { Piece } from '../piece';
+import { Square } from '../square.js';
+import { Board } from '../board.js';
 import { UiHelper } from './ui-helper.js';
 
 export class UIInit {

@@ -1,5 +1,5 @@
-import { PlayerType } from './types.js';
-import { Fen } from './fen.js';
+import { PlayerType } from '../types.js';
+import { Fen } from '../fen.js';
 import { UiHelper } from './ui-helper.js';
 
 export class UiWelcome {

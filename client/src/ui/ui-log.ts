@@ -1,5 +1,5 @@
-import { UserMsgType } from './types';
-import { Helper } from './helper';
+import { UserMsgType } from '../types';
+import { Helper } from '../helper';
 import { UiHelper } from './ui-helper.js';
 
 export class UILog {
