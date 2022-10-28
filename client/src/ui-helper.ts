@@ -1,14 +1,14 @@
 import { PlayerType, UserMsgType } from './types.js';
+import { Player } from './player.js';
+import { Piece } from './piece';
 import { Square } from './square.js';
 import { Board } from './board.js';
-import { Piece } from './piece';
-import { Player } from './player.js';
 import { Game } from './game.js';
 import { Helper } from './helper.js';
 
 export class UIHelper {
-	static isBoardFlipped = false;
 	static game: Game;
+	static isBoardFlipped = false;
 	static squareElms: HTMLDivElement[] = [];
 	static pieceElms: HTMLElement[] = [];
 	static selectedSquareIndex = -1;
@@ -60,13 +60,32 @@ export class UIHelper {
 		}
 	}
 
+	static goMove(srcSquareIndex: number, dstSquareIndex: number) {
+		const move = UIHelper.game.move(srcSquareIndex, dstSquareIndex);
+		if (move.isLegal && move.removedPiece) {
+			UIHelper.removeOnePieceElm(move.removedPiece);
+		}
+	}
+
+	static handleSelection(newSquareIndex: number) {
+		const curSquareIndex = UIHelper.selectedSquareIndex;
+		if (curSquareIndex === -1) {
+			UIHelper.selectedSquareIndex = newSquareIndex;
+		} else if (curSquareIndex === newSquareIndex) {
+			UIHelper.selectedSquareIndex = -1;
+		} else {
+			UIHelper.selectedSquareIndex = -1;
+			UIHelper.goMove(curSquareIndex, newSquareIndex);
+		}
+		UIHelper.updateBoard(UIHelper.game.board);
+	}
+
 	static handleClickSquare(event: MouseEvent) {
 		if (!event.target) {
 			return;
 		}
 		const elm = event.target as HTMLDivElement;
-		UIHelper.selectedSquareIndex = elm ? Number(elm.id) : -1;
-		UIHelper.placePieces(UIHelper.game.board);
+		UIHelper.handleSelection(elm ? Number(elm.dataset.index) : -1);
 	}
 
 	static handleClickPiece(event: MouseEvent) {
@@ -74,8 +93,8 @@ export class UIHelper {
 			return;
 		}
 		const piece = UIHelper.game.getPiece((event.target as HTMLDivElement).dataset.name);
-		UIHelper.selectedSquareIndex = piece ? piece.square?.index ?? -1 : -1;
-		UIHelper.placePieces(UIHelper.game.board);
+		const selectedSquareIndex = piece ? piece.square?.index ?? -1 : -1;
+		UIHelper.handleSelection(selectedSquareIndex);
 	}
 
 	static createBoardSquaresUI() {
@@ -87,7 +106,7 @@ export class UIHelper {
 			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - index : index;
 			const squareName = Square.getSquareNameByIndex(modifiedIndex);
 			const squareElm = document.createElement('div');
-			squareElm.setAttribute('id', String(index));
+			squareElm.setAttribute('data-index', String(index));
 			squareElm.setAttribute('data-name', squareName);
 			squareElm.classList.add('square', 'empty');
 			squareElm.addEventListener('click', UIHelper.handleClickSquare);
@@ -108,6 +127,17 @@ export class UIHelper {
 		boardPiecesElm.appendChild(pieceElm);
 		UIHelper.pieceElms.push(pieceElm);
 		return pieceElm;
+	}
+
+	static removeOnePieceElm(piece: Piece) {
+		const index = UIHelper.pieceElms.findIndex(elm => elm.dataset.name === piece?.name);
+		if (index) {
+			UIHelper.pieceElms.splice(index, 1);
+		}
+		const elm = UIHelper.queryElm(`[data-name="${piece.name}"]`);
+		if (elm) {
+			elm.remove();
+		}
 	}
 
 	static createAllPieceElms(board: Board) {
@@ -142,10 +172,10 @@ export class UIHelper {
 		welcomePanelElm.classList.add('none');
 	}
 
-	static placePieces(board) {
+	static updateBoard(board) {
 		for (let index = 0; index < 64; index++) {
 			const modifiedIndex = UIHelper.isBoardFlipped ? 63 - index : index;
-			const squareElm = UIHelper.getElm(index);
+			const squareElm = UIHelper.queryElm(`[data-index="${index}"]`);
 			if (!squareElm) {
 				return;
 			}
@@ -160,7 +190,7 @@ export class UIHelper {
 			if (index === UIHelper.selectedSquareIndex) {
 				squareElm.classList.add('selected-square');
 			}
-			const pieceElm = UIHelper.pieceElms.find(pe => pe.getAttribute('data-name') === piece.name);
+			const pieceElm = UIHelper.pieceElms.find(pe => pe.dataset.name === piece.name);
 			if (!pieceElm) {
 				return;
 			}

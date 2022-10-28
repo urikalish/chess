@@ -7,7 +7,7 @@ import { UserMsgType } from './types';
 let game: Game | null = null;
 
 function handleGameUpdate(game) {
-	UIHelper.placePieces(game.board);
+	UIHelper.updateBoard(game.board);
 }
 
 function handleWelcomeDone(fenStr, player0Type, player0Name, player1Type, player1Name) {

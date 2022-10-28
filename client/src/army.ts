@@ -1,4 +1,4 @@
-import { ColorType, PlayerType } from './types.js';
+import { PlayerType, ColorType, PieceType } from './types.js';
 import { Piece } from './piece.js';
 
 export class Army {
@@ -7,20 +7,28 @@ export class Army {
 	playerType: PlayerType;
 	pieces: Piece[];
 
-	constructor(armyIndex, playerType) {
+	constructor(armyIndex: number, playerType: PlayerType) {
 		this.index = armyIndex;
 		this.color = armyIndex === 0 ? ColorType.WHITE : ColorType.BLACK;
 		this.playerType = playerType;
 		this.pieces = [];
 	}
 
-	createAndAddPiece(pieceType): Piece {
+	createAndAddPiece(pieceType: PieceType): Piece {
 		const piece = new Piece(this.index, pieceType);
 		this.pieces.push(piece);
 		return piece;
 	}
 
-	getPiece(name) {
+	getPiece(name: string) {
 		return this.pieces.find(p => p.name === name);
+	}
+
+	removePiece(piece: Piece) {
+		const index = this.pieces.findIndex(p => p.name === piece.name);
+		if (index === -1) {
+			return;
+		}
+		this.pieces.splice(index, 1);
 	}
 }
