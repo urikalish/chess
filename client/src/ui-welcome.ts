@@ -1,21 +1,21 @@
 import { PlayerType } from './types.js';
 import { Fen } from './fen.js';
-import { UIHelper } from './ui-helper.js';
+import { UiHelper } from './ui-helper.js';
 
-export class Welcome {
+export class UiWelcome {
 	static init(onWelcomeDone) {
-		const fenTextElm = UIHelper.getElm('welcome-fen-text');
+		const fenTextElm = UiHelper.getElm('welcome-fen-text');
 
-		const hvhWhiteNameElm = UIHelper.getElm('welcome-hvh-white-name-text');
-		const hvhBlackNameElm = UIHelper.getElm('welcome-hvh-black-name-text');
-		const hvhStartButtonElm = UIHelper.getElm('welcome-hvh-start-button');
+		const hvhWhiteNameElm = UiHelper.getElm('welcome-hvh-white-name-text');
+		const hvhBlackNameElm = UiHelper.getElm('welcome-hvh-black-name-text');
+		const hvhStartButtonElm = UiHelper.getElm('welcome-hvh-start-button');
 
-		const hvmPlayerNameElm = UIHelper.getElm('welcome-hvm-player-name-text');
-		const hvmPlayerIsWhiteElm = UIHelper.getElm('welcome-hvm-player-color-selector-white');
-		const hvmPlayerIsBlackElm = UIHelper.getElm('welcome-hvm-player-color-selector-black');
-		const hvmStartButtonElm = UIHelper.getElm('welcome-hvm-start-button');
+		const hvmPlayerNameElm = UiHelper.getElm('welcome-hvm-player-name-text');
+		const hvmPlayerIsWhiteElm = UiHelper.getElm('welcome-hvm-player-color-selector-white');
+		const hvmPlayerIsBlackElm = UiHelper.getElm('welcome-hvm-player-color-selector-black');
+		const hvmStartButtonElm = UiHelper.getElm('welcome-hvm-start-button');
 
-		const mvmStartButtonElm = UIHelper.getElm('welcome-mvm-start-button');
+		const mvmStartButtonElm = UiHelper.getElm('welcome-mvm-start-button');
 
 		if (
 			!fenTextElm ||

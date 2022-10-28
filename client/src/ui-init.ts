@@ -2,31 +2,20 @@ import { Player } from './player.js';
 import { Piece } from './piece';
 import { Square } from './square.js';
 import { Board } from './board.js';
+import { UiHelper } from './ui-helper.js';
 
 export class UIInit {
-	static getElm(id) {
-		return document.getElementById(id);
-	}
-
-	static queryElm(selectors) {
-		return document.querySelector(selectors);
-	}
-
-	static queryElms(selectors) {
-		return document.querySelectorAll(selectors);
-	}
-
 	static createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
-		const colorElms = UIInit.queryElms('.info-player-color');
+		const colorElms = UiHelper.queryElms('.info-player-color');
 		colorElms[0].style.backgroundColor = isBoardFlipped ? '#fff' : '#000';
 		colorElms[1].style.backgroundColor = isBoardFlipped ? '#000' : '#fff';
-		const nameElms = UIInit.queryElms('.info-player-name');
+		const nameElms = UiHelper.queryElms('.info-player-name');
 		nameElms[0].innerText = isBoardFlipped ? players[0].name : players[1].name;
 		nameElms[1].innerText = isBoardFlipped ? players[1].name : players[0].name;
 	}
 
 	static createBoardGuttersUI(isBoardFlipped: boolean) {
-		const gutterElms = UIInit.queryElms('.board-gutter');
+		const gutterElms = UiHelper.queryElms('.board-gutter');
 		for (let g = 0; g < 4; g++) {
 			for (let index = 0; index < 8; index++) {
 				const modifiedIndex = g % 2 === 0 ? (isBoardFlipped ? 7 - index : index) : isBoardFlipped ? index + 1 : 8 - index;
@@ -39,7 +28,7 @@ export class UIInit {
 	}
 
 	static createBoardSquaresUI(isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void) {
-		const boardSquaresElm = UIInit.getElm('board-squares');
+		const boardSquaresElm = UiHelper.getElm('board-squares');
 		if (!boardSquaresElm) {
 			return;
 		}
@@ -69,7 +58,7 @@ export class UIInit {
 	}
 
 	static createAllPieceElms(board: Board, isBoardFlipped, onClickPiece: (MouseEvent) => void) {
-		const boardSquaresElm = UIInit.getElm('board-squares');
+		const boardSquaresElm = UiHelper.getElm('board-squares');
 		if (!boardSquaresElm) {
 			return;
 		}
@@ -88,9 +77,9 @@ export class UIInit {
 		UIInit.createBoardGuttersUI(isBoardFlipped);
 		UIInit.createBoardSquaresUI(isBoardFlipped, onClickSquare);
 		UIInit.createAllPieceElms(board, isBoardFlipped, onclickPiece);
-		const pageBgImageElm = UIInit.getElm('page-bg-img');
-		const mainContentElm = UIInit.getElm('main-content');
-		const welcomePanelElm = UIInit.getElm('welcome-panel');
+		const pageBgImageElm = UiHelper.getElm('page-bg-img');
+		const mainContentElm = UiHelper.getElm('main-content');
+		const welcomePanelElm = UiHelper.getElm('welcome-panel');
 		if (!pageBgImageElm || !mainContentElm || !welcomePanelElm) {
 			return;
 		}

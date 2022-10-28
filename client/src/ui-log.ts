@@ -1,23 +1,12 @@
 import { UserMsgType } from './types';
 import { Helper } from './helper';
+import { UiHelper } from './ui-helper.js';
 
 export class UILog {
 	static startTime = 0;
 
-	static getElm(id) {
-		return document.getElementById(id);
-	}
-
-	static queryElm(selectors) {
-		return document.querySelector(selectors);
-	}
-
-	static queryElms(selectors) {
-		return document.querySelectorAll(selectors);
-	}
-
 	static log(msg: string, type: UserMsgType) {
-		const panelElm = UILog.getElm('info-log');
+		const panelElm = UiHelper.getElm('info-log');
 		if (!panelElm) {
 			return;
 		}
