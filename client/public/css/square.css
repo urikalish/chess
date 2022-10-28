@@ -1,0 +1,15 @@
+.board-squares {
+    position: relative;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(8, 12.5%);
+    grid-template-rows: repeat(8, 12.5%);
+    background-image: url("../img/board1.png");
+    background-size: cover;
+}
+.square {
+    background-repeat: no-repeat;
+}
+.square.selected-square {
+    background-color: var(--color--3);
+}
