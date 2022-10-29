@@ -6,7 +6,7 @@ export class Player {
 	type: PlayerType;
 	name: string;
 
-	constructor(index, type, name) {
+	constructor(index: number, type: PlayerType, name: string) {
 		this.index = index;
 		this.color = index === 0 ? ColorType.WHITE : ColorType.BLACK;
 		this.type = type;

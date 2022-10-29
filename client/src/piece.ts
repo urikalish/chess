@@ -10,7 +10,7 @@ export class Piece {
 	name: string;
 	square: Square | null = null;
 
-	constructor(armyIndex, pieceType) {
+	constructor(armyIndex: number, pieceType: PieceType) {
 		this.armyIndex = armyIndex;
 		this.color = armyIndex === 0 ? ColorType.WHITE : ColorType.BLACK;
 		this.type = pieceType;
@@ -26,7 +26,7 @@ export class Piece {
 		return !this.square;
 	}
 
-	setSquare(square) {
+	setSquare(square: Square) {
 		this.square = square;
 		square.piece = this;
 	}

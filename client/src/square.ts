@@ -5,11 +5,11 @@ export class Square {
 	name: string;
 	piece: Piece | null;
 
-	static getSquareNameByIndex(index) {
+	static getSquareNameByIndex(index: number) {
 		return String.fromCharCode(97 + (index % 8)) + String(8 - Math.trunc(index / 8));
 	}
 
-	constructor(index) {
+	constructor(index: number) {
 		this.index = index;
 		this.name = Square.getSquareNameByIndex(index);
 		this.piece = null;
@@ -23,7 +23,7 @@ export class Square {
 		return !this.piece;
 	}
 
-	setPiece(piece) {
+	setPiece(piece: Piece) {
 		this.piece = piece;
 		piece.square = this;
 	}

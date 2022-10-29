@@ -11,8 +11,11 @@ export class UiMain {
 
 	static goMove(srcSquareIndex: number, dstSquareIndex: number) {
 		const move = UiMain.game.move(srcSquareIndex, dstSquareIndex);
-		if (move.isLegal && move.removedPiece) {
-			UiMain.removeOnePieceElm(move.removedPiece);
+		if (!move.isLegal) {
+			return;
+		}
+		if (move.removedPiece) {
+			UiMain.removePieceElm(move.removedPiece);
 		}
 	}
 
@@ -26,10 +29,10 @@ export class UiMain {
 			UiMain.selectedSquareIndex = -1;
 			UiMain.goMove(curSquareIndex, newSquareIndex);
 		}
-		UiMain.updateBoard(UiMain.game.board);
+		UiMain.updateBoardUI(UiMain.game.board);
 	}
 
-	static handleClickSquare(event: MouseEvent) {
+	static handleClickSquareElm(event: MouseEvent) {
 		if (!event.target) {
 			return;
 		}
@@ -37,16 +40,16 @@ export class UiMain {
 		UiMain.handleSelection(elm ? Number(elm.dataset.index) : -1);
 	}
 
-	static handleClickPiece(event: MouseEvent) {
+	static handleClickPieceElm(event: MouseEvent) {
 		if (!event.target) {
 			return;
 		}
-		const piece = UiMain.game.getPiece((event.target as HTMLDivElement).dataset.name);
+		const piece = UiMain.game.getPiece((event.target as HTMLDivElement)?.dataset?.name || '');
 		const selectedSquareIndex = piece ? piece.square?.index ?? -1 : -1;
 		UiMain.handleSelection(selectedSquareIndex);
 	}
 
-	static removeOnePieceElm(piece: Piece) {
+	static removePieceElm(piece: Piece) {
 		const elm = UiHelper.queryElm(`[data-name="${piece.name}"]`);
 		if (elm) {
 			elm.remove();
@@ -54,11 +57,12 @@ export class UiMain {
 	}
 
 	static createGameUI(game: Game) {
+		UiMain.game = game;
 		UiMain.isBoardFlipped = game.players[0].type === PlayerType.COMPUTER && game.players[1].type === PlayerType.HUMAN;
-		UIInit.createGameUI(game.players, game.board, UiMain.isBoardFlipped, UiMain.handleClickSquare, UiMain.handleClickPiece);
+		UIInit.createGameUI(game.players, game.board, UiMain.isBoardFlipped, UiMain.handleClickSquareElm, UiMain.handleClickPieceElm);
 	}
 
-	static updateBoard(board) {
+	static updateBoardUI(board) {
 		for (let index = 0; index < 64; index++) {
 			const modifiedIndex = UiMain.isBoardFlipped ? 63 - index : index;
 			const squareElm = UiHelper.queryElm(`[data-index="${index}"]`);

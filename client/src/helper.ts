@@ -1,11 +1,11 @@
 export class Helper {
-	static getRandomNumber(min, max) {
+	static getRandomNumber(min: number, max: number) {
 		min = Math.ceil(min);
 		max = Math.floor(max);
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	static getTimeStr(time) {
+	static getTimeStr(time: number) {
 		const totalSecs = Math.trunc(time / 1000);
 		const hours = Math.trunc(totalSecs / 3600);
 		const totalMinutes = totalSecs - hours * 3600;
