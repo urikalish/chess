@@ -50,7 +50,7 @@ export class UiMain {
 	}
 
 	static removePieceElm(piece: Piece) {
-		const elm = UiHelper.queryElm(`[data-name="${piece.name}"]`);
+		const elm = UiHelper.queryNameElm(piece.name);
 		if (elm) {
 			elm.remove();
 		}
@@ -65,7 +65,7 @@ export class UiMain {
 	static updateBoardUI(board) {
 		for (let index = 0; index < 64; index++) {
 			const modifiedIndex = UiMain.isBoardFlipped ? 63 - index : index;
-			const squareElm = UiHelper.queryElm(`[data-index="${index}"]`);
+			const squareElm = UiHelper.queryIndexElm(index);
 			if (!squareElm) {
 				return;
 			}
@@ -80,7 +80,7 @@ export class UiMain {
 			if (index === UiMain.selectedSquareIndex) {
 				squareElm.classList.add('selected-square');
 			}
-			const pieceElm = UiHelper.queryElm(`[data-name="${piece.name}"]`);
+			const pieceElm = UiHelper.queryNameElm(piece.name);
 			if (!pieceElm) {
 				return;
 			}
