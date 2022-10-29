@@ -15,7 +15,6 @@ function handleWelcomeDone(fenStr: string, player0Type, player0Name, player1Type
 	UILog.startTime = startTime;
 	game = new Game(player0Type, player0Name, player1Type, player1Name, fenStr, startTime, handleGameUpdate);
 	UiMain.createGameUI(game);
-	UILog.log('Start game', UserMsgType.GAME_PHASE);
 	UILog.log(`FEN loaded: ${fenStr}`, UserMsgType.FEN_TEXT);
 	game.start();
 }

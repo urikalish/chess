@@ -1,4 +1,4 @@
-import { ColorType, PieceType, PlayerType } from './types';
+import { ColorType, PieceType, PlayerType, UserMsgType } from './types';
 import { Fen } from './fen';
 import { Player } from './player.js';
 import { Piece } from './piece.js';
@@ -6,13 +6,14 @@ import { Army } from './army.js';
 import { Board } from './board.js';
 import { Position } from './position';
 import { Move } from './move';
+import { UILog } from './ui/ui-log';
 
 export class Game {
 	players: Player[];
 	armies: Army[];
 	board: Board;
-	moves: Move[];
 	positions: Position[];
+	moves: Move[];
 	startTime = 0;
 	onGameUpdate: (Game) => void;
 
@@ -51,6 +52,7 @@ export class Game {
 	}
 
 	start() {
+		UILog.log('Start game', UserMsgType.GAME_PHASE);
 		this.onGameUpdate(this);
 	}
 
