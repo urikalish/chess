@@ -39,7 +39,8 @@ export class UIInit {
 			const modifiedIndex = isBoardFlipped ? 63 - index : index;
 			const squareName = Square.getSquareNameByIndex(modifiedIndex);
 			const squareElm = document.createElement('div');
-			squareElm.setAttribute('data-index', String(index));
+			squareElm.setAttribute('data-index', String(modifiedIndex));
+			squareElm.setAttribute('data-ui-index', String(index));
 			squareElm.setAttribute('data-name', squareName);
 			squareElm.classList.add('square', 'empty');
 			squareElm.addEventListener('click', onClickSquare);

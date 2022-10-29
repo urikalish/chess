@@ -8,7 +8,11 @@ import { UIInit } from './ui-init.js';
 export class UiMain {
 	static game: Game;
 	static isBoardFlipped = false;
-	static selectedSquareIndex = -1;
+	static selectedSquareUiIndex = -1;
+
+	static getModifiedIndex(index: number) {
+		return UiMain.isBoardFlipped ? 63 - index : index;
+	}
 
 	static goMove(srcSquareIndex: number, dstSquareIndex: number) {
 		const move = UiMain.game.move(srcSquareIndex, dstSquareIndex);
@@ -20,17 +24,18 @@ export class UiMain {
 		}
 	}
 
-	static handleSelection(newSquareIndex: number) {
-		const curSquareIndex = UiMain.selectedSquareIndex;
-		if (curSquareIndex === -1) {
+	static handleUiSelection(newSquareUiIndex: number) {
+		const newSquareIndex = UiMain.getModifiedIndex(newSquareUiIndex);
+		const curSquareIndex = UiMain.getModifiedIndex(UiMain.selectedSquareUiIndex);
+		if (UiMain.selectedSquareUiIndex === -1) {
 			if (UiMain.game.board.squares[newSquareIndex].isOccupied()) {
-				UiMain.selectedSquareIndex = newSquareIndex;
+				UiMain.selectedSquareUiIndex = newSquareUiIndex;
 			}
-		} else if (curSquareIndex === newSquareIndex) {
-			UiMain.selectedSquareIndex = -1;
+		} else if (UiMain.selectedSquareUiIndex === newSquareUiIndex) {
+			UiMain.selectedSquareUiIndex = -1;
 		} else {
-			UiMain.selectedSquareIndex = -1;
 			UiMain.goMove(curSquareIndex, newSquareIndex);
+			UiMain.selectedSquareUiIndex = -1;
 		}
 		UiMain.updateUI();
 	}
@@ -40,7 +45,11 @@ export class UiMain {
 			return;
 		}
 		const elm = event.target as HTMLDivElement;
-		UiMain.handleSelection(elm ? Number(elm.dataset.index) : -1);
+		if (elm) {
+			UiMain.handleUiSelection(Number(elm.dataset.uiIndex));
+		} else {
+			UiMain.handleUiSelection(-1);
+		}
 	}
 
 	static handleClickPieceElm(event: MouseEvent) {
@@ -48,8 +57,13 @@ export class UiMain {
 			return;
 		}
 		const piece = UiMain.game.getPiece((event.target as HTMLDivElement)?.dataset?.name || '');
-		const selectedSquareIndex = piece ? piece.square?.index ?? -1 : -1;
-		UiMain.handleSelection(selectedSquareIndex);
+		if (piece && piece.square) {
+			const selectedSquareIndex = piece.square.index;
+			const selectedSquareUiIndex = UiMain.getModifiedIndex(selectedSquareIndex);
+			UiMain.handleUiSelection(selectedSquareUiIndex);
+		} else {
+			UiMain.handleUiSelection(-1);
+		}
 	}
 
 	static removePieceElm(piece: Piece) {
@@ -66,28 +80,28 @@ export class UiMain {
 	}
 
 	static updateBoardUI(board) {
-		for (let index = 0; index < 64; index++) {
-			const modifiedIndex = UiMain.isBoardFlipped ? 63 - index : index;
-			const squareElm = UiHelper.queryIndexElm(index);
+		for (let uiIndex = 0; uiIndex < 64; uiIndex++) {
+			const index = UiMain.getModifiedIndex(uiIndex);
+			const squareElm = UiHelper.queryUiIndexElm(uiIndex);
 			if (!squareElm) {
 				return;
 			}
 			squareElm.className = '';
-			const square = board.squares[modifiedIndex];
+			const square = board.squares[index];
 			if (square.isEmpty()) {
 				squareElm.classList.add('square', 'empty');
 				continue;
 			}
 			const piece = square.piece;
 			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
-			if (index === UiMain.selectedSquareIndex) {
+			if (uiIndex === UiMain.selectedSquareUiIndex) {
 				squareElm.classList.add('selected-square');
 			}
 			const pieceElm = UiHelper.queryNameElm(piece.name);
 			if (!pieceElm) {
 				return;
 			}
-			pieceElm.style.transform = `translate(${index % 8}00%, ${Math.trunc(index / 8)}00%)`;
+			pieceElm.style.transform = `translate(${uiIndex % 8}00%, ${Math.trunc(uiIndex / 8)}00%)`;
 		}
 	}
 
