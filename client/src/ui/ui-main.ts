@@ -23,7 +23,9 @@ export class UiMain {
 	static handleSelection(newSquareIndex: number) {
 		const curSquareIndex = UiMain.selectedSquareIndex;
 		if (curSquareIndex === -1) {
-			UiMain.selectedSquareIndex = newSquareIndex;
+			if (UiMain.game.board.squares[newSquareIndex].isOccupied()) {
+				UiMain.selectedSquareIndex = newSquareIndex;
+			}
 		} else if (curSquareIndex === newSquareIndex) {
 			UiMain.selectedSquareIndex = -1;
 		} else {
