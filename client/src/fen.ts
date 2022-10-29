@@ -20,7 +20,10 @@ export class Fen {
 		return position;
 	}
 
-	static getFenStr(position: Position) {
+	static getFenStr(position: Position | null) {
+		if (!position) {
+			return '';
+		}
 		const parts: string[] = [];
 		const pd: string[] = [];
 		let emptySquaresCount = 0;

@@ -16,7 +16,7 @@ export class UiMain {
 
 	static goMove(srcSquareIndex: number, dstSquareIndex: number) {
 		const move = UiMain.game.move(srcSquareIndex, dstSquareIndex);
-		if (!move.isLegal) {
+		if (!move || !move.isLegal) {
 			return;
 		}
 		if (move.removedPiece) {
@@ -77,21 +77,31 @@ export class UiMain {
 		UIInit.createGameUI(game.players, game.board, UiMain.isBoardFlipped, UiMain.handleClickSquareElm, UiMain.handleClickPieceElm);
 	}
 
-	static updateBoardUI(board) {
+	static updateBoardUI() {
 		for (let uiIndex = 0; uiIndex < 64; uiIndex++) {
-			const index = UiMain.getModifiedIndex(uiIndex);
 			const squareElm = UiHelper.queryUiIndexElm(uiIndex);
 			if (!squareElm) {
 				return;
 			}
+			const index = UiMain.getModifiedIndex(uiIndex);
+			const lastMove = UiMain.game.getLastMove();
 			squareElm.className = '';
-			const square = board.squares[index];
+			const square = UiMain.game.board.squares[index];
 			if (square.isEmpty()) {
 				squareElm.classList.add('square', 'empty');
+				if (lastMove && lastMove.srcSquareIndex === index) {
+					squareElm.classList.add('last-move-src');
+				}
 				continue;
 			}
 			const piece = square.piece;
+			if (!piece) {
+				continue;
+			}
 			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
+			if (lastMove && lastMove.dstSquareIndex === index) {
+				squareElm.classList.add('last-move-dst');
+			}
 			if (index === UiMain.selectedSquareIndex) {
 				squareElm.classList.add('selected-square');
 			}
@@ -106,12 +116,12 @@ export class UiMain {
 	static updateFenUI() {
 		const infoFenElm = UiHelper.getElm('info-fen');
 		if (infoFenElm) {
-			infoFenElm.innerText = Fen.getFenStr(UiMain.game.getCurPosition());
+			infoFenElm.innerText = Fen.getFenStr(UiMain.game.getLastPosition());
 		}
 	}
 
 	static updateUI() {
-		UiMain.updateBoardUI(UiMain.game.board);
+		UiMain.updateBoardUI();
 		UiMain.updateFenUI();
 	}
 }

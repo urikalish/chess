@@ -10,6 +10,14 @@
 .square {
     background-repeat: no-repeat;
 }
+.square.last-move-src {
+    background-color: var(--color--1);
+    opacity: 0.8;
+}
+.square.last-move-dst {
+    background-color: var(--color--1);
+    opacity: 0.8;
+}
 .square.selected-square {
     background-color: var(--color--3);
     opacity: 0.8;

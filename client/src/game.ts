@@ -28,8 +28,12 @@ export class Game {
 		this.applyFen(fenStr);
 	}
 
-	getCurPosition() {
-		return this.positions[this.positions.length - 1];
+	getLastPosition(): Position | null {
+		return this.positions.length ? this.positions[this.positions.length - 1] : null;
+	}
+
+	getLastMove(): Move | null {
+		return this.moves.length ? this.moves[this.moves.length - 1] : null;
 	}
 
 	applyPosition(position: Position) {
@@ -60,8 +64,11 @@ export class Game {
 		return this.armies[0].getPiece(name) || this.armies[1].getPiece(name) || null;
 	}
 
-	move(srcSquareIndex: number, dstSquareIndex: number): Move {
-		const curPosition = this.getCurPosition();
+	move(srcSquareIndex: number, dstSquareIndex: number): Move | null {
+		const curPosition = this.getLastPosition();
+		if (!curPosition) {
+			return null;
+		}
 		const move = this.board.movePiece(new Move(curPosition.activeColor === ColorType.WHITE ? 0 : 1, curPosition.fullMoveNumber, srcSquareIndex, dstSquareIndex));
 		if (!move.isLegal) {
 			return move;
@@ -69,6 +76,7 @@ export class Game {
 		if (move.removedPiece) {
 			this.armies[move.removedPiece.armyIndex].removePiece(move.removedPiece);
 		}
+		this.moves.push(move);
 		const newPosition = new Position(
 			curPosition.activeColor === ColorType.WHITE ? ColorType.BLACK : ColorType.WHITE,
 			curPosition.activeColor === ColorType.WHITE ? curPosition.fullMoveNumber : curPosition.fullMoveNumber + 1,
