@@ -8,7 +8,7 @@ import { UIInit } from './ui-init.js';
 export class UiMain {
 	static game: Game;
 	static isBoardFlipped = false;
-	static selectedSquareUiIndex = -1;
+	static selectedSquareIndex = -1;
 
 	static getModifiedIndex(index: number) {
 		return UiMain.isBoardFlipped ? 63 - index : index;
@@ -24,18 +24,17 @@ export class UiMain {
 		}
 	}
 
-	static handleUiSelection(newSquareUiIndex: number) {
-		const newSquareIndex = UiMain.getModifiedIndex(newSquareUiIndex);
-		const curSquareIndex = UiMain.getModifiedIndex(UiMain.selectedSquareUiIndex);
-		if (UiMain.selectedSquareUiIndex === -1) {
+	static handleUiSelection(newSquareIndex: number) {
+		const curSquareIndex = UiMain.selectedSquareIndex;
+		if (UiMain.selectedSquareIndex === -1) {
 			if (UiMain.game.board.squares[newSquareIndex].isOccupied()) {
-				UiMain.selectedSquareUiIndex = newSquareUiIndex;
+				UiMain.selectedSquareIndex = newSquareIndex;
 			}
-		} else if (UiMain.selectedSquareUiIndex === newSquareUiIndex) {
-			UiMain.selectedSquareUiIndex = -1;
+		} else if (UiMain.selectedSquareIndex === newSquareIndex) {
+			UiMain.selectedSquareIndex = -1;
 		} else {
 			UiMain.goMove(curSquareIndex, newSquareIndex);
-			UiMain.selectedSquareUiIndex = -1;
+			UiMain.selectedSquareIndex = -1;
 		}
 		UiMain.updateUI();
 	}
@@ -46,7 +45,7 @@ export class UiMain {
 		}
 		const elm = event.target as HTMLDivElement;
 		if (elm) {
-			UiMain.handleUiSelection(Number(elm.dataset.uiIndex));
+			UiMain.handleUiSelection(Number(elm.dataset.index));
 		} else {
 			UiMain.handleUiSelection(-1);
 		}
@@ -59,8 +58,7 @@ export class UiMain {
 		const piece = UiMain.game.getPiece((event.target as HTMLDivElement)?.dataset?.name || '');
 		if (piece && piece.square) {
 			const selectedSquareIndex = piece.square.index;
-			const selectedSquareUiIndex = UiMain.getModifiedIndex(selectedSquareIndex);
-			UiMain.handleUiSelection(selectedSquareUiIndex);
+			UiMain.handleUiSelection(selectedSquareIndex);
 		} else {
 			UiMain.handleUiSelection(-1);
 		}
@@ -94,7 +92,7 @@ export class UiMain {
 			}
 			const piece = square.piece;
 			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
-			if (uiIndex === UiMain.selectedSquareUiIndex) {
+			if (index === UiMain.selectedSquareIndex) {
 				squareElm.classList.add('selected-square');
 			}
 			const pieceElm = UiHelper.queryNameElm(piece.name);
