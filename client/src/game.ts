@@ -77,9 +77,6 @@ export class Game {
 			newPosition.pieceData.push(s.piece?.typeCased ?? '');
 		});
 		this.positions.push(newPosition);
-
-		console.log(Fen.getFenStr(this.getCurPosition()));
-
 		return move;
 	}
 }

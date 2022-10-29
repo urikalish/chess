@@ -1,4 +1,5 @@
 import { PlayerType } from '../types.js';
+import { Fen } from '../fen.js';
 import { Piece } from '../piece';
 import { Game } from '../game.js';
 import { UiHelper } from './ui-helper.js';
@@ -29,7 +30,7 @@ export class UiMain {
 			UiMain.selectedSquareIndex = -1;
 			UiMain.goMove(curSquareIndex, newSquareIndex);
 		}
-		UiMain.updateBoardUI(UiMain.game.board);
+		UiMain.updateUI();
 	}
 
 	static handleClickSquareElm(event: MouseEvent) {
@@ -86,5 +87,17 @@ export class UiMain {
 			}
 			pieceElm.style.transform = `translate(${index % 8}00%, ${Math.trunc(index / 8)}00%)`;
 		}
+	}
+
+	static updateFenUI() {
+		const infoFenElm = UiHelper.getElm('info-fen');
+		if (infoFenElm) {
+			infoFenElm.innerText = Fen.getFenStr(UiMain.game.getCurPosition());
+		}
+	}
+
+	static updateUI() {
+		UiMain.updateBoardUI(UiMain.game.board);
+		UiMain.updateFenUI();
 	}
 }

@@ -1,4 +1,3 @@
-import { UserMsgType } from './types';
 import { Game } from './game.js';
 import { UILog } from './ui/ui-log';
 import { UiWelcome } from './ui/ui-welcome.js';
@@ -6,8 +5,8 @@ import { UiMain } from './ui/ui-main.js';
 
 let game: Game | null = null;
 
-function handleGameUpdate(game: Game) {
-	UiMain.updateBoardUI(game.board);
+function handleGameUpdate() {
+	UiMain.updateUI();
 }
 
 function handleWelcomeDone(fenStr: string, player0Type, player0Name, player1Type, player1Name) {
@@ -15,7 +14,6 @@ function handleWelcomeDone(fenStr: string, player0Type, player0Name, player1Type
 	UILog.startTime = startTime;
 	game = new Game(player0Type, player0Name, player1Type, player1Name, fenStr, startTime, handleGameUpdate);
 	UiMain.createGameUI(game);
-	UILog.log(`FEN loaded: ${fenStr}`, UserMsgType.FEN_TEXT);
 	game.start();
 }
 

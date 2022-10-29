@@ -3,6 +3,7 @@ import { Piece } from '../piece';
 import { Square } from '../square.js';
 import { Board } from '../board.js';
 import { UiHelper } from './ui-helper.js';
+import { PlayerType } from '../types';
 
 export class UIInit {
 	static createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
@@ -12,6 +13,8 @@ export class UIInit {
 		const nameElms = UiHelper.queryElms('.info-player-name');
 		nameElms[0].innerText = isBoardFlipped ? players[0].name : players[1].name;
 		nameElms[1].innerText = isBoardFlipped ? players[1].name : players[0].name;
+		nameElms[0].classList.add(players[isBoardFlipped ? 0 : 1].type === PlayerType.HUMAN ? 'player-human' : 'player-machine');
+		nameElms[1].classList.add(players[isBoardFlipped ? 1 : 0].type === PlayerType.HUMAN ? 'player-human' : 'player-machine');
 	}
 
 	static createBoardGuttersUI(isBoardFlipped: boolean) {
@@ -21,7 +24,7 @@ export class UIInit {
 				const modifiedIndex = g % 2 === 0 ? (isBoardFlipped ? 7 - index : index) : isBoardFlipped ? index + 1 : 8 - index;
 				const markElm = document.createElement('div');
 				markElm.classList.add('board-gutter-label');
-				markElm.innerText = g % 2 === 0 ? String.fromCharCode(97 + modifiedIndex) : String(modifiedIndex);
+				markElm.innerText = g % 2 === 0 ? String.fromCharCode(65 + modifiedIndex) : String(modifiedIndex);
 				gutterElms[g].appendChild(markElm);
 			}
 		}
