@@ -1,8 +1,8 @@
 import { Piece } from './piece.js';
 
 export class Move {
-	armyIndex = 0;
 	wholeTurnId = 1;
+	armyIndex = 0;
 	srcSquareIndex = -1;
 	dstSquareIndex = -1;
 	movingPiece: Piece | null = null;

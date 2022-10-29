@@ -69,12 +69,10 @@ export class Game {
 		if (move.removedPiece) {
 			this.armies[move.removedPiece.armyIndex].removePiece(move.removedPiece);
 		}
-		const newPosition = new Position();
-		newPosition.activeColor = curPosition.activeColor === ColorType.WHITE ? ColorType.BLACK : ColorType.WHITE;
-		if (curPosition.activeColor === ColorType.BLACK) {
-			newPosition.fullMoveNumber++;
-		}
-		newPosition.pieceData = [];
+		const newPosition = new Position(
+			curPosition.activeColor === ColorType.WHITE ? ColorType.BLACK : ColorType.WHITE,
+			curPosition.activeColor === ColorType.WHITE ? curPosition.fullMoveNumber : curPosition.fullMoveNumber + 1,
+		);
 		this.board.squares.forEach(s => {
 			newPosition.pieceData.push(s.piece?.typeCased ?? '');
 		});

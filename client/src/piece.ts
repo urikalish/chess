@@ -26,16 +26,16 @@ export class Piece {
 		return !this.square;
 	}
 
-	setSquare(square: Square) {
-		this.square = square;
-		square.piece = this;
-	}
-
-	clearSquare() {
-		if (!this.square) {
-			return;
-		}
-		this.square.piece = null;
-		this.square = null;
-	}
+	// setSquare(square: Square) {
+	// 	this.square = square;
+	// 	square.piece = this;
+	// }
+	//
+	// clearSquare() {
+	// 	if (!this.square) {
+	// 		return;
+	// 	}
+	// 	this.square.piece = null;
+	// 	this.square = null;
+	// }
 }

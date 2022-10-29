@@ -5,9 +5,8 @@ export class Fen {
 	static default = `rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1`;
 
 	static parseFenStr(fenStr): Position {
-		const position = new Position();
 		const parts = fenStr.split(' ');
-		position.pieceData = [];
+		const position = new Position(parts[1] === 'b' ? ColorType.BLACK : ColorType.WHITE, parts[5]);
 		const rows = parts[0].split(`/`);
 		rows.forEach(row => {
 			for (let i = 0; i < row.length; i++) {
@@ -18,8 +17,6 @@ export class Fen {
 				}
 			}
 		});
-		position.activeColor = parts[1] === 'b' ? ColorType.BLACK : ColorType.WHITE;
-		position.fullMoveNumber = parts[5];
 		return position;
 	}
 }
