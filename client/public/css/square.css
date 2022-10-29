@@ -12,4 +12,5 @@
 }
 .square.selected-square {
     background-color: var(--color--3);
+    opacity: 0.8;
 }
