@@ -36,7 +36,7 @@ export class UIInit {
 			return;
 		}
 		for (let index = 0; index < 64; index++) {
-			const modifiedIndex = isBoardFlipped ? 63 - index : index;
+			const modifiedIndex = UiHelper.getModifiedIndex(index, isBoardFlipped);
 			const squareName = Square.getSquareNameByIndex(modifiedIndex);
 			const squareElm = document.createElement('div');
 			squareElm.setAttribute('data-index', String(modifiedIndex));
@@ -67,7 +67,7 @@ export class UIInit {
 			return;
 		}
 		for (let index = 0; index < 64; index++) {
-			const modifiedIndex = isBoardFlipped ? 63 - index : index;
+			const modifiedIndex = UiHelper.getModifiedIndex(index, isBoardFlipped);
 			const square = board.squares[modifiedIndex];
 			if (!square.piece) {
 				continue;

@@ -22,4 +22,8 @@ export class UiHelper {
 	static queryNameElm(name: string): HTMLElement | null {
 		return document.querySelector(`[data-name="${name}"]`);
 	}
+
+	static getModifiedIndex(index: number, isBoardFlipped: boolean) {
+		return isBoardFlipped ? 63 - index : index;
+	}
 }

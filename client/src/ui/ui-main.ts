@@ -10,10 +10,6 @@ export class UiMain {
 	static isBoardFlipped = false;
 	static selectedSquareIndex = -1;
 
-	static getModifiedIndex(index: number) {
-		return UiMain.isBoardFlipped ? 63 - index : index;
-	}
-
 	static goMove(srcSquareIndex: number, dstSquareIndex: number) {
 		const move = UiMain.game.move(srcSquareIndex, dstSquareIndex);
 		if (!move || !move.isLegal) {
@@ -83,7 +79,7 @@ export class UiMain {
 			if (!squareElm) {
 				return;
 			}
-			const index = UiMain.getModifiedIndex(uiIndex);
+			const index = UiHelper.getModifiedIndex(uiIndex, UiMain.isBoardFlipped);
 			const lastMove = UiMain.game.getLastMove();
 			squareElm.className = '';
 			const square = UiMain.game.board.squares[index];
