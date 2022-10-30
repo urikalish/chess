@@ -25,14 +25,12 @@ export class Square {
 
 	setPiece(piece: Piece) {
 		this.piece = piece;
-		piece.square = this;
 	}
 
 	clearPiece() {
 		if (!this.piece) {
 			return;
 		}
-		this.piece.square = null;
 		this.piece = null;
 	}
 }

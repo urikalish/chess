@@ -19,6 +19,10 @@ export class UiHelper {
 		return document.querySelector(`[data-ui-index="${uiIndex}"]`);
 	}
 
+	static querySquareIndexElm(squareIndex: number): HTMLElement | null {
+		return document.querySelector(`[data-square-index="${squareIndex}"]`);
+	}
+
 	static queryNameElm(name: string): HTMLElement | null {
 		return document.querySelector(`[data-name="${name}"]`);
 	}

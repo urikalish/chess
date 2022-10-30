@@ -1,6 +1,5 @@
 import { ColorType, PieceType, PieceTypeCased } from './types.js';
 import { Helper } from './helper.js';
-import { Square } from './square';
 
 export class Piece {
 	armyIndex: number;
@@ -8,7 +7,6 @@ export class Piece {
 	type: PieceType;
 	typeCased: PieceTypeCased;
 	name: string;
-	square: Square | null = null;
 
 	constructor(armyIndex: number, pieceType: PieceType) {
 		this.armyIndex = armyIndex;
@@ -17,25 +15,4 @@ export class Piece {
 		this.typeCased = armyIndex === 0 ? (pieceType.toUpperCase() as PieceTypeCased) : (pieceType.toLowerCase() as PieceTypeCased);
 		this.name = `${this.typeCased}.${Helper.getRandomNumber(111111, 999999)}`;
 	}
-
-	isPlaced() {
-		return !!this.square;
-	}
-
-	isUnplaced() {
-		return !this.square;
-	}
-
-	// setSquare(square: Square) {
-	// 	this.square = square;
-	// 	square.piece = this;
-	// }
-	//
-	// clearSquare() {
-	// 	if (!this.square) {
-	// 		return;
-	// 	}
-	// 	this.square.piece = null;
-	// 	this.square = null;
-	// }
 }
