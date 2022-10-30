@@ -1,4 +1,4 @@
-import { ColorType, PieceType, PlayerType, UserMsgType } from './types';
+import { ColorType, MoveType, PieceType, PlayerType, UserMsgType } from './types';
 import { Fen } from './fen';
 import { Player } from './player.js';
 import { Piece } from './piece.js';
@@ -36,6 +36,10 @@ export class Game {
 		return this.moves.length ? this.moves[this.moves.length - 1] : null;
 	}
 
+	getPiece(name: string): Piece | null {
+		return this.armies[0].getPiece(name) || this.armies[1].getPiece(name) || null;
+	}
+
 	applyPosition(position: Position) {
 		this.positions.push(position);
 		for (let i = 0; i < 64; i++) {
@@ -60,21 +64,17 @@ export class Game {
 		this.onGameUpdate(this);
 	}
 
-	getPiece(name: string): Piece | null {
-		return this.armies[0].getPiece(name) || this.armies[1].getPiece(name) || null;
-	}
-
-	move(srcSquareIndex: number, dstSquareIndex: number): Move | null {
+	move(from: number, to: number): Move | null {
 		const curPosition = this.getLastPosition();
 		if (!curPosition) {
 			return null;
 		}
-		const move = this.board.movePiece(new Move(curPosition.activeColor === ColorType.WHITE ? 0 : 1, curPosition.fullMoveNumber, srcSquareIndex, dstSquareIndex));
-		if (!move.isLegal) {
-			return move;
+		const move = this.board.movePiece(new Move(curPosition.activeColor === ColorType.WHITE ? 0 : 1, curPosition.fullMoveNumber, from, to));
+		if (move.type === MoveType.ILLEGAL) {
+			return null;
 		}
-		if (move.removedPiece) {
-			this.armies[move.removedPiece.armyIndex].removePiece(move.removedPiece);
+		if (move.capturedPiece) {
+			this.armies[move.capturedPiece.armyIndex].removePiece(move.capturedPiece);
 		}
 		this.moves.push(move);
 		const newPosition = new Position(

@@ -1,21 +1,19 @@
 import { Piece } from './piece.js';
+import { MoveType } from './types.js';
 
 export class Move {
 	wholeTurnId = 1;
 	armyIndex = 0;
-	srcSquareIndex = -1;
-	dstSquareIndex = -1;
+	from = -1;
+	to = -1;
 	movingPiece: Piece | null = null;
-	removedPiece: Piece | null = null;
-	isLegal: boolean;
+	capturedPiece: Piece | null = null;
+	type: MoveType = MoveType.NA;
 
 	constructor(wholeTurnId: number, armyIndex: number, srcSquareIndex: number, dstSquareIndex: number) {
 		this.wholeTurnId = wholeTurnId;
 		this.armyIndex = armyIndex;
-		this.srcSquareIndex = srcSquareIndex;
-		this.dstSquareIndex = dstSquareIndex;
-		this.movingPiece = null;
-		this.removedPiece = null;
-		this.isLegal = false;
+		this.from = srcSquareIndex;
+		this.to = dstSquareIndex;
 	}
 }

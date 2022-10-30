@@ -10,13 +10,13 @@ export class UiMain {
 	static isBoardFlipped = false;
 	static selectedSquareIndex = -1;
 
-	static goMove(srcSquareIndex: number, dstSquareIndex: number) {
-		const move = UiMain.game.move(srcSquareIndex, dstSquareIndex);
-		if (!move || !move.isLegal) {
+	static goMove(from: number, to: number) {
+		const move = UiMain.game.move(from, to);
+		if (!move) {
 			return;
 		}
-		if (move.removedPiece) {
-			UiMain.removePieceElm(move.removedPiece);
+		if (move.capturedPiece) {
+			UiMain.removePieceElm(move.capturedPiece);
 		}
 	}
 
@@ -85,7 +85,7 @@ export class UiMain {
 			const square = UiMain.game.board.squares[index];
 			if (square.isEmpty()) {
 				squareElm.classList.add('square', 'empty');
-				if (lastMove && lastMove.srcSquareIndex === index) {
+				if (lastMove && lastMove.from === index) {
 					squareElm.classList.add('last-move-src');
 				}
 				continue;
@@ -95,7 +95,7 @@ export class UiMain {
 				continue;
 			}
 			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
-			if (lastMove && lastMove.dstSquareIndex === index) {
+			if (lastMove && lastMove.to === index) {
 				squareElm.classList.add('last-move-dst');
 			}
 			if (index === UiMain.selectedSquareIndex) {

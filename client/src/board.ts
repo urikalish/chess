@@ -1,6 +1,7 @@
 import { Square } from './square.js';
 import { Piece } from './piece.js';
 import { Move } from './move.js';
+import { MoveType } from './types';
 
 export class Board {
 	squares: Square[];
@@ -25,19 +26,19 @@ export class Board {
 	}
 
 	movePiece(move: Move): Move {
-		move.isLegal = false;
-		const srcSquare = this.squares[move.srcSquareIndex];
-		const dstSquare = this.squares[move.dstSquareIndex];
-		const srcPiece = srcSquare.piece;
-		const dstPiece = dstSquare.piece;
-		if (!srcSquare || !dstSquare || !srcPiece) {
+		const fromSquare = this.squares[move.from];
+		const toSquare = this.squares[move.to];
+		const movingPiece = fromSquare.piece;
+		const targetPiece = toSquare.piece;
+		if (!fromSquare || !toSquare || !movingPiece) {
+			move.type = MoveType.ILLEGAL;
 			return move;
 		}
-		srcSquare.clearPiece();
-		dstSquare.clearPiece();
-		this.placePiece(srcPiece, move.dstSquareIndex);
-		move.removedPiece = dstPiece || null;
-		move.isLegal = true;
+		fromSquare.clearPiece();
+		toSquare.clearPiece();
+		this.placePiece(movingPiece, move.to);
+		move.capturedPiece = targetPiece || null;
+		move.type = move.capturedPiece ? MoveType.CAPTURE : MoveType.NORMAL;
 		return move;
 	}
 }
