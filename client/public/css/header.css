@@ -14,12 +14,10 @@ header {
     height: var(--header-height);
     display: flex;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
 }
 .page-title {
-    margin-top: 1.6rem;
     color: var(--color--page-title);
-    font-family: var(--font-family--script);
     font-size: 3.6rem;
     text-shadow: 2px 2px #000;
     user-select: none;
