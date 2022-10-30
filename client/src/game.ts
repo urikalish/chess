@@ -64,13 +64,13 @@ export class Game {
 	move(from: number, to: number): Move | null {
 		const curPosition = this.getCurPosition();
 		const fromSquare = this.board.squares[from];
-		const toSquare = this.board.squares[to];
 		const movingPiece = fromSquare.piece;
 		const pieceName = movingPiece?.name;
 		if (!curPosition || !pieceName) {
 			return null;
 		}
 		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, from, to, pieceName);
+		const toSquare = this.board.squares[to];
 		const targetPiece: Piece | null = toSquare.piece;
 		fromSquare.clearPiece();
 		toSquare.clearPiece();
