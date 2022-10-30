@@ -33,7 +33,6 @@ export class UiMain {
 	}
 
 	handleUiSelection(newIndex: number) {
-		const curSquareIndex = this.selectedIndex;
 		if (this.selectedIndex === newIndex) {
 			this.selectedIndex = -1;
 		} else if (this.selectedIndex === -1) {
@@ -41,8 +40,8 @@ export class UiMain {
 				this.selectedIndex = newIndex;
 			}
 		} else if (this.game.possibleMoves.find(m => this.selectedIndex === m.from && newIndex === m.to)) {
+			this.goMove(this.selectedIndex, newIndex);
 			this.selectedIndex = -1;
-			this.goMove(curSquareIndex, newIndex);
 		} else {
 			this.selectedIndex = -1;
 		}
