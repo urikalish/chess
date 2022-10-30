@@ -1,4 +1,4 @@
-import { PlayerType } from '../types';
+import { MoveType, PlayerType } from '../types';
 import { Fen } from '../fen';
 import { Game } from '../game';
 import { UiHelper } from './ui-helper';
@@ -14,8 +14,11 @@ export class UiMain {
 		if (!move) {
 			return;
 		}
-		if (move.capturedPieceName) {
-			UiMain.removePieceElm(move.capturedPieceName);
+		if (move.type === MoveType.CAPTURE) {
+			const elm = UiHelper.querySquareIndexElm(move.to);
+			if (elm && elm.dataset && elm?.dataset.name) {
+				UiMain.removePieceElm(elm.dataset.name);
+			}
 		}
 	}
 

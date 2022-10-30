@@ -8,6 +8,7 @@ import { Board } from './board';
 import { Move } from './move';
 import { Position } from './position';
 import { UILog } from './ui/ui-log';
+import { Engine } from './engine';
 
 export class Game {
 	players: Player[];
@@ -61,26 +62,19 @@ export class Game {
 		this.onGameUpdate(this);
 	}
 
-	move(from: number, to: number): Move | null {
+	getAllAllPossibleMoves() {
 		const curPosition = this.getCurPosition();
-		const fromSquare = this.board.squares[from];
-		const movingPiece = fromSquare.piece;
-		const pieceName = movingPiece?.name;
-		if (!curPosition || !pieceName) {
+		if (!curPosition) {
+			return [];
+		}
+		return Engine.getAllPossibleMoves(curPosition);
+	}
+
+	savePosition(): Position | null {
+		const curPosition = this.getCurPosition();
+		if (!curPosition) {
 			return null;
 		}
-		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, from, to, pieceName);
-		const toSquare = this.board.squares[to];
-		const targetPiece: Piece | null = toSquare.piece;
-		fromSquare.clearPiece();
-		toSquare.clearPiece();
-		this.board.placePiece(movingPiece, to);
-		move.capturedPieceName = targetPiece?.name || '';
-		move.type = move.capturedPieceName ? MoveType.CAPTURE : MoveType.NORMAL;
-		if (move.capturedPieceName) {
-			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(move.capturedPieceName);
-		}
-		this.moves.push(move);
 		const newPosition = new Position(
 			Helper.flipArmyIndex(curPosition.activeArmyIndex),
 			curPosition.activeArmyIndex === 0 ? curPosition.fullMoveNumber : curPosition.fullMoveNumber + 1,
@@ -89,6 +83,29 @@ export class Game {
 			newPosition.pieceData.push(s.piece?.typeCased ?? '');
 		});
 		this.positions.push(newPosition);
+		return newPosition;
+	}
+
+	move(from: number, to: number): Move | null {
+		const curPosition = this.getCurPosition();
+		const fromSquare = this.board.squares[from];
+		const movingPiece = fromSquare.piece;
+		const pieceName = movingPiece?.name;
+		if (!curPosition || !pieceName) {
+			return null;
+		}
+		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, from, to);
+		const toSquare = this.board.squares[to];
+		const targetPiece: Piece | null = toSquare.piece;
+		fromSquare.clearPiece();
+		toSquare.clearPiece();
+		this.board.placePiece(movingPiece, to);
+		move.type = targetPiece ? MoveType.CAPTURE : MoveType.NORMAL;
+		this.moves.push(move);
+		if (targetPiece) {
+			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPiece.name);
+		}
+		this.savePosition();
 		return move;
 	}
 }

@@ -55,7 +55,7 @@ export class UIInit {
 		}
 		const pieceElm = document.createElement('div');
 		pieceElm.setAttribute('data-name', piece.name);
-		pieceElm.classList.add('piece', piece.typeCased);
+		pieceElm.classList.add('piece', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
 		pieceElm.addEventListener('click', onClickPiece);
 		boardPiecesElm.appendChild(pieceElm);
 		return pieceElm;
