@@ -1,7 +1,7 @@
-import { Game } from './game.js';
+import { Game } from './game';
 import { UILog } from './ui/ui-log';
-import { UiWelcome } from './ui/ui-welcome.js';
-import { UiMain } from './ui/ui-main.js';
+import { UiWelcome } from './ui/ui-welcome';
+import { UiMain } from './ui/ui-main';
 
 let game: Game | null = null;
 

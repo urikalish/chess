@@ -1,5 +1,5 @@
-import { PlayerType, ColorType, PieceType } from './types.js';
-import { Piece } from './piece.js';
+import { PlayerType, ColorType, PieceType } from './types';
+import { Piece } from './piece';
 
 export class Army {
 	index: number;

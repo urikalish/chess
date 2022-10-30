@@ -1,8 +1,8 @@
-import { PlayerType } from '../types.js';
-import { Fen } from '../fen.js';
-import { Game } from '../game.js';
-import { UiHelper } from './ui-helper.js';
-import { UIInit } from './ui-init.js';
+import { PlayerType } from '../types';
+import { Fen } from '../fen';
+import { Game } from '../game';
+import { UiHelper } from './ui-helper';
+import { UIInit } from './ui-init';
 
 export class UiMain {
 	static game: Game;

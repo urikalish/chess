@@ -1,5 +1,5 @@
-import { ColorType, PieceType, PieceTypeCased } from './types.js';
-import { Helper } from './helper.js';
+import { ColorType, PieceType, PieceTypeCased } from './types';
+import { Helper } from './helper';
 
 export class Piece {
 	armyIndex: number;

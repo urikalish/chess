@@ -1,5 +1,5 @@
-import { Square } from './square.js';
-import { Piece } from './piece.js';
+import { Square } from './square';
+import { Piece } from './piece';
 
 export class Board {
 	squares: Square[];

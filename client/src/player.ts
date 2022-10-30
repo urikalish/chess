@@ -1,4 +1,4 @@
-import { ColorType, PlayerType } from './types.js';
+import { ColorType, PlayerType } from './types';
 
 export class Player {
 	index: number;

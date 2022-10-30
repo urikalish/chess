@@ -1,12 +1,13 @@
 import { ColorType, MoveType, PieceType, PlayerType, UserMsgType } from './types';
-import { Fen } from './fen';
-import { Player } from './player.js';
-import { Army } from './army.js';
-import { Board } from './board.js';
-import { Position } from './position';
-import { Move } from './move';
-import { UILog } from './ui/ui-log';
 import { Helper } from './helper';
+import { Fen } from './fen';
+import { Player } from './player';
+import { Piece } from './piece';
+import { Army } from './army';
+import { Board } from './board';
+import { Move } from './move';
+import { Position } from './position';
+import { UILog } from './ui/ui-log';
 
 export class Game {
 	players: Player[];
@@ -69,8 +70,8 @@ export class Game {
 		if (!curPosition || !pieceName) {
 			return null;
 		}
-		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, pieceName, from, to);
-		const targetPiece = toSquare.piece;
+		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, from, to, pieceName);
+		const targetPiece: Piece | null = toSquare.piece;
 		fromSquare.clearPiece();
 		toSquare.clearPiece();
 		this.board.placePiece(movingPiece, to);

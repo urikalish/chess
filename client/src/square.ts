@@ -1,4 +1,4 @@
-import { Piece } from './piece.js';
+import { Piece } from './piece';
 
 export class Square {
 	index: number;
