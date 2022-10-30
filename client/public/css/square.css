@@ -20,12 +20,12 @@
 }
 .square.possible-from {
     background-color: var(--color--3);
-    opacity: 0.2;
+    opacity: 0.3;
     cursor: pointer;
 }
 .square.possible-to {
     background-color: var(--color--3);
-    opacity: 0.2;
+    opacity: 0.3;
     cursor: pointer;
 }
 .square.selected-square {

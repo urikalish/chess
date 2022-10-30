@@ -103,25 +103,30 @@ export class UiMain {
 			if (!piece) {
 				continue;
 			}
-			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
-			if (lastMove && lastMove.to === index) {
-				squareElm.classList.add('last-move-to');
-			}
-			if (index === this.selectedIndex) {
-				squareElm.classList.add('selected-square');
-			}
-			if (this.selectedIndex === -1 && this.game.possibleMoves.find(m => m.from === index)) {
-				squareElm.classList.add('possible-from');
-			}
-			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
-				squareElm.classList.add('possible-to');
-			}
 			const pieceElm = UiHelper.queryNameElm(piece.name);
 			if (!pieceElm) {
 				return;
 			}
 			pieceElm.dataset.squareIndex = String(index);
 			pieceElm.style.transform = `translate(${uiIndex % 8}00%, ${Math.trunc(uiIndex / 8)}00%)`;
+			pieceElm.className = '';
+			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
+			pieceElm.classList.add('piece', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
+			if (lastMove && lastMove.to === index) {
+				squareElm.classList.add('last-move-to');
+			}
+			if (index === this.selectedIndex) {
+				squareElm.classList.add('selected-square');
+				pieceElm.classList.add('selected-square');
+			}
+			if (this.selectedIndex === -1 && this.game.possibleMoves.find(m => m.from === index)) {
+				squareElm.classList.add('possible-from');
+				pieceElm.classList.add('possible-from');
+			}
+			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
+				squareElm.classList.add('possible-to');
+				pieceElm.classList.add('possible-to');
+			}
 		}
 	}
 
