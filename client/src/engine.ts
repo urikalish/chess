@@ -3,7 +3,7 @@ import { Position } from './position';
 import { MoveType } from './types';
 
 export class Engine {
-	static getAllPossibleMoves(position: Position): Move[] {
+	getAllPossibleMoves(position: Position): Move[] {
 		const moves: Move[] = [];
 		for (let i = 0; i < position.pieceData.length; i++) {
 			const pd = position.pieceData[i];
@@ -14,12 +14,12 @@ export class Engine {
 			if (pieceColorIndex !== position.activeArmyIndex) {
 				continue;
 			}
-			moves.push(...Engine.getAllPossibleMovesForPiece(position, i));
+			moves.push(...this.getAllPossibleMovesForPiece(position, i));
 		}
 		return moves;
 	}
 
-	static getAllPossibleMovesForPiece(position: Position, index: number): Move[] {
+	getAllPossibleMovesForPiece(position: Position, index: number): Move[] {
 		const moves: Move[] = [];
 		moves.push(new Move(position.fullMoveNumber, position.activeArmyIndex, index, index - 8, MoveType.NORMAL));
 		moves.push(new Move(position.fullMoveNumber, position.activeArmyIndex, index, index + 8, MoveType.NORMAL));

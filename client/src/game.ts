@@ -19,6 +19,7 @@ export class Game {
 	possibleMoves: Move[] = [];
 	startTime = 0;
 	onGameUpdate: (Game) => void;
+	engine = new Engine();
 
 	constructor(player0Type: PlayerType, player0Name: string, player1Type: PlayerType, player1Name: string, fenStr: string, startTime: number, onGameUpdate: (game: Game) => void) {
 		this.players = [new Player(0, player0Type, player0Name), new Player(1, player1Type, player1Name)];
@@ -44,7 +45,7 @@ export class Game {
 
 	pushPosition(position: Position) {
 		this.positions.push(position);
-		this.possibleMoves = Engine.getAllPossibleMoves(position);
+		this.possibleMoves = this.engine.getAllPossibleMoves(position);
 	}
 
 	applyFen(fenStr: string) {
