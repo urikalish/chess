@@ -19,9 +19,9 @@
     opacity: 0.3;
     cursor: pointer;
 }
-.square.possible-capture {
+.square.occupied.possible-to {
     background-color: var(--color--3);
-    opacity: 0.8;
+    opacity: 0.3;
     cursor: pointer;
 }
 .square.selected-square {

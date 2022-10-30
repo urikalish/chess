@@ -127,10 +127,6 @@ export class UiMain {
 				squareElm.classList.add('possible-to');
 				pieceElm.classList.add('clickable');
 			}
-			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index && m.type === MoveType.CAPTURE)) {
-				squareElm.classList.add('possible-capture');
-				pieceElm.classList.add('clickable');
-			}
 		}
 	}
 
