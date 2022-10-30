@@ -43,7 +43,7 @@ export enum UserMsgType {
 }
 
 export enum MoveType {
-	NA = '-',
+	UNKNOWN = 'unknown',
 	ILLEGAL = 'illegal',
 	NORMAL = 'normal',
 	CAPTURE = 'capture',
