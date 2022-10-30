@@ -35,10 +35,8 @@ export class UiMain {
 	handleUiSelection(newIndex: number) {
 		if (this.selectedIndex === newIndex) {
 			this.selectedIndex = -1;
-		} else if (this.selectedIndex === -1) {
-			if (this.game.possibleMoves.find(m => newIndex === m.from)) {
-				this.selectedIndex = newIndex;
-			}
+		} else if (this.game.possibleMoves.find(m => newIndex === m.from)) {
+			this.selectedIndex = newIndex;
 		} else if (this.game.possibleMoves.find(m => this.selectedIndex === m.from && newIndex === m.to)) {
 			this.goMove(this.selectedIndex, newIndex);
 			this.selectedIndex = -1;
@@ -117,19 +115,21 @@ export class UiMain {
 			}
 			if (index === this.selectedIndex) {
 				squareElm.classList.add('selected-square');
-				pieceElm.classList.add('selected-square');
+				pieceElm.classList.add('clickable');
 			}
-			if (this.selectedIndex === -1 && this.game.possibleMoves.find(m => m.from === index)) {
-				squareElm.classList.add('possible-from');
-				pieceElm.classList.add('possible-from');
+			if (this.game.possibleMoves.find(m => m.from === index)) {
+				pieceElm.classList.add('clickable');
+				if (this.selectedIndex === -1) {
+					squareElm.classList.add('possible-from');
+				}
 			}
 			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
 				squareElm.classList.add('possible-to');
-				pieceElm.classList.add('possible-to');
+				pieceElm.classList.add('clickable');
 			}
 			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index && m.type === MoveType.CAPTURE)) {
 				squareElm.classList.add('possible-capture');
-				pieceElm.classList.add('possible-capture');
+				pieceElm.classList.add('clickable');
 			}
 		}
 	}

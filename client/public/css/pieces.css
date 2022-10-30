@@ -7,10 +7,7 @@
     transform: translate(350%, 350%);
     transition: all 0.1s linear;
 }
-.board-pieces > .piece.possible-from,
-.board-pieces > .piece.possible-to,
-.board-pieces > .piece.possible-capture,
-.board-pieces > .piece.selected-square {
+.board-pieces > .piece.clickable {
     cursor: pointer;
 }
 .piece.P {
