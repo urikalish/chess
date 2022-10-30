@@ -1,5 +1,3 @@
-import { Piece } from './piece';
-
 export enum PlayerType {
 	NA = '-',
 	HUMAN = 'human',
@@ -44,6 +42,12 @@ export enum UserMsgType {
 	FEN_TEXT = 'msg-fen-text',
 }
 
-export interface MoveResult {
-	removedPiece: Piece | null;
+export enum MoveType {
+	NORMAL = 'normal',
+	CAPTURE = 'capture',
+	PAWN_2S = 'pawn_2s',
+	EP_CAPTURE = 'ep_capture',
+	PROMOTION = 'promotion',
+	KS_CASTLE = 'ks_castle',
+	QS_CASTLE = 'qs_castle',
 }
