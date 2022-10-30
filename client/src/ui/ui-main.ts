@@ -1,91 +1,95 @@
 import { MoveType, PlayerType } from '../types';
 import { Game } from '../game';
 import { UiHelper } from './ui-helper';
-import { UIInit } from './ui-init';
+import { UiInit } from './ui-init';
 import { UiFen } from './ui-fen';
 
 export class UiMain {
-	static game: Game;
-	static isBoardFlipped = false;
-	static selectedIndex = -1;
+	game: Game;
+	isBoardFlipped = false;
+	selectedIndex = -1;
 
-	static goMove(from: number, to: number) {
-		const move = UiMain.game.move(from, to);
+	constructor(game: Game) {
+		this.game = game;
+	}
+
+	createGameUI() {
+		this.isBoardFlipped = this.game.players[0].type === PlayerType.COMPUTER && this.game.players[1].type === PlayerType.HUMAN;
+		const uiInit = new UiInit();
+		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
+	}
+
+	goMove(from: number, to: number) {
+		const move = this.game.move(from, to);
 		if (!move) {
 			return;
 		}
 		if (move.type === MoveType.CAPTURE) {
 			const elm = UiHelper.querySquareIndexElm(move.to);
 			if (elm && elm.dataset && elm?.dataset.name) {
-				UiMain.removePieceElm(elm.dataset.name);
+				this.removePieceElm(elm.dataset.name);
 			}
 		}
 	}
 
-	static handleUiSelection(newIndex: number) {
-		const curSquareIndex = UiMain.selectedIndex;
-		if (UiMain.selectedIndex === newIndex) {
-			UiMain.selectedIndex = -1;
-		} else if (UiMain.selectedIndex === -1) {
-			if (UiMain.game.possibleMoves.find(m => newIndex === m.from)) {
-				UiMain.selectedIndex = newIndex;
+	handleUiSelection(newIndex: number) {
+		const curSquareIndex = this.selectedIndex;
+		if (this.selectedIndex === newIndex) {
+			this.selectedIndex = -1;
+		} else if (this.selectedIndex === -1) {
+			if (this.game.possibleMoves.find(m => newIndex === m.from)) {
+				this.selectedIndex = newIndex;
 			}
-		} else if (UiMain.game.possibleMoves.find(m => UiMain.selectedIndex === m.from && newIndex === m.to)) {
-			UiMain.selectedIndex = -1;
-			UiMain.goMove(curSquareIndex, newIndex);
+		} else if (this.game.possibleMoves.find(m => this.selectedIndex === m.from && newIndex === m.to)) {
+			this.selectedIndex = -1;
+			this.goMove(curSquareIndex, newIndex);
 		} else {
-			UiMain.selectedIndex = -1;
+			this.selectedIndex = -1;
 		}
-		UiMain.updateUI();
+		this.updateUI();
 	}
 
-	static handleClickSquareElm(event: MouseEvent) {
+	handleClickSquareElm(event: MouseEvent) {
 		if (!event.target) {
 			return;
 		}
 		const elm = event.target as HTMLDivElement;
 		if (elm) {
-			UiMain.handleUiSelection(Number(elm.dataset.index));
+			this.handleUiSelection(Number(elm.dataset.index));
 		} else {
-			UiMain.handleUiSelection(-1);
+			this.handleUiSelection(-1);
 		}
 	}
 
-	static handleClickPieceElm(event: MouseEvent) {
+	handleClickPieceElm(event: MouseEvent) {
 		if (!event.target) {
 			return;
 		}
 		const elm = event.target as HTMLDivElement;
 		if (elm) {
-			UiMain.handleUiSelection(Number(elm.dataset.squareIndex));
+			this.handleUiSelection(Number(elm.dataset.squareIndex));
 		} else {
-			UiMain.handleUiSelection(-1);
+			this.handleUiSelection(-1);
 		}
 	}
 
-	static removePieceElm(pieceNme: string) {
+	removePieceElm(pieceNme: string) {
 		const elm = UiHelper.queryNameElm(pieceNme);
 		if (elm) {
 			elm.remove();
 		}
 	}
 
-	static createGameUI(game: Game) {
-		UiMain.game = game;
-		UiMain.isBoardFlipped = game.players[0].type === PlayerType.COMPUTER && game.players[1].type === PlayerType.HUMAN;
-		UIInit.createGameUI(game.players, game.board, UiMain.isBoardFlipped, UiMain.handleClickSquareElm, UiMain.handleClickPieceElm);
-	}
-
-	static updateBoardUI() {
+	updateBoardUI() {
 		for (let uiIndex = 0; uiIndex < 64; uiIndex++) {
 			const squareElm = UiHelper.queryUiIndexElm(uiIndex);
 			if (!squareElm) {
 				return;
 			}
-			const index = UiHelper.getModifiedIndex(uiIndex, UiMain.isBoardFlipped);
-			const lastMove = UiMain.game.getCurMove();
+			const index = UiHelper.getModifiedIndex(uiIndex, this.isBoardFlipped);
+			const lastMove = this.game.getCurMove();
 			squareElm.className = '';
-			const square = UiMain.game.board.squares[index];
+			const square = this.game.board.squares[index];
 			if (square.isEmpty()) {
 				squareElm.classList.add('square', 'empty');
 				if (lastMove && lastMove.from === index) {
@@ -101,7 +105,7 @@ export class UiMain {
 			if (lastMove && lastMove.to === index) {
 				squareElm.classList.add('last-move-dst');
 			}
-			if (index === UiMain.selectedIndex) {
+			if (index === this.selectedIndex) {
 				squareElm.classList.add('selected-square');
 			}
 			const pieceElm = UiHelper.queryNameElm(piece.name);
@@ -113,8 +117,8 @@ export class UiMain {
 		}
 	}
 
-	static updateUI() {
-		UiMain.updateBoardUI();
-		UiFen.updateFenUI(UiMain.game.getCurPosition());
+	updateUI() {
+		this.updateBoardUI();
+		UiFen.updateFenUI(this.game.getCurPosition());
 	}
 }

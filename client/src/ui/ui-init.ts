@@ -5,8 +5,8 @@ import { Board } from '../board';
 import { UiHelper } from './ui-helper';
 import { PlayerType } from '../types';
 
-export class UIInit {
-	static createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
+export class UiInit {
+	createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
 		const colorElms = UiHelper.queryElms('.info-player-color');
 		colorElms[0].style.backgroundColor = isBoardFlipped ? '#fff' : '#000';
 		colorElms[1].style.backgroundColor = isBoardFlipped ? '#000' : '#fff';
@@ -17,7 +17,7 @@ export class UIInit {
 		nameElms[1].classList.add(players[isBoardFlipped ? 1 : 0].type === PlayerType.HUMAN ? 'player-human' : 'player-machine');
 	}
 
-	static createBoardGuttersUI(isBoardFlipped: boolean) {
+	createBoardGuttersUI(isBoardFlipped: boolean) {
 		const gutterElms = UiHelper.queryElms('.board-gutter');
 		for (let g = 0; g < 4; g++) {
 			for (let index = 0; index < 8; index++) {
@@ -30,7 +30,7 @@ export class UIInit {
 		}
 	}
 
-	static createBoardSquaresUI(isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void) {
+	createBoardSquaresUI(isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void) {
 		const boardSquaresElm = UiHelper.getElm('board-squares');
 		if (!boardSquaresElm) {
 			return;
@@ -48,7 +48,7 @@ export class UIInit {
 		}
 	}
 
-	static createOnePieceElm(piece: Piece, onClickPiece: (MouseEvent) => void) {
+	createOnePieceElm(piece: Piece, onClickPiece: (MouseEvent) => void) {
 		const boardPiecesElm = document.getElementById('board-pieces');
 		if (!boardPiecesElm) {
 			return;
@@ -61,7 +61,7 @@ export class UIInit {
 		return pieceElm;
 	}
 
-	static createAllPieceElms(board: Board, isBoardFlipped, onClickPiece: (MouseEvent) => void) {
+	createAllPieceElms(board: Board, isBoardFlipped, onClickPiece: (MouseEvent) => void) {
 		const boardSquaresElm = UiHelper.getElm('board-squares');
 		if (!boardSquaresElm) {
 			return;
@@ -72,15 +72,15 @@ export class UIInit {
 			if (!square.piece) {
 				continue;
 			}
-			UIInit.createOnePieceElm(square.piece, onClickPiece);
+			this.createOnePieceElm(square.piece, onClickPiece);
 		}
 	}
 
-	static createGameUI(players: Player[], board: Board, isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void, onclickPiece: (MouseEvent) => void) {
-		UIInit.createPlayersInfoUI(players, isBoardFlipped);
-		UIInit.createBoardGuttersUI(isBoardFlipped);
-		UIInit.createBoardSquaresUI(isBoardFlipped, onClickSquare);
-		UIInit.createAllPieceElms(board, isBoardFlipped, onclickPiece);
+	createGameUI(players: Player[], board: Board, isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void, onclickPiece: (MouseEvent) => void) {
+		this.createPlayersInfoUI(players, isBoardFlipped);
+		this.createBoardGuttersUI(isBoardFlipped);
+		this.createBoardSquaresUI(isBoardFlipped, onClickSquare);
+		this.createAllPieceElms(board, isBoardFlipped, onclickPiece);
 		const pageBgImageElm = UiHelper.getElm('page-bg-img');
 		const mainContentElm = UiHelper.getElm('main-content');
 		const welcomePanelElm = UiHelper.getElm('welcome-panel');

@@ -1,24 +1,29 @@
 import { Game } from './game';
-import { UILog } from './ui/ui-log';
+import { UiLog } from './ui/ui-log';
 import { UiWelcome } from './ui/ui-welcome';
 import { UiMain } from './ui/ui-main';
 
 let game: Game | null = null;
+let uiMain: UiMain | null = null;
 
-function handleGameUpdate() {
-	UiMain.updateUI();
+function init() {
+	const uiWelcome = new UiWelcome();
+	uiWelcome.init(handleWelcomeDone);
 }
 
 function handleWelcomeDone(fenStr: string, player0Type, player0Name, player1Type, player1Name) {
 	const startTime = new Date().getTime();
-	UILog.startTime = startTime;
+	UiLog.startTime = startTime;
 	game = new Game(player0Type, player0Name, player1Type, player1Name, fenStr, startTime, handleGameUpdate);
-	UiMain.createGameUI(game);
+	uiMain = new UiMain(game);
+	uiMain.createGameUI();
 	game.start();
 }
 
-function init() {
-	UiWelcome.init(handleWelcomeDone);
+function handleGameUpdate() {
+	if (uiMain) {
+		uiMain.updateUI();
+	}
 }
 
 init();

@@ -7,7 +7,7 @@ import { Army } from './army';
 import { Board } from './board';
 import { Move } from './move';
 import { Position } from './position';
-import { UILog } from './ui/ui-log';
+import { UiLog } from './ui/ui-log';
 import { Engine } from './engine';
 
 export class Game {
@@ -30,7 +30,7 @@ export class Game {
 	}
 
 	start() {
-		UILog.log('Start game', UserMsgType.GAME_PHASE);
+		UiLog.log('Start game', UserMsgType.GAME_PHASE);
 		this.onGameUpdate(this);
 	}
 

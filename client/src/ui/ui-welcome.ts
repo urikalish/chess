@@ -3,7 +3,7 @@ import { Fen } from '../fen';
 import { UiHelper } from './ui-helper';
 
 export class UiWelcome {
-	static init(onWelcomeDone) {
+	init(onWelcomeDone) {
 		const fenTextElm = UiHelper.getElm('welcome-fen-text');
 
 		const hvhWhiteNameElm = UiHelper.getElm('welcome-hvh-white-name-text');
