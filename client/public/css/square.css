@@ -19,7 +19,7 @@
     opacity: 0.3;
     cursor: pointer;
 }
-.square.occupied.possible-to {
+.square.possible-to.occupied {
     background-color: var(--color--3);
     opacity: 0.3;
     cursor: pointer;
