@@ -28,6 +28,11 @@
     opacity: 0.3;
     cursor: pointer;
 }
+.square.possible-capture {
+    background-color: var(--color--3);
+    opacity: 0.8;
+    cursor: pointer;
+}
 .square.selected-square {
     background-color: var(--color--3);
     opacity: 0.8;
