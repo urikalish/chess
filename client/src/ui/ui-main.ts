@@ -1,13 +1,13 @@
 import { MoveType, PlayerType } from '../types';
-import { Fen } from '../fen';
 import { Game } from '../game';
 import { UiHelper } from './ui-helper';
 import { UIInit } from './ui-init';
+import { UiFen } from './ui-fen';
 
 export class UiMain {
 	static game: Game;
 	static isBoardFlipped = false;
-	static selectedSquareIndex = -1;
+	static selectedIndex = -1;
 
 	static goMove(from: number, to: number) {
 		const move = UiMain.game.move(from, to);
@@ -22,17 +22,19 @@ export class UiMain {
 		}
 	}
 
-	static handleUiSelection(newSquareIndex: number) {
-		const curSquareIndex = UiMain.selectedSquareIndex;
-		if (UiMain.selectedSquareIndex === -1) {
-			if (UiMain.game.board.squares[newSquareIndex].isOccupied()) {
-				UiMain.selectedSquareIndex = newSquareIndex;
+	static handleUiSelection(newIndex: number) {
+		const curSquareIndex = UiMain.selectedIndex;
+		if (UiMain.selectedIndex === newIndex) {
+			UiMain.selectedIndex = -1;
+		} else if (UiMain.selectedIndex === -1) {
+			if (UiMain.game.possibleMoves.find(m => newIndex === m.from)) {
+				UiMain.selectedIndex = newIndex;
 			}
-		} else if (UiMain.selectedSquareIndex === newSquareIndex) {
-			UiMain.selectedSquareIndex = -1;
+		} else if (UiMain.game.possibleMoves.find(m => UiMain.selectedIndex === m.from && newIndex === m.to)) {
+			UiMain.selectedIndex = -1;
+			UiMain.goMove(curSquareIndex, newIndex);
 		} else {
-			UiMain.goMove(curSquareIndex, newSquareIndex);
-			UiMain.selectedSquareIndex = -1;
+			UiMain.selectedIndex = -1;
 		}
 		UiMain.updateUI();
 	}
@@ -99,7 +101,7 @@ export class UiMain {
 			if (lastMove && lastMove.to === index) {
 				squareElm.classList.add('last-move-dst');
 			}
-			if (index === UiMain.selectedSquareIndex) {
+			if (index === UiMain.selectedIndex) {
 				squareElm.classList.add('selected-square');
 			}
 			const pieceElm = UiHelper.queryNameElm(piece.name);
@@ -111,15 +113,8 @@ export class UiMain {
 		}
 	}
 
-	static updateFenUI() {
-		const infoFenElm = UiHelper.getElm('info-fen');
-		if (infoFenElm) {
-			infoFenElm.innerText = Fen.getFenStr(UiMain.game.getCurPosition());
-		}
-	}
-
 	static updateUI() {
 		UiMain.updateBoardUI();
-		UiMain.updateFenUI();
+		UiFen.updateFenUI(UiMain.game.getCurPosition());
 	}
 }

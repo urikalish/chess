@@ -14,8 +14,9 @@ export class Game {
 	players: Player[];
 	armies: Army[];
 	board: Board;
-	positions: Position[];
-	moves: Move[];
+	positions: Position[] = [];
+	moves: Move[] = [];
+	possibleMoves: Move[] = [];
 	startTime = 0;
 	onGameUpdate: (Game) => void;
 
@@ -23,11 +24,14 @@ export class Game {
 		this.players = [new Player(0, player0Type, player0Name), new Player(1, player1Type, player1Name)];
 		this.armies = [new Army(0, player0Type), new Army(1, player1Type)];
 		this.board = new Board();
-		this.positions = [];
-		this.moves = [];
 		this.startTime = startTime;
 		this.onGameUpdate = onGameUpdate;
 		this.applyFen(fenStr);
+	}
+
+	start() {
+		UILog.log('Start game', UserMsgType.GAME_PHASE);
+		this.onGameUpdate(this);
 	}
 
 	getCurPosition(): Position | null {
@@ -38,8 +42,14 @@ export class Game {
 		return this.moves.length ? this.moves[this.moves.length - 1] : null;
 	}
 
-	applyPosition(position: Position) {
+	pushPosition(position: Position) {
 		this.positions.push(position);
+		this.possibleMoves = Engine.getAllPossibleMoves(position);
+	}
+
+	applyFen(fenStr: string) {
+		const position = Fen.parseFenStr(fenStr);
+		this.pushPosition(position);
 		for (let i = 0; i < 64; i++) {
 			const char = position.pieceData[i];
 			if (!char) {
@@ -52,25 +62,7 @@ export class Game {
 		}
 	}
 
-	applyFen(fenStr: string) {
-		const position = Fen.parseFenStr(fenStr);
-		this.applyPosition(position);
-	}
-
-	start() {
-		UILog.log('Start game', UserMsgType.GAME_PHASE);
-		this.onGameUpdate(this);
-	}
-
-	getAllAllPossibleMoves() {
-		const curPosition = this.getCurPosition();
-		if (!curPosition) {
-			return [];
-		}
-		return Engine.getAllPossibleMoves(curPosition);
-	}
-
-	savePosition(): Position | null {
+	updatePosition(): Position | null {
 		const curPosition = this.getCurPosition();
 		if (!curPosition) {
 			return null;
@@ -82,7 +74,7 @@ export class Game {
 		this.board.squares.forEach(s => {
 			newPosition.pieceData.push(s.piece?.typeCased ?? '');
 		});
-		this.positions.push(newPosition);
+		this.pushPosition(newPosition);
 		return newPosition;
 	}
 
@@ -94,7 +86,7 @@ export class Game {
 		if (!curPosition || !pieceName) {
 			return null;
 		}
-		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, from, to);
+		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, from, to, MoveType.NORMAL);
 		const toSquare = this.board.squares[to];
 		const targetPiece: Piece | null = toSquare.piece;
 		fromSquare.clearPiece();
@@ -105,7 +97,7 @@ export class Game {
 		if (targetPiece) {
 			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPiece.name);
 		}
-		this.savePosition();
+		this.updatePosition();
 		return move;
 	}
 }

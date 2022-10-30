@@ -1,5 +1,6 @@
 import { Move } from './move';
 import { Position } from './position';
+import { MoveType } from './types';
 
 export class Engine {
 	static getAllPossibleMoves(position: Position): Move[] {
@@ -20,8 +21,8 @@ export class Engine {
 
 	static getAllPossibleMovesForPiece(position: Position, index: number): Move[] {
 		const moves: Move[] = [];
-		moves.push(new Move(position.fullMoveNumber, position.activeArmyIndex, index, index - 8));
-		moves.push(new Move(position.fullMoveNumber, position.activeArmyIndex, index, index + 8));
+		moves.push(new Move(position.fullMoveNumber, position.activeArmyIndex, index, index - 8, MoveType.NORMAL));
+		moves.push(new Move(position.fullMoveNumber, position.activeArmyIndex, index, index + 8, MoveType.NORMAL));
 		return moves;
 	}
 }
