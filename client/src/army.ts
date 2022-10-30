@@ -24,8 +24,8 @@ export class Army {
 		return this.pieces.find(p => p.name === name);
 	}
 
-	removePiece(piece: Piece) {
-		const index = this.pieces.findIndex(p => p.name === piece.name);
+	removePiece(pieceName: string) {
+		const index = this.pieces.findIndex(p => p.name === pieceName);
 		if (index === -1) {
 			return;
 		}

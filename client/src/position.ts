@@ -1,13 +1,11 @@
-import { ColorType } from './types.js';
-
 export class Position {
 	pieceData: string[] = [];
-	activeColor: ColorType = ColorType.WHITE;
+	activeArmyIndex = 0;
 	fullMoveNumber = 1;
 
-	constructor(activeColor: ColorType, fullMoveNumber: number) {
+	constructor(activeArmyIndex: number, fullMoveNumber: number) {
 		this.pieceData = [];
-		this.activeColor = activeColor;
+		this.activeArmyIndex = activeArmyIndex;
 		this.fullMoveNumber = fullMoveNumber;
 	}
 }

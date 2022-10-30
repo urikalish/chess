@@ -6,6 +6,7 @@ import { Board } from './board.js';
 import { Position } from './position';
 import { Move } from './move';
 import { UILog } from './ui/ui-log';
+import { Helper } from './helper';
 
 export class Game {
 	players: Player[];
@@ -27,11 +28,11 @@ export class Game {
 		this.applyFen(fenStr);
 	}
 
-	getLastPosition(): Position | null {
+	getCurPosition(): Position | null {
 		return this.positions.length ? this.positions[this.positions.length - 1] : null;
 	}
 
-	getLastMove(): Move | null {
+	getCurMove(): Move | null {
 		return this.moves.length ? this.moves[this.moves.length - 1] : null;
 	}
 
@@ -60,21 +61,28 @@ export class Game {
 	}
 
 	move(from: number, to: number): Move | null {
-		const curPosition = this.getLastPosition();
-		if (!curPosition) {
+		const curPosition = this.getCurPosition();
+		const fromSquare = this.board.squares[from];
+		const toSquare = this.board.squares[to];
+		const movingPiece = fromSquare.piece;
+		const pieceName = movingPiece?.name;
+		if (!curPosition || !pieceName) {
 			return null;
 		}
-		const move = this.board.movePiece(new Move(curPosition.activeColor === ColorType.WHITE ? 0 : 1, curPosition.fullMoveNumber, from, to));
-		if (move.type === MoveType.ILLEGAL) {
-			return null;
-		}
-		if (move.capturedPiece) {
-			this.armies[move.capturedPiece.armyIndex].removePiece(move.capturedPiece);
+		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, pieceName, from, to);
+		const targetPiece = toSquare.piece;
+		fromSquare.clearPiece();
+		toSquare.clearPiece();
+		this.board.placePiece(movingPiece, to);
+		move.capturedPieceName = targetPiece?.name || '';
+		move.type = move.capturedPieceName ? MoveType.CAPTURE : MoveType.NORMAL;
+		if (move.capturedPieceName) {
+			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(move.capturedPieceName);
 		}
 		this.moves.push(move);
 		const newPosition = new Position(
-			curPosition.activeColor === ColorType.WHITE ? ColorType.BLACK : ColorType.WHITE,
-			curPosition.activeColor === ColorType.WHITE ? curPosition.fullMoveNumber : curPosition.fullMoveNumber + 1,
+			Helper.flipArmyIndex(curPosition.activeArmyIndex),
+			curPosition.activeArmyIndex === 0 ? curPosition.fullMoveNumber : curPosition.fullMoveNumber + 1,
 		);
 		this.board.squares.forEach(s => {
 			newPosition.pieceData.push(s.piece?.typeCased ?? '');

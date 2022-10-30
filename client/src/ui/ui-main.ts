@@ -1,6 +1,5 @@
 import { PlayerType } from '../types.js';
 import { Fen } from '../fen.js';
-import { Piece } from '../piece';
 import { Game } from '../game.js';
 import { UiHelper } from './ui-helper.js';
 import { UIInit } from './ui-init.js';
@@ -15,8 +14,8 @@ export class UiMain {
 		if (!move) {
 			return;
 		}
-		if (move.capturedPiece) {
-			UiMain.removePieceElm(move.capturedPiece);
+		if (move.capturedPieceName) {
+			UiMain.removePieceElm(move.capturedPieceName);
 		}
 	}
 
@@ -59,8 +58,8 @@ export class UiMain {
 		}
 	}
 
-	static removePieceElm(piece: Piece) {
-		const elm = UiHelper.queryNameElm(piece.name);
+	static removePieceElm(pieceNme: string) {
+		const elm = UiHelper.queryNameElm(pieceNme);
 		if (elm) {
 			elm.remove();
 		}
@@ -79,7 +78,7 @@ export class UiMain {
 				return;
 			}
 			const index = UiHelper.getModifiedIndex(uiIndex, UiMain.isBoardFlipped);
-			const lastMove = UiMain.game.getLastMove();
+			const lastMove = UiMain.game.getCurMove();
 			squareElm.className = '';
 			const square = UiMain.game.board.squares[index];
 			if (square.isEmpty()) {
@@ -112,7 +111,7 @@ export class UiMain {
 	static updateFenUI() {
 		const infoFenElm = UiHelper.getElm('info-fen');
 		if (infoFenElm) {
-			infoFenElm.innerText = Fen.getFenStr(UiMain.game.getLastPosition());
+			infoFenElm.innerText = Fen.getFenStr(UiMain.game.getCurPosition());
 		}
 	}
 

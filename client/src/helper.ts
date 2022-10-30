@@ -16,4 +16,8 @@ export class Helper {
 		const ss = secs >= 10 ? secs : '0' + secs;
 		return `${hh}:${mm}:${ss}`;
 	}
+
+	static flipArmyIndex(armyIndex) {
+		return (armyIndex - 1) * -1;
+	}
 }

@@ -1,4 +1,3 @@
-import { ColorType } from './types.js';
 import { Position } from './position';
 
 export class Fen {
@@ -6,7 +5,7 @@ export class Fen {
 
 	static parseFenStr(fenStr): Position {
 		const parts = fenStr.split(' ');
-		const position = new Position(parts[1] === 'b' ? ColorType.BLACK : ColorType.WHITE, Number(parts[5]));
+		const position = new Position(parts[1] === 'w' ? 0 : 1, Number(parts[5]));
 		const rows = parts[0].split(`/`);
 		rows.forEach(row => {
 			for (let i = 0; i < row.length; i++) {
@@ -48,7 +47,7 @@ export class Fen {
 			}
 		}
 		parts[0] = pd.join('');
-		parts[1] = position.activeColor === ColorType.WHITE ? 'w' : 'b';
+		parts[1] = ['w', 'b'][position.activeArmyIndex];
 		parts[2] = 'KQkq';
 		parts[3] = '-';
 		parts[4] = '0';
