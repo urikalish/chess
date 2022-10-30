@@ -93,7 +93,10 @@ export class UiMain {
 			if (square.isEmpty()) {
 				squareElm.classList.add('square', 'empty');
 				if (lastMove && lastMove.from === index) {
-					squareElm.classList.add('last-move-src');
+					squareElm.classList.add('last-move-from');
+				}
+				if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
+					squareElm.classList.add('possible-to');
 				}
 				continue;
 			}
@@ -103,10 +106,16 @@ export class UiMain {
 			}
 			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
 			if (lastMove && lastMove.to === index) {
-				squareElm.classList.add('last-move-dst');
+				squareElm.classList.add('last-move-to');
 			}
 			if (index === this.selectedIndex) {
 				squareElm.classList.add('selected-square');
+			}
+			if (this.selectedIndex === -1 && this.game.possibleMoves.find(m => m.from === index)) {
+				squareElm.classList.add('possible-from');
+			}
+			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
+				squareElm.classList.add('possible-to');
 			}
 			const pieceElm = UiHelper.queryNameElm(piece.name);
 			if (!pieceElm) {

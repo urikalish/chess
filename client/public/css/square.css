@@ -10,13 +10,21 @@
 .square {
     background-repeat: no-repeat;
 }
-.square.last-move-src {
+.square.last-move-from {
     background-color: var(--color--1);
     opacity: 0.8;
 }
-.square.last-move-dst {
+.square.last-move-to {
     background-color: var(--color--1);
     opacity: 0.8;
+}
+.square.possible-from {
+    background-color: var(--color--3);
+    opacity: 0.2;
+}
+.square.possible-to {
+    background-color: var(--color--3);
+    opacity: 0.2;
 }
 .square.selected-square {
     background-color: var(--color--3);
