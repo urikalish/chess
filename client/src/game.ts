@@ -1,7 +1,6 @@
 import { ColorType, MoveType, PieceType, PlayerType, UserMsgType } from './types';
 import { Fen } from './fen';
 import { Player } from './player.js';
-import { Piece } from './piece.js';
 import { Army } from './army.js';
 import { Board } from './board.js';
 import { Position } from './position';
@@ -34,10 +33,6 @@ export class Game {
 
 	getLastMove(): Move | null {
 		return this.moves.length ? this.moves[this.moves.length - 1] : null;
-	}
-
-	getPiece(name: string): Piece | null {
-		return this.armies[0].getPiece(name) || this.armies[1].getPiece(name) || null;
 	}
 
 	applyPosition(position: Position) {

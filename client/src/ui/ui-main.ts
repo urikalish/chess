@@ -51,10 +51,9 @@ export class UiMain {
 		if (!event.target) {
 			return;
 		}
-		const piece = UiMain.game.getPiece((event.target as HTMLDivElement)?.dataset?.name || '');
-		if (piece && piece.square) {
-			const selectedSquareIndex = piece.square.index;
-			UiMain.handleUiSelection(selectedSquareIndex);
+		const elm = event.target as HTMLDivElement;
+		if (elm) {
+			UiMain.handleUiSelection(Number(elm.dataset.squareIndex));
 		} else {
 			UiMain.handleUiSelection(-1);
 		}
@@ -105,6 +104,7 @@ export class UiMain {
 			if (!pieceElm) {
 				return;
 			}
+			pieceElm.dataset.squareIndex = String(index);
 			pieceElm.style.transform = `translate(${uiIndex % 8}00%, ${Math.trunc(uiIndex / 8)}00%)`;
 		}
 	}
