@@ -24,7 +24,7 @@ export class UiInit {
 				const modifiedIndex = g % 2 === 0 ? (isBoardFlipped ? 7 - index : index) : isBoardFlipped ? index + 1 : 8 - index;
 				const markElm = document.createElement('div');
 				markElm.classList.add('board-gutter-label');
-				markElm.innerText = g % 2 === 0 ? String.fromCharCode(65 + modifiedIndex) : String(modifiedIndex);
+				markElm.innerText = g % 2 === 0 ? String.fromCharCode(97 + modifiedIndex) : String(modifiedIndex);
 				gutterElms[g].appendChild(markElm);
 			}
 		}
