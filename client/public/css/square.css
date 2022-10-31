@@ -1,31 +1,37 @@
 .square {
     background-repeat: no-repeat;
 }
-.square.last-move-from {
-    background-color: var(--color--3);
-    opacity: 0.8;
-}
+.square.last-move-from,
 .square.last-move-to {
-    background-color: var(--color--3);
-    opacity: 0.8;
+    background-color: var(--color--1);
+    opacity: 0.6;
 }
 .square.possible-from {
-    background-color: var(--color--1);
-    opacity: 0.3;
-    cursor: pointer;
+    background-color: var(--color--3);
+    opacity: 0.4;
 }
 .square.possible-to {
-    background-color: var(--color--1);
-    opacity: 0.3;
+    position: relative;
     cursor: pointer;
 }
-.square.possible-to.occupied {
-    background-color: var(--color--1);
-    opacity: 0.3;
-    cursor: pointer;
+.square.possible-to::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background-color: #000;
+    opacity: 0.4;
+}
+.square.possible-to:not(.occupied)::after {
+    left: calc(50% - 1vh);
+    top: calc(50% - 1vh);
+    width: 2vh;
+    height: 2vh;
+}
+.square.possible-to.occupied::after {
+    inset: 0 0 0 0;
 }
 .square.selected-square {
-    background-color: var(--color--1);
+    background-color: var(--color--3);
     opacity: 0.8;
     cursor: pointer;
 }
