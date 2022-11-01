@@ -19,7 +19,7 @@
     position: absolute;
     border-radius: 50%;
     background-color: #000;
-    opacity: 0.4;
+    opacity: 0.3;
 }
 .square.possible-to:not(.occupied)::after {
     left: calc(50% - 1vh);
