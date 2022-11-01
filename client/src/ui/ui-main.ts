@@ -24,7 +24,7 @@ export class UiMain {
 		if (!move) {
 			return;
 		}
-		if (move.type === MoveType.CAPTURE) {
+		if (move.types.has(MoveType.CAPTURE)) {
 			const elm = UiHelper.querySquareIndexElm(move.to);
 			if (elm && elm.dataset && elm?.dataset.name) {
 				this.removePieceElm(elm.dataset.name);

@@ -45,9 +45,11 @@ export enum MoveType {
 	NA = '-',
 	NORMAL = 'normal',
 	CAPTURE = 'capture',
-	PAWN_2S = 'pawn_2s',
-	EP_CAPTURE = 'ep_capture',
+	PAWN_TWO_SQUARES = 'pawn-two_squares',
+	EN_PASSANT = 'en-passant',
 	PROMOTION = 'promotion',
 	KS_CASTLE = 'ks_castle',
 	QS_CASTLE = 'qs_castle',
+	CHECK = 'check',
+	CHECKMATE = 'checkmate',
 }

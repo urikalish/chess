@@ -50,7 +50,10 @@ export class UiLog {
 			const whiteMoveElm = document.createElement('span');
 			whiteMoveElm.innerText = move.name;
 			whiteMoveElm.title = UiLog.getTimeStr();
-			whiteMoveElm.classList.add('info-log--msg-part', 'info-log--msg-move', `info-log--msg-move-${move.type.replace('_', '-')}`);
+			whiteMoveElm.classList.add('info-log--msg-part', 'info-log--msg-move');
+			move.types.forEach(t => {
+				whiteMoveElm.classList.add(`info-log--msg-move-${t}`);
+			});
 			lineElm.appendChild(whiteMoveElm);
 
 			panelElm.appendChild(lineElm);
@@ -61,7 +64,10 @@ export class UiLog {
 			const blackMoveElm = document.createElement('span');
 			blackMoveElm.innerText = move.name;
 			blackMoveElm.title = UiLog.getTimeStr();
-			blackMoveElm.classList.add('info-log--msg-part', 'info-log--msg-move', `info-log--msg-move-${move.type.replace('_', '-')}`);
+			blackMoveElm.classList.add('info-log--msg-part', 'info-log--msg-move');
+			move.types.forEach(t => {
+				blackMoveElm.classList.add(`info-log--msg-move-${t}`);
+			});
 			lineElm.appendChild(blackMoveElm);
 		}
 		panelElm.scrollTo(0, panelElm.scrollHeight);

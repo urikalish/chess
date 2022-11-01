@@ -96,7 +96,7 @@ export class Engine {
 		const to = this.getIndex(x, y + fw);
 		if (this.isYOk(y + fw) && this.isEmpty(p, to)) {
 			const [toFile, toRank] = this.getFileAndRank(to);
-			moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `${toFile}${toRank}`));
+			moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`));
 		}
 
 		//double step
@@ -105,7 +105,7 @@ export class Engine {
 			const to = i + 16 * fw;
 			if (this.isEmpty(p, to)) {
 				const [toFile, toRank] = this.getFileAndRank(to);
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.PAWN_2S, `${toFile}${toRank}`));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_TWO_SQUARES]), `${toFile}${toRank}`));
 			}
 		}
 
@@ -117,7 +117,7 @@ export class Engine {
 			const [toFile, toRank] = this.getFileAndRank(to);
 			if (this.isXOk(toX) && this.isYOk(toY) && this.isEnemyPiece(p, to)) {
 				const [fromFile] = this.getFileAndRank(i);
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `${fromFile}x${toFile}${toRank}`));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`));
 			}
 		});
 
@@ -145,9 +145,9 @@ export class Engine {
 			}
 			const [toFile, toRank] = this.getFileAndRank(to);
 			if (this.isEmpty(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `N${toFile}${toRank}`));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.NORMAL]), `N${toFile}${toRank}`));
 			} else if (this.isEnemyPiece(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Nx${toFile}${toRank}`));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.CAPTURE]), `Nx${toFile}${toRank}`));
 			}
 		}
 		return moves;
@@ -174,9 +174,9 @@ export class Engine {
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
 					if (this.isEmpty(p, to)) {
-						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `B${toFile}${toRank}`));
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.NORMAL]), `B${toFile}${toRank}`));
 					} else if (this.isEnemyPiece(p, to)) {
-						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Bx${toFile}${toRank}`));
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.CAPTURE]), `Bx${toFile}${toRank}`));
 						stop = true;
 					}
 				}
@@ -206,9 +206,9 @@ export class Engine {
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
 					if (this.isEmpty(p, to)) {
-						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `R${toFile}${toRank}`));
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.NORMAL]), `R${toFile}${toRank}`));
 					} else if (this.isEnemyPiece(p, to)) {
-						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Rx${toFile}${toRank}`));
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.CAPTURE]), `Rx${toFile}${toRank}`));
 						stop = true;
 					}
 				}
@@ -242,9 +242,9 @@ export class Engine {
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
 					if (this.isEmpty(p, to)) {
-						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `Q${toFile}${toRank}`));
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.NORMAL]), `Q${toFile}${toRank}`));
 					} else if (this.isEnemyPiece(p, to)) {
-						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Qx${toFile}${toRank}`));
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.CAPTURE]), `Qx${toFile}${toRank}`));
 						stop = true;
 					}
 				}
@@ -274,9 +274,9 @@ export class Engine {
 			}
 			const [toFile, toRank] = this.getFileAndRank(to);
 			if (this.isEmpty(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `K${toFile}${toRank}`));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.NORMAL]), `K${toFile}${toRank}`));
 			} else if (this.isEnemyPiece(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Kx${toFile}${toRank}`));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, new Set([MoveType.CAPTURE]), `Kx${toFile}${toRank}`));
 			}
 		}
 		return moves;
