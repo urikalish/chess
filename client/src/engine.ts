@@ -118,12 +118,36 @@ export class Engine {
 	}
 	getMovesForBishop(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
+		const [c, r] = Engine.getColAndRow(i);
+		const directions = [
+			[-1, -1],
+			[-1, 1],
+			[1, -1],
+			[1, 1],
+		];
+		for (let d = 0; d < directions.length; d++) {
+			let step = 0;
+			let stop = false;
+			while (!stop) {
+				step++;
+				const toCol = c + directions[d][0] * step;
+				const toRow = r + directions[d][1] * step;
+				const to = Engine.getIndex(toCol, toRow);
+				if (!Engine.isColOk(toCol) || !Engine.isRowOk(toRow) || Engine.isMyPiece(p, to)) {
+					stop = true;
+				} else if (Engine.isEmpty(p, to)) {
+					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
+				} else if (Engine.isEnemyPiece(p, to)) {
+					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
+					stop = true;
+				}
+			}
+		}
 		return moves;
 	}
 	getMovesForRook(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
 		const [c, r] = Engine.getColAndRow(i);
-
 		const directions = [
 			[0, -1],
 			[0, 1],
