@@ -77,9 +77,9 @@
     margin-top: 0.5rem;
     font-size: 1.6rem;
 }
-.info-log-msg.msg-regular {
-    color: var(--color--text);
+.info-log-msg-game-phase {
+    color: #fff;
 }
-.info-log-msg.msg-game-phase {
-    color: var(--color--2);
+.info-log-msg-move {
+    color: #ccc;
 }

@@ -1,4 +1,4 @@
-import { ColorType, MoveType, PieceType, PlayerType, UserMsgType } from './types';
+import { ColorType, PieceType, PlayerType } from './types';
 import { Helper } from './helper';
 import { Fen } from './fen';
 import { Player } from './player';
@@ -31,7 +31,6 @@ export class Game {
 	}
 
 	start() {
-		UiLog.log('Start game', UserMsgType.GAME_PHASE);
 		this.onGameUpdate(this);
 	}
 
@@ -80,24 +79,24 @@ export class Game {
 	}
 
 	move(from: number, to: number): Move | null {
+		const move = this.possibleMoves.find(m => m.from === from && m.to === to);
 		const curPosition = this.getCurPosition();
 		const fromSquare = this.board.squares[from];
 		const movingPiece = fromSquare.piece;
 		const pieceName = movingPiece?.name;
-		if (!curPosition || !pieceName) {
+		if (!move || !curPosition || !pieceName) {
 			return null;
 		}
-		const move = new Move(curPosition.fullMoveNumber, curPosition.activeArmyIndex, from, to, MoveType.NORMAL);
 		const toSquare = this.board.squares[to];
 		const targetPiece: Piece | null = toSquare.piece;
 		fromSquare.clearPiece();
 		toSquare.clearPiece();
 		this.board.placePiece(movingPiece, to);
-		move.type = targetPiece ? MoveType.CAPTURE : MoveType.NORMAL;
 		this.moves.push(move);
 		if (targetPiece) {
 			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPiece.name);
 		}
+		UiLog.logMove(move);
 		this.updatePosition();
 		return move;
 	}

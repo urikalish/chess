@@ -17,6 +17,7 @@ function handleWelcomeDone(fenStr: string, player0Type, player0Name, player1Type
 	game = new Game(player0Type, player0Name, player1Type, player1Name, fenStr, startTime, handleGameUpdate);
 	uiMain = new UiMain(game);
 	uiMain.createGameUI();
+	UiLog.logGamePhase('Game started');
 	game.start();
 }
 

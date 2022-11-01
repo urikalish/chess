@@ -37,8 +37,8 @@ export enum PieceTypeCased {
 }
 
 export enum UserMsgType {
-	REGULAR = 'msg-regular',
 	GAME_PHASE = 'msg-game-phase',
+	MOVE = 'msg-move',
 }
 
 export enum MoveType {

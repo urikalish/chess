@@ -3,6 +3,8 @@ import { Position } from './position';
 import { MoveType, PieceType } from './types';
 
 export class Engine {
+	//region Helper methods
+
 	getForwardDirection(armyIndex: number): number {
 		return armyIndex === 0 ? -1 : 1;
 	}
@@ -12,8 +14,11 @@ export class Engine {
 	getRow(i: number): number {
 		return Math.trunc(i / 8);
 	}
-	getColAndRow(i: number) {
+	getColAndRow(i: number): [number, number] {
 		return [i % 8, Math.trunc(i / 8)];
+	}
+	getFileAndRank(i: number): [string, number] {
+		return [String.fromCharCode(97 + (i % 8)), 8 - Math.trunc(i / 8)];
 	}
 	isColOk(c: number): boolean {
 		return c >= 0 && c <= 7;
@@ -36,6 +41,8 @@ export class Engine {
 	isEmpty(p: Position, i: number): boolean {
 		return !p.pieceData[i];
 	}
+
+	//endregion
 
 	getAllPossibleMoves(p: Position): Move[] {
 		const moves: Move[] = [];
@@ -88,7 +95,8 @@ export class Engine {
 		//single step
 		const to = this.getIndex(c, r + fw);
 		if (this.isRowOk(r + fw) && this.isEmpty(p, to)) {
-			moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
+			const [toFile, toRank] = this.getFileAndRank(to);
+			moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `${toFile}${toRank}`));
 		}
 
 		//double step
@@ -96,7 +104,8 @@ export class Engine {
 		if (this.getRow(i) === pawnsStartRow) {
 			const to = i + 16 * fw;
 			if (this.isEmpty(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.PAWN_2S));
+				const [toFile, toRank] = this.getFileAndRank(to);
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.PAWN_2S, `${toFile}${toRank}`));
 			}
 		}
 
@@ -105,8 +114,10 @@ export class Engine {
 			const toCol = c + d;
 			const toRow = r + fw;
 			const to = this.getIndex(toCol, toRow);
+			const [toFile, toRank] = this.getFileAndRank(to);
 			if (this.isColOk(toCol) && this.isRowOk(toRow) && this.isEnemyPiece(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
+				const [fromFile] = this.getFileAndRank(i);
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `${fromFile}x${toFile}${toRank}`));
 			}
 		});
 
@@ -132,10 +143,11 @@ export class Engine {
 			if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 				continue;
 			}
+			const [toFile, toRank] = this.getFileAndRank(to);
 			if (this.isEmpty(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `N${toFile}${toRank}`));
 			} else if (this.isEnemyPiece(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Nx${toFile}${toRank}`));
 			}
 		}
 		return moves;
@@ -159,11 +171,14 @@ export class Engine {
 				const to = this.getIndex(toCol, toRow);
 				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 					stop = true;
-				} else if (this.isEmpty(p, to)) {
-					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
-				} else if (this.isEnemyPiece(p, to)) {
-					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
-					stop = true;
+				} else {
+					const [toFile, toRank] = this.getFileAndRank(to);
+					if (this.isEmpty(p, to)) {
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `B${toFile}${toRank}`));
+					} else if (this.isEnemyPiece(p, to)) {
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Bx${toFile}${toRank}`));
+						stop = true;
+					}
 				}
 			}
 		}
@@ -188,11 +203,14 @@ export class Engine {
 				const to = this.getIndex(toCol, toRow);
 				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 					stop = true;
-				} else if (this.isEmpty(p, to)) {
-					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
-				} else if (this.isEnemyPiece(p, to)) {
-					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
-					stop = true;
+				} else {
+					const [toFile, toRank] = this.getFileAndRank(to);
+					if (this.isEmpty(p, to)) {
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `R${toFile}${toRank}`));
+					} else if (this.isEnemyPiece(p, to)) {
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Rx${toFile}${toRank}`));
+						stop = true;
+					}
 				}
 			}
 		}
@@ -221,11 +239,14 @@ export class Engine {
 				const to = this.getIndex(toCol, toRow);
 				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 					stop = true;
-				} else if (this.isEmpty(p, to)) {
-					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
-				} else if (this.isEnemyPiece(p, to)) {
-					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
-					stop = true;
+				} else {
+					const [toFile, toRank] = this.getFileAndRank(to);
+					if (this.isEmpty(p, to)) {
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `Q${toFile}${toRank}`));
+					} else if (this.isEnemyPiece(p, to)) {
+						moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Qx${toFile}${toRank}`));
+						stop = true;
+					}
 				}
 			}
 		}
@@ -251,10 +272,11 @@ export class Engine {
 			if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 				continue;
 			}
+			const [toFile, toRank] = this.getFileAndRank(to);
 			if (this.isEmpty(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `K${toFile}${toRank}`));
 			} else if (this.isEnemyPiece(p, to)) {
-				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
+				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `Kx${toFile}${toRank}`));
 			}
 		}
 		return moves;
