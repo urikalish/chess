@@ -55,6 +55,9 @@
     inset: 0;
     overflow: auto;
     padding-top: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: start;
 }
 .info-log::-webkit-scrollbar {
     width: 12px;
@@ -70,33 +73,23 @@
 .info-log::-webkit-scrollbar-thumb:hover {
     background-color: #777;
 }
-.info-log--msg-line {
+.info-log--full-move {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     margin-top: 0.5rem;
     font-size: 1.6rem;
 }
-.info-log--msg-part {
+.info-log--move-part {
     margin-right: 1rem;
     cursor: default;
 }
-.info-log--msg-line--game-phase {
-}
-.info-log--msg-time {
-    color: var(--color--2);
-}
-.info-log--msg-game-phase-name {
-    color: var(--color--2);
-}
-.info-log--msg-line--move {
-}
-.info-log--msg-move {
-    color: #ccc;
-}
-.info-log--msg-move-number {
+.info-log--move-number {
     color: #666;
 }
-.info-log--msg-move-capture {
+.info-log--move-name {
+    color: #ccc;
+}
+.info-log--move-type-capture {
     color: var(--color--1);
 }

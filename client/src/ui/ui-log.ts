@@ -9,28 +9,18 @@ export class UiLog {
 		return `${Helper.getTimeStr(new Date().getTime() - UiLog.startTime)}`;
 	}
 
-	static logGamePhase(msg: string) {
-		const panelElm = UiHelper.getElm('info-log');
-		if (!panelElm) {
-			return;
-		}
-
-		const lineElm: HTMLDivElement = document.createElement('div');
-		lineElm.classList.add('info-log--msg-line', 'info-log--msg-line--game-phase');
-
-		// const timeElm = document.createElement('span');
-		// timeElm.classList.add('info-log--msg-part', 'info-log--msg-time');
-		// timeElm.innerText = UiLog.getTimeStr();
-		// lineElm.appendChild(timeElm);
-
-		const phaseNameElm = document.createElement('span');
-		phaseNameElm.classList.add('info-log--msg-part', 'info-log--msg-game-phase-name');
-		phaseNameElm.innerText = msg;
-		lineElm.appendChild(phaseNameElm);
-
-		panelElm.appendChild(lineElm);
-
-		panelElm.scrollTo(0, panelElm.scrollHeight);
+	static createMoveElm(move) {
+		const movePartClass = 'info-log--move-part';
+		const moveNameClass = 'info-log--move-name';
+		const moveTypeClassPrefix = 'info-log--move-type-';
+		const elm = document.createElement('span');
+		elm.innerText = move.name;
+		elm.title = UiLog.getTimeStr();
+		elm.classList.add(movePartClass, moveNameClass);
+		move.types.forEach(t => {
+			elm.classList.add(`${moveTypeClassPrefix}${t}`);
+		});
+		return elm;
 	}
 
 	static logMove(move: Move) {
@@ -38,37 +28,29 @@ export class UiLog {
 		if (!panelElm) {
 			return;
 		}
+		const fullMoveClass = 'info-log--full-move';
+		const movePartClass = 'info-log--move-part';
+		const moveNumberClass = 'info-log--move-number';
 		if (move.armyIndex === 0) {
-			const lineElm: HTMLDivElement = document.createElement('div');
-			lineElm.classList.add('info-log--msg-line', 'info-log--msg-line--move');
+			const fullMoveElm: HTMLDivElement = document.createElement('div');
+			fullMoveElm.classList.add(fullMoveClass);
 
 			const moveNumElm = document.createElement('span');
 			moveNumElm.innerText = `${String(move.fullMoveNumber)})`;
-			moveNumElm.classList.add('info-log--msg-part', 'info-log--msg-move', 'info-log--msg-move-number');
-			lineElm.appendChild(moveNumElm);
+			moveNumElm.classList.add(movePartClass, moveNumberClass);
+			fullMoveElm.appendChild(moveNumElm);
 
-			const whiteMoveElm = document.createElement('span');
-			whiteMoveElm.innerText = move.name;
-			whiteMoveElm.title = UiLog.getTimeStr();
-			whiteMoveElm.classList.add('info-log--msg-part', 'info-log--msg-move');
-			move.types.forEach(t => {
-				whiteMoveElm.classList.add(`info-log--msg-move-${t}`);
-			});
-			lineElm.appendChild(whiteMoveElm);
+			const whiteMoveElm = UiLog.createMoveElm(move);
+			fullMoveElm.appendChild(whiteMoveElm);
 
-			panelElm.appendChild(lineElm);
+			panelElm.appendChild(fullMoveElm);
 		} else {
-			const lineElms = panelElm.querySelectorAll('.info-log--msg-line--move');
-			const lineElm = lineElms[lineElms.length - 1];
+			const fullMoveElms = panelElm.querySelectorAll(`.${fullMoveClass}`);
+			const fullMoveElm = fullMoveElms[fullMoveElms.length - 1];
 
-			const blackMoveElm = document.createElement('span');
-			blackMoveElm.innerText = move.name;
-			blackMoveElm.title = UiLog.getTimeStr();
-			blackMoveElm.classList.add('info-log--msg-part', 'info-log--msg-move');
-			move.types.forEach(t => {
-				blackMoveElm.classList.add(`info-log--msg-move-${t}`);
-			});
-			lineElm.appendChild(blackMoveElm);
+			const blackMoveElm = UiLog.createMoveElm(move);
+
+			fullMoveElm.appendChild(blackMoveElm);
 		}
 		panelElm.scrollTo(0, panelElm.scrollHeight);
 	}
