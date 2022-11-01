@@ -3,37 +3,37 @@ import { Position } from './position';
 import { MoveType, PieceType } from './types';
 
 export class Engine {
-	static getForwardDirection(armyIndex: number): number {
+	getForwardDirection(armyIndex: number): number {
 		return armyIndex === 0 ? -1 : 1;
 	}
-	static getCol(i: number): number {
+	getCol(i: number): number {
 		return i % 8;
 	}
-	static getRow(i: number): number {
+	getRow(i: number): number {
 		return Math.trunc(i / 8);
 	}
-	static getColAndRow(i: number) {
+	getColAndRow(i: number) {
 		return [i % 8, Math.trunc(i / 8)];
 	}
-	static isColOk(c: number): boolean {
+	isColOk(c: number): boolean {
 		return c >= 0 && c <= 7;
 	}
-	static isRowOk(r: number): boolean {
+	isRowOk(r: number): boolean {
 		return r >= 0 && r <= 7;
 	}
-	static getIndex(c: number, r: number): number {
+	getIndex(c: number, r: number): number {
 		return r * 8 + c;
 	}
-	static isMyPiece(p: Position, i: number): boolean {
+	isMyPiece(p: Position, i: number): boolean {
 		return !!p.pieceData[i] && (p.pieceData[i] === p.pieceData[i].toUpperCase() ? 0 : 1) === p.activeArmyIndex;
 	}
-	static isEnemyPiece(p: Position, i: number): boolean {
+	isEnemyPiece(p: Position, i: number): boolean {
 		return !!p.pieceData[i] && (p.pieceData[i] === p.pieceData[i].toUpperCase() ? 0 : 1) !== p.activeArmyIndex;
 	}
-	static hasPiece(p: Position, i: number): boolean {
+	hasPiece(p: Position, i: number): boolean {
 		return !!p.pieceData[i];
 	}
-	static isEmpty(p: Position, i: number): boolean {
+	isEmpty(p: Position, i: number): boolean {
 		return !p.pieceData[i];
 	}
 
@@ -82,20 +82,20 @@ export class Engine {
 
 	getMovesForPawn(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = Engine.getColAndRow(i);
-		const fw = Engine.getForwardDirection(p.activeArmyIndex);
+		const [c, r] = this.getColAndRow(i);
+		const fw = this.getForwardDirection(p.activeArmyIndex);
 
 		//single step
-		const to = Engine.getIndex(c, r + fw);
-		if (Engine.isRowOk(r + fw) && Engine.isEmpty(p, to)) {
+		const to = this.getIndex(c, r + fw);
+		if (this.isRowOk(r + fw) && this.isEmpty(p, to)) {
 			moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
 		}
 
 		//double step
 		const pawnsStartRow = p.activeArmyIndex === 0 ? 6 : 1;
-		if (Engine.getRow(i) === pawnsStartRow) {
+		if (this.getRow(i) === pawnsStartRow) {
 			const to = i + 16 * fw;
-			if (Engine.isEmpty(p, to)) {
+			if (this.isEmpty(p, to)) {
 				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.PAWN_2S));
 			}
 		}
@@ -104,8 +104,8 @@ export class Engine {
 		[-1, 1].forEach(d => {
 			const toCol = c + d;
 			const toRow = r + fw;
-			const to = Engine.getIndex(toCol, toRow);
-			if (Engine.isColOk(toCol) && Engine.isRowOk(toRow) && Engine.isEnemyPiece(p, to)) {
+			const to = this.getIndex(toCol, toRow);
+			if (this.isColOk(toCol) && this.isRowOk(toRow) && this.isEnemyPiece(p, to)) {
 				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
 			}
 		});
@@ -114,7 +114,7 @@ export class Engine {
 	}
 	getMovesForKnight(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = Engine.getColAndRow(i);
+		const [c, r] = this.getColAndRow(i);
 		const directions = [
 			[-2, -1],
 			[-2, 1],
@@ -128,13 +128,13 @@ export class Engine {
 		for (let d = 0; d < directions.length; d++) {
 			const toCol = c + directions[d][0];
 			const toRow = r + directions[d][1];
-			const to = Engine.getIndex(toCol, toRow);
-			if (!Engine.isColOk(toCol) || !Engine.isRowOk(toRow) || Engine.isMyPiece(p, to)) {
+			const to = this.getIndex(toCol, toRow);
+			if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 				continue;
 			}
-			if (Engine.isEmpty(p, to)) {
+			if (this.isEmpty(p, to)) {
 				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
-			} else if (Engine.isEnemyPiece(p, to)) {
+			} else if (this.isEnemyPiece(p, to)) {
 				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
 			}
 		}
@@ -142,7 +142,7 @@ export class Engine {
 	}
 	getMovesForBishop(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = Engine.getColAndRow(i);
+		const [c, r] = this.getColAndRow(i);
 		const directions = [
 			[-1, -1],
 			[-1, 1],
@@ -156,12 +156,12 @@ export class Engine {
 				step++;
 				const toCol = c + directions[d][0] * step;
 				const toRow = r + directions[d][1] * step;
-				const to = Engine.getIndex(toCol, toRow);
-				if (!Engine.isColOk(toCol) || !Engine.isRowOk(toRow) || Engine.isMyPiece(p, to)) {
+				const to = this.getIndex(toCol, toRow);
+				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 					stop = true;
-				} else if (Engine.isEmpty(p, to)) {
+				} else if (this.isEmpty(p, to)) {
 					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
-				} else if (Engine.isEnemyPiece(p, to)) {
+				} else if (this.isEnemyPiece(p, to)) {
 					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
 					stop = true;
 				}
@@ -171,7 +171,7 @@ export class Engine {
 	}
 	getMovesForRook(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = Engine.getColAndRow(i);
+		const [c, r] = this.getColAndRow(i);
 		const directions = [
 			[0, -1],
 			[0, 1],
@@ -185,12 +185,12 @@ export class Engine {
 				step++;
 				const toCol = c + directions[d][0] * step;
 				const toRow = r + directions[d][1] * step;
-				const to = Engine.getIndex(toCol, toRow);
-				if (!Engine.isColOk(toCol) || !Engine.isRowOk(toRow) || Engine.isMyPiece(p, to)) {
+				const to = this.getIndex(toCol, toRow);
+				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 					stop = true;
-				} else if (Engine.isEmpty(p, to)) {
+				} else if (this.isEmpty(p, to)) {
 					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
-				} else if (Engine.isEnemyPiece(p, to)) {
+				} else if (this.isEnemyPiece(p, to)) {
 					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
 					stop = true;
 				}
@@ -200,7 +200,7 @@ export class Engine {
 	}
 	getMovesForQueen(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = Engine.getColAndRow(i);
+		const [c, r] = this.getColAndRow(i);
 		const directions = [
 			[-1, -1],
 			[-1, 0],
@@ -218,12 +218,12 @@ export class Engine {
 				step++;
 				const toCol = c + directions[d][0] * step;
 				const toRow = r + directions[d][1] * step;
-				const to = Engine.getIndex(toCol, toRow);
-				if (!Engine.isColOk(toCol) || !Engine.isRowOk(toRow) || Engine.isMyPiece(p, to)) {
+				const to = this.getIndex(toCol, toRow);
+				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 					stop = true;
-				} else if (Engine.isEmpty(p, to)) {
+				} else if (this.isEmpty(p, to)) {
 					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
-				} else if (Engine.isEnemyPiece(p, to)) {
+				} else if (this.isEnemyPiece(p, to)) {
 					moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
 					stop = true;
 				}
@@ -233,7 +233,7 @@ export class Engine {
 	}
 	getMovesForKing(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = Engine.getColAndRow(i);
+		const [c, r] = this.getColAndRow(i);
 		const directions = [
 			[-1, -1],
 			[-1, 0],
@@ -247,13 +247,13 @@ export class Engine {
 		for (let d = 0; d < directions.length; d++) {
 			const toCol = c + directions[d][0];
 			const toRow = r + directions[d][1];
-			const to = Engine.getIndex(toCol, toRow);
-			if (!Engine.isColOk(toCol) || !Engine.isRowOk(toRow) || Engine.isMyPiece(p, to)) {
+			const to = this.getIndex(toCol, toRow);
+			if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
 				continue;
 			}
-			if (Engine.isEmpty(p, to)) {
+			if (this.isEmpty(p, to)) {
 				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL));
-			} else if (Engine.isEnemyPiece(p, to)) {
+			} else if (this.isEnemyPiece(p, to)) {
 				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE));
 			}
 		}
