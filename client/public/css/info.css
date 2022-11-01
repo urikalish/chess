@@ -70,16 +70,33 @@
 .info-log::-webkit-scrollbar-thumb:hover {
     background-color: #777;
 }
-.info-log-msg {
+.info-log--msg-line {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     margin-top: 0.5rem;
     font-size: 1.6rem;
 }
-.info-log-msg-game-phase {
-    color: #fff;
+.info-log--msg-part {
+    margin-right: 1rem;
+    cursor: default;
 }
-.info-log-msg-move {
+.info-log--msg-line--game-phase {
+}
+.info-log--msg-time {
+    color: var(--color--2);
+}
+.info-log--msg-game-phase-name {
+    color: var(--color--2);
+}
+.info-log--msg-line--move {
+}
+.info-log--msg-move {
     color: #ccc;
+}
+.info-log--msg-move-number {
+    color: #666;
+}
+.info-log--msg-move-capture {
+    color: var(--color--1);
 }

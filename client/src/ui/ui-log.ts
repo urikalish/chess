@@ -5,16 +5,31 @@ import { UiHelper } from './ui-helper';
 export class UiLog {
 	static startTime = 0;
 
+	static getTimeStr() {
+		return `${Helper.getTimeStr(new Date().getTime() - UiLog.startTime)}`;
+	}
+
 	static logGamePhase(msg: string) {
 		const panelElm = UiHelper.getElm('info-log');
 		if (!panelElm) {
 			return;
 		}
-		const msgElm = document.createElement('div');
-		msgElm.classList.add('info-log-msg', 'info-log-msg-game-phase');
-		msgElm.innerText = `${Helper.getTimeStr(new Date().getTime() - UiLog.startTime)} - ${msg}`;
-		msgElm.setAttribute('title', msg);
-		panelElm.appendChild(msgElm);
+
+		const lineElm: HTMLDivElement = document.createElement('div');
+		lineElm.classList.add('info-log--msg-line', 'info-log--msg-line--game-phase');
+
+		// const timeElm = document.createElement('span');
+		// timeElm.classList.add('info-log--msg-part', 'info-log--msg-time');
+		// timeElm.innerText = UiLog.getTimeStr();
+		// lineElm.appendChild(timeElm);
+
+		const phaseNameElm = document.createElement('span');
+		phaseNameElm.classList.add('info-log--msg-part', 'info-log--msg-game-phase-name');
+		phaseNameElm.innerText = msg;
+		lineElm.appendChild(phaseNameElm);
+
+		panelElm.appendChild(lineElm);
+
 		panelElm.scrollTo(0, panelElm.scrollHeight);
 	}
 
@@ -23,16 +38,31 @@ export class UiLog {
 		if (!panelElm) {
 			return;
 		}
-		let msgElm;
 		if (move.armyIndex === 0) {
-			msgElm = document.createElement('div');
-			msgElm.classList.add('info-log-msg', 'info-log-msg-move');
-			msgElm.innerText = `${move.fullMoveNumber}. ${move.name}`;
-			panelElm.appendChild(msgElm);
+			const lineElm: HTMLDivElement = document.createElement('div');
+			lineElm.classList.add('info-log--msg-line', 'info-log--msg-line--move');
+
+			const moveNumElm = document.createElement('span');
+			moveNumElm.innerText = `${String(move.fullMoveNumber)})`;
+			moveNumElm.classList.add('info-log--msg-part', 'info-log--msg-move', 'info-log--msg-move-number');
+			lineElm.appendChild(moveNumElm);
+
+			const whiteMoveElm = document.createElement('span');
+			whiteMoveElm.innerText = move.name;
+			whiteMoveElm.title = UiLog.getTimeStr();
+			whiteMoveElm.classList.add('info-log--msg-part', 'info-log--msg-move', `info-log--msg-move-${move.type.replace('_', '-')}`);
+			lineElm.appendChild(whiteMoveElm);
+
+			panelElm.appendChild(lineElm);
 		} else {
-			const msgElms = panelElm.querySelectorAll('.info-log-msg-move');
-			msgElm = msgElms[msgElms.length - 1];
-			msgElm.innerText += ` ${move.name}`;
+			const lineElms = panelElm.querySelectorAll('.info-log--msg-line--move');
+			const lineElm = lineElms[lineElms.length - 1];
+
+			const blackMoveElm = document.createElement('span');
+			blackMoveElm.innerText = move.name;
+			blackMoveElm.title = UiLog.getTimeStr();
+			blackMoveElm.classList.add('info-log--msg-part', 'info-log--msg-move', `info-log--msg-move-${move.type.replace('_', '-')}`);
+			lineElm.appendChild(blackMoveElm);
 		}
 		panelElm.scrollTo(0, panelElm.scrollHeight);
 	}
