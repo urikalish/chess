@@ -8,26 +8,26 @@ export class Engine {
 	getForwardDirection(armyIndex: number): number {
 		return armyIndex === 0 ? -1 : 1;
 	}
-	getCol(i: number): number {
+	getX(i: number): number {
 		return i % 8;
 	}
-	getRow(i: number): number {
+	getY(i: number): number {
 		return Math.trunc(i / 8);
 	}
-	getColAndRow(i: number): [number, number] {
+	getXAndY(i: number): [number, number] {
 		return [i % 8, Math.trunc(i / 8)];
 	}
 	getFileAndRank(i: number): [string, number] {
 		return [String.fromCharCode(97 + (i % 8)), 8 - Math.trunc(i / 8)];
 	}
-	isColOk(c: number): boolean {
-		return c >= 0 && c <= 7;
+	isXOk(x: number): boolean {
+		return x >= 0 && x <= 7;
 	}
-	isRowOk(r: number): boolean {
-		return r >= 0 && r <= 7;
+	isYOk(y: number): boolean {
+		return y >= 0 && y <= 7;
 	}
-	getIndex(c: number, r: number): number {
-		return r * 8 + c;
+	getIndex(x: number, y: number): number {
+		return y * 8 + x;
 	}
 	isMyPiece(p: Position, i: number): boolean {
 		return !!p.pieceData[i] && (p.pieceData[i] === p.pieceData[i].toUpperCase() ? 0 : 1) === p.activeArmyIndex;
@@ -51,8 +51,8 @@ export class Engine {
 			if (!pd) {
 				continue;
 			}
-			const pieceColorIndex = pd === pd.toUpperCase() ? 0 : 1;
-			if (pieceColorIndex !== p.activeArmyIndex) {
+			const pieceXorIndex = pd === pd.toUpperCase() ? 0 : 1;
+			if (pieceXorIndex !== p.activeArmyIndex) {
 				continue;
 			}
 			moves.push(...this.getMovesForPiece(p, i));
@@ -89,19 +89,19 @@ export class Engine {
 
 	getMovesForPawn(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = this.getColAndRow(i);
+		const [x, y] = this.getXAndY(i);
 		const fw = this.getForwardDirection(p.activeArmyIndex);
 
 		//single step
-		const to = this.getIndex(c, r + fw);
-		if (this.isRowOk(r + fw) && this.isEmpty(p, to)) {
+		const to = this.getIndex(x, y + fw);
+		if (this.isYOk(y + fw) && this.isEmpty(p, to)) {
 			const [toFile, toRank] = this.getFileAndRank(to);
 			moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.NORMAL, `${toFile}${toRank}`));
 		}
 
 		//double step
-		const pawnsStartRow = p.activeArmyIndex === 0 ? 6 : 1;
-		if (this.getRow(i) === pawnsStartRow) {
+		const pawnsStartY = p.activeArmyIndex === 0 ? 6 : 1;
+		if (this.getY(i) === pawnsStartY) {
 			const to = i + 16 * fw;
 			if (this.isEmpty(p, to)) {
 				const [toFile, toRank] = this.getFileAndRank(to);
@@ -111,11 +111,11 @@ export class Engine {
 
 		//captures
 		[-1, 1].forEach(d => {
-			const toCol = c + d;
-			const toRow = r + fw;
-			const to = this.getIndex(toCol, toRow);
+			const toX = x + d;
+			const toY = y + fw;
+			const to = this.getIndex(toX, toY);
 			const [toFile, toRank] = this.getFileAndRank(to);
-			if (this.isColOk(toCol) && this.isRowOk(toRow) && this.isEnemyPiece(p, to)) {
+			if (this.isXOk(toX) && this.isYOk(toY) && this.isEnemyPiece(p, to)) {
 				const [fromFile] = this.getFileAndRank(i);
 				moves.push(new Move(p.fullMoveNumber, p.activeArmyIndex, i, to, MoveType.CAPTURE, `${fromFile}x${toFile}${toRank}`));
 			}
@@ -125,7 +125,7 @@ export class Engine {
 	}
 	getMovesForKnight(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = this.getColAndRow(i);
+		const [x, y] = this.getXAndY(i);
 		const directions = [
 			[-2, -1],
 			[-2, 1],
@@ -137,10 +137,10 @@ export class Engine {
 			[2, 1],
 		];
 		for (let d = 0; d < directions.length; d++) {
-			const toCol = c + directions[d][0];
-			const toRow = r + directions[d][1];
-			const to = this.getIndex(toCol, toRow);
-			if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
+			const toX = x + directions[d][0];
+			const toY = y + directions[d][1];
+			const to = this.getIndex(toX, toY);
+			if (!this.isXOk(toX) || !this.isYOk(toY) || this.isMyPiece(p, to)) {
 				continue;
 			}
 			const [toFile, toRank] = this.getFileAndRank(to);
@@ -154,7 +154,7 @@ export class Engine {
 	}
 	getMovesForBishop(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = this.getColAndRow(i);
+		const [x, y] = this.getXAndY(i);
 		const directions = [
 			[-1, -1],
 			[-1, 1],
@@ -166,10 +166,10 @@ export class Engine {
 			let stop = false;
 			while (!stop) {
 				step++;
-				const toCol = c + directions[d][0] * step;
-				const toRow = r + directions[d][1] * step;
-				const to = this.getIndex(toCol, toRow);
-				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
+				const toX = x + directions[d][0] * step;
+				const toY = y + directions[d][1] * step;
+				const to = this.getIndex(toX, toY);
+				if (!this.isXOk(toX) || !this.isYOk(toY) || this.isMyPiece(p, to)) {
 					stop = true;
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
@@ -186,7 +186,7 @@ export class Engine {
 	}
 	getMovesForRook(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = this.getColAndRow(i);
+		const [x, y] = this.getXAndY(i);
 		const directions = [
 			[0, -1],
 			[0, 1],
@@ -198,10 +198,10 @@ export class Engine {
 			let stop = false;
 			while (!stop) {
 				step++;
-				const toCol = c + directions[d][0] * step;
-				const toRow = r + directions[d][1] * step;
-				const to = this.getIndex(toCol, toRow);
-				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
+				const toX = x + directions[d][0] * step;
+				const toY = y + directions[d][1] * step;
+				const to = this.getIndex(toX, toY);
+				if (!this.isXOk(toX) || !this.isYOk(toY) || this.isMyPiece(p, to)) {
 					stop = true;
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
@@ -218,7 +218,7 @@ export class Engine {
 	}
 	getMovesForQueen(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = this.getColAndRow(i);
+		const [x, y] = this.getXAndY(i);
 		const directions = [
 			[-1, -1],
 			[-1, 0],
@@ -234,10 +234,10 @@ export class Engine {
 			let stop = false;
 			while (!stop) {
 				step++;
-				const toCol = c + directions[d][0] * step;
-				const toRow = r + directions[d][1] * step;
-				const to = this.getIndex(toCol, toRow);
-				if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
+				const toX = x + directions[d][0] * step;
+				const toY = y + directions[d][1] * step;
+				const to = this.getIndex(toX, toY);
+				if (!this.isXOk(toX) || !this.isYOk(toY) || this.isMyPiece(p, to)) {
 					stop = true;
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
@@ -254,7 +254,7 @@ export class Engine {
 	}
 	getMovesForKing(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		const [c, r] = this.getColAndRow(i);
+		const [x, y] = this.getXAndY(i);
 		const directions = [
 			[-1, -1],
 			[-1, 0],
@@ -266,10 +266,10 @@ export class Engine {
 			[1, 1],
 		];
 		for (let d = 0; d < directions.length; d++) {
-			const toCol = c + directions[d][0];
-			const toRow = r + directions[d][1];
-			const to = this.getIndex(toCol, toRow);
-			if (!this.isColOk(toCol) || !this.isRowOk(toRow) || this.isMyPiece(p, to)) {
+			const toX = x + directions[d][0];
+			const toY = y + directions[d][1];
+			const to = this.getIndex(toX, toY);
+			if (!this.isXOk(toX) || !this.isYOk(toY) || this.isMyPiece(p, to)) {
 				continue;
 			}
 			const [toFile, toRank] = this.getFileAndRank(to);
