@@ -4,7 +4,7 @@
     --color--board-frame-shadow: #000;
     --color--board-frame-text: #999;
     --board-gutter-width: 3rem;
-    --board-min-size: 300px;
+    --board-min-size: 43rem;
     width: var(--main-content-height);
     height: var(--main-content-height);
     min-width: var(--board-min-size);

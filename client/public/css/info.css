@@ -1,12 +1,10 @@
 :root {
     --color--info-panel-background: #222;
     --color--info-panel-border: #444;
-    --info-panel-width: 20vw;
-    --info-panel-min-width: 300px;
+    --info-panel-width: 43rem;
 }
 .info-panel {
     width: var(--info-panel-width);
-    min-width: var(--info-panel-min-width);
     height: 100%;
     overflow: auto;
     background-color: var(--color--info-panel-background);
@@ -18,6 +16,7 @@
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto auto 1fr;
     grid-row-gap: 0.5rem;
+    font-size: 1.6rem;
 }
 .info-player-color {
     width: 2.1rem;
@@ -41,7 +40,6 @@
     border-top: 1px solid #999;
     padding-top: 0.5rem;
     word-break: break-all;
-    font-size: 1.4rem;
     color: #ccc;
 }
 .info-log-wrapper {
@@ -78,7 +76,6 @@
     text-overflow: ellipsis;
     overflow: hidden;
     margin-top: 0.5rem;
-    font-size: 1.6rem;
 }
 .info-log--move-part {
     margin-right: 1rem;
