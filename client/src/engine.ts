@@ -3,7 +3,7 @@ import { Position } from './position';
 import { MoveType, PieceType } from './types';
 
 export class Engine {
-	//region Helper methods
+	//region Helper Methods
 
 	getForwardDirection(armyIndex: number): number {
 		return armyIndex === 0 ? -1 : 1;
@@ -44,6 +44,51 @@ export class Engine {
 
 	//endregion
 
+	//region Ambiguous Move Names
+
+	resolveOneAmbiguousMoveName(moves: Move[]) {
+		const files = new Set<string>();
+		const ranks = new Set<number>();
+		moves.forEach(m => {
+			const [f, r] = this.getFileAndRank(m.from);
+			files.add(f);
+			ranks.add(r);
+		});
+		if (files.size === moves.length) {
+			moves.forEach(m => {
+				const [f] = this.getFileAndRank(m.from);
+				m.name = m.name[0] + f + m.name.slice(1, m.name.length);
+			});
+		} else if (ranks.size === moves.length) {
+			moves.forEach(m => {
+				const [, r] = this.getFileAndRank(m.from);
+				m.name = m.name[0] + r + m.name.slice(1, m.name.length);
+			});
+		} else {
+			moves.forEach(m => {
+				const [f, r] = this.getFileAndRank(m.from);
+				m.name = m.name[0] + f + r + m.name.slice(1, m.name.length);
+			});
+		}
+	}
+
+	resolveAllAmbiguousMoveNames(moves: Move[]) {
+		const moveNames = new Set<string>();
+		const ambiguousNames = new Set<string>();
+		moves.forEach(m => {
+			if (!moveNames.has(m.name)) {
+				moveNames.add(m.name);
+			} else {
+				ambiguousNames.add(m.name);
+			}
+		});
+		ambiguousNames.forEach(name => {
+			this.resolveOneAmbiguousMoveName(moves.filter(m => m.name === name));
+		});
+	}
+
+	//endregion
+
 	getAllPossibleMoves(p: Position): Move[] {
 		const moves: Move[] = [];
 		for (let i = 0; i < p.pieceData.length; i++) {
@@ -57,6 +102,7 @@ export class Engine {
 			}
 			moves.push(...this.getMovesForPiece(p, i));
 		}
+		this.resolveAllAmbiguousMoveNames(moves);
 		return moves;
 	}
 
