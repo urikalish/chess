@@ -53,8 +53,8 @@
     inset: 0;
     overflow: auto;
     padding-top: 0.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     align-content: start;
 }
 .info-log::-webkit-scrollbar {
@@ -76,9 +76,10 @@
     text-overflow: ellipsis;
     overflow: hidden;
     margin-top: 0.5rem;
+    margin-right: 1rem;
 }
 .info-log--move-part {
-    margin-right: 1rem;
+    margin-right: 0.5rem;
     cursor: default;
 }
 .info-log--move-number {
@@ -87,6 +88,7 @@
 .info-log--move-name {
     color: #ccc;
 }
-.info-log--move-type-capture {
+.info-log--move-type-capture,
+.info-log--move-type-promotion {
     color: var(--color--1);
 }
