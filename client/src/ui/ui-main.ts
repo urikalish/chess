@@ -20,12 +20,18 @@ export class UiMain {
 	}
 
 	goMove(from: number, to: number) {
-		const move = this.game.move(from, to);
-		if (!move) {
+		const moves = this.game.possibleMoves.filter(m => m.from === from && m.to === to);
+		if (moves.length === 0) {
 			return;
 		}
-		if (move.types.has(MoveType.CAPTURE)) {
-			const elm = UiHelper.querySquareIndexElm(move.to);
+		let move;
+		if (moves.length === 1) {
+			move = this.game.move(moves[0]);
+		} else {
+			move = this.game.move(moves[0]); //todo ask user
+		}
+		if (move && move.types.has(MoveType.CAPTURE)) {
+			const elm = UiHelper.querySquareIndexElm(to);
 			if (elm && elm.dataset && elm?.dataset.name) {
 				this.removePieceElm(elm.dataset.name);
 			}
@@ -75,6 +81,14 @@ export class UiMain {
 		if (elm) {
 			elm.remove();
 		}
+	}
+
+	changePieceName(oldName: string, newName: string) {
+		const pieceElm = UiHelper.queryNameElm(oldName);
+		if (!pieceElm) {
+			return;
+		}
+		pieceElm.setAttribute('data-name', newName);
 	}
 
 	updateBoardUI() {

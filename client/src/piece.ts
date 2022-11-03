@@ -15,4 +15,13 @@ export class Piece {
 		this.typeCased = armyIndex === 0 ? (pieceType.toUpperCase() as PieceTypeCased) : (pieceType.toLowerCase() as PieceTypeCased);
 		this.name = `${this.typeCased}.${Helper.getRandomNumber(111111, 999999)}`;
 	}
+
+	promote(toType: PieceType) {
+		if (this.type !== PieceType.PAWN) {
+			return;
+		}
+		this.type = toType;
+		this.typeCased = this.armyIndex === 0 ? (toType.toUpperCase() as PieceTypeCased) : (toType.toLowerCase() as PieceTypeCased);
+		this.name = this.typeCased + this.name.slice(1, this.name.length);
+	}
 }

@@ -47,11 +47,11 @@ export class Fen {
 			}
 		}
 		parts[0] = pd.join('');
-		parts[1] = ['w', 'b'][position.activeArmyIndex];
+		parts[1] = ['w', 'b'][position.armyIndex];
 		parts[2] = 'KQkq';
 		parts[3] = '-';
 		parts[4] = '0';
-		parts[5] = String(position.fullMoveNumber);
+		parts[5] = String(position.fullMoveNum);
 		return parts.join(' ');
 	}
 }

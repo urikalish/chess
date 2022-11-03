@@ -24,9 +24,9 @@ export class UiLog {
 		return elm;
 	}
 
-	static createMoveNumberElm(fullMoveNumber: number) {
+	static createMoveNumberElm(fullMoveNum: number) {
 		const elm = document.createElement('span');
-		elm.innerText = `${String(fullMoveNumber)})`;
+		elm.innerText = `${String(fullMoveNum)}.`;
 		elm.classList.add(UiLog.classNames.movePart, UiLog.classNames.moveNumber);
 		return elm;
 	}
@@ -49,7 +49,7 @@ export class UiLog {
 		}
 		if (move.armyIndex === 0) {
 			const fullMoveElm = UiLog.createFullMoveElm();
-			const moveNumElm = UiLog.createMoveNumberElm(move.fullMoveNumber);
+			const moveNumElm = UiLog.createMoveNumberElm(move.fullMoveNum);
 			const whiteMoveElm = UiLog.createMoveElm(move.name, move.types);
 			fullMoveElm.appendChild(moveNumElm);
 			fullMoveElm.appendChild(whiteMoveElm);
@@ -61,7 +61,7 @@ export class UiLog {
 				fullMoveElm = fullMoveElms[fullMoveElms.length - 1];
 			} else {
 				fullMoveElm = UiLog.createFullMoveElm();
-				const moveNumElm = UiLog.createMoveNumberElm(move.fullMoveNumber);
+				const moveNumElm = UiLog.createMoveNumberElm(move.fullMoveNum);
 				const whiteMoveElm = UiLog.createMoveElm('...', new Set([]));
 				fullMoveElm.appendChild(moveNumElm);
 				fullMoveElm.appendChild(whiteMoveElm);

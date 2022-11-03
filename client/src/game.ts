@@ -1,4 +1,4 @@
-import { ColorType, PieceType, PlayerType } from './types';
+import { ColorType, MoveType, PieceType, PlayerType } from './types';
 import { Helper } from './helper';
 import { Fen } from './fen';
 import { Player } from './player';
@@ -19,14 +19,25 @@ export class Game {
 	possibleMoves: Move[] = [];
 	startTime = 0;
 	onGameUpdate: (Game) => void;
+	onPieceNameChange: (oldName: string, newName: string) => void;
 	engine = new Engine();
 
-	constructor(player0Type: PlayerType, player0Name: string, player1Type: PlayerType, player1Name: string, fenStr: string, startTime: number, onGameUpdate: (game: Game) => void) {
+	constructor(
+		player0Type: PlayerType,
+		player0Name: string,
+		player1Type: PlayerType,
+		player1Name: string,
+		fenStr: string,
+		startTime: number,
+		onGameUpdate: (game: Game) => void,
+		onPieceNameChange: (oldName: string, newName: string) => void,
+	) {
 		this.players = [new Player(0, player0Type, player0Name), new Player(1, player1Type, player1Name)];
 		this.armies = [new Army(0, player0Type), new Army(1, player1Type)];
 		this.board = new Board();
 		this.startTime = startTime;
 		this.onGameUpdate = onGameUpdate;
+		this.onPieceNameChange = onPieceNameChange;
 		this.applyFen(fenStr);
 	}
 
@@ -67,10 +78,7 @@ export class Game {
 		if (!curPosition) {
 			return null;
 		}
-		const newPosition = new Position(
-			Helper.flipArmyIndex(curPosition.activeArmyIndex),
-			curPosition.activeArmyIndex === 0 ? curPosition.fullMoveNumber : curPosition.fullMoveNumber + 1,
-		);
+		const newPosition = new Position(Helper.flipArmyIndex(curPosition.armyIndex), curPosition.armyIndex === 0 ? curPosition.fullMoveNum : curPosition.fullMoveNum + 1);
 		this.board.squares.forEach(s => {
 			newPosition.pieceData.push(s.piece?.typeCased ?? '');
 		});
@@ -78,20 +86,33 @@ export class Game {
 		return newPosition;
 	}
 
-	move(from: number, to: number): Move | null {
-		const move = this.possibleMoves.find(m => m.from === from && m.to === to);
-		const curPosition = this.getCurPosition();
-		const fromSquare = this.board.squares[from];
-		const movingPiece = fromSquare.piece;
-		const pieceName = movingPiece?.name;
-		if (!move || !curPosition || !pieceName) {
+	move(move): Move | null {
+		if (!move) {
 			return null;
 		}
-		const toSquare = this.board.squares[to];
+		const fromSquare = this.board.squares[move.from];
+		const piece = fromSquare.piece;
+		if (!piece) {
+			return null;
+		}
+		const pieceName = piece.name;
+		if (move.types.has(MoveType.PROMOTION)) {
+			if (move.types.has(MoveType.PROMOTION_TO_QUEEN)) {
+				piece.promote(PieceType.QUEEN);
+			} else if (move.types.has(MoveType.PROMOTION_TO_ROOK)) {
+				piece.promote(PieceType.ROOK);
+			} else if (move.types.has(MoveType.PROMOTION_TO_BISHOP)) {
+				piece.promote(PieceType.BISHOP);
+			} else if (move.types.has(MoveType.PROMOTION_TO_KNIGHT)) {
+				piece.promote(PieceType.KNIGHT);
+			}
+			this.onPieceNameChange(pieceName, piece.name);
+		}
+		const toSquare = this.board.squares[move.to];
 		const targetPiece: Piece | null = toSquare.piece;
 		fromSquare.clearPiece();
 		toSquare.clearPiece();
-		this.board.placePiece(movingPiece, to);
+		this.board.placePiece(piece, move.to);
 		this.moves.push(move);
 		if (targetPiece) {
 			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPiece.name);
