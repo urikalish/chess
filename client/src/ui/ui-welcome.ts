@@ -32,9 +32,9 @@ export class UiWelcome {
 		}
 		(fenTextElm as HTMLInputElement).value = Fen.default;
 		hvhStartButtonElm.addEventListener('click', () => {
-			const fenStr = (fenTextElm as HTMLInputElement).value || Fen.default;
-			const whitePlayerName = (hvhWhiteNameElm as HTMLInputElement).value || 'Player1';
-			const blackPlayerName = (hvhBlackNameElm as HTMLInputElement).value || 'Player2';
+			const fenStr = (fenTextElm as HTMLInputElement).value.trim() || Fen.default;
+			const whitePlayerName = (hvhWhiteNameElm as HTMLInputElement).value.trim() || 'Player1';
+			const blackPlayerName = (hvhBlackNameElm as HTMLInputElement).value.trim() || 'Player2';
 			onWelcomeDone(fenStr, PlayerType.HUMAN, whitePlayerName, PlayerType.HUMAN, blackPlayerName);
 		});
 		hvmPlayerIsWhiteElm.addEventListener('click', () => {
@@ -46,8 +46,8 @@ export class UiWelcome {
 			hvmPlayerIsWhiteElm.classList.remove('selected');
 		});
 		hvmStartButtonElm.addEventListener('click', () => {
-			const fenStr = (fenTextElm as HTMLInputElement).value || Fen.default;
-			const playerName = (hvmPlayerNameElm as HTMLInputElement).value || 'Player1';
+			const fenStr = (fenTextElm as HTMLInputElement).value.trim() || Fen.default;
+			const playerName = (hvmPlayerNameElm as HTMLInputElement).value.trim() || 'Player1';
 			const isPlayerWhite = hvmPlayerIsWhiteElm.classList.contains('selected');
 			if (isPlayerWhite) {
 				onWelcomeDone(fenStr, PlayerType.HUMAN, playerName, PlayerType.COMPUTER, 'Computer');
@@ -56,7 +56,7 @@ export class UiWelcome {
 			}
 		});
 		mvmStartButtonElm.addEventListener('click', () => {
-			const fenStr = (fenTextElm as HTMLInputElement).value || Fen.default;
+			const fenStr = (fenTextElm as HTMLInputElement).value.trim() || Fen.default;
 			onWelcomeDone(fenStr, PlayerType.COMPUTER, 'Computer1', PlayerType.COMPUTER, 'Computer2');
 		});
 	}
