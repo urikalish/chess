@@ -1,8 +1,10 @@
 import { MoveType, PlayerType } from '../types';
+import { Move } from '../move';
 import { Game } from '../game';
 import { UiHelper } from './ui-helper';
 import { UiInit } from './ui-init';
 import { UiFen } from './ui-fen';
+import { UiPromotion } from './ui-promotion';
 
 export class UiMain {
 	game: Game;
@@ -19,37 +21,57 @@ export class UiMain {
 		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
 	}
 
-	goMove(from: number, to: number) {
-		const moves = this.game.possibleMoves.filter(m => m.from === from && m.to === to);
+	goMove(from: number, to: number, onMoveDone: () => void) {
+		const moves: Move[] = this.game.possibleMoves.filter(m => m.from === from && m.to === to);
 		if (moves.length === 0) {
 			return;
 		}
 		let move;
 		if (moves.length === 1) {
 			move = this.game.move(moves[0]);
+			onMoveDone();
 		} else {
-			move = this.game.move(moves[0]); //todo ask user
+			const uiPromotion = new UiPromotion();
+			const p = this.game.getCurPosition();
+			if (!p) {
+				return;
+			}
+			uiPromotion.init(p.armyIndex, (promotionMoveType: MoveType) => {
+				move = this.game.move(moves.find(m => m.types.has(promotionMoveType)));
+				if (move && move.types.has(MoveType.CAPTURE)) {
+					const targetElm = UiHelper.querySquareIndexElm(to);
+					if (targetElm && targetElm.dataset && targetElm?.dataset.name) {
+						this.removePieceElm(targetElm.dataset.name);
+					}
+				}
+				onMoveDone();
+			});
 		}
 		if (move && move.types.has(MoveType.CAPTURE)) {
-			const elm = UiHelper.querySquareIndexElm(to);
-			if (elm && elm.dataset && elm?.dataset.name) {
-				this.removePieceElm(elm.dataset.name);
+			const targetElm = UiHelper.querySquareIndexElm(to);
+			if (targetElm && targetElm.dataset && targetElm?.dataset.name) {
+				this.removePieceElm(targetElm.dataset.name);
 			}
+			onMoveDone();
 		}
 	}
 
 	handleUiSelection(newIndex: number) {
 		if (this.selectedIndex === newIndex) {
 			this.selectedIndex = -1;
+			this.updateUI();
 		} else if (this.game.possibleMoves.find(m => newIndex === m.from)) {
 			this.selectedIndex = newIndex;
+			this.updateUI();
 		} else if (this.game.possibleMoves.find(m => this.selectedIndex === m.from && newIndex === m.to)) {
-			this.goMove(this.selectedIndex, newIndex);
-			this.selectedIndex = -1;
+			this.goMove(this.selectedIndex, newIndex, () => {
+				this.selectedIndex = -1;
+				this.updateUI();
+			});
 		} else {
 			this.selectedIndex = -1;
+			this.updateUI();
 		}
-		this.updateUI();
 	}
 
 	handleClickSquareElm(event: MouseEvent) {

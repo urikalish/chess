@@ -1,0 +1,32 @@
+.promotion-panel {
+    --color--welcome-background: #222;
+    --color--welcome-border-color: #666;
+    --color--welcome-selection-background: #666;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    background-color: var(--color--welcome-background);
+    border: 1px solid var(--color--welcome-border-color);
+    border-radius: 1rem;
+    padding: 3rem;
+    opacity: 0.9;
+    user-select: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.promotion-options {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+}
+.promotion-option {
+    background-size: cover;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+.promotion-option:hover {
+    background-color: #666;
+}

@@ -6,6 +6,7 @@
 @import "./square.css";
 @import "./pieces.css";
 @import "./info.css";
+@import "./promotion.css";
 @import "./footer.css";
 
 :root {
