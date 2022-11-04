@@ -48,14 +48,20 @@ export class Game {
 		return this.moves.length ? this.moves[this.moves.length - 1] : null;
 	}
 
+	pushMove(move: Move) {
+		console.log(move.name);
+		UiLog.logMove(move);
+		this.moves.push(move);
+	}
+
 	pushPosition(position: Position) {
+		console.log(Fen.getFenStr(position));
 		this.positions.push(position);
 		this.possibleMoves = this.engine.getAllPossibleMoves(position);
 	}
 
 	applyFen(fenStr: string) {
 		const position = Fen.parseFenStr(fenStr);
-		console.log(Fen.getFenStr(position));
 		this.pushPosition(position);
 		for (let i = 0; i < 64; i++) {
 			const char = position.pieceData[i];
@@ -104,14 +110,8 @@ export class Game {
 				this.onChangePieceName(pieceName, piece.name);
 			}
 		}
-
-		UiLog.logMove(move);
-		this.moves.push(move);
-
-		const newPosition = move.newPosition;
-		this.pushPosition(newPosition);
-		console.log(Fen.getFenStr(newPosition));
-
+		this.pushMove(move);
+		this.pushPosition(move.newPosition);
 		return move;
 	}
 }
