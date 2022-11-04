@@ -1,11 +1,11 @@
 export class Position {
-	pieceData: string[] = [];
-	armyIndex = 0;
 	fullMoveNum = 1;
+	armyIndex = 0;
+	pieceData: string[] = [];
 
-	constructor(armyIndex: number, fullMoveNum: number) {
-		this.pieceData = [];
-		this.armyIndex = armyIndex;
+	constructor(fullMoveNum: number, armyIndex: number, pieceData: string[]) {
 		this.fullMoveNum = fullMoveNum;
+		this.armyIndex = armyIndex;
+		this.pieceData = pieceData;
 	}
 }

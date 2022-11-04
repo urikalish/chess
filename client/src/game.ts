@@ -78,10 +78,11 @@ export class Game {
 		if (!curPosition) {
 			return null;
 		}
-		const newPosition = new Position(Helper.flipArmyIndex(curPosition.armyIndex), curPosition.armyIndex === 0 ? curPosition.fullMoveNum : curPosition.fullMoveNum + 1);
+		const pd: string[] = [];
 		this.board.squares.forEach(s => {
-			newPosition.pieceData.push(s.piece?.typeCased ?? '');
+			pd.push(s.piece?.typeCased ?? '');
 		});
+		const newPosition = new Position(curPosition.armyIndex === 0 ? curPosition.fullMoveNum : curPosition.fullMoveNum + 1, Helper.flipArmyIndex(curPosition.armyIndex), pd);
 		this.pushPosition(newPosition);
 		return newPosition;
 	}
