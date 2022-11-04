@@ -55,6 +55,7 @@ export class Game {
 
 	applyFen(fenStr: string) {
 		const position = Fen.parseFenStr(fenStr);
+		console.log(Fen.getFenStr(position));
 		this.pushPosition(position);
 		for (let i = 0; i < 64; i++) {
 			const char = position.pieceData[i];
@@ -78,6 +79,7 @@ export class Game {
 			pd.push(s.piece?.typeCased ?? '');
 		});
 		const newPosition = new Position(curPosition.armyIndex === 0 ? curPosition.fullMoveNum : curPosition.fullMoveNum + 1, Helper.flipArmyIndex(curPosition.armyIndex), pd);
+		console.log(Fen.getFenStr(newPosition));
 		this.pushPosition(newPosition);
 		return newPosition;
 	}
