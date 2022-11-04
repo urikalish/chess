@@ -4,9 +4,7 @@ import { MoveType } from '../types';
 export class UiPromotion {
 	init(armyIndex: number, onPromotionDialogDone: (MoveType) => void) {
 		const promotionPanel = UiHelper.getElm('promotion-panel');
-		const promotionOptionWhite = UiHelper.getElm('promotion-options--white');
-		const promotionOptionBlack = UiHelper.getElm('promotion-options--black');
-		if (!promotionPanel || !promotionOptionWhite || !promotionOptionBlack) {
+		if (!promotionPanel) {
 			return;
 		}
 		const promotionOptionElms = UiHelper.queryElms('.promotion-option');
@@ -36,13 +34,8 @@ export class UiPromotion {
 				}
 			});
 		});
-		if (armyIndex === 0) {
-			promotionOptionWhite.classList.remove('none');
-			promotionOptionBlack.classList.add('none');
-		} else {
-			promotionOptionWhite.classList.add('none');
-			promotionOptionBlack.classList.remove('none');
-		}
+		promotionPanel.classList.toggle('promotion-panel--white', armyIndex === 0);
+		promotionPanel.classList.toggle('promotion-panel--black', armyIndex === 1);
 		promotionPanel.classList.remove('none');
 	}
 }

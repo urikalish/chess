@@ -1,12 +1,7 @@
 .promotion-panel {
-    --color--welcome-background: #222;
-    --color--welcome-border-color: #666;
-    --color--welcome-selection-background: #666;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    background-color: var(--color--welcome-background);
-    border: 1px solid var(--color--welcome-border-color);
     border-radius: 1rem;
     padding: 3rem;
     opacity: 0.9;
@@ -16,9 +11,29 @@
     top: 50%;
     transform: translate(-50%, -50%);
 }
+.promotion-panel--white {
+    background-color: #333;
+    border: 1px solid #999;
+}
+.promotion-panel--black {
+    background-color: #ccc;
+    border: 1px solid #666;
+}
 .promotion-options {
     display: grid;
     grid-template-columns: repeat(4, auto);
+}
+.promotion-panel--white > .promotion-options--white {
+    display: grid;
+}
+.promotion-panel--white > .promotion-options--black {
+    display: none;
+}
+.promotion-panel--black > .promotion-options--black {
+    display: grid;
+}
+.promotion-panel--black > .promotion-options--white {
+    display: none;
 }
 .promotion-option {
     background-size: cover;
