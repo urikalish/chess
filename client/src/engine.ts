@@ -51,6 +51,9 @@ export class Engine {
 	isPawn(p: Position, i: number): boolean {
 		return p.pieceData[i].toLowerCase() === PieceType.PAWN;
 	}
+	getCasedPieceType(p: Position, pieceType: PieceType) {
+		return p.armyIndex === 0 ? pieceType.toUpperCase() : pieceType.toLowerCase();
+	}
 
 	//endregion
 
@@ -119,26 +122,36 @@ export class Engine {
 		const moves: Move[] = [];
 		const [x, y] = this.getXAndY(i);
 		const fw = this.getForwardDirection(p.armyIndex);
+		let np;
 
 		//single step
 		const to = this.getIndex(x, y + fw);
 		if (this.isYOk(y + fw) && this.isEmpty(p, to)) {
 			const [toFile, toRank] = this.getFileAndRank(to);
-			if (this.getRank(i) === (p.armyIndex === 0 ? 7 : 2)) {
-				//normal promotion
-				const np = p.createNewPosition();
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_QUEEN]), `${toFile}${toRank}=Q`, p, np));
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_ROOK]), `${toFile}${toRank}=R`, p, np));
-				moves.push(
-					new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_BISHOP]), `${toFile}${toRank}=B`, p, np),
-				);
-				moves.push(
-					new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_KNIGHT]), `${toFile}${toRank}=N`, p, np),
-				);
-			} else {
+			if (this.getRank(i) !== (p.armyIndex === 0 ? 7 : 2)) {
 				//normal
-				const np = p.createNewPosition();
+				np = p.createNextPosition();
+				np.pieceData[i] = '';
+				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`, p, np));
+			} else {
+				//normal promotion
+				np = p.createNextPosition();
+				np.pieceData[i] = '';
+				np.pieceData[to] = this.getCasedPieceType(p, PieceType.QUEEN);
+				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_Q]), `${toFile}${toRank}=Q`, p, np));
+				np = p.createNextPosition();
+				np.pieceData[i] = '';
+				np.pieceData[to] = this.getCasedPieceType(p, PieceType.ROOK);
+				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_R]), `${toFile}${toRank}=R`, p, np));
+				np = p.createNextPosition();
+				np.pieceData[i] = '';
+				np.pieceData[to] = this.getCasedPieceType(p, PieceType.BISHOP);
+				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_B]), `${toFile}${toRank}=B`, p, np));
+				np = p.createNextPosition();
+				np.pieceData[i] = '';
+				np.pieceData[to] = this.getCasedPieceType(p, PieceType.KNIGHT);
+				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_N]), `${toFile}${toRank}=N`, p, np));
 			}
 		}
 
@@ -148,8 +161,10 @@ export class Engine {
 			const to = i + 16 * fw;
 			if (this.isEmpty(p, to) && this.isEmpty(p, onTheWay)) {
 				const [toFile, toRank] = this.getFileAndRank(to);
-				const np = p.createNewPosition();
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_DOUBLE_START]), `${toFile}${toRank}`, p, np));
+				np = p.createNextPosition();
+				np.pieceData[i] = '';
+				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_BIG_START]), `${toFile}${toRank}`, p, np));
 			}
 		}
 
@@ -161,61 +176,74 @@ export class Engine {
 			const [toFile, toRank] = this.getFileAndRank(to);
 			if (this.isXOk(toX) && this.isYOk(toY) && this.isEnemyPiece(p, to)) {
 				const [fromFile] = this.getFileAndRank(i);
-				if (this.getRank(i) === (p.armyIndex === 0 ? 7 : 2)) {
+				if (this.getRank(i) !== (p.armyIndex === 0 ? 7 : 2)) {
+					//capture
+					np = p.createNextPosition();
+					np.pieceData[i] = '';
+					np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+					moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, p, np));
+				} else {
 					//capture with promotion
-					const np = p.createNewPosition();
+					np = p.createNextPosition();
+					np.pieceData[i] = '';
+					np.pieceData[to] = this.getCasedPieceType(p, PieceType.QUEEN);
 					moves.push(
 						new Move(
 							p.fullMoveNum,
 							p.armyIndex,
 							i,
 							to,
-							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_QUEEN]),
+							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_Q]),
 							`${fromFile}x${toFile}${toRank}=Q`,
 							p,
 							np,
 						),
 					);
+					np = p.createNextPosition();
+					np.pieceData[i] = '';
+					np.pieceData[to] = this.getCasedPieceType(p, PieceType.ROOK);
 					moves.push(
 						new Move(
 							p.fullMoveNum,
 							p.armyIndex,
 							i,
 							to,
-							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_ROOK]),
+							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_R]),
 							`${fromFile}x${toFile}${toRank}=R`,
 							p,
 							np,
 						),
 					);
+					np = p.createNextPosition();
+					np.pieceData[i] = '';
+					np.pieceData[to] = this.getCasedPieceType(p, PieceType.BISHOP);
 					moves.push(
 						new Move(
 							p.fullMoveNum,
 							p.armyIndex,
 							i,
 							to,
-							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_BISHOP]),
+							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_B]),
 							`${fromFile}x${toFile}${toRank}=B`,
 							p,
 							np,
 						),
 					);
+					np = p.createNextPosition();
+					np.pieceData[i] = '';
+					np.pieceData[to] = this.getCasedPieceType(p, PieceType.KNIGHT);
 					moves.push(
 						new Move(
 							p.fullMoveNum,
 							p.armyIndex,
 							i,
 							to,
-							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_KNIGHT]),
+							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_N]),
 							`${fromFile}x${toFile}${toRank}=N`,
 							p,
 							np,
 						),
 					);
-				} else {
-					//capture
-					const np = p.createNewPosition();
-					moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, p, np));
 				}
 			}
 		});
@@ -241,10 +269,14 @@ export class Engine {
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
 					if (this.isEmpty(p, to)) {
-						const np = p.createNewPosition();
+						const np = p.createNextPosition();
+						np.pieceData[i] = '';
+						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 						moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${pieceType.toUpperCase()}${toFile}${toRank}`, p, np));
 					} else if (this.isEnemyPiece(p, to)) {
-						const np = p.createNewPosition();
+						const np = p.createNextPosition();
+						np.pieceData[i] = '';
+						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 						moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${pieceType.toUpperCase()}x${toFile}${toRank}`, p, np));
 						stop = true;
 					}

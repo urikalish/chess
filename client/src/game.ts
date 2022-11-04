@@ -106,13 +106,13 @@ export class Game {
 		}
 		this.board.placePiece(piece, move.to);
 		if (move.types.has(MoveType.PROMOTION)) {
-			if (move.types.has(MoveType.PROMOTION_TO_QUEEN)) {
+			if (move.types.has(MoveType.PROMOTION_TO_Q)) {
 				piece.promote(PieceType.QUEEN);
-			} else if (move.types.has(MoveType.PROMOTION_TO_ROOK)) {
+			} else if (move.types.has(MoveType.PROMOTION_TO_R)) {
 				piece.promote(PieceType.ROOK);
-			} else if (move.types.has(MoveType.PROMOTION_TO_BISHOP)) {
+			} else if (move.types.has(MoveType.PROMOTION_TO_B)) {
 				piece.promote(PieceType.BISHOP);
-			} else if (move.types.has(MoveType.PROMOTION_TO_KNIGHT)) {
+			} else if (move.types.has(MoveType.PROMOTION_TO_N)) {
 				piece.promote(PieceType.KNIGHT);
 			}
 			if (this.onChangePieceName) {
