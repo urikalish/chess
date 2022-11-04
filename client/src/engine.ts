@@ -162,8 +162,9 @@ export class Engine {
 
 		//double step
 		if (this.getRank(i) === (p.armyIndex === 0 ? 2 : 7)) {
+			const onTheWay = i + 8 * fw;
 			const to = i + 16 * fw;
-			if (this.isEmpty(p, to)) {
+			if (this.isEmpty(p, to) && this.isEmpty(p, onTheWay)) {
 				const [toFile, toRank] = this.getFileAndRank(to);
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_DOUBLE_START]), `${toFile}${toRank}`));
 			}
