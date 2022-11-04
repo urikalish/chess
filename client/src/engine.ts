@@ -133,25 +133,33 @@ export class Engine {
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`, p, np));
+				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`, p.clone(), np));
 			} else {
 				//normal promotion
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.QUEEN);
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_Q]), `${toFile}${toRank}=Q`, p, np));
+				moves.push(
+					new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_Q]), `${toFile}${toRank}=Q`, p.clone(), np),
+				);
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.ROOK);
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_R]), `${toFile}${toRank}=R`, p, np));
+				moves.push(
+					new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_R]), `${toFile}${toRank}=R`, p.clone(), np),
+				);
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.BISHOP);
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_B]), `${toFile}${toRank}=B`, p, np));
+				moves.push(
+					new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_B]), `${toFile}${toRank}=B`, p.clone(), np),
+				);
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.KNIGHT);
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_N]), `${toFile}${toRank}=N`, p, np));
+				moves.push(
+					new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_N]), `${toFile}${toRank}=N`, p.clone(), np),
+				);
 			}
 		}
 
@@ -164,7 +172,7 @@ export class Engine {
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_BIG_START]), `${toFile}${toRank}`, p, np));
+				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_BIG_START]), `${toFile}${toRank}`, p.clone(), np));
 			}
 		}
 
@@ -181,7 +189,7 @@ export class Engine {
 					np = p.createNextPosition();
 					np.pieceData[i] = '';
 					np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
-					moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, p, np));
+					moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, p.clone(), np));
 				} else {
 					//capture with promotion
 					np = p.createNextPosition();
@@ -195,7 +203,7 @@ export class Engine {
 							to,
 							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_Q]),
 							`${fromFile}x${toFile}${toRank}=Q`,
-							p,
+							p.clone(),
 							np,
 						),
 					);
@@ -210,7 +218,7 @@ export class Engine {
 							to,
 							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_R]),
 							`${fromFile}x${toFile}${toRank}=R`,
-							p,
+							p.clone(),
 							np,
 						),
 					);
@@ -225,7 +233,7 @@ export class Engine {
 							to,
 							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_B]),
 							`${fromFile}x${toFile}${toRank}=B`,
-							p,
+							p.clone(),
 							np,
 						),
 					);
@@ -240,7 +248,7 @@ export class Engine {
 							to,
 							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_N]),
 							`${fromFile}x${toFile}${toRank}=N`,
-							p,
+							p.clone(),
 							np,
 						),
 					);
