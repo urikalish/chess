@@ -22,21 +22,21 @@ export class UiMain {
 	}
 
 	goMove(from: number, to: number, onMoveDone: () => void) {
+		const p = this.game.getCurPosition();
 		const moves: Move[] = this.game.possibleMoves.filter(m => m.from === from && m.to === to);
-		if (moves.length === 0) {
+		if (!p || moves.length === 0) {
 			return;
 		}
 		let move;
 		const targetElmName = UiHelper.querySquareIndexElm(to)?.dataset.name || '';
 		if (moves.length === 1) {
 			move = this.game.move(moves[0]);
+			if (move && move.types.has(MoveType.CAPTURE) && targetElmName) {
+				this.removePieceElm(targetElmName);
+			}
 			onMoveDone();
 		} else {
 			const uiPromotion = new UiPromotion();
-			const p = this.game.getCurPosition();
-			if (!p) {
-				return;
-			}
 			uiPromotion.init(p.armyIndex, (promotionMoveType: MoveType) => {
 				move = this.game.move(moves.find(m => m.types.has(promotionMoveType)));
 				if (move && move.types.has(MoveType.CAPTURE) && targetElmName) {
@@ -44,10 +44,6 @@ export class UiMain {
 				}
 				onMoveDone();
 			});
-		}
-		if (move && move.types.has(MoveType.CAPTURE) && targetElmName) {
-			this.removePieceElm(targetElmName);
-			onMoveDone();
 		}
 	}
 
