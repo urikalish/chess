@@ -11,10 +11,6 @@ export class Position {
 		this.pieceData = pieceData;
 	}
 
-	clone() {
-		return new Position(this.fullMoveNum, this.armyIndex, [...this.pieceData]);
-	}
-
 	createNextPosition() {
 		return new Position(this.armyIndex === 0 ? this.fullMoveNum : this.fullMoveNum + 1, Helper.flipArmyIndex(this.armyIndex), [...this.pieceData]);
 	}

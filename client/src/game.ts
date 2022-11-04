@@ -7,7 +7,7 @@ import { Board } from './board';
 import { Move } from './move';
 import { Position } from './position';
 import { UiLog } from './ui/ui-log';
-import { Engine } from './engine';
+import { Mover } from './mover';
 
 export class Game {
 	players: Player[];
@@ -19,7 +19,7 @@ export class Game {
 	startTime = 0;
 	onRemovePiece: (pieceName: string) => void | null;
 	onChangePieceName: (oldName: string, newName: string) => void | null;
-	engine = new Engine();
+	mover = new Mover();
 
 	constructor(
 		player0Type: PlayerType,
@@ -57,7 +57,7 @@ export class Game {
 	pushPosition(position: Position) {
 		console.log(Fen.getFenStr(position));
 		this.positions.push(position);
-		this.possibleMoves = this.engine.getAllPossibleMoves(position);
+		this.possibleMoves = this.mover.getAllPossibleMoves(position);
 	}
 
 	applyFen(fenStr: string) {
