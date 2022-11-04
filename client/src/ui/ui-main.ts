@@ -27,6 +27,7 @@ export class UiMain {
 			return;
 		}
 		let move;
+		const targetElm = UiHelper.querySquareIndexElm(to);
 		if (moves.length === 1) {
 			move = this.game.move(moves[0]);
 			onMoveDone();
@@ -39,7 +40,6 @@ export class UiMain {
 			uiPromotion.init(p.armyIndex, (promotionMoveType: MoveType) => {
 				move = this.game.move(moves.find(m => m.types.has(promotionMoveType)));
 				if (move && move.types.has(MoveType.CAPTURE)) {
-					const targetElm = UiHelper.querySquareIndexElm(to);
 					if (targetElm && targetElm.dataset && targetElm?.dataset.name) {
 						this.removePieceElm(targetElm.dataset.name);
 					}
@@ -48,7 +48,6 @@ export class UiMain {
 			});
 		}
 		if (move && move.types.has(MoveType.CAPTURE)) {
-			const targetElm = UiHelper.querySquareIndexElm(to);
 			if (targetElm && targetElm.dataset && targetElm?.dataset.name) {
 				this.removePieceElm(targetElm.dataset.name);
 			}
