@@ -24,4 +24,68 @@ export class Piece {
 		this.typeCased = this.armyIndex === 0 ? (toType.toUpperCase() as PieceTypeCased) : (toType.toLowerCase() as PieceTypeCased);
 		this.name = this.typeCased + this.name.slice(1, this.name.length);
 	}
+
+	static isLongRange(pieceType: PieceType) {
+		return [PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP].includes(pieceType);
+	}
+
+	static getDirections(pieceType) {
+		switch (pieceType) {
+			case PieceType.KNIGHT: {
+				return [
+					[-2, -1],
+					[-2, 1],
+					[-1, -2],
+					[-1, 2],
+					[1, -2],
+					[1, 2],
+					[2, -1],
+					[2, 1],
+				];
+			}
+			case PieceType.BISHOP: {
+				return [
+					[-1, -1],
+					[-1, 1],
+					[1, -1],
+					[1, 1],
+				];
+			}
+			case PieceType.ROOK: {
+				return [
+					[0, -1],
+					[0, 1],
+					[-1, 0],
+					[1, 0],
+				];
+			}
+			case PieceType.QUEEN: {
+				return [
+					[-1, -1],
+					[-1, 0],
+					[-1, 1],
+					[0, -1],
+					[0, 1],
+					[1, -1],
+					[1, 0],
+					[1, 1],
+				];
+			}
+			case PieceType.KING: {
+				return [
+					[-1, -1],
+					[-1, 0],
+					[-1, 1],
+					[0, -1],
+					[0, 1],
+					[1, -1],
+					[1, 0],
+					[1, 1],
+				];
+			}
+			default: {
+				return [];
+			}
+		}
+	}
 }

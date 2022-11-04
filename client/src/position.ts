@@ -1,3 +1,5 @@
+import { Helper } from './helper';
+
 export class Position {
 	fullMoveNum = 1;
 	armyIndex = 0;
@@ -7,5 +9,9 @@ export class Position {
 		this.fullMoveNum = fullMoveNum;
 		this.armyIndex = armyIndex;
 		this.pieceData = pieceData;
+	}
+
+	createNewPosition() {
+		return new Position(this.armyIndex === 0 ? this.fullMoveNum : this.fullMoveNum + 1, Helper.flipArmyIndex(this.armyIndex), [...this.pieceData]);
 	}
 }
