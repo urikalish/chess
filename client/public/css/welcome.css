@@ -1,7 +1,6 @@
 .welcome-panel {
     --color--welcome-background: #222;
     --color--welcome-border-color: #666;
-    --color--welcome-selection-background: #666;
     display: grid;
     grid-template-columns: 26rem 29rem 29rem;
     grid-template-rows: auto auto;
