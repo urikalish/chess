@@ -98,12 +98,7 @@ export class Engine {
 	getAllPossibleMoves(p: Position): Move[] {
 		const moves: Move[] = [];
 		for (let i = 0; i < p.pieceData.length; i++) {
-			const pd = p.pieceData[i];
-			if (!pd) {
-				continue;
-			}
-			const pieceXorIndex = pd === pd.toUpperCase() ? 0 : 1;
-			if (pieceXorIndex !== p.armyIndex) {
+			if (!p.pieceData[i] || this.isEnemyPiece(p, i)) {
 				continue;
 			}
 			moves.push(...this.getMovesForPiece(p, i));
