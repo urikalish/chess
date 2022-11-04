@@ -69,21 +69,6 @@ export class Game {
 		}
 	}
 
-	updatePosition(): Position | null {
-		const curPosition = this.getCurPosition();
-		if (!curPosition) {
-			return null;
-		}
-		const pd: string[] = [];
-		this.board.squares.forEach(s => {
-			pd.push(s.piece?.typeCased ?? '');
-		});
-		const newPosition = new Position(curPosition.armyIndex === 0 ? curPosition.fullMoveNum : curPosition.fullMoveNum + 1, Helper.flipArmyIndex(curPosition.armyIndex), pd);
-		console.log(Fen.getFenStr(newPosition));
-		this.pushPosition(newPosition);
-		return newPosition;
-	}
-
 	move(move): Move | null {
 		if (!move) {
 			return null;
@@ -119,9 +104,14 @@ export class Game {
 				this.onChangePieceName(pieceName, piece.name);
 			}
 		}
+
 		UiLog.logMove(move);
 		this.moves.push(move);
-		this.updatePosition();
+
+		const newPosition = move.newPosition;
+		this.pushPosition(newPosition);
+		console.log(Fen.getFenStr(newPosition));
+
 		return move;
 	}
 }
