@@ -94,6 +94,15 @@ export class Game {
 		if (!piece) {
 			return null;
 		}
+		fromSquare.clearPiece();
+		toSquare.clearPiece();
+		if (targetPieceName) {
+			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
+			if (this.onRemovePiece) {
+				this.onRemovePiece(targetPieceName);
+			}
+		}
+		this.board.placePiece(piece, move.to);
 		if (move.types.has(MoveType.PROMOTION)) {
 			if (move.types.has(MoveType.PROMOTION_TO_QUEEN)) {
 				piece.promote(PieceType.QUEEN);
@@ -108,17 +117,8 @@ export class Game {
 				this.onChangePieceName(pieceName, piece.name);
 			}
 		}
-		fromSquare.clearPiece();
-		toSquare.clearPiece();
-		this.board.placePiece(piece, move.to);
-		this.moves.push(move);
-		if (targetPieceName) {
-			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
-			if (this.onRemovePiece) {
-				this.onRemovePiece(targetPieceName);
-			}
-		}
 		UiLog.logMove(move);
+		this.moves.push(move);
 		this.updatePosition();
 		return move;
 	}
