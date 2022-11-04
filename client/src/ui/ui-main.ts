@@ -21,28 +21,23 @@ export class UiMain {
 		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
 	}
 
-	goMove(from: number, to: number, onMoveDone: () => void) {
-		const p = this.game.getCurPosition();
+	goMove(from: number, to: number, onMoveDone: (Move, string) => void) {
 		const moves: Move[] = this.game.possibleMoves.filter(m => m.from === from && m.to === to);
-		if (!p || moves.length === 0) {
+		if (moves.length === 0) {
 			return;
 		}
 		let move;
 		const targetElmName = UiHelper.querySquareIndexElm(to)?.dataset.name || '';
 		if (moves.length === 1) {
 			move = this.game.move(moves[0]);
-			if (move && move.types.has(MoveType.CAPTURE) && targetElmName) {
-				this.removePieceElm(targetElmName);
-			}
-			onMoveDone();
+			onMoveDone(move, targetElmName);
 		} else {
+			//promotion
 			const uiPromotion = new UiPromotion();
-			uiPromotion.init(p.armyIndex, (promotionMoveType: MoveType) => {
+			const p = this.game.getCurPosition();
+			uiPromotion.init(p?.armyIndex || 0, (promotionMoveType: MoveType) => {
 				move = this.game.move(moves.find(m => m.types.has(promotionMoveType)));
-				if (move && move.types.has(MoveType.CAPTURE) && targetElmName) {
-					this.removePieceElm(targetElmName);
-				}
-				onMoveDone();
+				onMoveDone(move, targetElmName);
 			});
 		}
 	}
@@ -55,7 +50,10 @@ export class UiMain {
 			this.selectedIndex = newIndex;
 			this.updateUI();
 		} else if (this.game.possibleMoves.find(m => this.selectedIndex === m.from && newIndex === m.to)) {
-			this.goMove(this.selectedIndex, newIndex, () => {
+			this.goMove(this.selectedIndex, newIndex, (move: Move, targetElmName: string) => {
+				if (move && move.types.has(MoveType.CAPTURE) && targetElmName) {
+					this.removePieceElm(targetElmName);
+				}
 				this.selectedIndex = -1;
 				this.updateUI();
 			});
