@@ -7,28 +7,24 @@ let game: Game | null = null;
 let uiMain: UiMain | null = null;
 
 function init() {
-	const uiWelcome = new UiWelcome();
-	uiWelcome.init(handleWelcomeDone);
+	UiWelcome.showDialog((fenStr: string, player0Type, player0Name, player1Type, player1Name) => {
+		const startTime = new Date().getTime();
+		UiLog.startTime = startTime;
+		game = new Game(player0Type, player0Name, player1Type, player1Name, fenStr, startTime, handleRemovePiece, handleChangePieceName);
+		uiMain = new UiMain(game);
+		uiMain.createGameUI();
+	});
 }
 
-function handleWelcomeDone(fenStr: string, player0Type, player0Name, player1Type, player1Name) {
-	const startTime = new Date().getTime();
-	UiLog.startTime = startTime;
-	game = new Game(player0Type, player0Name, player1Type, player1Name, fenStr, startTime, handleGameUpdate, handlePieceNameChange);
-	uiMain = new UiMain(game);
-	uiMain.createGameUI();
-	game.start();
-}
-
-function handleGameUpdate() {
+function handleRemovePiece(pieceName: string) {
 	if (uiMain) {
-		uiMain.updateUI();
+		uiMain.removePieceElm(pieceName);
 	}
 }
 
-function handlePieceNameChange(oldName: string, newName: string) {
+function handleChangePieceName(oldName: string, newName: string) {
 	if (uiMain) {
-		uiMain.changePieceName(oldName, newName);
+		uiMain.changePieceElmName(oldName, newName);
 	}
 }
 

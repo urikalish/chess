@@ -2,7 +2,7 @@ import { UiHelper } from './ui-helper';
 import { MoveType } from '../types';
 
 export class UiPromotion {
-	init(armyIndex: number, onPromotionDialogDone: (MoveType) => void) {
+	static showDialog(armyIndex: number, onPromotionDialogDone: (MoveType) => void) {
 		const promotionPanel = UiHelper.getElm('promotion-panel');
 		if (!promotionPanel) {
 			return;

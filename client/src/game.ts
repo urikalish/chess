@@ -2,7 +2,6 @@ import { ColorType, MoveType, PieceType, PlayerType } from './types';
 import { Helper } from './helper';
 import { Fen } from './fen';
 import { Player } from './player';
-import { Piece } from './piece';
 import { Army } from './army';
 import { Board } from './board';
 import { Move } from './move';
@@ -18,8 +17,8 @@ export class Game {
 	moves: Move[] = [];
 	possibleMoves: Move[] = [];
 	startTime = 0;
-	onGameUpdate: (Game) => void;
-	onPieceNameChange: (oldName: string, newName: string) => void;
+	onRemovePiece: (pieceName: string) => void | null;
+	onChangePieceName: (oldName: string, newName: string) => void | null;
 	engine = new Engine();
 
 	constructor(
@@ -29,20 +28,16 @@ export class Game {
 		player1Name: string,
 		fenStr: string,
 		startTime: number,
-		onGameUpdate: (game: Game) => void,
-		onPieceNameChange: (oldName: string, newName: string) => void,
+		onRemovePiece: (pieceName: string) => void,
+		onChangePieceName: (oldName: string, newName: string) => void,
 	) {
 		this.players = [new Player(0, player0Type, player0Name), new Player(1, player1Type, player1Name)];
 		this.armies = [new Army(0, player0Type), new Army(1, player1Type)];
 		this.board = new Board();
 		this.startTime = startTime;
-		this.onGameUpdate = onGameUpdate;
-		this.onPieceNameChange = onPieceNameChange;
+		this.onRemovePiece = onRemovePiece;
+		this.onChangePieceName = onChangePieceName;
 		this.applyFen(fenStr);
-	}
-
-	start() {
-		this.onGameUpdate(this);
 	}
 
 	getCurPosition(): Position | null {
@@ -92,11 +87,13 @@ export class Game {
 			return null;
 		}
 		const fromSquare = this.board.squares[move.from];
+		const toSquare = this.board.squares[move.to];
 		const piece = fromSquare.piece;
+		const pieceName = piece?.name || '';
+		const targetPieceName = this.board.squares[move.to].piece?.name || '';
 		if (!piece) {
 			return null;
 		}
-		const pieceName = piece.name;
 		if (move.types.has(MoveType.PROMOTION)) {
 			if (move.types.has(MoveType.PROMOTION_TO_QUEEN)) {
 				piece.promote(PieceType.QUEEN);
@@ -107,16 +104,19 @@ export class Game {
 			} else if (move.types.has(MoveType.PROMOTION_TO_KNIGHT)) {
 				piece.promote(PieceType.KNIGHT);
 			}
-			this.onPieceNameChange(pieceName, piece.name);
+			if (this.onChangePieceName) {
+				this.onChangePieceName(pieceName, piece.name);
+			}
 		}
-		const toSquare = this.board.squares[move.to];
-		const targetPiece: Piece | null = toSquare.piece;
 		fromSquare.clearPiece();
 		toSquare.clearPiece();
 		this.board.placePiece(piece, move.to);
 		this.moves.push(move);
-		if (targetPiece) {
-			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPiece.name);
+		if (targetPieceName) {
+			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
+			if (this.onRemovePiece) {
+				this.onRemovePiece(targetPieceName);
+			}
 		}
 		UiLog.logMove(move);
 		this.updatePosition();

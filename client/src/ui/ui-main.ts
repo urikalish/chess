@@ -15,93 +15,6 @@ export class UiMain {
 		this.game = game;
 	}
 
-	createGameUI() {
-		this.isBoardFlipped = this.game.players[0].type === PlayerType.COMPUTER && this.game.players[1].type === PlayerType.HUMAN;
-		const uiInit = new UiInit();
-		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
-	}
-
-	goMove(from: number, to: number, onMoveDone: (Move, string) => void) {
-		const moves: Move[] = this.game.possibleMoves.filter(m => m.from === from && m.to === to);
-		if (moves.length === 0) {
-			return;
-		}
-		let move;
-		const targetElmName = UiHelper.querySquareIndexElm(to)?.dataset.name || '';
-		if (moves.length === 1) {
-			move = this.game.move(moves[0]);
-			onMoveDone(move, targetElmName);
-		} else {
-			//promotion
-			const uiPromotion = new UiPromotion();
-			const p = this.game.getCurPosition();
-			uiPromotion.init(p?.armyIndex || 0, (promotionMoveType: MoveType) => {
-				move = this.game.move(moves.find(m => m.types.has(promotionMoveType)));
-				onMoveDone(move, targetElmName);
-			});
-		}
-	}
-
-	handleUiSelection(newIndex: number) {
-		if (this.selectedIndex === newIndex) {
-			this.selectedIndex = -1;
-			this.updateUI();
-		} else if (this.game.possibleMoves.find(m => newIndex === m.from)) {
-			this.selectedIndex = newIndex;
-			this.updateUI();
-		} else if (this.game.possibleMoves.find(m => this.selectedIndex === m.from && newIndex === m.to)) {
-			this.goMove(this.selectedIndex, newIndex, (move: Move, targetElmName: string) => {
-				if (move && move.types.has(MoveType.CAPTURE) && targetElmName) {
-					this.removePieceElm(targetElmName);
-				}
-				this.selectedIndex = -1;
-				this.updateUI();
-			});
-		} else {
-			this.selectedIndex = -1;
-			this.updateUI();
-		}
-	}
-
-	handleClickSquareElm(event: MouseEvent) {
-		if (!event.target) {
-			return;
-		}
-		const elm = event.target as HTMLDivElement;
-		if (elm) {
-			this.handleUiSelection(Number(elm.dataset.index));
-		} else {
-			this.handleUiSelection(-1);
-		}
-	}
-
-	handleClickPieceElm(event: MouseEvent) {
-		if (!event.target) {
-			return;
-		}
-		const elm = event.target as HTMLDivElement;
-		if (elm) {
-			this.handleUiSelection(Number(elm.dataset.squareIndex));
-		} else {
-			this.handleUiSelection(-1);
-		}
-	}
-
-	removePieceElm(pieceNme: string) {
-		const elm = UiHelper.queryNameElm(pieceNme);
-		if (elm) {
-			elm.remove();
-		}
-	}
-
-	changePieceName(oldName: string, newName: string) {
-		const pieceElm = UiHelper.queryNameElm(oldName);
-		if (!pieceElm) {
-			return;
-		}
-		pieceElm.setAttribute('data-name', newName);
-	}
-
 	updateBoardUI() {
 		for (let uiIndex = 0; uiIndex < 64; uiIndex++) {
 			const squareElm = UiHelper.queryUiIndexElm(uiIndex);
@@ -158,5 +71,77 @@ export class UiMain {
 	updateUI() {
 		this.updateBoardUI();
 		UiFen.updateFenUI(this.game.getCurPosition());
+	}
+
+	createGameUI() {
+		this.isBoardFlipped = this.game.players[0].type === PlayerType.COMPUTER && this.game.players[1].type === PlayerType.HUMAN;
+		const uiInit = new UiInit();
+		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
+		this.updateUI();
+	}
+
+	removePieceElm(pieceNme: string) {
+		const elm = UiHelper.queryNameElm(pieceNme);
+		if (elm) {
+			elm.remove();
+		}
+	}
+
+	changePieceElmName(oldName: string, newName: string) {
+		const pieceElm = UiHelper.queryNameElm(oldName);
+		if (!pieceElm) {
+			return;
+		}
+		pieceElm.setAttribute('data-name', newName);
+	}
+
+	handleUiSelection(newIndex: number) {
+		if (this.selectedIndex === newIndex) {
+			this.selectedIndex = -1;
+			this.updateUI();
+		} else if (this.game.possibleMoves.find(m => newIndex === m.from)) {
+			this.selectedIndex = newIndex;
+			this.updateUI();
+		} else if (this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === newIndex)) {
+			const moves: Move[] = this.game.possibleMoves.filter(m => m.from === this.selectedIndex && m.to === newIndex);
+			if (moves.length === 1) {
+				this.game.move(moves[0]);
+				this.selectedIndex = -1;
+				this.updateUI();
+			} else if (moves.length === 4 && moves.every(m => m.types.has(MoveType.PROMOTION))) {
+				UiPromotion.showDialog(this.game.getCurPosition()?.armyIndex || 0, (promotionMoveType: MoveType) => {
+					this.game.move(moves.find(m => m.types.has(promotionMoveType)));
+					this.selectedIndex = -1;
+					this.updateUI();
+				});
+			}
+		} else {
+			this.selectedIndex = -1;
+			this.updateUI();
+		}
+	}
+
+	handleClickSquareElm(event: MouseEvent) {
+		if (!event.target) {
+			return;
+		}
+		const elm = event.target as HTMLDivElement;
+		if (elm) {
+			this.handleUiSelection(Number(elm.dataset.index));
+		} else {
+			this.handleUiSelection(-1);
+		}
+	}
+
+	handleClickPieceElm(event: MouseEvent) {
+		if (!event.target) {
+			return;
+		}
+		const elm = event.target as HTMLDivElement;
+		if (elm) {
+			this.handleUiSelection(Number(elm.dataset.squareIndex));
+		} else {
+			this.handleUiSelection(-1);
+		}
 	}
 }
