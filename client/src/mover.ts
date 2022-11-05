@@ -54,6 +54,13 @@ export class Mover {
 	getCasedPieceType(p: Position, pieceType: PieceType) {
 		return p.armyIndex === 0 ? pieceType.toUpperCase() : pieceType.toLowerCase();
 	}
+	getPromotionMoveType(pieceType: PieceType): MoveType {
+		if (pieceType === PieceType.QUEEN) return MoveType.PROMOTION_TO_Q;
+		if (pieceType === PieceType.ROOK) return MoveType.PROMOTION_TO_R;
+		if (pieceType === PieceType.BISHOP) return MoveType.PROMOTION_TO_B;
+		if (pieceType === PieceType.KNIGHT) return MoveType.PROMOTION_TO_N;
+		return MoveType.NA;
+	}
 
 	//endregion
 
@@ -136,27 +143,25 @@ export class Mover {
 				np.halfMoveClock = 0;
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`, p, np));
 			} else {
-				//normal promotion
-				np = p.createNextPosition();
-				np.pieceData[i] = '';
-				np.pieceData[to] = this.getCasedPieceType(p, PieceType.QUEEN);
-				np.halfMoveClock = 0;
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_Q]), `${toFile}${toRank}=Q`, p, np));
-				np = p.createNextPosition();
-				np.pieceData[i] = '';
-				np.pieceData[to] = this.getCasedPieceType(p, PieceType.ROOK);
-				np.halfMoveClock = 0;
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_R]), `${toFile}${toRank}=R`, p, np));
-				np = p.createNextPosition();
-				np.pieceData[i] = '';
-				np.pieceData[to] = this.getCasedPieceType(p, PieceType.BISHOP);
-				np.halfMoveClock = 0;
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_B]), `${toFile}${toRank}=B`, p, np));
-				np = p.createNextPosition();
-				np.pieceData[i] = '';
-				np.pieceData[to] = this.getCasedPieceType(p, PieceType.KNIGHT);
-				np.halfMoveClock = 0;
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_N]), `${toFile}${toRank}=N`, p, np));
+				//normal promotions
+				[PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT].forEach(pieceType => {
+					np = p.createNextPosition();
+					np.pieceData[i] = '';
+					np.pieceData[to] = this.getCasedPieceType(p, pieceType);
+					np.halfMoveClock = 0;
+					moves.push(
+						new Move(
+							p.fullMoveNum,
+							p.armyIndex,
+							i,
+							to,
+							new Set([MoveType.NORMAL, MoveType.PROMOTION, this.getPromotionMoveType(pieceType)]),
+							`${toFile}${toRank}=${pieceType.toUpperCase()}`,
+							p,
+							np,
+						),
+					);
+				});
 			}
 		}
 
@@ -193,70 +198,24 @@ export class Mover {
 					moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, p, np));
 				} else {
 					//capture with promotion
-					np = p.createNextPosition();
-					np.pieceData[i] = '';
-					np.pieceData[to] = this.getCasedPieceType(p, PieceType.QUEEN);
-					np.halfMoveClock = 0;
-					moves.push(
-						new Move(
-							p.fullMoveNum,
-							p.armyIndex,
-							i,
-							to,
-							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_Q]),
-							`${fromFile}x${toFile}${toRank}=Q`,
-							p,
-							np,
-						),
-					);
-					np = p.createNextPosition();
-					np.pieceData[i] = '';
-					np.pieceData[to] = this.getCasedPieceType(p, PieceType.ROOK);
-					np.halfMoveClock = 0;
-					moves.push(
-						new Move(
-							p.fullMoveNum,
-							p.armyIndex,
-							i,
-							to,
-							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_R]),
-							`${fromFile}x${toFile}${toRank}=R`,
-							p,
-							np,
-						),
-					);
-					np = p.createNextPosition();
-					np.pieceData[i] = '';
-					np.pieceData[to] = this.getCasedPieceType(p, PieceType.BISHOP);
-					np.halfMoveClock = 0;
-					moves.push(
-						new Move(
-							p.fullMoveNum,
-							p.armyIndex,
-							i,
-							to,
-							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_B]),
-							`${fromFile}x${toFile}${toRank}=B`,
-							p,
-							np,
-						),
-					);
-					np = p.createNextPosition();
-					np.pieceData[i] = '';
-					np.pieceData[to] = this.getCasedPieceType(p, PieceType.KNIGHT);
-					np.halfMoveClock = 0;
-					moves.push(
-						new Move(
-							p.fullMoveNum,
-							p.armyIndex,
-							i,
-							to,
-							new Set([MoveType.CAPTURE, MoveType.PROMOTION, MoveType.PROMOTION_TO_N]),
-							`${fromFile}x${toFile}${toRank}=N`,
-							p,
-							np,
-						),
-					);
+					[PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT].forEach(pieceType => {
+						np = p.createNextPosition();
+						np.pieceData[i] = '';
+						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
+						np.halfMoveClock = 0;
+						moves.push(
+							new Move(
+								p.fullMoveNum,
+								p.armyIndex,
+								i,
+								to,
+								new Set([MoveType.CAPTURE, MoveType.PROMOTION, this.getPromotionMoveType(pieceType)]),
+								`${fromFile}x${toFile}${toRank}=${pieceType.toUpperCase()}`,
+								p,
+								np,
+							),
+						);
+					});
 				}
 			}
 		});
