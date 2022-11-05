@@ -17,8 +17,8 @@ export class Fen {
 				}
 			}
 		});
-		const epTargetSquare = Square.getIndexByName(parts[3]);
-		return new Position(pd, parts[1] === 'w' ? 0 : 1, epTargetSquare, Number(parts[4]), Number(parts[5]));
+		const epTargetIndex = parts[3] === '-' ? -1 : Square.getIndexByName(parts[3]);
+		return new Position(pd, parts[1] === 'w' ? 0 : 1, epTargetIndex, Number(parts[4]), Number(parts[5]));
 	}
 
 	static getFenStr(position: Position | null) {
@@ -51,7 +51,7 @@ export class Fen {
 		parts[0] = pd.join('');
 		parts[1] = ['w', 'b'][position.armyIndex];
 		parts[2] = 'KQkq';
-		parts[3] = position.epTargetIndex === -1 ? '' : Square.getNameByIndex(position.epTargetIndex);
+		parts[3] = position.epTargetIndex === -1 ? '-' : Square.getNameByIndex(position.epTargetIndex);
 		parts[4] = String(position.halfMoveClock);
 		parts[5] = String(position.fullMoveNum);
 		return parts.join(' ');
