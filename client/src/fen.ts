@@ -16,7 +16,7 @@ export class Fen {
 				}
 			}
 		});
-		return new Position(pd, parts[1] === 'w' ? 0 : 1, Number(parts[4]), Number(parts[5]));
+		return new Position(pd, parts[1] === 'w' ? 0 : 1, parts[3], Number(parts[4]), Number(parts[5]));
 	}
 
 	static getFenStr(position: Position | null) {
@@ -49,7 +49,7 @@ export class Fen {
 		parts[0] = pd.join('');
 		parts[1] = ['w', 'b'][position.armyIndex];
 		parts[2] = 'KQkq';
-		parts[3] = '-';
+		parts[3] = position.epTargetSquare || '-';
 		parts[4] = String(position.halfMoveClock);
 		parts[5] = String(position.fullMoveNum);
 		return parts.join(' ');

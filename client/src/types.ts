@@ -45,7 +45,7 @@ export enum MoveType {
 	NA = '-',
 	NORMAL = 'normal',
 	CAPTURE = 'capture',
-	PAWN_BIG_START = 'pawn-big-start',
+	PAWN_DOUBLE_START = 'pawn-double-start',
 	PROMOTION = 'promotion',
 	PROMOTION_TO_Q = 'promotion-to-q',
 	PROMOTION_TO_R = 'promotion-to-r',

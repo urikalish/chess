@@ -162,15 +162,17 @@ export class Mover {
 
 		//double step
 		if (this.getRank(i) === (p.armyIndex === 0 ? 2 : 7)) {
-			const onTheWay = i + 8 * fw;
+			const epTargetIndex = i + 8 * fw;
 			const to = i + 16 * fw;
-			if (this.isEmpty(p, to) && this.isEmpty(p, onTheWay)) {
+			if (this.isEmpty(p, to) && this.isEmpty(p, epTargetIndex)) {
 				const [toFile, toRank] = this.getFileAndRank(to);
+				const [epTargetFile, epTargetRank] = this.getFileAndRank(epTargetIndex);
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+				np.epTargetSquare = `${epTargetFile}${epTargetRank}`;
 				np.halfMoveClock = 0;
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_BIG_START]), `${toFile}${toRank}`, p, np));
+				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_DOUBLE_START]), `${toFile}${toRank}`, p, np));
 			}
 		}
 
