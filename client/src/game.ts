@@ -75,39 +75,29 @@ export class Game {
 		}
 	}
 
-	move(move): Move | null {
+	move(move: Move | undefined): Move | null {
 		if (!move) {
 			return null;
 		}
 		const fromSquare = this.board.squares[move.from];
-		const toSquare = this.board.squares[move.to];
 		const piece = fromSquare.piece;
-		const pieceName = piece?.name || '';
-		const targetPieceName = this.board.squares[move.to].piece?.name || '';
 		if (!piece) {
 			return null;
 		}
+		const targetPieceName = move.captureIndex === -1 ? '' : this.board.squares[move.captureIndex].piece?.name || '';
 		fromSquare.clearPiece();
-		toSquare.clearPiece();
+		this.board.placePiece(piece, move.to);
+		if (move.types.has(MoveType.PROMOTION)) {
+			const prePromotionPieceName = piece.name || '';
+			piece.promoteByMoveType(move.types);
+			if (this.onChangePieceName) {
+				this.onChangePieceName(prePromotionPieceName, piece.name);
+			}
+		}
 		if (targetPieceName) {
 			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
 			if (this.onRemovePiece) {
 				this.onRemovePiece(targetPieceName);
-			}
-		}
-		this.board.placePiece(piece, move.to);
-		if (move.types.has(MoveType.PROMOTION)) {
-			if (move.types.has(MoveType.PROMOTION_TO_Q)) {
-				piece.promote(PieceType.QUEEN);
-			} else if (move.types.has(MoveType.PROMOTION_TO_R)) {
-				piece.promote(PieceType.ROOK);
-			} else if (move.types.has(MoveType.PROMOTION_TO_B)) {
-				piece.promote(PieceType.BISHOP);
-			} else if (move.types.has(MoveType.PROMOTION_TO_N)) {
-				piece.promote(PieceType.KNIGHT);
-			}
-			if (this.onChangePieceName) {
-				this.onChangePieceName(pieceName, piece.name);
 			}
 		}
 		this.pushMove(move);

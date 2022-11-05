@@ -1,4 +1,4 @@
-import { ColorType, PieceType, PieceTypeCased } from './types';
+import { ColorType, MoveType, PieceType, PieceTypeCased } from './types';
 import { Helper } from './helper';
 
 export class Piece {
@@ -23,6 +23,18 @@ export class Piece {
 		this.type = toType;
 		this.typeCased = this.armyIndex === 0 ? (toType.toUpperCase() as PieceTypeCased) : (toType.toLowerCase() as PieceTypeCased);
 		this.name = this.typeCased + this.name.slice(1, this.name.length);
+	}
+
+	promoteByMoveType(moveTypes: Set<MoveType>) {
+		if (moveTypes.has(MoveType.PROMOTION_TO_Q)) {
+			this.promote(PieceType.QUEEN);
+		} else if (moveTypes.has(MoveType.PROMOTION_TO_R)) {
+			this.promote(PieceType.ROOK);
+		} else if (moveTypes.has(MoveType.PROMOTION_TO_B)) {
+			this.promote(PieceType.BISHOP);
+		} else if (moveTypes.has(MoveType.PROMOTION_TO_N)) {
+			this.promote(PieceType.KNIGHT);
+		}
 	}
 
 	static isLongRange(pieceType: PieceType) {
