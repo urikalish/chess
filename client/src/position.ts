@@ -1,17 +1,19 @@
 import { Helper } from './helper';
 
 export class Position {
-	fullMoveNum = 1;
-	armyIndex = 0;
 	pieceData: string[] = [];
+	armyIndex = 0;
+	halfMoveClock = 0;
+	fullMoveNum = 1;
 
-	constructor(fullMoveNum: number, armyIndex: number, pieceData: string[]) {
+	constructor(pieceData: string[], armyIndex: number, halfMoveClock: number, fullMoveNum: number) {
 		this.fullMoveNum = fullMoveNum;
 		this.armyIndex = armyIndex;
 		this.pieceData = pieceData;
+		this.halfMoveClock = halfMoveClock;
 	}
 
 	createNextPosition() {
-		return new Position(this.armyIndex === 0 ? this.fullMoveNum : this.fullMoveNum + 1, Helper.flipArmyIndex(this.armyIndex), [...this.pieceData]);
+		return new Position([...this.pieceData], Helper.flipArmyIndex(this.armyIndex), this.halfMoveClock + 1, this.armyIndex === 0 ? this.fullMoveNum : this.fullMoveNum + 1);
 	}
 }

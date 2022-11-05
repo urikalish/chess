@@ -133,24 +133,29 @@ export class Mover {
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+				np.halfMoveClock = 0;
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`, p, np));
 			} else {
 				//normal promotion
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.QUEEN);
+				np.halfMoveClock = 0;
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_Q]), `${toFile}${toRank}=Q`, p, np));
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.ROOK);
+				np.halfMoveClock = 0;
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_R]), `${toFile}${toRank}=R`, p, np));
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.BISHOP);
+				np.halfMoveClock = 0;
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_B]), `${toFile}${toRank}=B`, p, np));
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.KNIGHT);
+				np.halfMoveClock = 0;
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PROMOTION, MoveType.PROMOTION_TO_N]), `${toFile}${toRank}=N`, p, np));
 			}
 		}
@@ -164,6 +169,7 @@ export class Mover {
 				np = p.createNextPosition();
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+				np.halfMoveClock = 0;
 				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_BIG_START]), `${toFile}${toRank}`, p, np));
 			}
 		}
@@ -181,12 +187,14 @@ export class Mover {
 					np = p.createNextPosition();
 					np.pieceData[i] = '';
 					np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+					np.halfMoveClock = 0;
 					moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, p, np));
 				} else {
 					//capture with promotion
 					np = p.createNextPosition();
 					np.pieceData[i] = '';
 					np.pieceData[to] = this.getCasedPieceType(p, PieceType.QUEEN);
+					np.halfMoveClock = 0;
 					moves.push(
 						new Move(
 							p.fullMoveNum,
@@ -202,6 +210,7 @@ export class Mover {
 					np = p.createNextPosition();
 					np.pieceData[i] = '';
 					np.pieceData[to] = this.getCasedPieceType(p, PieceType.ROOK);
+					np.halfMoveClock = 0;
 					moves.push(
 						new Move(
 							p.fullMoveNum,
@@ -217,6 +226,7 @@ export class Mover {
 					np = p.createNextPosition();
 					np.pieceData[i] = '';
 					np.pieceData[to] = this.getCasedPieceType(p, PieceType.BISHOP);
+					np.halfMoveClock = 0;
 					moves.push(
 						new Move(
 							p.fullMoveNum,
@@ -232,6 +242,7 @@ export class Mover {
 					np = p.createNextPosition();
 					np.pieceData[i] = '';
 					np.pieceData[to] = this.getCasedPieceType(p, PieceType.KNIGHT);
+					np.halfMoveClock = 0;
 					moves.push(
 						new Move(
 							p.fullMoveNum,
@@ -277,6 +288,7 @@ export class Mover {
 						const np = p.createNextPosition();
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
+						np.halfMoveClock = 0;
 						moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${pieceType.toUpperCase()}x${toFile}${toRank}`, p, np));
 						stop = true;
 					}
