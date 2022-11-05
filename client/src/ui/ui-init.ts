@@ -37,7 +37,7 @@ export class UiInit {
 		}
 		for (let index = 0; index < 64; index++) {
 			const modifiedIndex = UiHelper.getModifiedIndex(index, isBoardFlipped);
-			const squareName = Square.getSquareNameByIndex(modifiedIndex);
+			const squareName = Square.getNameByIndex(modifiedIndex);
 			const squareElm = document.createElement('div');
 			squareElm.setAttribute('data-index', String(modifiedIndex));
 			squareElm.setAttribute('data-ui-index', String(index));
