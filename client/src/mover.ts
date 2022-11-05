@@ -160,7 +160,7 @@ export class Mover {
 			}
 		}
 
-		//double step
+		//double start
 		if (this.getRank(i) === (p.armyIndex === 0 ? 2 : 7)) {
 			const epTargetIndex = i + 8 * fw;
 			const to = i + 16 * fw;
