@@ -11,20 +11,22 @@ export class Position {
 	halfMoveClock = 0;
 	fullMoveNum = 1;
 
-	constructor(pieceData: string[], armyIndex: number, castlingOptions: boolean[][], epTargetIndex: number, halfMoveClock: number, fullMoveNum: number) {
-		this.fullMoveNum = fullMoveNum;
-		this.armyIndex = armyIndex;
-		this.castlingOptions = [
+	static createInstance(pieceData: string[], armyIndex: number, castlingOptions: boolean[][], epTargetIndex: number, halfMoveClock: number, fullMoveNum: number) {
+		const p: Position = new Position();
+		p.fullMoveNum = fullMoveNum;
+		p.armyIndex = armyIndex;
+		p.castlingOptions = [
 			[castlingOptions[0][0], castlingOptions[0][1]],
 			[castlingOptions[1][0], castlingOptions[1][1]],
 		];
-		this.epTargetIndex = epTargetIndex;
-		this.pieceData = pieceData;
-		this.halfMoveClock = halfMoveClock;
+		p.epTargetIndex = epTargetIndex;
+		p.pieceData = pieceData;
+		p.halfMoveClock = halfMoveClock;
+		return p;
 	}
 
 	static createNextPosition(p: Position) {
-		return new Position(
+		return Position.createInstance(
 			[...p.pieceData],
 			Helper.flipArmyIndex(p.armyIndex),
 			[

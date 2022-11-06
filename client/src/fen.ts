@@ -22,7 +22,7 @@ export class Fen {
 			[parts[2].includes('k'), parts[2].includes('q')],
 		];
 		const epTargetIndex = parts[3] === '-' ? -1 : Square.getIndexByName(parts[3]);
-		return new Position(pd, parts[1] === 'w' ? 0 : 1, castlingOptions, epTargetIndex, Number(parts[4]), Number(parts[5]));
+		return Position.createInstance(pd, parts[1] === 'w' ? 0 : 1, castlingOptions, epTargetIndex, Number(parts[4]), Number(parts[5]));
 	}
 
 	static getFenStr(p: Position | null) {
