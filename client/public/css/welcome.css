@@ -57,6 +57,11 @@
     font-size: 1.6rem;
     border: 1px solid #666;
     background-color: #222;
+}
+.welcome-fen-text {
+    color: var(--color--2);
+}
+.welcome-player-name-text {
     color: #ccc;
 }
 .welcome-player-color-selection {
