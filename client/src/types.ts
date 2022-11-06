@@ -52,6 +52,7 @@ export enum MoveType {
 	PROMOTION_TO_B = 'promotion-to-b',
 	PROMOTION_TO_N = 'promotion-to-n',
 	EN_PASSANT = 'en-passant',
-	KS_CASTLE = 'ks-castle',
-	QS_CASTLE = 'qs-castle',
+	CASTLING = 'castling',
+	CASTLING_KS = 'castling-ks',
+	CASTLING_QS = 'castling-qs',
 }

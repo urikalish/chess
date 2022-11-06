@@ -121,6 +121,7 @@ export class Mover {
 				moves.push(...this.getMovesForPiece(p, i));
 			}
 		}
+		moves.push(...this.getCastlingMoves(p));
 		this.resolveAllAmbiguousMoveNames(moves);
 		return moves;
 	}
@@ -283,6 +284,11 @@ export class Mover {
 				}
 			}
 		}
+		return moves;
+	}
+
+	getCastlingMoves(p): Move[] {
+		const moves: Move[] = [];
 		return moves;
 	}
 }
