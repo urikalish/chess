@@ -228,9 +228,11 @@ export class Mover {
 						moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, to, null, p, np));
 					} else {
 						//pawn en passant capture
+						const epCaptureIndex = p.epTargetIndex - 8 * fw;
 						np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+						np.pieceData[epCaptureIndex] = '';
 						np.halfMoveClock = 0;
 						moves.push(
 							Move.createInstance(
@@ -240,7 +242,7 @@ export class Mover {
 								to,
 								new Set([MoveType.CAPTURE, MoveType.EN_PASSANT]),
 								`${fromFile}x${toFile}${toRank} e.p.`,
-								p.epTargetIndex - 8 * fw,
+								epCaptureIndex,
 								null,
 								p,
 								np,
