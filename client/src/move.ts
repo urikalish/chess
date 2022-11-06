@@ -9,6 +9,7 @@ export class Move {
 	to = -1;
 	name = '';
 	captureIndex = -1;
+	additionalMove: { from: number; to: number } | null = null;
 	oldPosition: Position;
 	newPosition: Position;
 
@@ -20,6 +21,7 @@ export class Move {
 		types: Set<MoveType>,
 		name: string,
 		captureIndex: number,
+		additionalMove: { from: number; to: number } | null,
 		oldPosition: Position,
 		newPosition: Position,
 	) {
@@ -30,6 +32,7 @@ export class Move {
 		this.types = types;
 		this.name = name;
 		this.captureIndex = captureIndex;
+		this.additionalMove = additionalMove;
 		this.oldPosition = oldPosition;
 		this.newPosition = newPosition;
 	}

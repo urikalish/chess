@@ -80,6 +80,12 @@ export class Game {
 		if (move.types.has(MoveType.PROMOTION)) {
 			piece.promoteByMoveType(move.types);
 		}
+		if (move.additionalMove) {
+			const additionalMovePiece = this.board.squares[move.additionalMove.from].piece;
+			if (additionalMovePiece) {
+				this.board.movePiece(additionalMovePiece, move.additionalMove.from, move.additionalMove.to);
+			}
+		}
 		this.pushMove(move);
 		this.pushPosition(move.newPosition);
 		return move;
