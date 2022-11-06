@@ -1,4 +1,4 @@
-import { MoveType, PlayerType } from '../types';
+import { MoveType, PieceType, PlayerType } from '../types';
 import { Move } from '../move';
 import { Game } from '../game';
 import { UiHelper } from './ui-helper';
@@ -30,7 +30,7 @@ export class UiMain {
 				}
 				if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
 					squareElm.classList.add('possible-to');
-					if (index === this.game.getCurPosition()?.epTargetIndex) {
+					if (this.game.board.squares[this.selectedIndex].piece?.type === PieceType.PAWN && index === this.game.getCurPosition()?.epTargetIndex) {
 						squareElm.classList.add('en-passant-target');
 					}
 				}
