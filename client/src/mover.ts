@@ -348,8 +348,8 @@ export class Mover {
 		if (p.armyIndex === 1 && p.castlingOptions[1][0] && !p.pieceData[5] && !p.pieceData[6]) {
 			const np = Position.createNextPosition(p);
 			np.pieceData[4] = '';
-			np.pieceData[5] = 'R';
-			np.pieceData[6] = 'K';
+			np.pieceData[5] = 'r';
+			np.pieceData[6] = 'k';
 			np.pieceData[7] = '';
 			np.castlingOptions[1][0] = false;
 			np.castlingOptions[1][1] = false;
@@ -358,8 +358,8 @@ export class Mover {
 		if (p.armyIndex === 1 && p.castlingOptions[1][1] && !p.pieceData[1] && !p.pieceData[2] && !p.pieceData[3]) {
 			const np = Position.createNextPosition(p);
 			np.pieceData[0] = '';
-			np.pieceData[2] = 'K';
-			np.pieceData[3] = 'R';
+			np.pieceData[2] = 'k';
+			np.pieceData[3] = 'r';
 			np.pieceData[4] = '';
 			np.castlingOptions[1][0] = false;
 			np.castlingOptions[1][1] = false;
