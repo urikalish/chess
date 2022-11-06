@@ -59,7 +59,7 @@ export enum MoveType {
 
 export enum GameResult {
 	WIN = 'win',
-	DRAW ='draw',
+	DRAW = 'draw',
 	CHECKMATE_BY_WHITE = 'checkmate-by-white',
 	CHECKMATE_BY_BLACK = 'checkmate-by-black',
 	STALEMATE = 'stalemate',
@@ -70,5 +70,5 @@ export enum GameResult {
 	INSUFFICIENT_MATERIAL = 'insufficient-material',
 	WHITE_RESIGNATION = 'white-resignation',
 	BLACK_RESIGNATION = 'black-resignation',
-	MUTUAL_AGREEMENT  = 'mutual-agreement',
+	MUTUAL_AGREEMENT = 'mutual-agreement',
 }
