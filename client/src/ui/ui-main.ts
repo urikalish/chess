@@ -30,6 +30,9 @@ export class UiMain {
 				}
 				if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
 					squareElm.classList.add('possible-to');
+					if (index === this.game.getCurPosition()?.epTargetIndex) {
+						squareElm.classList.add('en-passant-target');
+					}
 				}
 				continue;
 			}

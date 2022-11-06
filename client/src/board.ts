@@ -17,15 +17,24 @@ export class Board {
 		return square;
 	}
 
-	placePiece(piece: Piece, index: number): Square {
-		const square = this.squares[index];
-		square.setPiece(piece);
-		return square;
+	clearPiece(index: number) {
+		this.squares[index].clearPiece();
 	}
 
-	movePiece(piece: Piece, from: number, to: number): Square {
+	placePiece(piece: Piece, index: number) {
+		const square = this.squares[index];
+		square.setPiece(piece);
+	}
+
+	movePiece(piece: Piece, from: number, to: number) {
 		this.squares[from].clearPiece();
 		this.placePiece(piece, to);
-		return this.squares[to];
+	}
+
+	clearSquareByPieceName(pieceName: string) {
+		const index = this.squares.findIndex(s => s.piece?.name === pieceName);
+		if (index > -1) {
+			this.clearPiece(index);
+		}
 	}
 }

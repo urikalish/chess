@@ -73,6 +73,7 @@ export class Game {
 		}
 		const targetPieceName = move.captureIndex === -1 ? '' : this.board.squares[move.captureIndex].piece?.name || '';
 		if (targetPieceName) {
+			this.board.clearSquareByPieceName(targetPieceName);
 			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
 		}
 		this.board.movePiece(piece, move.from, move.to);

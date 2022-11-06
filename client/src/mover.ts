@@ -187,15 +187,36 @@ export class Mover {
 			const toY = y + fw;
 			const to = this.getIndex(toX, toY);
 			const [toFile, toRank] = this.getFileAndRank(to);
-			if (this.isXOk(toX) && this.isYOk(toY) && this.isEnemyPiece(p, to)) {
+			if (this.isXOk(toX) && this.isYOk(toY) && (this.isEnemyPiece(p, to) || to == p.epTargetIndex)) {
 				const [fromFile] = this.getFileAndRank(i);
 				if (this.getRank(i) !== (p.armyIndex === 0 ? 7 : 2)) {
-					//pawn simple capture
-					np = p.createNextPosition();
-					np.pieceData[i] = '';
-					np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
-					np.halfMoveClock = 0;
-					moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, to, p, np));
+					if (to !== p.epTargetIndex) {
+						//pawn simple capture
+						np = p.createNextPosition();
+						np.pieceData[i] = '';
+						np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+						np.halfMoveClock = 0;
+						moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, to, p, np));
+					} else {
+						//pawn en passant capture
+						np = p.createNextPosition();
+						np.pieceData[i] = '';
+						np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
+						np.halfMoveClock = 0;
+						moves.push(
+							new Move(
+								p.fullMoveNum,
+								p.armyIndex,
+								i,
+								to,
+								new Set([MoveType.CAPTURE, MoveType.EN_PASSANT]),
+								`${fromFile}x${toFile}${toRank} e.p.`,
+								p.epTargetIndex - 8 * fw,
+								p,
+								np,
+							),
+						);
+					}
 				} else {
 					//pawn capture with promotion
 					[PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT].forEach(pieceType => {
