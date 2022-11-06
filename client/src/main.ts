@@ -10,22 +10,10 @@ function init() {
 	UiWelcome.showDialog((fenStr: string, player0Type, player0Name, player1Type, player1Name) => {
 		const startTime = new Date().getTime();
 		UiLog.startTime = startTime;
-		game = new Game(player0Type, player0Name, player1Type, player1Name, fenStr, startTime, handleRemovePiece, handleChangePieceName);
+		game = new Game(player0Type, player0Name, player1Type, player1Name, fenStr, startTime);
 		uiMain = new UiMain(game);
 		uiMain.createGameUI();
 	});
-}
-
-function handleRemovePiece(pieceName: string) {
-	if (uiMain) {
-		uiMain.removePieceElm(pieceName);
-	}
-}
-
-function handleChangePieceName(oldName: string, newName: string) {
-	if (uiMain) {
-		uiMain.changePieceElmName(oldName, newName);
-	}
 }
 
 init();

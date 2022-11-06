@@ -15,14 +15,12 @@ export class UiMain {
 		this.game = game;
 	}
 
-	updateBoardUI() {
+	updateBoardSquaresUI() {
+		const squareElms = Array.from(UiHelper.queryElms(`.board-squares > .square`));
 		for (let uiIndex = 0; uiIndex < 64; uiIndex++) {
-			const squareElm = UiHelper.queryUiIndexElm(uiIndex);
-			if (!squareElm) {
-				return;
-			}
 			const index = UiHelper.getModifiedIndex(uiIndex, this.isBoardFlipped);
 			const lastMove = this.game.getCurMove();
+			const squareElm = squareElms[uiIndex];
 			squareElm.className = '';
 			const square = this.game.board.squares[index];
 			if (square.isEmpty()) {
@@ -39,37 +37,71 @@ export class UiMain {
 			if (!piece) {
 				continue;
 			}
-			const pieceElm = UiHelper.queryNameElm(piece.name);
-			if (!pieceElm) {
-				return;
-			}
-			pieceElm.dataset.squareIndex = String(index);
-			pieceElm.style.transform = `translate(${uiIndex % 8}00%, ${Math.trunc(uiIndex / 8)}00%)`;
-			pieceElm.className = '';
 			squareElm.classList.add('square', 'occupied', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
-			pieceElm.classList.add('piece', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
 			if (lastMove && lastMove.to === index) {
 				squareElm.classList.add('last-move-to');
 			}
 			if (index === this.selectedIndex) {
 				squareElm.classList.add('selected-square');
-				pieceElm.classList.add('clickable');
 			}
 			if (this.game.possibleMoves.find(m => m.from === index)) {
-				pieceElm.classList.add('clickable');
 				if (this.selectedIndex === -1) {
 					squareElm.classList.add('possible-from');
 				}
 			}
 			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
 				squareElm.classList.add('possible-to');
-				pieceElm.classList.add('clickable');
 			}
 		}
 	}
 
+	updateBoardPiecesUI() {
+		const pieceElmsToHandle = Array.from(UiHelper.queryElms(`.board-pieces > .piece`));
+		for (let uiIndex = 0; uiIndex < 64; uiIndex++) {
+			const index = UiHelper.getModifiedIndex(uiIndex, this.isBoardFlipped);
+			const square = this.game.board.squares[index];
+			const piece = square.piece;
+			if (!piece) {
+				continue;
+			}
+			let pieceElm, pieceElmIndex;
+			pieceElmIndex = pieceElmsToHandle.findIndex(elm => elm.dataset.name === piece.name);
+			if (pieceElmIndex > -1) {
+				pieceElm = pieceElmsToHandle[pieceElmIndex];
+				pieceElmsToHandle.splice(pieceElmIndex, 1);
+			} else {
+				//check name changed due to promotion
+				pieceElmIndex = pieceElmsToHandle.findIndex(elm => elm.dataset.name.substring(1) === piece.name.substring(1));
+				if (pieceElmIndex > -1) {
+					pieceElm = pieceElmsToHandle[pieceElmIndex];
+					pieceElm.setAttribute('data-name', piece.name);
+					pieceElmsToHandle.splice(pieceElmIndex, 1);
+				} else {
+					continue;
+				}
+			}
+			pieceElm.dataset.squareIndex = String(index);
+			pieceElm.style.transform = `translate(${uiIndex % 8}00%, ${Math.trunc(uiIndex / 8)}00%)`;
+			pieceElm.className = '';
+			pieceElm.classList.add('piece', piece.armyIndex === 0 ? 'white' : 'black', piece.typeCased);
+			if (index === this.selectedIndex) {
+				pieceElm.classList.add('clickable');
+			}
+			if (this.game.possibleMoves.find(m => m.from === index)) {
+				pieceElm.classList.add('clickable');
+			}
+			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
+				pieceElm.classList.add('clickable');
+			}
+		}
+		pieceElmsToHandle.forEach(elm => {
+			elm.remove();
+		});
+	}
+
 	updateUI() {
-		this.updateBoardUI();
+		this.updateBoardSquaresUI();
+		this.updateBoardPiecesUI();
 		UiFen.updateFenUI(this.game.getCurPosition());
 	}
 
@@ -78,21 +110,6 @@ export class UiMain {
 		const uiInit = new UiInit();
 		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
 		this.updateUI();
-	}
-
-	removePieceElm(pieceNme: string) {
-		const elm = UiHelper.queryNameElm(pieceNme);
-		if (elm) {
-			elm.remove();
-		}
-	}
-
-	changePieceElmName(oldName: string, newName: string) {
-		const pieceElm = UiHelper.queryNameElm(oldName);
-		if (!pieceElm) {
-			return;
-		}
-		pieceElm.setAttribute('data-name', newName);
 	}
 
 	handleUiSelection(newIndex: number) {

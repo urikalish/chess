@@ -17,26 +17,13 @@ export class Game {
 	moves: Move[] = [];
 	possibleMoves: Move[] = [];
 	startTime = 0;
-	onRemovePiece: (pieceName: string) => void | null;
-	onChangePieceName: (oldName: string, newName: string) => void | null;
 	mover = new Mover();
 
-	constructor(
-		player0Type: PlayerType,
-		player0Name: string,
-		player1Type: PlayerType,
-		player1Name: string,
-		fenStr: string,
-		startTime: number,
-		onRemovePiece: (pieceName: string) => void,
-		onChangePieceName: (oldName: string, newName: string) => void,
-	) {
+	constructor(player0Type: PlayerType, player0Name: string, player1Type: PlayerType, player1Name: string, fenStr: string, startTime: number) {
 		this.players = [new Player(0, player0Type, player0Name), new Player(1, player1Type, player1Name)];
 		this.armies = [new Army(0, player0Type), new Army(1, player1Type)];
 		this.board = new Board();
 		this.startTime = startTime;
-		this.onRemovePiece = onRemovePiece;
-		this.onChangePieceName = onChangePieceName;
 		this.applyFen(fenStr);
 	}
 
@@ -85,20 +72,13 @@ export class Game {
 			return null;
 		}
 		const targetPieceName = move.captureIndex === -1 ? '' : this.board.squares[move.captureIndex].piece?.name || '';
+		if (targetPieceName) {
+			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
+		}
 		fromSquare.clearPiece();
 		this.board.placePiece(piece, move.to);
 		if (move.types.has(MoveType.PROMOTION)) {
-			const prePromotionPieceName = piece.name || '';
 			piece.promoteByMoveType(move.types);
-			if (this.onChangePieceName) {
-				this.onChangePieceName(prePromotionPieceName, piece.name);
-			}
-		}
-		if (targetPieceName) {
-			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
-			if (this.onRemovePiece) {
-				this.onRemovePiece(targetPieceName);
-			}
 		}
 		this.pushMove(move);
 		this.pushPosition(move.newPosition);
