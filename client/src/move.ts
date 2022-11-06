@@ -25,17 +25,17 @@ export class Move {
 		oldPosition: Position,
 		newPosition: Position,
 	) {
-		const move: Move = new Move();
-		move.fullMoveNum = fullMoveNum;
-		move.armyIndex = armyIndex;
-		move.from = from;
-		move.to = to;
-		move.types = types;
-		move.name = name;
-		move.captureIndex = captureIndex;
-		move.additionalMove = additionalMove;
-		move.oldPosition = oldPosition;
-		move.newPosition = newPosition;
-		return move;
+		const m: Move = new Move();
+		m.fullMoveNum = fullMoveNum;
+		m.armyIndex = armyIndex;
+		m.from = from;
+		m.to = to;
+		m.types = types;
+		m.name = name;
+		m.captureIndex = captureIndex;
+		m.additionalMove = additionalMove;
+		m.oldPosition = oldPosition;
+		m.newPosition = newPosition;
+		return m;
 	}
 }

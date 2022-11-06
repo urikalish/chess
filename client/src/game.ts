@@ -36,16 +36,16 @@ export class Game {
 		return this.moves.length ? this.moves[this.moves.length - 1] : null;
 	}
 
-	pushMove(move: Move) {
-		console.log(move.name);
-		UiLog.logMove(move);
-		this.moves.push(move);
+	pushMove(m: Move) {
+		console.log(m.name);
+		UiLog.logMove(m);
+		this.moves.push(m);
 	}
 
-	pushPosition(position: Position) {
-		console.log(Fen.getFenStr(position));
-		this.positions.push(position);
-		this.possibleMoves = this.mover.getAllPossibleMoves(position);
+	pushPosition(p: Position) {
+		console.log(Fen.getFenStr(p));
+		this.positions.push(p);
+		this.possibleMoves = this.mover.getAllPossibleMoves(p);
 	}
 
 	applyFen(fenStr: string) {
@@ -63,32 +63,32 @@ export class Game {
 		}
 	}
 
-	move(move: Move | undefined): Move | null {
-		if (!move) {
+	move(m: Move | undefined): Move | null {
+		if (!m) {
 			return null;
 		}
-		const fromSquare = this.board.squares[move.from];
+		const fromSquare = this.board.squares[m.from];
 		const piece = fromSquare.piece;
 		if (!piece) {
 			return null;
 		}
-		const targetPieceName = move.captureIndex === -1 ? '' : this.board.squares[move.captureIndex].piece?.name || '';
+		const targetPieceName = m.captureIndex === -1 ? '' : this.board.squares[m.captureIndex].piece?.name || '';
 		if (targetPieceName) {
 			this.board.clearSquareByPieceName(targetPieceName);
-			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
+			this.armies[Helper.flipArmyIndex(m.armyIndex)].removePiece(targetPieceName);
 		}
-		this.board.movePiece(piece, move.from, move.to);
-		if (move.types.has(MoveType.PROMOTION)) {
-			Piece.promoteByMoveType(piece, move.types);
+		this.board.movePiece(piece, m.from, m.to);
+		if (m.types.has(MoveType.PROMOTION)) {
+			Piece.promoteByMoveType(piece, m.types);
 		}
-		if (move.additionalMove) {
-			const additionalMovePiece = this.board.squares[move.additionalMove.from].piece;
+		if (m.additionalMove) {
+			const additionalMovePiece = this.board.squares[m.additionalMove.from].piece;
 			if (additionalMovePiece) {
-				this.board.movePiece(additionalMovePiece, move.additionalMove.from, move.additionalMove.to);
+				this.board.movePiece(additionalMovePiece, m.additionalMove.from, m.additionalMove.to);
 			}
 		}
-		this.pushMove(move);
-		this.pushPosition(move.newPosition);
-		return move;
+		this.pushMove(m);
+		this.pushPosition(m.newPosition);
+		return m;
 	}
 }
