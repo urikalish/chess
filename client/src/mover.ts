@@ -109,6 +109,30 @@ export class Mover {
 
 	//endregion
 
+	//region Update Castling Options
+
+	updateCastlingOptions(p: Position, moves: Move[]) {
+		moves.forEach(m => {
+			if (m.from === 60) {
+				m.newPosition.castlingOptions[0][0] = false;
+				m.newPosition.castlingOptions[0][1] = false;
+			} else if ([m.from, m.to].includes(63)) {
+				m.newPosition.castlingOptions[0][0] = false;
+			} else if ([m.from, m.to].includes(56)) {
+				m.newPosition.castlingOptions[0][1] = false;
+			} else if (m.from === 4) {
+				m.newPosition.castlingOptions[1][0] = false;
+				m.newPosition.castlingOptions[1][1] = false;
+			} else if ([m.from, m.to].includes(7)) {
+				m.newPosition.castlingOptions[1][0] = false;
+			} else if ([m.from, m.to].includes(0)) {
+				m.newPosition.castlingOptions[1][1] = false;
+			}
+		});
+	}
+
+	//endregion
+
 	getAllPossibleMoves(p: Position): Move[] {
 		const moves: Move[] = [];
 		for (let i = 0; i < p.pieceData.length; i++) {
@@ -121,8 +145,11 @@ export class Mover {
 				moves.push(...this.getMovesForPiece(p, i));
 			}
 		}
-		moves.push(...this.getCastlingMoves(p));
 		this.resolveAllAmbiguousMoveNames(moves);
+		moves.push(...this.getCastlingMoves(p));
+		if (Position.hasAnyCastlingOptions(p, p.armyIndex)) {
+			this.updateCastlingOptions(p, moves);
+		}
 		return moves;
 	}
 

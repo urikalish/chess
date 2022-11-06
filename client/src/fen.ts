@@ -17,7 +17,10 @@ export class Fen {
 				}
 			}
 		});
-		const castlingOptions = [parts[2].includes('K'), parts[2].includes('Q'), parts[2].includes('k'), parts[2].includes('q')];
+		const castlingOptions: boolean[][] = [
+			[parts[2].includes('K'), parts[2].includes('Q')],
+			[parts[2].includes('k'), parts[2].includes('q')],
+		];
 		const epTargetIndex = parts[3] === '-' ? -1 : Square.getIndexByName(parts[3]);
 		return new Position(pd, parts[1] === 'w' ? 0 : 1, castlingOptions, epTargetIndex, Number(parts[4]), Number(parts[5]));
 	}
@@ -50,16 +53,16 @@ export class Fen {
 			}
 		}
 		let castlingOptions = '';
-		if (p.castlingOptions[0]) {
+		if (p.castlingOptions[0][0]) {
 			castlingOptions += 'K';
 		}
-		if (p.castlingOptions[1]) {
+		if (p.castlingOptions[0][1]) {
 			castlingOptions += 'Q';
 		}
-		if (p.castlingOptions[2]) {
+		if (p.castlingOptions[1][0]) {
 			castlingOptions += 'k';
 		}
-		if (p.castlingOptions[3]) {
+		if (p.castlingOptions[1][1]) {
 			castlingOptions += 'q';
 		}
 		parts[0] = pd.join('');
