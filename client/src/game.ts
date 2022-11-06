@@ -2,12 +2,13 @@ import { ColorType, MoveType, PieceType, PlayerType } from './types';
 import { Helper } from './helper';
 import { Fen } from './fen';
 import { Player } from './player';
+import { Piece } from './piece';
 import { Army } from './army';
 import { Board } from './board';
-import { Move } from './move';
 import { Position } from './position';
-import { UiLog } from './ui/ui-log';
+import { Move } from './move';
 import { Mover } from './mover';
+import { UiLog } from './ui/ui-log';
 
 export class Game {
 	players: Player[];
@@ -78,7 +79,7 @@ export class Game {
 		}
 		this.board.movePiece(piece, move.from, move.to);
 		if (move.types.has(MoveType.PROMOTION)) {
-			piece.promoteByMoveType(move.types);
+			Piece.promoteByMoveType(piece, move.types);
 		}
 		if (move.additionalMove) {
 			const additionalMovePiece = this.board.squares[move.additionalMove.from].piece;

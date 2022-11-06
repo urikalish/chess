@@ -16,24 +16,24 @@ export class Piece {
 		this.name = `${this.typeCased}.${Helper.getRandomNumber(111111, 999999)}`;
 	}
 
-	promote(toType: PieceType) {
-		if (this.type !== PieceType.PAWN) {
+	static promote(piece: Piece, toType: PieceType) {
+		if (piece.type !== PieceType.PAWN) {
 			return;
 		}
-		this.type = toType;
-		this.typeCased = this.armyIndex === 0 ? (toType.toUpperCase() as PieceTypeCased) : (toType.toLowerCase() as PieceTypeCased);
-		this.name = this.typeCased + this.name.slice(1, this.name.length);
+		piece.type = toType;
+		piece.typeCased = piece.armyIndex === 0 ? (toType.toUpperCase() as PieceTypeCased) : (toType.toLowerCase() as PieceTypeCased);
+		piece.name = piece.typeCased + piece.name.slice(1, piece.name.length);
 	}
 
-	promoteByMoveType(moveTypes: Set<MoveType>) {
+	static promoteByMoveType(piece: Piece, moveTypes: Set<MoveType>) {
 		if (moveTypes.has(MoveType.PROMOTION_TO_Q)) {
-			this.promote(PieceType.QUEEN);
+			Piece.promote(piece, PieceType.QUEEN);
 		} else if (moveTypes.has(MoveType.PROMOTION_TO_R)) {
-			this.promote(PieceType.ROOK);
+			Piece.promote(piece, PieceType.ROOK);
 		} else if (moveTypes.has(MoveType.PROMOTION_TO_B)) {
-			this.promote(PieceType.BISHOP);
+			Piece.promote(piece, PieceType.BISHOP);
 		} else if (moveTypes.has(MoveType.PROMOTION_TO_N)) {
-			this.promote(PieceType.KNIGHT);
+			Piece.promote(piece, PieceType.KNIGHT);
 		}
 	}
 
