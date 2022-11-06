@@ -13,10 +13,16 @@
     padding: 2rem;
     opacity: 0.9;
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto auto 1fr;
-    grid-row-gap: 0.5rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-row-gap: 1rem;
     font-size: 1.6rem;
+}
+.info-players {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    grid-row-gap: 0.5rem;
 }
 .info-player-color {
     width: 2.1rem;
@@ -34,16 +40,7 @@
 .info-player-name.player-machine:before {
     content: "🤖";
 }
-.info-fen {
-    grid-column: 1 / span 2;
-    margin-top: 0.5rem;
-    border-top: 1px solid #999;
-    padding-top: 0.5rem;
-    word-break: break-all;
-    color: #ccc;
-}
 .info-log-wrapper {
-    grid-column: 1 / span 2;
     overflow: hidden;
     position: relative;
     border-top: 1px solid #999;
@@ -52,7 +49,7 @@
     position: absolute;
     inset: 0;
     overflow: auto;
-    padding-top: 0.5rem;
+    padding: 0.5rem 0;
     display: flex;
     flex-wrap: wrap;
     align-content: start;
@@ -91,4 +88,10 @@
 .info-log--move-type-capture,
 .info-log--move-type-promotion {
     color: var(--color--1);
+}
+.info-fen {
+    border-top: 1px solid #999;
+    padding-top: 0.5rem;
+    word-break: break-all;
+    color: #ccc;
 }
