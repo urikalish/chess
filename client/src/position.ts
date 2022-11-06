@@ -23,17 +23,17 @@ export class Position {
 		this.halfMoveClock = halfMoveClock;
 	}
 
-	createNextPosition() {
+	static createNextPosition(p: Position) {
 		return new Position(
-			[...this.pieceData],
-			Helper.flipArmyIndex(this.armyIndex),
+			[...p.pieceData],
+			Helper.flipArmyIndex(p.armyIndex),
 			[
-				[this.castlingOptions[0][0], this.castlingOptions[0][1]],
-				[this.castlingOptions[1][0], this.castlingOptions[1][1]],
+				[p.castlingOptions[0][0], p.castlingOptions[0][1]],
+				[p.castlingOptions[1][0], p.castlingOptions[1][1]],
 			],
 			-1,
-			this.halfMoveClock + 1,
-			this.armyIndex === 0 ? this.fullMoveNum : this.fullMoveNum + 1,
+			p.halfMoveClock + 1,
+			p.armyIndex === 0 ? p.fullMoveNum : p.fullMoveNum + 1,
 		);
 	}
 
