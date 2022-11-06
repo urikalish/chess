@@ -56,3 +56,19 @@ export enum MoveType {
 	CASTLING_KS = 'castling-ks',
 	CASTLING_QS = 'castling-qs',
 }
+
+export enum GameResult {
+	WIN = 'win',
+	DRAW ='draw',
+	CHECKMATE_BY_WHITE = 'checkmate-by-white',
+	CHECKMATE_BY_BLACK = 'checkmate-by-black',
+	STALEMATE = 'stalemate',
+	THREEFOLD_REPETITION = 'threefold-repetition',
+	FIVEFOLD_REPETITION = 'fivefold-repetition',
+	FIFTY_MOVE_RULE = 'fifty-move-rule',
+	SEVENTY_FIVE_MOVE_RULE = 'seventy-five-move-rule',
+	INSUFFICIENT_MATERIAL = 'insufficient-material',
+	WHITE_RESIGNATION = 'white-resignation',
+	BLACK_RESIGNATION = 'black-resignation',
+	MUTUAL_AGREEMENT  = 'mutual-agreement',
+}
