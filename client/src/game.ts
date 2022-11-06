@@ -75,8 +75,7 @@ export class Game {
 		if (targetPieceName) {
 			this.armies[Helper.flipArmyIndex(move.armyIndex)].removePiece(targetPieceName);
 		}
-		fromSquare.clearPiece();
-		this.board.placePiece(piece, move.to);
+		this.board.movePiece(piece, move.from, move.to);
 		if (move.types.has(MoveType.PROMOTION)) {
 			piece.promoteByMoveType(move.types);
 		}
