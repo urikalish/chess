@@ -169,7 +169,7 @@ export class Mover {
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
 				np.halfMoveClock = 0;
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`, -1, null, p, np));
+				moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`, -1, null, p, np));
 			} else {
 				//pawn normal promotion
 				[PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT].forEach(pieceType => {
@@ -178,7 +178,7 @@ export class Mover {
 					np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 					np.halfMoveClock = 0;
 					moves.push(
-						new Move(
+						Move.createInstance(
 							p.fullMoveNum,
 							p.armyIndex,
 							i,
@@ -206,7 +206,7 @@ export class Mover {
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
 				np.epTargetIndex = epTargetIndex;
 				np.halfMoveClock = 0;
-				moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_DOUBLE_START]), `${toFile}${toRank}`, -1, null, p, np));
+				moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_DOUBLE_START]), `${toFile}${toRank}`, -1, null, p, np));
 			}
 		}
 
@@ -225,7 +225,7 @@ export class Mover {
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
 						np.halfMoveClock = 0;
-						moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, to, null, p, np));
+						moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, to, null, p, np));
 					} else {
 						//pawn en passant capture
 						np = Position.createNextPosition(p);
@@ -233,7 +233,7 @@ export class Mover {
 						np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
 						np.halfMoveClock = 0;
 						moves.push(
-							new Move(
+							Move.createInstance(
 								p.fullMoveNum,
 								p.armyIndex,
 								i,
@@ -255,7 +255,7 @@ export class Mover {
 						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 						np.halfMoveClock = 0;
 						moves.push(
-							new Move(
+							Move.createInstance(
 								p.fullMoveNum,
 								p.armyIndex,
 								i,
@@ -298,14 +298,18 @@ export class Mover {
 						const np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
-						moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${pieceType.toUpperCase()}${toFile}${toRank}`, -1, null, p, np));
+						moves.push(
+							Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${pieceType.toUpperCase()}${toFile}${toRank}`, -1, null, p, np),
+						);
 					} else if (this.isEnemyPiece(p, to)) {
 						//piece capture
 						const np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 						np.halfMoveClock = 0;
-						moves.push(new Move(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${pieceType.toUpperCase()}x${toFile}${toRank}`, to, null, p, np));
+						moves.push(
+							Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${pieceType.toUpperCase()}x${toFile}${toRank}`, to, null, p, np),
+						);
 						stop = true;
 					}
 				}
@@ -327,7 +331,7 @@ export class Mover {
 			np.pieceData[63] = '';
 			np.castlingOptions[0][0] = false;
 			np.castlingOptions[0][1] = false;
-			moves.push(new Move(p.fullMoveNum, p.armyIndex, 60, 62, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 63, to: 61 }, p, np));
+			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 60, 62, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 63, to: 61 }, p, np));
 		}
 		if (p.armyIndex === 0 && p.castlingOptions[0][1] && !p.pieceData[57] && !p.pieceData[58] && !p.pieceData[59]) {
 			const np = Position.createNextPosition(p);
@@ -337,7 +341,7 @@ export class Mover {
 			np.pieceData[60] = '';
 			np.castlingOptions[0][0] = false;
 			np.castlingOptions[0][1] = false;
-			moves.push(new Move(p.fullMoveNum, p.armyIndex, 60, 58, new Set([MoveType.CASTLING, MoveType.CASTLING_QS]), `O-O-O`, -1, { from: 56, to: 59 }, p, np));
+			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 60, 58, new Set([MoveType.CASTLING, MoveType.CASTLING_QS]), `O-O-O`, -1, { from: 56, to: 59 }, p, np));
 		}
 		if (p.armyIndex === 1 && p.castlingOptions[1][0] && !p.pieceData[5] && !p.pieceData[6]) {
 			const np = Position.createNextPosition(p);
@@ -347,7 +351,7 @@ export class Mover {
 			np.pieceData[7] = '';
 			np.castlingOptions[1][0] = false;
 			np.castlingOptions[1][1] = false;
-			moves.push(new Move(p.fullMoveNum, p.armyIndex, 4, 6, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 7, to: 5 }, p, np));
+			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 4, 6, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 7, to: 5 }, p, np));
 		}
 		if (p.armyIndex === 1 && p.castlingOptions[1][1] && !p.pieceData[1] && !p.pieceData[2] && !p.pieceData[3]) {
 			const np = Position.createNextPosition(p);
@@ -357,7 +361,7 @@ export class Mover {
 			np.pieceData[4] = '';
 			np.castlingOptions[1][0] = false;
 			np.castlingOptions[1][1] = false;
-			moves.push(new Move(p.fullMoveNum, p.armyIndex, 4, 2, new Set([MoveType.CASTLING, MoveType.CASTLING_QS]), `O-O-O`, -1, { from: 0, to: 3 }, p, np));
+			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 4, 2, new Set([MoveType.CASTLING, MoveType.CASTLING_QS]), `O-O-O`, -1, { from: 0, to: 3 }, p, np));
 		}
 		return moves;
 	}

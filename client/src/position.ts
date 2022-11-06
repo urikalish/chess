@@ -13,15 +13,15 @@ export class Position {
 
 	static createInstance(pieceData: string[], armyIndex: number, castlingOptions: boolean[][], epTargetIndex: number, halfMoveClock: number, fullMoveNum: number) {
 		const p: Position = new Position();
-		p.fullMoveNum = fullMoveNum;
+		p.pieceData = pieceData;
 		p.armyIndex = armyIndex;
 		p.castlingOptions = [
 			[castlingOptions[0][0], castlingOptions[0][1]],
 			[castlingOptions[1][0], castlingOptions[1][1]],
 		];
 		p.epTargetIndex = epTargetIndex;
-		p.pieceData = pieceData;
 		p.halfMoveClock = halfMoveClock;
+		p.fullMoveNum = fullMoveNum;
 		return p;
 	}
 
