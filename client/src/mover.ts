@@ -37,7 +37,7 @@ export class Mover {
 	getIndex(x: number, y: number): number {
 		return y * 8 + x;
 	}
-	belongsToArmy(armyIndex: number, pd: string[], i: number): boolean {
+	belongsToArmy(pd: string[], i: number, armyIndex: number): boolean {
 		return !!pd[i] && (pd[i] === pd[i].toUpperCase() ? 0 : 1) === armyIndex;
 	}
 	hasPiece(p: Position, i: number): boolean {
@@ -46,8 +46,8 @@ export class Mover {
 	isEmpty(p: Position, i: number): boolean {
 		return !p.pieceData[i];
 	}
-	isPawn(p: Position, i: number): boolean {
-		return p.pieceData[i].toLowerCase() === PieceType.PAWN;
+	isPieceOfType(p: Position, i: number, pieceType: PieceType): boolean {
+		return p.pieceData[i].toLowerCase() === pieceType;
 	}
 	getCasedPieceType(p: Position, pieceType: PieceType) {
 		return p.armyIndex === 0 ? pieceType.toUpperCase() : pieceType.toLowerCase();
@@ -125,7 +125,7 @@ export class Mover {
 			const toY = y + fw;
 			const to = this.getIndex(toX, toY);
 			const [toFile, toRank] = this.getFileAndRank(to);
-			if (this.isXOk(toX) && this.isYOk(toY) && (this.belongsToArmy(Army.flipArmyIndex(p.armyIndex), p.pieceData, to) || to == p.epTargetIndex)) {
+			if (this.isXOk(toX) && this.isYOk(toY) && (this.belongsToArmy(p.pieceData, to, Army.flipArmyIndex(p.armyIndex)) || to == p.epTargetIndex)) {
 				const [fromFile] = this.getFileAndRank(i);
 				if (this.getRank(i) !== (p.armyIndex === 0 ? 7 : 2)) {
 					if (to !== p.epTargetIndex) {
@@ -200,7 +200,7 @@ export class Mover {
 				const toX = x + directions[d][0] * step;
 				const toY = y + directions[d][1] * step;
 				const to = this.getIndex(toX, toY);
-				if (!this.isXOk(toX) || !this.isYOk(toY) || this.belongsToArmy(p.armyIndex, p.pieceData, to)) {
+				if (!this.isXOk(toX) || !this.isYOk(toY) || this.belongsToArmy(p.pieceData, to, p.armyIndex)) {
 					stop = true;
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
@@ -212,7 +212,7 @@ export class Mover {
 						moves.push(
 							Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${pieceType.toUpperCase()}${toFile}${toRank}`, -1, null, p, np),
 						);
-					} else if (this.belongsToArmy(Army.flipArmyIndex(p.armyIndex), p.pieceData, to)) {
+					} else if (this.belongsToArmy(p.pieceData, to, Army.flipArmyIndex(p.armyIndex))) {
 						//piece capture
 						const np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
@@ -224,7 +224,7 @@ export class Mover {
 						stop = true;
 					}
 				}
-				if (!Piece.isLongRange(pieceType)) {
+				if (!stop && !Piece.isLongRange(pieceType)) {
 					stop = true;
 				}
 			}
@@ -341,10 +341,10 @@ export class Mover {
 	getAllPossibleMoves(p: Position): Move[] {
 		const moves: Move[] = [];
 		for (let i = 0; i < p.pieceData.length; i++) {
-			if (!p.pieceData[i] || this.belongsToArmy(Army.flipArmyIndex(p.armyIndex), p.pieceData, i)) {
+			if (!p.pieceData[i] || (p.pieceData && this.belongsToArmy(p.pieceData, i, Army.flipArmyIndex(p.armyIndex)))) {
 				continue;
 			}
-			if (this.isPawn(p, i)) {
+			if (this.isPieceOfType(p, i, PieceType.PAWN)) {
 				moves.push(...this.getMovesForPawn(p, i));
 			} else {
 				moves.push(...this.getMovesForPiece(p, i));
@@ -358,5 +358,45 @@ export class Mover {
 		return moves;
 	}
 
+	isSquareAttacked(p: Position, i: number, attackerArmyIndex: number) {
+		const myArmyIndex = Army.flipArmyIndex(attackerArmyIndex);
+		const fw = this.getForwardDirection(myArmyIndex);
+		const pd = p.pieceData;
+		const [x, y] = this.getXAndY(i);
+		let aX, aY, aI;
 
+		//pawns
+		for (const d of [-1, 1]) {
+			aX = x + d;
+			aY = y + fw;
+			aI = this.getIndex(aX, aY);
+			if (this.isXOk(aX) && this.isYOk(aY) && this.isPieceOfType(p, aI, PieceType.PAWN) && this.belongsToArmy(pd, aI, attackerArmyIndex)) {
+				return true;
+			}
+		}
+
+		//pieces
+		for (const pieceType of [PieceType.KING, PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT]) {
+			const directions: number[][] = Piece.getDirections(pieceType);
+			for (let d = 0; d < directions.length; d++) {
+				let step = 0;
+				let stop = false;
+				while (!stop) {
+					step++;
+					aX = x + directions[d][0] * step;
+					aY = y + directions[d][1] * step;
+					aI = this.getIndex(aX, aY);
+					if (!this.isXOk(aX) || !this.isYOk(aY) || this.belongsToArmy(pd, aI, myArmyIndex)) {
+						stop = true;
+					} else if (this.belongsToArmy(pd, aI, attackerArmyIndex) && this.isPieceOfType(p, aI, pieceType)) {
+						return true;
+					}
+					if (!stop && !Piece.isLongRange(pieceType)) {
+						stop = true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 }
