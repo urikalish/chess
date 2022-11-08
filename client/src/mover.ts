@@ -1,5 +1,6 @@
 import { MoveType, PieceType } from './types';
 import { Piece } from './piece';
+import { Army } from './army';
 import { Move } from './move';
 import { Position } from './position';
 
@@ -36,11 +37,8 @@ export class Mover {
 	getIndex(x: number, y: number): number {
 		return y * 8 + x;
 	}
-	isMyPiece(p: Position, i: number): boolean {
-		return !!p.pieceData[i] && (p.pieceData[i] === p.pieceData[i].toUpperCase() ? 0 : 1) === p.armyIndex;
-	}
-	isEnemyPiece(p: Position, i: number): boolean {
-		return !!p.pieceData[i] && (p.pieceData[i] === p.pieceData[i].toUpperCase() ? 0 : 1) !== p.armyIndex;
+	belongsToArmy(armyIndex: number, pd: string[], i: number): boolean {
+		return !!pd[i] && (pd[i] === pd[i].toUpperCase() ? 0 : 1) === armyIndex;
 	}
 	hasPiece(p: Position, i: number): boolean {
 		return !!p.pieceData[i];
@@ -63,95 +61,6 @@ export class Mover {
 	}
 
 	//endregion
-
-	//region Ambiguous Move Names
-
-	resolveOneAmbiguousMoveName(moves: Move[]) {
-		const files = new Set<string>();
-		const ranks = new Set<number>();
-		moves.forEach(m => {
-			const [f, r] = this.getFileAndRank(m.from);
-			files.add(f);
-			ranks.add(r);
-		});
-		if (files.size === moves.length) {
-			moves.forEach(m => {
-				const [f] = this.getFileAndRank(m.from);
-				m.name = m.name[0] + f + m.name.slice(1, m.name.length);
-			});
-		} else if (ranks.size === moves.length) {
-			moves.forEach(m => {
-				const [, r] = this.getFileAndRank(m.from);
-				m.name = m.name[0] + r + m.name.slice(1, m.name.length);
-			});
-		} else {
-			moves.forEach(m => {
-				const [f, r] = this.getFileAndRank(m.from);
-				m.name = m.name[0] + f + r + m.name.slice(1, m.name.length);
-			});
-		}
-	}
-
-	resolveAllAmbiguousMoveNames(moves: Move[]) {
-		const moveNames = new Set<string>();
-		const ambiguousNames = new Set<string>();
-		moves.forEach(m => {
-			if (!moveNames.has(m.name)) {
-				moveNames.add(m.name);
-			} else {
-				ambiguousNames.add(m.name);
-			}
-		});
-		ambiguousNames.forEach(name => {
-			this.resolveOneAmbiguousMoveName(moves.filter(m => m.name === name));
-		});
-	}
-
-	//endregion
-
-	//region Update Castling Options
-
-	updateCastlingOptions(p: Position, moves: Move[]) {
-		moves.forEach(m => {
-			if (m.from === 60) {
-				m.newPosition.castlingOptions[0][0] = false;
-				m.newPosition.castlingOptions[0][1] = false;
-			} else if ([m.from, m.to].includes(63)) {
-				m.newPosition.castlingOptions[0][0] = false;
-			} else if ([m.from, m.to].includes(56)) {
-				m.newPosition.castlingOptions[0][1] = false;
-			} else if (m.from === 4) {
-				m.newPosition.castlingOptions[1][0] = false;
-				m.newPosition.castlingOptions[1][1] = false;
-			} else if ([m.from, m.to].includes(7)) {
-				m.newPosition.castlingOptions[1][0] = false;
-			} else if ([m.from, m.to].includes(0)) {
-				m.newPosition.castlingOptions[1][1] = false;
-			}
-		});
-	}
-
-	//endregion
-
-	getAllPossibleMoves(p: Position): Move[] {
-		const moves: Move[] = [];
-		for (let i = 0; i < p.pieceData.length; i++) {
-			if (!p.pieceData[i] || this.isEnemyPiece(p, i)) {
-				continue;
-			}
-			if (this.isPawn(p, i)) {
-				moves.push(...this.getMovesForPawn(p, i));
-			} else {
-				moves.push(...this.getMovesForPiece(p, i));
-			}
-		}
-		this.resolveAllAmbiguousMoveNames(moves);
-		if (Position.hasAnyCastlingOptions(p, p.armyIndex)) {
-			this.updateCastlingOptions(p, moves);
-			moves.push(...this.getCastlingMoves(p));
-		}
-		return moves;
-	}
 
 	getMovesForPawn(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
@@ -216,7 +125,7 @@ export class Mover {
 			const toY = y + fw;
 			const to = this.getIndex(toX, toY);
 			const [toFile, toRank] = this.getFileAndRank(to);
-			if (this.isXOk(toX) && this.isYOk(toY) && (this.isEnemyPiece(p, to) || to == p.epTargetIndex)) {
+			if (this.isXOk(toX) && this.isYOk(toY) && (this.belongsToArmy(Army.flipArmyIndex(p.armyIndex), p.pieceData, to) || to == p.epTargetIndex)) {
 				const [fromFile] = this.getFileAndRank(i);
 				if (this.getRank(i) !== (p.armyIndex === 0 ? 7 : 2)) {
 					if (to !== p.epTargetIndex) {
@@ -291,7 +200,7 @@ export class Mover {
 				const toX = x + directions[d][0] * step;
 				const toY = y + directions[d][1] * step;
 				const to = this.getIndex(toX, toY);
-				if (!this.isXOk(toX) || !this.isYOk(toY) || this.isMyPiece(p, to)) {
+				if (!this.isXOk(toX) || !this.isYOk(toY) || this.belongsToArmy(p.armyIndex, p.pieceData, to)) {
 					stop = true;
 				} else {
 					const [toFile, toRank] = this.getFileAndRank(to);
@@ -303,7 +212,7 @@ export class Mover {
 						moves.push(
 							Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${pieceType.toUpperCase()}${toFile}${toRank}`, -1, null, p, np),
 						);
-					} else if (this.isEnemyPiece(p, to)) {
+					} else if (this.belongsToArmy(Army.flipArmyIndex(p.armyIndex), p.pieceData, to)) {
 						//piece capture
 						const np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
@@ -321,6 +230,67 @@ export class Mover {
 			}
 		}
 		return moves;
+	}
+
+	resolveOneAmbiguousMoveName(moves: Move[]) {
+		const files = new Set<string>();
+		const ranks = new Set<number>();
+		moves.forEach(m => {
+			const [f, r] = this.getFileAndRank(m.from);
+			files.add(f);
+			ranks.add(r);
+		});
+		if (files.size === moves.length) {
+			moves.forEach(m => {
+				const [f] = this.getFileAndRank(m.from);
+				m.name = m.name[0] + f + m.name.slice(1, m.name.length);
+			});
+		} else if (ranks.size === moves.length) {
+			moves.forEach(m => {
+				const [, r] = this.getFileAndRank(m.from);
+				m.name = m.name[0] + r + m.name.slice(1, m.name.length);
+			});
+		} else {
+			moves.forEach(m => {
+				const [f, r] = this.getFileAndRank(m.from);
+				m.name = m.name[0] + f + r + m.name.slice(1, m.name.length);
+			});
+		}
+	}
+
+	resolveAllAmbiguousMoveNames(moves: Move[]) {
+		const moveNames = new Set<string>();
+		const ambiguousNames = new Set<string>();
+		moves.forEach(m => {
+			if (!moveNames.has(m.name)) {
+				moveNames.add(m.name);
+			} else {
+				ambiguousNames.add(m.name);
+			}
+		});
+		ambiguousNames.forEach(name => {
+			this.resolveOneAmbiguousMoveName(moves.filter(m => m.name === name));
+		});
+	}
+
+	updateCastlingOptions(p: Position, moves: Move[]) {
+		moves.forEach(m => {
+			if (m.from === 60) {
+				m.newPosition.castlingOptions[0][0] = false;
+				m.newPosition.castlingOptions[0][1] = false;
+			} else if ([m.from, m.to].includes(63)) {
+				m.newPosition.castlingOptions[0][0] = false;
+			} else if ([m.from, m.to].includes(56)) {
+				m.newPosition.castlingOptions[0][1] = false;
+			} else if (m.from === 4) {
+				m.newPosition.castlingOptions[1][0] = false;
+				m.newPosition.castlingOptions[1][1] = false;
+			} else if ([m.from, m.to].includes(7)) {
+				m.newPosition.castlingOptions[1][0] = false;
+			} else if ([m.from, m.to].includes(0)) {
+				m.newPosition.castlingOptions[1][1] = false;
+			}
+		});
 	}
 
 	getCastlingMoves(p: Position): Move[] {
@@ -367,4 +337,26 @@ export class Mover {
 		}
 		return moves;
 	}
+
+	getAllPossibleMoves(p: Position): Move[] {
+		const moves: Move[] = [];
+		for (let i = 0; i < p.pieceData.length; i++) {
+			if (!p.pieceData[i] || this.belongsToArmy(Army.flipArmyIndex(p.armyIndex), p.pieceData, i)) {
+				continue;
+			}
+			if (this.isPawn(p, i)) {
+				moves.push(...this.getMovesForPawn(p, i));
+			} else {
+				moves.push(...this.getMovesForPiece(p, i));
+			}
+		}
+		this.resolveAllAmbiguousMoveNames(moves);
+		if (Position.hasAnyCastlingOptions(p, p.armyIndex)) {
+			this.updateCastlingOptions(p, moves);
+			moves.push(...this.getCastlingMoves(p));
+		}
+		return moves;
+	}
+
+
 }

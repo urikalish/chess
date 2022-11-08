@@ -1,5 +1,4 @@
 import { ColorType, MoveType, PieceType, PlayerType } from './types';
-import { Helper } from './helper';
 import { Fen } from './fen';
 import { Player } from './player';
 import { Piece } from './piece';
@@ -75,7 +74,7 @@ export class Game {
 		const targetPieceName = m.captureIndex === -1 ? '' : this.board.squares[m.captureIndex].piece?.name || '';
 		if (targetPieceName) {
 			this.board.clearSquareByPieceName(targetPieceName);
-			this.armies[Helper.flipArmyIndex(m.armyIndex)].removePiece(targetPieceName);
+			this.armies[Army.flipArmyIndex(m.armyIndex)].removePiece(targetPieceName);
 		}
 		this.board.movePiece(piece, m.from, m.to);
 		if (m.types.has(MoveType.PROMOTION)) {

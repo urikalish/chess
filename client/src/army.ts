@@ -14,6 +14,10 @@ export class Army {
 		this.pieces = [];
 	}
 
+	static flipArmyIndex(armyIndex) {
+		return (armyIndex - 1) * -1;
+	}
+
 	createAndAddPiece(pieceType: PieceType): Piece {
 		const piece = new Piece(this.index, pieceType);
 		this.pieces.push(piece);

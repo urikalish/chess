@@ -1,4 +1,4 @@
-import { Helper } from './helper';
+import { Army } from './army';
 
 export class Position {
 	pieceData: string[] = [];
@@ -28,7 +28,7 @@ export class Position {
 	static createNextPosition(p: Position) {
 		return Position.createInstance(
 			[...p.pieceData],
-			Helper.flipArmyIndex(p.armyIndex),
+			Army.flipArmyIndex(p.armyIndex),
 			[
 				[p.castlingOptions[0][0], p.castlingOptions[0][1]],
 				[p.castlingOptions[1][0], p.castlingOptions[1][1]],
