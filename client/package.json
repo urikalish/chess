@@ -20,9 +20,9 @@
     "clean": "rimraf public/js && rimraf tsc",
     "compile": "tsc",
     "bundle-dev": "rollup -c --environment build:development",
-    "bundle": "rollup -c --environment build:production",
+    "bundle-prod": "rollup -c --environment build:production",
+    "bundle": "yarn bundle-dev && yarn bundle-prod",
     "build": "yarn format && yarn lint && yarn clean && yarn compile && yarn bundle",
-    "build-dev": "yarn format && yarn lint && yarn clean && yarn compile && yarn bundle-dev",
     "http-server": "http-server ./public --port 6464 --cors -c-1",
     "pre-commit": "yarn build"
   },
