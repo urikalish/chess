@@ -413,8 +413,15 @@ export class Mover {
 		const enemyKingIndex = p.pieceData.findIndex(p => p === enemyKingLetter);
 		moves.forEach(m => {
 			if (this.isSquareAttacked(m.newPosition, enemyKingIndex, myArmyIndex)) {
-				m.name += '+';
+				//check
 				m.types.add(MoveType.CHECK);
+				//check for checkmate
+				if (this.getAllPossibleMoves(m.newPosition).length === 0) {
+					m.name += '#';
+					m.types.add(MoveType.CHECKMATE);
+				} else {
+					m.name += '+';
+				}
 			}
 		});
 	}

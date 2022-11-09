@@ -44,7 +44,9 @@ export class Game {
 	pushPosition(p: Position) {
 		console.log(Fen.getFenStr(p));
 		this.positions.push(p);
+		//const startTime = Date.now();
 		this.possibleMoves = this.mover.getAllPossibleMoves(p);
+		//console.log(`${Date.now() - startTime}ms`);
 	}
 
 	applyFen(fenStr: string) {
