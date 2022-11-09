@@ -104,8 +104,8 @@ export class Mover {
 		return false;
 	}
 
-	areSquareAttacked(p: Position, squareIndexes: number[], attackerArmyIndex: number) {
-		return squareIndexes.every(i => this.isSquareAttacked(p, i, attackerArmyIndex));
+	areSomeSquareAttacked(p: Position, squareIndexes: number[], attackerArmyIndex: number) {
+		return squareIndexes.some(i => this.isSquareAttacked(p, i, attackerArmyIndex));
 	}
 
 	getMovesForPawn(p: Position, i: number): Move[] {
@@ -304,6 +304,23 @@ export class Mover {
 		}
 	}
 
+	removeKingAttackedMoves(p: Position, moves: Move[]) {
+		let move: Move;
+		const myArmyIndex = p.armyIndex;
+		const attackerArmyIndex = Army.flipArmyIndex(myArmyIndex);
+		const myKingLetter: string = this.getCasedPieceType(p, PieceType.KING);
+		let index = 0;
+		while (index < moves.length) {
+			move = moves[index];
+			const myKingIndex = move.newPosition.pieceData.findIndex(p => p === myKingLetter);
+			if (myKingIndex >= 0 && this.isSquareAttacked(move.newPosition, myKingIndex, attackerArmyIndex)) {
+				moves.splice(index, 1);
+			} else {
+				index++;
+			}
+		}
+	}
+
 	resolveAllAmbiguousMoveNames(moves: Move[]) {
 		const moveNames = new Set<string>();
 		const ambiguousNames = new Set<string>();
@@ -341,7 +358,7 @@ export class Mover {
 
 	getCastlingMoves(p: Position): Move[] {
 		const moves: Move[] = [];
-		if (p.armyIndex === 0 && p.castlingOptions[0][0] && !p.pieceData[61] && !p.pieceData[62] && !this.areSquareAttacked(p, [60, 61, 62], 1)) {
+		if (p.armyIndex === 0 && p.castlingOptions[0][0] && !p.pieceData[61] && !p.pieceData[62] && !this.areSomeSquareAttacked(p, [60, 61, 62], 1)) {
 			const np = Position.createNextPosition(p);
 			np.pieceData[60] = '';
 			np.pieceData[61] = 'R';
@@ -351,7 +368,7 @@ export class Mover {
 			np.castlingOptions[0][1] = false;
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 60, 62, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 63, to: 61 }, p, np));
 		}
-		if (p.armyIndex === 0 && p.castlingOptions[0][1] && !p.pieceData[57] && !p.pieceData[58] && !p.pieceData[59] && !this.areSquareAttacked(p, [58, 59, 60], 1)) {
+		if (p.armyIndex === 0 && p.castlingOptions[0][1] && !p.pieceData[57] && !p.pieceData[58] && !p.pieceData[59] && !this.areSomeSquareAttacked(p, [58, 59, 60], 1)) {
 			const np = Position.createNextPosition(p);
 			np.pieceData[56] = '';
 			np.pieceData[58] = 'K';
@@ -361,7 +378,7 @@ export class Mover {
 			np.castlingOptions[0][1] = false;
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 60, 58, new Set([MoveType.CASTLING, MoveType.CASTLING_QS]), `O-O-O`, -1, { from: 56, to: 59 }, p, np));
 		}
-		if (p.armyIndex === 1 && p.castlingOptions[1][0] && !p.pieceData[5] && !p.pieceData[6] && !this.areSquareAttacked(p, [4, 5, 6], 0)) {
+		if (p.armyIndex === 1 && p.castlingOptions[1][0] && !p.pieceData[5] && !p.pieceData[6] && !this.areSomeSquareAttacked(p, [4, 5, 6], 0)) {
 			const np = Position.createNextPosition(p);
 			np.pieceData[4] = '';
 			np.pieceData[5] = 'r';
@@ -371,7 +388,7 @@ export class Mover {
 			np.castlingOptions[1][1] = false;
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 4, 6, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 7, to: 5 }, p, np));
 		}
-		if (p.armyIndex === 1 && p.castlingOptions[1][1] && !p.pieceData[1] && !p.pieceData[2] && !p.pieceData[3] && !this.areSquareAttacked(p, [2, 3, 4], 0)) {
+		if (p.armyIndex === 1 && p.castlingOptions[1][1] && !p.pieceData[1] && !p.pieceData[2] && !p.pieceData[3] && !this.areSomeSquareAttacked(p, [2, 3, 4], 0)) {
 			const np = Position.createNextPosition(p);
 			np.pieceData[0] = '';
 			np.pieceData[2] = 'k';
@@ -382,23 +399,6 @@ export class Mover {
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 4, 2, new Set([MoveType.CASTLING, MoveType.CASTLING_QS]), `O-O-O`, -1, { from: 0, to: 3 }, p, np));
 		}
 		return moves;
-	}
-
-	removeKingAttackedMoves(p: Position, moves: Move[]) {
-		let move: Move;
-		const myArmyIndex = p.armyIndex;
-		const attackerArmyIndex = Army.flipArmyIndex(myArmyIndex);
-		const myKingLetter: string = this.getCasedPieceType(p, PieceType.KING);
-		let index = 0;
-		while (index < moves.length) {
-			move = moves[index];
-			const myKingIndex = move.newPosition.pieceData.findIndex(p => p === myKingLetter);
-			if (myKingIndex >= 0 && this.isSquareAttacked(move.newPosition, myKingIndex, attackerArmyIndex)) {
-				moves.splice(index, 1);
-			} else {
-				index++;
-			}
-		}
 	}
 
 	getAllPossibleMoves(p: Position): Move[] {
