@@ -62,48 +62,50 @@ export class Mover {
 
 	//endregion
 
-	areSquareAttacked(p: Position, squareIndexes: number[], attackerArmyIndex: number) {
+	isSquareAttacked(p: Position, i: number, attackerArmyIndex: number) {
 		const myArmyIndex = Army.flipArmyIndex(attackerArmyIndex);
 		const fw = this.getForwardDirection(myArmyIndex);
 		const pd = p.pieceData;
 		let aX, aY, aI;
 
-		for (const i of squareIndexes) {
-			const [x, y] = this.getXAndY(i);
-			//pawns
-			for (const d of [-1, 1]) {
-				aX = x + d;
-				aY = y + fw;
-				aI = this.getIndex(aX, aY);
-				if (this.isXOk(aX) && this.isYOk(aY) && this.isPieceOfType(p, aI, PieceType.PAWN) && this.belongsToArmy(pd, aI, attackerArmyIndex)) {
-					return true;
-				}
+		const [x, y] = this.getXAndY(i);
+		//pawns
+		for (const d of [-1, 1]) {
+			aX = x + d;
+			aY = y + fw;
+			aI = this.getIndex(aX, aY);
+			if (this.isXOk(aX) && this.isYOk(aY) && this.isPieceOfType(p, aI, PieceType.PAWN) && this.belongsToArmy(pd, aI, attackerArmyIndex)) {
+				return true;
 			}
-			//pieces
-			for (const pieceType of [PieceType.KING, PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT]) {
-				const directions: number[][] = Piece.getDirections(pieceType);
-				for (let d = 0; d < directions.length; d++) {
-					let step = 0;
-					let stop = false;
-					while (!stop) {
-						step++;
-						aX = x + directions[d][0] * step;
-						aY = y + directions[d][1] * step;
-						aI = this.getIndex(aX, aY);
-						if (!this.isXOk(aX) || !this.isYOk(aY) || this.belongsToArmy(pd, aI, myArmyIndex)) {
-							stop = true;
-						} else if (this.belongsToArmy(pd, aI, attackerArmyIndex) && this.isPieceOfType(p, aI, pieceType)) {
-							return true;
-						}
-						if (!stop && !Piece.isLongRange(pieceType)) {
-							stop = true;
-						}
+		}
+		//pieces
+		for (const pieceType of [PieceType.KING, PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT]) {
+			const directions: number[][] = Piece.getDirections(pieceType);
+			for (let d = 0; d < directions.length; d++) {
+				let step = 0;
+				let stop = false;
+				while (!stop) {
+					step++;
+					aX = x + directions[d][0] * step;
+					aY = y + directions[d][1] * step;
+					aI = this.getIndex(aX, aY);
+					if (!this.isXOk(aX) || !this.isYOk(aY) || this.belongsToArmy(pd, aI, myArmyIndex)) {
+						stop = true;
+					} else if (this.belongsToArmy(pd, aI, attackerArmyIndex) && this.isPieceOfType(p, aI, pieceType)) {
+						return true;
+					}
+					if (!stop && !Piece.isLongRange(pieceType)) {
+						stop = true;
 					}
 				}
 			}
 		}
 
 		return false;
+	}
+
+	areSquareAttacked(p: Position, squareIndexes: number[], attackerArmyIndex: number) {
+		return squareIndexes.every(i => this.isSquareAttacked(p, i, attackerArmyIndex));
 	}
 
 	getMovesForPawn(p: Position, i: number): Move[] {
@@ -382,6 +384,20 @@ export class Mover {
 		return moves;
 	}
 
+	removeKingAttackedMoves(p: Position, moves: Move[]) {
+		let move: Move;
+		const myArmyIndex = p.armyIndex;
+		const attackerArmyIndex = Army.flipArmyIndex(myArmyIndex);
+		const myKingLetter: string = this.getCasedPieceType(p, PieceType.KING);
+		for (let index = 0; index < moves.length; index++) {
+			move = moves[index];
+			const myKingIndex = move.newPosition.pieceData.findIndex(p => p === myKingLetter);
+			if (myKingIndex >= 0 && this.isSquareAttacked(move.newPosition, myKingIndex, attackerArmyIndex)) {
+				moves.splice(index, 1);
+			}
+		}
+	}
+
 	getAllPossibleMoves(p: Position): Move[] {
 		const moves: Move[] = [];
 		for (let i = 0; i < p.pieceData.length; i++) {
@@ -395,6 +411,7 @@ export class Mover {
 			}
 		}
 		this.resolveAllAmbiguousMoveNames(moves);
+		this.removeKingAttackedMoves(p, moves);
 		if (Position.hasAnyCastlingOptions(p, p.armyIndex)) {
 			this.updateCastlingOptions(p, moves);
 			moves.push(...this.getCastlingMoves(p));
