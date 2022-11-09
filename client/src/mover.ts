@@ -389,11 +389,14 @@ export class Mover {
 		const myArmyIndex = p.armyIndex;
 		const attackerArmyIndex = Army.flipArmyIndex(myArmyIndex);
 		const myKingLetter: string = this.getCasedPieceType(p, PieceType.KING);
-		for (let index = 0; index < moves.length; index++) {
+		let index = 0;
+		while (index < moves.length) {
 			move = moves[index];
 			const myKingIndex = move.newPosition.pieceData.findIndex(p => p === myKingLetter);
 			if (myKingIndex >= 0 && this.isSquareAttacked(move.newPosition, myKingIndex, attackerArmyIndex)) {
 				moves.splice(index, 1);
+			} else {
+				index++;
 			}
 		}
 	}
