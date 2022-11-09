@@ -56,22 +56,22 @@ export class Board {
 		return true;
 	}
 
-	onlyOneBishopLeft() {
-		let bishopCount = 0;
+	onlyOnePieceLeft(pieceType: PieceType) {
+		let count = 0;
 		for (let i = 0; i < 64; i++) {
 			if (!this.squares[i].piece) {
 				continue;
 			}
-			if (this.squares[i].piece?.type !== PieceType.KING && this.squares[i].piece?.type !== PieceType.BISHOP) {
+			if (this.squares[i].piece?.type !== PieceType.KING && this.squares[i].piece?.type !== pieceType) {
 				return false;
 			}
-			if (this.squares[i].piece?.type === PieceType.BISHOP) {
-				bishopCount++;
-				if (bishopCount > 1) {
+			if (this.squares[i].piece?.type === pieceType) {
+				count++;
+				if (count > 1) {
 					return false;
 				}
 			}
 		}
-		return bishopCount === 1;
+		return count === 1;
 	}
 }
