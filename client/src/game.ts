@@ -43,12 +43,14 @@ export class Game {
 	}
 
 	checkForGameEnded() {
+		//no possible moves
 		if (this.possibleMoves.length === 0) {
 			const m = this.getCurMove();
 			if (!m) {
 				return;
 			}
 			if (m.types.has(MoveType.CHECKMATE)) {
+				//checkmate
 				this.results.add(GameResult.WIN);
 				this.results.add(GameResult.CHECKMATE);
 				if (m.armyIndex === 0) {
@@ -60,11 +62,14 @@ export class Game {
 				}
 				return;
 			}
+			//stalemate
 			this.results.add(GameResult.DRAW);
 			this.results.add(GameResult.STALEMATE);
 			console.log('½-½ (stalemate)');
 			return;
 		}
+
+		//fifty moves
 		const p = this.getCurPosition();
 		if (p && p.halfMoveClock === 100) {
 			this.results.add(GameResult.DRAW);
@@ -72,6 +77,8 @@ export class Game {
 			console.log('½-½ (fifty moves)');
 			return;
 		}
+
+		//threefold repetition
 		if (this.positions.length >= 8) {
 			const ps = {};
 			for (let i = this.positions.length - 1; i >= 0; i--) {
@@ -89,6 +96,14 @@ export class Game {
 				}
 			}
 		}
+
+		//insufficient material
+		if (this.board.onlyKingsLeft()) {
+			this.results.add(GameResult.DRAW);
+			this.results.add(GameResult.INSUFFICIENT_MATERIAL);
+			console.log('½-½ (insufficient material)');
+			return;
+		}
 	}
 
 	pushPosition(p: Position) {
@@ -102,7 +117,6 @@ export class Game {
 
 	applyFen(fenStr: string) {
 		const position = Fen.parseFenStr(fenStr);
-		this.pushPosition(position);
 		for (let i = 0; i < 64; i++) {
 			const char = position.pieceData[i];
 			if (!char) {
@@ -113,6 +127,7 @@ export class Game {
 			const piece = this.armies[armyIndex].createAndAddPiece(char.toLowerCase() as PieceType);
 			this.board.placePiece(piece, i);
 		}
+		this.pushPosition(position);
 	}
 
 	isInCheck() {

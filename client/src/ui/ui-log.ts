@@ -100,6 +100,8 @@ export class UiLog {
 				gameResultElm.textContent += ` (fifty moves)`;
 			} else if (results.has(GameResult.THREEFOLD_REPETITION)) {
 				gameResultElm.textContent += ` (threefold repetition)`;
+			} else if (results.has(GameResult.INSUFFICIENT_MATERIAL)) {
+				gameResultElm.textContent += ` (insufficient material)`;
 			}
 		}
 		fullMoveElm.appendChild(gameResultElm);
