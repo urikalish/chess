@@ -26,7 +26,7 @@
     "http-server": "http-server ./public --port 6464 --cors -c-1",
     "pre-commit": "yarn build"
   },
-  "devDependencies": {
+  "dependencies": {
     "@open-wc/building-rollup": "^2.0.1",
     "@rollup/plugin-json": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
