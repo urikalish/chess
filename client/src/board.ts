@@ -1,5 +1,6 @@
 import { Square } from './square';
 import { Piece } from './piece';
+import { PieceTypeCased } from './types';
 
 export class Board {
 	squares: Square[];
@@ -36,5 +37,10 @@ export class Board {
 		if (index > -1) {
 			this.clearPiece(index);
 		}
+	}
+
+	getKingIndex(armyIndex: number) {
+		const myKingLetter: string = armyIndex === 0 ? PieceTypeCased.WHITE_KING : PieceTypeCased.BLACK_KING;
+		return this.squares.findIndex(s => s.piece?.typeCased === myKingLetter);
 	}
 }

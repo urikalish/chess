@@ -31,6 +31,10 @@
 .square.possible-to.en-passant-target::after {
     inset: 0 0 0 0;
 }
+.square.checked-king {
+    background-color: var(--color--4);
+    opacity: 0.8;
+}
 .square.selected-square {
     background-color: var(--color--3);
     opacity: 0.8;

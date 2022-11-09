@@ -44,9 +44,6 @@ export class UiMain {
 			if (lastMove && lastMove.to === index) {
 				squareElm.classList.add('last-move-to');
 			}
-			if (index === this.selectedIndex) {
-				squareElm.classList.add('selected-square');
-			}
 			if (this.game.possibleMoves.find(m => m.from === index)) {
 				if (this.selectedIndex === -1) {
 					squareElm.classList.add('possible-from');
@@ -54,6 +51,12 @@ export class UiMain {
 			}
 			if (this.selectedIndex !== -1 && this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === index)) {
 				squareElm.classList.add('possible-to');
+			}
+			if (piece.type === PieceType.KING && piece.armyIndex !== lastMove?.armyIndex && this.game.isInCheck()) {
+				squareElm.classList.add('checked-king');
+			}
+			if (index === this.selectedIndex) {
+				squareElm.classList.add('selected-square');
 			}
 		}
 	}

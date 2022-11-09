@@ -62,6 +62,14 @@ export class Game {
 		}
 	}
 
+	isInCheck() {
+		const p = this.getCurPosition();
+		if (!p) {
+			return false;
+		}
+		return this.mover.isSquareAttacked(p, this.board.getKingIndex(p.armyIndex), Army.flipArmyIndex(p.armyIndex));
+	}
+
 	move(m: Move | undefined): Move | null {
 		if (!m) {
 			return null;
