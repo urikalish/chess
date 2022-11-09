@@ -89,8 +89,14 @@ export class UiLog {
 		const gameResultElm = UiLog.createGameResultElm();
 		if (results.has(GameResult.WIN)) {
 			gameResultElm.textContent = results.has(GameResult.WIN_BY_WHITE) ? '1-0' : '0-1';
+			if (results.has(GameResult.CHECKMATE)) {
+				gameResultElm.textContent += ` (checkmate by ${results.has(GameResult.WIN_BY_WHITE) ? 'white' : 'black'})`;
+			}
 		} else if (results.has(GameResult.DRAW)) {
 			gameResultElm.textContent = '½-½';
+			if (results.has(GameResult.STALEMATE)) {
+				gameResultElm.textContent += ` (stalemate)`;
+			}
 		}
 		fullMoveElm.appendChild(gameResultElm);
 		panelElm.appendChild(fullMoveElm);

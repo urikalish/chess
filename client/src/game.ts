@@ -53,15 +53,15 @@ export class Game {
 				this.results.add(GameResult.CHECKMATE);
 				if (m.armyIndex === 0) {
 					this.results.add(GameResult.WIN_BY_WHITE);
-					console.log('1-0');
+					console.log('1-0 (checkmate by white)');
 				} else {
 					this.results.add(GameResult.WIN_BY_BLACK);
-					console.log('0-1');
+					console.log('0-1 (checkmate by black)');
 				}
 			} else {
 				this.results.add(GameResult.DRAW);
 				this.results.add(GameResult.STALEMATE);
-				console.log('½-½');
+				console.log('½-½ (stalemate)');
 			}
 		}
 	}
