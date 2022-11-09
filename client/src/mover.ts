@@ -93,6 +93,8 @@ export class Mover {
 						stop = true;
 					} else if (this.belongsToArmy(pd, aI, attackerArmyIndex) && this.isPieceOfType(p, aI, pieceType)) {
 						return true;
+					} else if (this.belongsToArmy(pd, aI, attackerArmyIndex) && !this.isPieceOfType(p, aI, pieceType)) {
+						stop = true;
 					}
 					if (!stop && !Piece.isLongRange(pieceType)) {
 						stop = true;
@@ -108,16 +110,16 @@ export class Mover {
 		return squareIndexes.some(i => this.isSquareAttacked(p, i, attackerArmyIndex));
 	}
 
-	getMovesForPawn(p: Position, i: number): Move[] {
+	getPawnMoves(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
+		let np, fromFile, to, toX, toY, toFile, toRank, epTargetIndex;
 		const [x, y] = this.getXAndY(i);
 		const fw = this.getForwardDirection(p.armyIndex);
-		let np;
 
 		//pawn single step
-		const to = this.getIndex(x, y + fw);
+		to = this.getIndex(x, y + fw);
 		if (this.isYOk(y + fw) && this.isEmpty(p, to)) {
-			const [toFile, toRank] = this.getFileAndRank(to);
+			[toFile, toRank] = this.getFileAndRank(to);
 			if (this.getRank(i) !== (p.armyIndex === 0 ? 7 : 2)) {
 				//pawn normal move
 				np = Position.createNextPosition(p);
@@ -152,10 +154,10 @@ export class Mover {
 
 		//pawn double start
 		if (this.getRank(i) === (p.armyIndex === 0 ? 2 : 7)) {
-			const epTargetIndex = i + 8 * fw;
-			const to = i + 16 * fw;
+			epTargetIndex = i + 8 * fw;
+			to = i + 16 * fw;
 			if (this.isEmpty(p, to) && this.isEmpty(p, epTargetIndex)) {
-				const [toFile, toRank] = this.getFileAndRank(to);
+				[toFile, toRank] = this.getFileAndRank(to);
 				np = Position.createNextPosition(p);
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
@@ -167,12 +169,12 @@ export class Mover {
 
 		//pawn capture
 		[-1, 1].forEach(d => {
-			const toX = x + d;
-			const toY = y + fw;
-			const to = this.getIndex(toX, toY);
-			const [toFile, toRank] = this.getFileAndRank(to);
+			toX = x + d;
+			toY = y + fw;
+			to = this.getIndex(toX, toY);
+			[toFile, toRank] = this.getFileAndRank(to);
 			if (this.isXOk(toX) && this.isYOk(toY) && (this.belongsToArmy(p.pieceData, to, Army.flipArmyIndex(p.armyIndex)) || to == p.epTargetIndex)) {
-				const [fromFile] = this.getFileAndRank(i);
+				[fromFile] = this.getFileAndRank(i);
 				if (this.getRank(i) !== (p.armyIndex === 0 ? 7 : 2)) {
 					if (to !== p.epTargetIndex) {
 						//pawn simple capture
@@ -233,26 +235,28 @@ export class Mover {
 		return moves;
 	}
 
-	getMovesForPiece(p: Position, i: number): Move[] {
+	getPieceMoves(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
+		let np, to, toX, toY, toFile, toRank;
 		const [x, y] = this.getXAndY(i);
 		const pieceType = p.pieceData[i].toLowerCase() as PieceType;
 		const directions: number[][] = Piece.getDirections(pieceType);
+
 		for (let d = 0; d < directions.length; d++) {
 			let step = 0;
 			let stop = false;
 			while (!stop) {
 				step++;
-				const toX = x + directions[d][0] * step;
-				const toY = y + directions[d][1] * step;
-				const to = this.getIndex(toX, toY);
+				toX = x + directions[d][0] * step;
+				toY = y + directions[d][1] * step;
+				to = this.getIndex(toX, toY);
 				if (!this.isXOk(toX) || !this.isYOk(toY) || this.belongsToArmy(p.pieceData, to, p.armyIndex)) {
 					stop = true;
 				} else {
-					const [toFile, toRank] = this.getFileAndRank(to);
+					[toFile, toRank] = this.getFileAndRank(to);
 					if (this.isEmpty(p, to)) {
 						//piece move
-						const np = Position.createNextPosition(p);
+						np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 						moves.push(
@@ -260,7 +264,7 @@ export class Mover {
 						);
 					} else if (this.belongsToArmy(p.pieceData, to, Army.flipArmyIndex(p.armyIndex))) {
 						//piece capture
-						const np = Position.createNextPosition(p);
+						np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 						np.halfMoveClock = 0;
@@ -279,41 +283,42 @@ export class Mover {
 	}
 
 	resolveOneAmbiguousMoveName(moves: Move[]) {
+		let f, r;
 		const files = new Set<string>();
 		const ranks = new Set<number>();
 		moves.forEach(m => {
-			const [f, r] = this.getFileAndRank(m.from);
+			[f, r] = this.getFileAndRank(m.from);
 			files.add(f);
 			ranks.add(r);
 		});
 		if (files.size === moves.length) {
 			moves.forEach(m => {
-				const [f] = this.getFileAndRank(m.from);
+				[f] = this.getFileAndRank(m.from);
 				m.name = m.name[0] + f + m.name.slice(1, m.name.length);
 			});
 		} else if (ranks.size === moves.length) {
 			moves.forEach(m => {
-				const [, r] = this.getFileAndRank(m.from);
+				[, r] = this.getFileAndRank(m.from);
 				m.name = m.name[0] + r + m.name.slice(1, m.name.length);
 			});
 		} else {
 			moves.forEach(m => {
-				const [f, r] = this.getFileAndRank(m.from);
+				[f, r] = this.getFileAndRank(m.from);
 				m.name = m.name[0] + f + r + m.name.slice(1, m.name.length);
 			});
 		}
 	}
 
-	removeKingAttackedMoves(p: Position, moves: Move[]) {
-		let move: Move;
+	removeKingInCheckMoves(p: Position, moves: Move[]) {
+		let m: Move;
 		const myArmyIndex = p.armyIndex;
-		const attackerArmyIndex = Army.flipArmyIndex(myArmyIndex);
+		const enemyArmyIndex = Army.flipArmyIndex(myArmyIndex);
 		const myKingLetter: string = this.getCasedPieceType(p, PieceType.KING);
 		let index = 0;
 		while (index < moves.length) {
-			move = moves[index];
-			const myKingIndex = move.newPosition.pieceData.findIndex(p => p === myKingLetter);
-			if (myKingIndex >= 0 && this.isSquareAttacked(move.newPosition, myKingIndex, attackerArmyIndex)) {
+			m = moves[index];
+			const myKingIndex = m.newPosition.pieceData.findIndex(p => p === myKingLetter);
+			if (myKingIndex >= 0 && this.isSquareAttacked(m.newPosition, myKingIndex, enemyArmyIndex)) {
 				moves.splice(index, 1);
 			} else {
 				index++;
@@ -321,7 +326,7 @@ export class Mover {
 		}
 	}
 
-	resolveAllAmbiguousMoveNames(moves: Move[]) {
+	renameAmbiguousMoves(moves: Move[]) {
 		const moveNames = new Set<string>();
 		const ambiguousNames = new Set<string>();
 		moves.forEach(m => {
@@ -358,8 +363,9 @@ export class Mover {
 
 	getCastlingMoves(p: Position): Move[] {
 		const moves: Move[] = [];
+		let np;
 		if (p.armyIndex === 0 && p.castlingOptions[0][0] && !p.pieceData[61] && !p.pieceData[62] && !this.areSomeSquareAttacked(p, [60, 61, 62], 1)) {
-			const np = Position.createNextPosition(p);
+			np = Position.createNextPosition(p);
 			np.pieceData[60] = '';
 			np.pieceData[61] = 'R';
 			np.pieceData[62] = 'K';
@@ -369,7 +375,7 @@ export class Mover {
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 60, 62, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 63, to: 61 }, p, np));
 		}
 		if (p.armyIndex === 0 && p.castlingOptions[0][1] && !p.pieceData[57] && !p.pieceData[58] && !p.pieceData[59] && !this.areSomeSquareAttacked(p, [58, 59, 60], 1)) {
-			const np = Position.createNextPosition(p);
+			np = Position.createNextPosition(p);
 			np.pieceData[56] = '';
 			np.pieceData[58] = 'K';
 			np.pieceData[59] = 'R';
@@ -379,7 +385,7 @@ export class Mover {
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 60, 58, new Set([MoveType.CASTLING, MoveType.CASTLING_QS]), `O-O-O`, -1, { from: 56, to: 59 }, p, np));
 		}
 		if (p.armyIndex === 1 && p.castlingOptions[1][0] && !p.pieceData[5] && !p.pieceData[6] && !this.areSomeSquareAttacked(p, [4, 5, 6], 0)) {
-			const np = Position.createNextPosition(p);
+			np = Position.createNextPosition(p);
 			np.pieceData[4] = '';
 			np.pieceData[5] = 'r';
 			np.pieceData[6] = 'k';
@@ -389,7 +395,7 @@ export class Mover {
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 4, 6, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 7, to: 5 }, p, np));
 		}
 		if (p.armyIndex === 1 && p.castlingOptions[1][1] && !p.pieceData[1] && !p.pieceData[2] && !p.pieceData[3] && !this.areSomeSquareAttacked(p, [2, 3, 4], 0)) {
-			const np = Position.createNextPosition(p);
+			np = Position.createNextPosition(p);
 			np.pieceData[0] = '';
 			np.pieceData[2] = 'k';
 			np.pieceData[3] = 'r';
@@ -403,7 +409,6 @@ export class Mover {
 
 	handleCheckMoves(p: Position, moves: Move[]) {
 		const myArmyIndex = p.armyIndex;
-		//const enemyArmyIndex = Army.flipArmyIndex(myArmyIndex);
 		const enemyKingLetter: string = this.getCasedPieceType(p, PieceType.KING, true);
 		const enemyKingIndex = p.pieceData.findIndex(p => p === enemyKingLetter);
 		moves.forEach(m => {
@@ -411,24 +416,24 @@ export class Mover {
 				m.name += '+';
 				m.types.add(MoveType.CHECK);
 			}
-			console.log('> ' + m.name);
 		});
 	}
 
 	getAllPossibleMoves(p: Position): Move[] {
 		const moves: Move[] = [];
+		const enemyArmyIndex = Army.flipArmyIndex(p.armyIndex);
 		for (let i = 0; i < p.pieceData.length; i++) {
-			if (!p.pieceData[i] || (p.pieceData && this.belongsToArmy(p.pieceData, i, Army.flipArmyIndex(p.armyIndex)))) {
+			if (!p.pieceData[i] || (p.pieceData && this.belongsToArmy(p.pieceData, i, enemyArmyIndex))) {
 				continue;
 			}
 			if (this.isPieceOfType(p, i, PieceType.PAWN)) {
-				moves.push(...this.getMovesForPawn(p, i));
+				moves.push(...this.getPawnMoves(p, i));
 			} else {
-				moves.push(...this.getMovesForPiece(p, i));
+				moves.push(...this.getPieceMoves(p, i));
 			}
 		}
-		this.resolveAllAmbiguousMoveNames(moves);
-		this.removeKingAttackedMoves(p, moves);
+		this.renameAmbiguousMoves(moves);
+		this.removeKingInCheckMoves(p, moves);
 		if (Position.hasAnyCastlingOptions(p, p.armyIndex)) {
 			this.updateCastlingOptions(p, moves);
 			moves.push(...this.getCastlingMoves(p));
