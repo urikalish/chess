@@ -1,7 +1,7 @@
 import { Helper } from '../helper';
 import { Move } from '../move';
 import { UiHelper } from './ui-helper';
-import { MoveType } from '../types';
+import { GameResult, MoveType } from '../types';
 
 export class UiLog {
 	static startTime = 0;
@@ -16,6 +16,7 @@ export class UiLog {
 		moveNumber: 'info-log--move-number',
 		moveName: 'info-log--move-name',
 		moveTypePrefix: 'info-log--move-type-',
+		gameResult: 'info-log-game-result',
 	};
 
 	static createFullMoveElm() {
@@ -71,5 +72,27 @@ export class UiLog {
 			fullMoveElm.appendChild(blackMoveElm);
 		}
 		panelElm.scrollTo(0, panelElm.scrollHeight);
+	}
+
+	static createGameResultElm() {
+		const elm: HTMLDivElement = document.createElement('div');
+		elm.classList.add(UiLog.classNames.movePart, UiLog.classNames.gameResult);
+		return elm;
+	}
+
+	static logGameResult(results: Set<GameResult>) {
+		const panelElm = UiHelper.getElm('info-log');
+		if (!panelElm) {
+			return;
+		}
+		const fullMoveElm = UiLog.createFullMoveElm();
+		const gameResultElm = UiLog.createGameResultElm();
+		if (results.has(GameResult.WIN)) {
+			gameResultElm.textContent = results.has(GameResult.WIN_BY_WHITE) ? '1-0' : '0-1';
+		} else if (results.has(GameResult.DRAW)) {
+			gameResultElm.textContent = '½-½';
+		}
+		fullMoveElm.appendChild(gameResultElm);
+		panelElm.appendChild(fullMoveElm);
 	}
 }

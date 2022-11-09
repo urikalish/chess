@@ -5,6 +5,7 @@ import { UiHelper } from './ui-helper';
 import { UiInit } from './ui-init';
 import { UiFen } from './ui-fen';
 import { UiPromotion } from './ui-promotion';
+import { UiLog } from './ui-log';
 
 export class UiMain {
 	game: Game;
@@ -105,10 +106,17 @@ export class UiMain {
 		});
 	}
 
+	checkGameEnded() {
+		if (this.game.results.size > 0) {
+			UiLog.logGameResult(this.game.results);
+		}
+	}
+
 	updateUI() {
 		this.updateBoardSquaresUI();
 		this.updateBoardPiecesUI();
 		UiFen.updateFenUI(this.game.getCurPosition());
+		this.checkGameEnded();
 	}
 
 	createGameUI() {
@@ -119,6 +127,9 @@ export class UiMain {
 	}
 
 	handleUiSelection(newIndex: number) {
+		if (this.game.results.size > 0) {
+			return;
+		}
 		if (this.selectedIndex === newIndex) {
 			this.selectedIndex = -1;
 			this.updateUI();

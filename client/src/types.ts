@@ -36,11 +36,6 @@ export enum PieceTypeCased {
 	BLACK_KING = 'k',
 }
 
-export enum UserMsgType {
-	GAME_PHASE = 'msg-game-phase',
-	MOVE = 'msg-move',
-}
-
 export enum MoveType {
 	NA = '-',
 	NORMAL = 'normal',
@@ -61,16 +56,18 @@ export enum MoveType {
 
 export enum GameResult {
 	WIN = 'win',
+	WIN_BY_WHITE = 'checkmate-by-white',
+	WIN_BY_BLACK = 'checkmate-by-black',
+	CHECKMATE = 'checkmate',
 	DRAW = 'draw',
-	CHECKMATE_BY_WHITE = 'checkmate-by-white',
-	CHECKMATE_BY_BLACK = 'checkmate-by-black',
 	STALEMATE = 'stalemate',
+
+	WHITE_RESIGNATION = 'white-resignation',
+	BLACK_RESIGNATION = 'black-resignation',
 	THREEFOLD_REPETITION = 'threefold-repetition',
 	FIVEFOLD_REPETITION = 'fivefold-repetition',
 	FIFTY_MOVE_RULE = 'fifty-move-rule',
 	SEVENTY_FIVE_MOVE_RULE = 'seventy-five-move-rule',
 	INSUFFICIENT_MATERIAL = 'insufficient-material',
-	WHITE_RESIGNATION = 'white-resignation',
-	BLACK_RESIGNATION = 'black-resignation',
 	MUTUAL_AGREEMENT = 'mutual-agreement',
 }

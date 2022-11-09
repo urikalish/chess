@@ -1,4 +1,4 @@
-import { ColorType, MoveType, PieceType, PlayerType } from './types';
+import { ColorType, GameResult, MoveType, PieceType, PlayerType } from './types';
 import { Fen } from './fen';
 import { Player } from './player';
 import { Piece } from './piece';
@@ -18,6 +18,7 @@ export class Game {
 	possibleMoves: Move[] = [];
 	startTime = 0;
 	mover = new Mover();
+	results: Set<GameResult> = new Set();
 
 	constructor(player0Type: PlayerType, player0Name: string, player1Type: PlayerType, player1Name: string, fenStr: string, startTime: number) {
 		this.players = [new Player(0, player0Type, player0Name), new Player(1, player1Type, player1Name)];
@@ -41,11 +42,36 @@ export class Game {
 		this.moves.push(m);
 	}
 
+	checkForGameEnded() {
+		if (this.possibleMoves.length === 0) {
+			const m = this.getCurMove();
+			if (!m) {
+				return;
+			}
+			if (m.types.has(MoveType.CHECKMATE)) {
+				this.results.add(GameResult.WIN);
+				this.results.add(GameResult.CHECKMATE);
+				if (m.armyIndex === 0) {
+					this.results.add(GameResult.WIN_BY_WHITE);
+					console.log('1-0');
+				} else {
+					this.results.add(GameResult.WIN_BY_BLACK);
+					console.log('0-1');
+				}
+			} else {
+				this.results.add(GameResult.DRAW);
+				this.results.add(GameResult.STALEMATE);
+				console.log('½-½');
+			}
+		}
+	}
+
 	pushPosition(p: Position) {
 		console.log(Fen.getFenStr(p));
 		this.positions.push(p);
 		//const startTime = Date.now();
 		this.possibleMoves = this.mover.getAllPossibleMoves(p);
+		this.checkForGameEnded();
 		//console.log(`${Date.now() - startTime}ms`);
 	}
 

@@ -92,6 +92,9 @@
 .info-log--move-type-check {
     color: var(--color--4);
 }
+.info-log-game-result {
+    color: var(--color--2);
+}
 .info-fen {
     border-top: 1px solid #999;
     padding-top: 0.5rem;
