@@ -49,8 +49,8 @@ export class Mover {
 	isPieceOfType(p: Position, i: number, pieceType: PieceType): boolean {
 		return p.pieceData[i].toLowerCase() === pieceType;
 	}
-	getCasedPieceType(p: Position, pieceType: PieceType) {
-		return p.armyIndex === 0 ? pieceType.toUpperCase() : pieceType.toLowerCase();
+	getCasedPieceType(p: Position, pieceType: PieceType, flipArmy = false) {
+		return flipArmy ? (p.armyIndex === 1 ? pieceType.toUpperCase() : pieceType.toLowerCase()) : p.armyIndex === 0 ? pieceType.toUpperCase() : pieceType.toLowerCase();
 	}
 	getPromotionMoveType(pieceType: PieceType): MoveType {
 		if (pieceType === PieceType.QUEEN) return MoveType.PROMOTION_TO_Q;
@@ -401,6 +401,20 @@ export class Mover {
 		return moves;
 	}
 
+	handleCheckMoves(p: Position, moves: Move[]) {
+		const myArmyIndex = p.armyIndex;
+		//const enemyArmyIndex = Army.flipArmyIndex(myArmyIndex);
+		const enemyKingLetter: string = this.getCasedPieceType(p, PieceType.KING, true);
+		const enemyKingIndex = p.pieceData.findIndex(p => p === enemyKingLetter);
+		moves.forEach(m => {
+			if (this.isSquareAttacked(m.newPosition, enemyKingIndex, myArmyIndex)) {
+				m.name += '+';
+				m.types.add(MoveType.CHECK);
+			}
+			console.log('> ' + m.name);
+		});
+	}
+
 	getAllPossibleMoves(p: Position): Move[] {
 		const moves: Move[] = [];
 		for (let i = 0; i < p.pieceData.length; i++) {
@@ -419,6 +433,7 @@ export class Mover {
 			this.updateCastlingOptions(p, moves);
 			moves.push(...this.getCastlingMoves(p));
 		}
+		this.handleCheckMoves(p, moves);
 		return moves;
 	}
 }

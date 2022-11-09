@@ -89,6 +89,9 @@
 .info-log--move-type-promotion {
     color: var(--color--1);
 }
+.info-log--move-type-check {
+    color: var(--color--4);
+}
 .info-fen {
     border-top: 1px solid #999;
     padding-top: 0.5rem;

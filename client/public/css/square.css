@@ -32,7 +32,7 @@
     inset: 0 0 0 0;
 }
 .square.checked-king {
-    background-color: var(--color--4);
+    background-color: var(--color--5);
     opacity: 0.8;
 }
 .square.selected-square {

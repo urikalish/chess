@@ -55,6 +55,7 @@ export enum MoveType {
 	CASTLING = 'castling',
 	CASTLING_KS = 'castling-ks',
 	CASTLING_QS = 'castling-qs',
+	CHECK = 'check',
 }
 
 export enum GameResult {
