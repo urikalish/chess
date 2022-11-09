@@ -98,7 +98,7 @@ export class Game {
 		}
 
 		//insufficient material
-		if (this.board.onlyKingsLeft()) {
+		if (this.board.onlyKingsLeft() || this.board.onlyOneBishopLeft()) {
 			this.results.add(GameResult.DRAW);
 			this.results.add(GameResult.INSUFFICIENT_MATERIAL);
 			console.log('½-½ (insufficient material)');

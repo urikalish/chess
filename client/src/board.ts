@@ -46,10 +46,32 @@ export class Board {
 
 	onlyKingsLeft() {
 		for (let i = 0; i < 64; i++) {
-			if (this.squares[i].piece && this.squares[i].piece?.type !== PieceType.KING) {
+			if (!this.squares[i].piece) {
+				continue;
+			}
+			if (this.squares[i].piece?.type !== PieceType.KING) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	onlyOneBishopLeft() {
+		let bishopCount = 0;
+		for (let i = 0; i < 64; i++) {
+			if (!this.squares[i].piece) {
+				continue;
+			}
+			if (this.squares[i].piece?.type !== PieceType.KING && this.squares[i].piece?.type !== PieceType.BISHOP) {
+				return false;
+			}
+			if (this.squares[i].piece?.type === PieceType.BISHOP) {
+				bishopCount++;
+				if (bishopCount > 1) {
+					return false;
+				}
+			}
+		}
+		return bishopCount === 1;
 	}
 }
