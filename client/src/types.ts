@@ -10,6 +10,11 @@ export enum ColorType {
 	BLACK = 'black',
 }
 
+export enum SquareColor {
+	LIGHT = 'light',
+	DARK = 'dark',
+}
+
 export enum PieceType {
 	NA = '-',
 	PAWN = 'p',

@@ -1,6 +1,6 @@
 import { Square } from './square';
 import { Piece } from './piece';
-import { PieceType, PieceTypeCased } from './types';
+import { PieceType, PieceTypeCased, SquareColor } from './types';
 
 export class Board {
 	squares: Square[];
@@ -73,5 +73,41 @@ export class Board {
 			}
 		}
 		return count === 1;
+	}
+
+	getSquareColor(i): SquareColor {
+		const [x, y] = [i % 8, Math.trunc(i / 8)];
+		if (y % 2 === 0) {
+			return x % 2 === 0 ? SquareColor.LIGHT : SquareColor.DARK;
+		} else {
+			return x % 2 === 0 ? SquareColor.DARK : SquareColor.LIGHT;
+		}
+	}
+
+	onlyTwoSameColorBishopsLeft() {
+		let whiteBishopIndex = -1;
+		let blackBishopIndex = -1;
+		for (let i = 0; i < 64; i++) {
+			if (!this.squares[i].piece) {
+				continue;
+			}
+			if (this.squares[i].piece?.type !== PieceType.KING && this.squares[i].piece?.type !== PieceType.BISHOP) {
+				return false;
+			}
+			if (this.squares[i].piece?.typeCased === PieceTypeCased.WHITE_BISHOP) {
+				if (whiteBishopIndex === -1) {
+					whiteBishopIndex = i;
+				} else {
+					return false;
+				}
+			} else if (this.squares[i].piece?.typeCased === PieceTypeCased.BLACK_BISHOP) {
+				if (blackBishopIndex === -1) {
+					blackBishopIndex = i;
+				} else {
+					return false;
+				}
+			}
+		}
+		return whiteBishopIndex !== -1 && blackBishopIndex !== -1 && this.getSquareColor(whiteBishopIndex) === this.getSquareColor(blackBishopIndex);
 	}
 }
