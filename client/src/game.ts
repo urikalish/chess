@@ -58,17 +58,35 @@ export class Game {
 					this.results.add(GameResult.WIN_BY_BLACK);
 					console.log('0-1 (checkmate by black)');
 				}
-			} else {
-				this.results.add(GameResult.DRAW);
-				this.results.add(GameResult.STALEMATE);
-				console.log('½-½ (stalemate)');
+				return;
 			}
-		} else {
-			const p = this.getCurPosition();
-			if (p && p.halfMoveClock === 100) {
-				this.results.add(GameResult.DRAW);
-				this.results.add(GameResult.FIFTY_MOVES);
-				console.log('½-½ (fifty moves)');
+			this.results.add(GameResult.DRAW);
+			this.results.add(GameResult.STALEMATE);
+			console.log('½-½ (stalemate)');
+			return;
+		}
+		const p = this.getCurPosition();
+		if (p && p.halfMoveClock === 100) {
+			this.results.add(GameResult.DRAW);
+			this.results.add(GameResult.FIFTY_MOVES);
+			console.log('½-½ (fifty moves)');
+			return;
+		}
+		if (this.positions.length >= 8) {
+			const ps = {};
+			for (let i = this.positions.length - 1; i >= 0; i--) {
+				const str = Fen.getFenStr(this.positions[i], true);
+				if (!ps[str]) {
+					ps[str] = 1;
+				} else {
+					ps[str]++;
+					if (ps[str] === 3) {
+						this.results.add(GameResult.DRAW);
+						this.results.add(GameResult.THREEFOLD_REPETITION);
+						console.log('½-½ (threefold repetition)');
+						return;
+					}
+				}
 			}
 		}
 	}

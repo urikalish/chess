@@ -25,7 +25,7 @@ export class Fen {
 		return Position.createInstance(pd, parts[1] === 'w' ? 0 : 1, castlingOptions, epTargetIndex, Number(parts[4]), Number(parts[5]));
 	}
 
-	static getFenStr(p: Position | null) {
+	static getFenStr(p: Position | null, forRepetitionCheck = false) {
 		if (!p) {
 			return '';
 		}
@@ -69,8 +69,10 @@ export class Fen {
 		parts[1] = ['w', 'b'][p.armyIndex];
 		parts[2] = castlingOptions || '-';
 		parts[3] = p.epTargetIndex === -1 ? '-' : Square.getNameByIndex(p.epTargetIndex);
-		parts[4] = String(p.halfMoveClock);
-		parts[5] = String(p.fullMoveNum);
+		if (!forRepetitionCheck) {
+			parts[4] = String(p.halfMoveClock);
+			parts[5] = String(p.fullMoveNum);
+		}
 		return parts.join(' ');
 	}
 }

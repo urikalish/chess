@@ -61,13 +61,13 @@ export enum GameResult {
 	CHECKMATE = 'checkmate',
 	DRAW = 'draw',
 	STALEMATE = 'stalemate',
+	THREEFOLD_REPETITION = 'threefold-repetition',
+	FIVEFOLD_REPETITION = 'fivefold-repetition',
 	FIFTY_MOVES = 'fifty-moves',
 	SEVENTY_FIVE_MOVES = 'seventy-five-moves',
+	INSUFFICIENT_MATERIAL = 'insufficient-material',
 
 	WHITE_RESIGNATION = 'white-resignation',
 	BLACK_RESIGNATION = 'black-resignation',
-	THREEFOLD_REPETITION = 'threefold-repetition',
-	FIVEFOLD_REPETITION = 'fivefold-repetition',
-	INSUFFICIENT_MATERIAL = 'insufficient-material',
 	MUTUAL_AGREEMENT = 'mutual-agreement',
 }

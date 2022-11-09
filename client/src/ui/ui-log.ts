@@ -98,6 +98,8 @@ export class UiLog {
 				gameResultElm.textContent += ` (stalemate)`;
 			} else if (results.has(GameResult.FIFTY_MOVES)) {
 				gameResultElm.textContent += ` (fifty moves)`;
+			} else if (results.has(GameResult.THREEFOLD_REPETITION)) {
+				gameResultElm.textContent += ` (threefold repetition)`;
 			}
 		}
 		fullMoveElm.appendChild(gameResultElm);
