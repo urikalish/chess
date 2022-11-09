@@ -63,6 +63,13 @@ export class Game {
 				this.results.add(GameResult.STALEMATE);
 				console.log('½-½ (stalemate)');
 			}
+		} else {
+			const p = this.getCurPosition();
+			if (p && p.halfMoveClock === 100) {
+				this.results.add(GameResult.DRAW);
+				this.results.add(GameResult.FIFTY_MOVES);
+				console.log('½-½ (fifty moves)');
+			}
 		}
 	}
 

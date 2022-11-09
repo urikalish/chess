@@ -96,6 +96,8 @@ export class UiLog {
 			gameResultElm.textContent = '½-½';
 			if (results.has(GameResult.STALEMATE)) {
 				gameResultElm.textContent += ` (stalemate)`;
+			} else if (results.has(GameResult.FIFTY_MOVES)) {
+				gameResultElm.textContent += ` (fifty moves)`;
 			}
 		}
 		fullMoveElm.appendChild(gameResultElm);
