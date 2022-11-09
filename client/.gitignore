@@ -1,5 +1,7 @@
 /.idea
 /node_modules
 /public/js/main.js
+/public/js/main.min.js
+/public/js/main.min.js.map
 /tsc
 yarn-error.log
