@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "build": "cd client && yarn build",
     "prepare": "husky install",
     "post-checkout": "cd client && yarn post-checkout",
     "post-merge": "cd client && yarn post-merge",
