@@ -76,11 +76,24 @@ export class UiInit {
 		}
 	}
 
+	setUpActionButtons() {
+		const restartButtonElm = UiHelper.getElm('restart-button');
+		if (!restartButtonElm) {
+			return;
+		}
+		restartButtonElm.addEventListener('click', () => {
+			if (confirm('Restart game?')) {
+				location.reload();
+			}
+		});
+	}
+
 	createGameUI(players: Player[], board: Board, isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void, onclickPiece: (MouseEvent) => void) {
 		this.createPlayersInfoUI(players, isBoardFlipped);
 		this.createBoardGuttersUI(isBoardFlipped);
 		this.createBoardSquaresUI(isBoardFlipped, onClickSquare);
 		this.createAllPieceElms(board, isBoardFlipped, onclickPiece);
+		this.setUpActionButtons();
 		const pageBgImageElm = UiHelper.getElm('page-bg-img');
 		const mainContentElm = UiHelper.getElm('main-content');
 		const welcomePanelElm = UiHelper.getElm('welcome-panel');

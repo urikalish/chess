@@ -78,6 +78,8 @@
     color: #999;
 }
 .info-actions {
+    display: flex;
+    justify-content: flex-end;
     margin-top: 0.5rem;
     border-top: 1px solid #666;
     padding-top: 1rem;
@@ -85,6 +87,7 @@
 .restart-button {
     cursor: pointer;
     height: 2.5rem;
-    background-color: var(--color--red--light);
+    background-color: #ccc;
+    border-radius: 0.5rem;
 }
 
