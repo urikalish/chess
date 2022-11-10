@@ -153,4 +153,12 @@
     .info-log {
         inset: 0;
     }
+    .info-log--full-move {
+        margin-top: 0.2rem;
+        margin-right: 0.5rem;
+    }
+    .info-log--move-part {
+        margin-right: 0;
+        cursor: default;
+    }
 }
