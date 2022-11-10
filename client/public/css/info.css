@@ -20,12 +20,16 @@
 .info-log-wrapper {
     overflow: hidden;
     position: relative;
+}
+.info-log-background {
+    position: absolute;
+    inset: 0 0 4rem 0;
     background: linear-gradient( to bottom, #222, #222 95%, #333 95%, #333);
     background-size: 100% 2.4rem;
 }
 .info-log {
     position: absolute;
-    inset: 0;
+    inset: 0 0 4rem 0;
     overflow: auto;
     display: flex;
     flex-wrap: wrap;
@@ -73,9 +77,11 @@
     color: var(--color--green--light);
 }
 .info-fen {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     border-top: 1px solid #666;
-    padding-top: 0.5rem;
+    padding-top: 1rem;
+}
+.info-fen-text {
     word-break: break-all;
     color: #999;
 }
@@ -86,11 +92,22 @@
     border-top: 1px solid #666;
     padding-top: 1rem;
 }
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0.5rem 0;
+}
+.info-log-wrapper > .action-buttons {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
 .action-button {
     cursor: pointer;
     width: 10rem;
     height: 2.5rem;
-    background-color: #999;
+    background-color: #444;
+    color: #ccc;
     border: none;
     border-radius: 0.5rem;
     margin-left: 0.5rem;
@@ -100,5 +117,14 @@
 .action-button:hover,
 .action-button:focus-visible,
 .action-button:active {
-    background-color: #bbb;
+    background-color: #555;
+}
+.restart-button {
+    background-color: #966;
+    color: #000;
+}
+.restart-button:hover,
+.restart-button:focus-visible,
+.restart-button:active {
+    background-color: #a77;
 }

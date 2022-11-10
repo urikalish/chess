@@ -86,11 +86,11 @@ export class UiInit {
 			});
 		}
 		const copyFenButtonElm = UiHelper.getElm('copy-fen-button');
-		const infoFenElm = UiHelper.getElm('info-fen');
-		if (copyFenButtonElm && infoFenElm) {
+		const infoFenTextElm = UiHelper.getElm('info-fen-text');
+		if (copyFenButtonElm && infoFenTextElm) {
 			copyFenButtonElm.addEventListener('click', () => {
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				navigator.clipboard.writeText(infoFenElm.innerText).then(() => {});
+				navigator.clipboard.writeText(infoFenTextElm.innerText).then(() => {});
 			});
 		}
 		const restartButtonElm = UiHelper.getElm('restart-button');
