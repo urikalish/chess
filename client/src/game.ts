@@ -7,7 +7,6 @@ import { Board } from './board';
 import { Position } from './position';
 import { Move } from './move';
 import { Mover } from './mover';
-import { UiLog } from './ui/ui-log';
 
 export class Game {
 	players: Player[];
@@ -38,7 +37,6 @@ export class Game {
 
 	pushMove(m: Move) {
 		console.log(m.name);
-		UiLog.logMove(m);
 		this.moves.push(m);
 	}
 

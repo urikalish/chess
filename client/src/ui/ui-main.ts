@@ -139,7 +139,9 @@ export class UiMain {
 		} else if (this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === newIndex)) {
 			const moves: Move[] = this.game.possibleMoves.filter(m => m.from === this.selectedIndex && m.to === newIndex);
 			if (moves.length === 1) {
-				this.game.move(moves[0]);
+				const m = moves[0];
+				this.game.move(m);
+				UiLog.logMove(m);
 				this.selectedIndex = -1;
 				this.updateUI();
 			} else if (moves.length === 4 && moves.every(m => m.types.has(MoveType.PROMOTION))) {
