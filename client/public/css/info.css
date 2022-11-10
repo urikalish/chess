@@ -139,13 +139,14 @@
     }
     .info-panel {
         border-radius: 0;
+        padding: 1rem;
+        font-size: 14px;
     }
     .info-fen,
-    .info-log-wrapper > .action-buttons {
+    .info-log-wrapper > .action-buttons,
+    .info-log-background,
+    .info-actions {
         display: none;
-    }
-    .info-log-background {
-        inset: 0.3rem 0 0 0;
     }
     .info-log {
         inset: 0;

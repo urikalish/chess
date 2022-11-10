@@ -103,7 +103,7 @@
         font-size: 1.4rem;
     }
     .player-info {
-        left: -1.2rem;
+        left: -1.4rem;
     }
     .player-info--top {
         top: calc(var(--board-gutter-width) * -2.5);
