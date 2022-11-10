@@ -3,11 +3,11 @@
 }
 .square.last-move-from,
 .square.last-move-to {
-    background-color: var(--color--1);
+    background-color: var(--color--orange);
     opacity: 0.5;
 }
 .square.possible-from {
-    background-color: var(--color--3);
+    background-color: var(--color--green--medium);
     opacity: 0.5;
 }
 .square.possible-to {
@@ -32,11 +32,11 @@
     inset: 0 0 0 0;
 }
 .square.checked-king {
-    background-color: var(--color--5);
+    background-color: var(--color--red--dark);
     opacity: 0.8;
 }
 .square.selected-square {
-    background-color: var(--color--3);
+    background-color: var(--color--green--medium);
     opacity: 0.8;
     cursor: pointer;
 }

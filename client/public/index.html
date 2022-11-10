@@ -20,6 +20,14 @@
             <div id="main-content" class="main-content none">
                 <div id="board-frame" class="board-frame">
                     <div class="board">
+                        <div class="player-info player-info--top">
+                            <div class="player-info-color"></div>
+                            <div class="player-info-name"></div>
+                        </div>
+                        <div class="player-info player-info--bottom">
+                            <div class="player-info-color"></div>
+                            <div class="player-info-name"></div>
+                        </div>
                         <div id="board-gutters">
                             <div class="board-gutter"></div>
                             <div class="board-gutter"></div>
@@ -45,16 +53,13 @@
                     </div>
                 </div>
                 <div class="info-panel">
-                    <div class="info-players">
-                        <div class="info-player-color"></div>
-                        <div class="info-player-name"></div>
-                        <div class="info-player-color"></div>
-                        <div class="info-player-name"></div>
-                    </div>
                     <div class="info-log-wrapper">
                         <div id="info-log" class="info-log"></div>
                     </div>
                     <div id="info-fen" class="info-fen"></div>
+                    <div class="info-actions">
+                        <button id="restart-button" class="restart-button">Restart</button>
+                    </div>
                 </div>
             </div>
             <div id="welcome-panel" class="welcome-panel">

@@ -7,10 +7,10 @@ import { PlayerType } from '../types';
 
 export class UiInit {
 	createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
-		const colorElms = UiHelper.queryElms('.info-player-color');
+		const colorElms = UiHelper.queryElms('.player-info-color');
 		colorElms[0].style.backgroundColor = isBoardFlipped ? '#fff' : '#000';
 		colorElms[1].style.backgroundColor = isBoardFlipped ? '#000' : '#fff';
-		const nameElms = UiHelper.queryElms('.info-player-name');
+		const nameElms = UiHelper.queryElms('.player-info-name');
 		nameElms[0].innerText = isBoardFlipped ? players[0].name : players[1].name;
 		nameElms[1].innerText = isBoardFlipped ? players[1].name : players[0].name;
 		nameElms[0].classList.add(players[isBoardFlipped ? 0 : 1].type === PlayerType.HUMAN ? 'player-human' : 'player-machine');
