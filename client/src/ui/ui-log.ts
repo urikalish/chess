@@ -43,7 +43,10 @@ export class UiLog {
 		return elm;
 	}
 
-	static logMove(move: Move) {
+	static logMove(move: Move | undefined) {
+		if (!move) {
+			return;
+		}
 		const panelElm = UiHelper.getElm('info-log');
 		if (!panelElm) {
 			return;
