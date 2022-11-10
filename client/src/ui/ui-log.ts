@@ -110,5 +110,6 @@ export class UiLog {
 		}
 		fullMoveElm.appendChild(gameResultElm);
 		panelElm.appendChild(fullMoveElm);
+		panelElm.scrollTo(0, panelElm.scrollHeight);
 	}
 }
