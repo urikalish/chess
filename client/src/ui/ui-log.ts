@@ -27,14 +27,14 @@ export class UiLog {
 
 	static createMoveNumberElm(fullMoveNum: number) {
 		const elm = document.createElement('span');
-		elm.innerText = `${String(fullMoveNum)}.`;
+		elm.innerText = `${String(fullMoveNum)}. `;
 		elm.classList.add(UiLog.classNames.movePart, UiLog.classNames.moveNumber);
 		return elm;
 	}
 
 	static createMoveElm(moveName: string, moveTypes: Set<MoveType>) {
 		const elm = document.createElement('span');
-		elm.innerText = moveName;
+		elm.innerText = `${moveName} `;
 		elm.title = UiLog.getTimeStr();
 		elm.classList.add(UiLog.classNames.movePart, UiLog.classNames.moveName);
 		moveTypes.forEach(t => {

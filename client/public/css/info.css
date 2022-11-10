@@ -53,11 +53,11 @@
     margin-right: 1rem;
 }
 .info-log--move-part {
-    margin-right: 0.5rem;
+    margin-right: 0.2rem;
     cursor: default;
 }
 .info-log--move-number {
-    color: #777;
+    color: #666;
 }
 .info-log--move-name {
     color: #ccc;
