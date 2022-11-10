@@ -77,6 +77,14 @@ export class UiInit {
 	}
 
 	setUpActionButtons() {
+		const copyMovesButtonElm = UiHelper.getElm('copy-moves-button');
+		const infoLogElm = UiHelper.getElm('info-log');
+		if (copyMovesButtonElm && infoLogElm) {
+			copyMovesButtonElm.addEventListener('click', () => {
+				// eslint-disable-next-line @typescript-eslint/no-empty-function
+				navigator.clipboard.writeText(infoLogElm.innerText).then(() => {});
+			});
+		}
 		const copyFenButtonElm = UiHelper.getElm('copy-fen-button');
 		const infoFenElm = UiHelper.getElm('info-fen');
 		if (copyFenButtonElm && infoFenElm) {

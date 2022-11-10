@@ -88,11 +88,14 @@
 }
 .action-button {
     cursor: pointer;
-    width: 8rem;
+    width: 10rem;
     height: 2.5rem;
-    background-color: #ccc;
+    background-color: #999;
+    border: none;
     border-radius: 0.5rem;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
+    font-size: 1.4rem;
+    font-family: var(--font-family--defalt);
 }
 .action-button:hover,
 .action-button:focus-visible,
