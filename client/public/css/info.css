@@ -23,7 +23,7 @@
 }
 .info-log-background {
     position: absolute;
-    inset: 0 0 4rem 0;
+    inset: 0.3rem 0 4rem 0;
     background: linear-gradient( to bottom, #222, #222 95%, #333 95%, #333);
     background-size: 100% 2.4rem;
 }
