@@ -128,3 +128,8 @@
 .restart-button:active {
     background-color: #a77;
 }
+.disabled-button {
+    pointer-events: none;
+    color: #777;
+
+}

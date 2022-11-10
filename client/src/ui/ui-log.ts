@@ -72,6 +72,10 @@ export class UiLog {
 			fullMoveElm.appendChild(blackMoveElm);
 		}
 		panelElm.scrollTo(0, panelElm.scrollHeight);
+		const copyMovesButtonElm = UiHelper.getElm('copy-moves-button');
+		if (copyMovesButtonElm) {
+			copyMovesButtonElm.classList.remove('disabled-button');
+		}
 	}
 
 	static createGameResultElm() {
