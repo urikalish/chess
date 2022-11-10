@@ -103,12 +103,12 @@
         font-size: 1.4rem;
     }
     .player-info {
-        left: -1.4rem;
+        left: -1.6rem;
     }
     .player-info--top {
-        top: calc(var(--board-gutter-width) * -2.5);
+        top: -4.9rem;
     }
     .player-info--bottom {
-        bottom: calc(var(--board-gutter-width) * -2.5);
+        bottom: -4.9rem;
     }
 }
