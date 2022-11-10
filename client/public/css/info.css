@@ -140,7 +140,8 @@
     }
     .info-panel {
         border-radius: 0;
-        padding: 1rem;
+        overflow: hidden scroll;
+        padding: 1rem 1rem 7.2rem 1rem;
         font-size: 14px;
     }
     .info-fen,
