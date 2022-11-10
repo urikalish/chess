@@ -81,10 +81,10 @@ main {
         grid-template-rows: 1fr;
     }
     .main-content {
-        height: calc(100vh - 4rem);
+        height: 100vh;
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
-        grid-column-gap: 3rem;
-        margin: 4rem 0 0 0;
+        grid-column-gap: 0;
+        margin: 0;
     }
 }

@@ -1,6 +1,7 @@
 :root {
     --color--info-panel-background: #222;
     --color--info-panel-border: #444;
+    --color--info-panel-scroll-background: #111;
     --info-panel-width: 43rem;
 }
 .info-panel {
@@ -39,12 +40,12 @@
     width: 12px;
 }
 .info-log::-webkit-scrollbar-track {
-    background-color: var(--color--info-panel-background);
+    background-color: var(--color--info-panel-scroll-background);
 }
 .info-log::-webkit-scrollbar-thumb {
     border-radius: 12px;
     background-color: #666;
-    border: 2px solid var(--color--info-panel-background);
+    border: 2px solid var(--color--info-panel-scroll-background);
 }
 .info-log::-webkit-scrollbar-thumb:hover {
     background-color: #777;
