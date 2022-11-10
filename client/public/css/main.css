@@ -67,6 +67,24 @@ main {
     grid-template-rows: 1fr;
     grid-column-gap: 3rem;
     height: var(--main-content-height);
-    margin: 4rem 0;
+    margin: 3.6rem 0;
     animation: fade-in-animation 1s;
+}
+@media (max-width: 900px) {
+    :root {
+        --main-content-height: calc(100vh - 8rem);
+    }
+    .page-bg-img {
+        display: none;
+    }
+    .wrapper {
+        grid-template-rows: 1fr;
+    }
+    .main-content {
+        height: calc(100vh - 4rem);
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        grid-column-gap: 3rem;
+        margin: 4rem 0 0 0;
+    }
 }

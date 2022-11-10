@@ -89,3 +89,26 @@
     background-image: url("../img/board1.png");
     background-size: cover;
 }
+@media (max-width: 900px) {
+    .board-frame {
+        --board-gutter-width: 2rem;
+        width: 100vw;
+        height: 100vw;
+        min-width: 0;
+        min-height: 0;
+        border-radius: 0;
+        margin-bottom: 3.6rem;
+    }
+    .board-gutter-label {
+        font-size: 1.4rem;
+    }
+    .player-info {
+        left: -1.2rem;
+    }
+    .player-info--top {
+        top: calc(var(--board-gutter-width) * -2.5);
+    }
+    .player-info--bottom {
+        bottom: calc(var(--board-gutter-width) * -2.5);
+    }
+}

@@ -133,3 +133,21 @@
     color: #777;
 
 }
+@media (max-width: 900px) {
+    :root {
+        --info-panel-width: 100vw;
+    }
+    .info-panel {
+        border-radius: 0;
+    }
+    .info-fen,
+    .info-log-wrapper > .action-buttons {
+        display: none;
+    }
+    .info-log-background {
+        inset: 0.3rem 0 0 0;
+    }
+    .info-log {
+        inset: 0;
+    }
+}

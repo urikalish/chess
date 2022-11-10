@@ -12,3 +12,12 @@
 footer {
     height: var(--footer-height);
 }
+@media (max-width: 900px) {
+    :root {
+        --footer-height: 0;
+    }
+    .footer-band,
+    footer {
+        display: none;
+    }
+}

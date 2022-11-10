@@ -22,3 +22,12 @@ header {
     text-shadow: 2px 2px #000;
     user-select: none;
 }
+@media (max-width: 900px) {
+    :root {
+        --header-height: 0;
+    }
+    .header-band,
+    header {
+        display: none;
+    }
+}
