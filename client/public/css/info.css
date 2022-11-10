@@ -57,7 +57,7 @@
     cursor: default;
 }
 .info-log--move-number {
-    color: #666;
+    color: #777;
 }
 .info-log--move-name {
     color: #ccc;
@@ -86,10 +86,16 @@
     border-top: 1px solid #666;
     padding-top: 1rem;
 }
-.restart-button {
+.action-button {
     cursor: pointer;
+    width: 8rem;
     height: 2.5rem;
     background-color: #ccc;
     border-radius: 0.5rem;
+    margin-left: 1rem;
 }
-
+.action-button:hover,
+.action-button:focus-visible,
+.action-button:active {
+    background-color: #bbb;
+}

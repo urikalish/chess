@@ -77,15 +77,22 @@ export class UiInit {
 	}
 
 	setUpActionButtons() {
-		const restartButtonElm = UiHelper.getElm('restart-button');
-		if (!restartButtonElm) {
-			return;
+		const copyFenButtonElm = UiHelper.getElm('copy-fen-button');
+		const infoFenElm = UiHelper.getElm('info-fen');
+		if (copyFenButtonElm && infoFenElm) {
+			copyFenButtonElm.addEventListener('click', () => {
+				// eslint-disable-next-line @typescript-eslint/no-empty-function
+				navigator.clipboard.writeText(infoFenElm.innerText).then(() => {});
+			});
 		}
-		restartButtonElm.addEventListener('click', () => {
-			if (confirm('Restart game?')) {
-				location.reload();
-			}
-		});
+		const restartButtonElm = UiHelper.getElm('restart-button');
+		if (restartButtonElm) {
+			restartButtonElm.addEventListener('click', () => {
+				if (confirm('Restart game?')) {
+					location.reload();
+				}
+			});
+		}
 	}
 
 	createGameUI(players: Player[], board: Board, isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void, onclickPiece: (MouseEvent) => void) {
