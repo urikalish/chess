@@ -1,6 +1,6 @@
 :root {
     --color--footer-background: #000;
-    --footer-height: 4rem;
+    --footer-height: 5rem;
 }
 .footer-band {
     position: absolute;

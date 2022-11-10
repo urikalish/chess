@@ -1,7 +1,7 @@
 :root {
     --color--header-background: #c33;
     --color--page-title: #ddd;
-    --header-height: 6rem;
+    --header-height: 5rem;
 }
 .header-band {
     position: absolute;
@@ -14,11 +14,11 @@ header {
     height: var(--header-height);
     display: flex;
     align-items: center;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
 }
 .page-title {
     color: var(--color--page-title);
-    font-size: 3.6rem;
+    font-size: 3rem;
     text-shadow: 2px 2px #000;
     user-select: none;
 }
