@@ -154,8 +154,8 @@
         inset: 0;
     }
     .info-log--full-move {
-        margin-top: 0.2rem;
-        margin-right: 0.5rem;
+        margin-top: 0;
+        margin-right: 0;
     }
     .info-log--move-part {
         margin-right: 0;
