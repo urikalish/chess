@@ -22,10 +22,10 @@
     opacity: 0.3;
 }
 .square.possible-to:not(.occupied):not(.en-passant-target)::after {
-    left: calc(50% - 1vh);
-    top: calc(50% - 1vh);
-    width: 2vh;
-    height: 2vh;
+    left: 40%;
+    top: 40%;
+    width: 20%;
+    height: 20%;
 }
 .square.possible-to.occupied::after,
 .square.possible-to.en-passant-target::after {
