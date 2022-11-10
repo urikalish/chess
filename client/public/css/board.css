@@ -18,32 +18,32 @@
     position: relative;
     height: 100%;
 }
-.player-info {
+.player-status {
     position: absolute;
     left: 0;
     display: flex;
     align-items: center;
 }
-.player-info--top {
-    top: calc(var(--board-gutter-width) * -2);
+.player-status--top {
+    top: -6.1rem;
 }
-.player-info--bottom {
-    bottom: calc(var(--board-gutter-width) * -2);
+.player-status--bottom {
+    bottom: -6.1rem;
 }
-.player-info-color {
+.player-status-color {
     width: 2.1rem;
     height: 2.1rem;
     border: 1px solid #666;
 }
-.player-info-name {
+.player-status-name {
     margin-left: 0.2rem;
     user-select: none;
     color: #ccc;
 }
-.player-info-name.player-human:before {
+.player-status-name.player-human:before {
     content: "👨";
 }
-.player-info-name.player-machine:before {
+.player-status-name.player-machine:before {
     content: "🤖";
 }
 .board-gutter {
@@ -102,13 +102,13 @@
     .board-gutter-label {
         font-size: 1.4rem;
     }
-    .player-info {
+    .player-status {
         left: -1.6rem;
     }
-    .player-info--top {
+    .player-status--top {
         top: -4.9rem;
     }
-    .player-info--bottom {
+    .player-status--bottom {
         bottom: -4.9rem;
     }
 }
