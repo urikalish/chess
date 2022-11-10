@@ -20,6 +20,8 @@
 .info-log-wrapper {
     overflow: hidden;
     position: relative;
+    background: linear-gradient( to bottom, #222, #222 95%, #333 95%, #333);
+    background-size: 100% 2.4rem;
 }
 .info-log {
     position: absolute;
