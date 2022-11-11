@@ -24,7 +24,6 @@ footer {
         --color--footer-background: #c33;
     }
     footer {
-        justify-content: flex-start;
         padding: 0 0.8rem;
     }
     .footer-text {
