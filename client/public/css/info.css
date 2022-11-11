@@ -154,7 +154,7 @@
         margin-right: 0;
     }
     .info-log-background {
-        inset: 0.1rem 0 0 0;
+        inset: 0;
         background-size: 100% 1.6rem;
     }
     .info-log-wrapper > .action-buttons,
