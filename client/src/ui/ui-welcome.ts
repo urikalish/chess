@@ -1,6 +1,7 @@
 import { PlayerType } from '../types';
 import { Fen } from '../fen';
 import { UiHelper } from './ui-helper';
+import { UiPieceDesign } from './ui-types';
 
 export class UiWelcome {
 	static showDialog(onWelcomeDone) {
@@ -35,7 +36,8 @@ export class UiWelcome {
 			const fenStr = (fenTextElm as HTMLInputElement).value.trim() || Fen.default;
 			const whitePlayerName = (hvhWhiteNameElm as HTMLInputElement).value.trim() || 'Player1';
 			const blackPlayerName = (hvhBlackNameElm as HTMLInputElement).value.trim() || 'Player2';
-			onWelcomeDone(fenStr, PlayerType.HUMAN, whitePlayerName, PlayerType.HUMAN, blackPlayerName);
+			const pieceDesign = UiPieceDesign.NEO_WOOD;
+			onWelcomeDone(fenStr, PlayerType.HUMAN, whitePlayerName, PlayerType.HUMAN, blackPlayerName, pieceDesign);
 		});
 		hvmPlayerIsWhiteElm.addEventListener('click', () => {
 			hvmPlayerIsWhiteElm.classList.add('selected');
@@ -49,15 +51,17 @@ export class UiWelcome {
 			const fenStr = (fenTextElm as HTMLInputElement).value.trim() || Fen.default;
 			const playerName = (hvmPlayerNameElm as HTMLInputElement).value.trim() || 'Player1';
 			const isPlayerWhite = hvmPlayerIsWhiteElm.classList.contains('selected');
+			const pieceDesign = UiPieceDesign.NEO_WOOD;
 			if (isPlayerWhite) {
-				onWelcomeDone(fenStr, PlayerType.HUMAN, playerName, PlayerType.COMPUTER, 'Computer');
+				onWelcomeDone(fenStr, PlayerType.HUMAN, playerName, PlayerType.COMPUTER, 'Computer', pieceDesign);
 			} else {
-				onWelcomeDone(fenStr, PlayerType.COMPUTER, 'Computer', PlayerType.HUMAN, playerName);
+				onWelcomeDone(fenStr, PlayerType.COMPUTER, 'Computer', PlayerType.HUMAN, playerName, pieceDesign);
 			}
 		});
 		mvmStartButtonElm.addEventListener('click', () => {
 			const fenStr = (fenTextElm as HTMLInputElement).value.trim() || Fen.default;
-			onWelcomeDone(fenStr, PlayerType.COMPUTER, 'Computer1', PlayerType.COMPUTER, 'Computer2');
+			const pieceDesign = UiPieceDesign.NEO_WOOD;
+			onWelcomeDone(fenStr, PlayerType.COMPUTER, 'Computer1', PlayerType.COMPUTER, 'Computer2', pieceDesign);
 		});
 	}
 }

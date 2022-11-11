@@ -36,8 +36,4 @@ export class UiHelper {
 		const holderRect = container.getBoundingClientRect();
 		return top <= holderRect.top ? holderRect.top - top <= height : bottom - holderRect.bottom <= height;
 	}
-
-	static getUiPieceColor(index: number) {
-		return index === 0 ? '#D8CBB9' : '#453E39';
-	}
 }

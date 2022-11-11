@@ -4,13 +4,14 @@ import { Square } from '../square';
 import { Board } from '../board';
 import { UiHelper } from './ui-helper';
 import { PlayerType } from '../types';
+import { UiDesign } from './ui-design';
 import { UiLog } from './ui-log';
 
 export class UiInit {
 	createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
 		const colorElms = UiHelper.queryElms('.player-status-color');
-		colorElms[0].style.backgroundColor = UiHelper.getUiPieceColor(isBoardFlipped ? 0 : 1);
-		colorElms[1].style.backgroundColor = UiHelper.getUiPieceColor(isBoardFlipped ? 1 : 0);
+		colorElms[0].style.backgroundColor = UiDesign.getUiPieceColor(isBoardFlipped ? 0 : 1);
+		colorElms[1].style.backgroundColor = UiDesign.getUiPieceColor(isBoardFlipped ? 1 : 0);
 		const nameElms = UiHelper.queryElms('.player-status-name');
 		nameElms[0].innerText = isBoardFlipped ? players[0].name : players[1].name;
 		nameElms[1].innerText = isBoardFlipped ? players[1].name : players[0].name;
