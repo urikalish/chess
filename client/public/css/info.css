@@ -146,6 +146,8 @@
     .info-log-wrapper > .action-buttons,
     .info-log-background,
     .info-actions {
+        max-height: 0;
+        overflow: hidden;
         display: none;
     }
     .info-log {
