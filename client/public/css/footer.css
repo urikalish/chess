@@ -11,5 +11,6 @@ footer {
 @media (max-width: 900px) {
     :root {
         --footer-height: 3rem;
+        --color--footer-background: #c33;
     }
 }
