@@ -20,13 +20,10 @@ footer {
 }
 @media (max-width: 900px) {
     :root {
-        --footer-height: 3rem;
-        --color--footer-background: #c33;
+        --footer-height: 0;
     }
+    .footer-band,
     footer {
-        padding: 0 0.8rem;
-    }
-    .footer-text {
-        font-size: 1.2rem;
+        display: none;
     }
 }

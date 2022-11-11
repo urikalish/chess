@@ -64,13 +64,18 @@ main {
 }
 @media (max-width: 900px) {
     :root {
+        --main-content-height: 100vh;
         --main-playing-area-height: calc(var(--board-frame-size) + 2 * var(--player-status-height));
         --info-panel-height: calc(var(--main-content-height) - var(--main-playing-area-height) - var(--extra-space-magic-number));
     }
     .page-bg-img {
         display: none;
     }
+    .wrapper {
+        grid-template-rows: 1fr;
+    }
     .main-content {
+        height: 100vh;
         grid-template-columns: 1fr;
         grid-template-rows: var(--main-playing-area-height) var(--info-panel-height);
     }

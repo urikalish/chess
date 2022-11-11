@@ -19,12 +19,10 @@ header {
 }
 @media (max-width: 900px) {
     :root {
-        --header-height: 3rem;
+        --header-height: 0;
     }
+    .header-band,
     header {
-        padding: 0 0.8rem;
-    }
-    .header-text {
-        font-size: 1.6rem;
+        display: none;
     }
 }
