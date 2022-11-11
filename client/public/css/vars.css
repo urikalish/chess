@@ -1,0 +1,39 @@
+:root {
+    --color--text: #999;
+    --color--orange: #d90;
+    --color--green--light: #bc3;
+    --color--green--medium: #783;
+    --color--red--light: #f66;
+    --color--red--medium: #f33;
+    --color--red--dark: #900;
+    --color--background: #111;
+    --font-family--defalt: Play, 'Helvetica Neue', Arial, sans-serif;
+    --font-family--script: 'Aguafina Script', serif;
+    --font-family--code: 'Share Tech Mono', Consolas, 'Courier New', monospace;
+
+    --color--header-background: #c33;
+    --color--page-title: #ddd;
+    --header-height: 5rem;
+
+    /*--color--footer-background: #000;*/
+    --color--footer-background: #c33;
+    --footer-height: 5rem;
+
+    --player-status-height: 4rem;
+    --color--board-frame-background: #222;
+    --color--board-frame-border: #444;
+    --color--board-frame-shadow: #000;
+    --color--board-frame-text: #999;
+    --board-gutter-width: 3rem;
+    --main-content-height: calc(100vh - var(--header-height) - var(--footer-height));
+    --board-size: calc(var(--main-content-height) - 2 * var(--player-status-height));
+    --board-min-size: 43rem;
+
+    --color--info-panel-background: #222;
+    --color--info-panel-border: #444;
+    --color--info-panel-scroll-background: #111;
+    --info-panel-width: 43rem;
+
+    --color--welcome-background: #222;
+    --color--welcome-border-color: #666;
+}

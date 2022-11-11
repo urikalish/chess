@@ -1,12 +1,6 @@
 .board-frame {
-    --color--board-frame-background: #222;
-    --color--board-frame-border: #444;
-    --color--board-frame-shadow: #000;
-    --color--board-frame-text: #999;
-    --board-gutter-width: 3rem;
-    --board-min-size: 43rem;
-    width: var(--main-content-height);
-    height: var(--main-content-height);
+    width: var(--board-size);
+    height: var(--board-size);
     min-width: var(--board-min-size);
     min-height: var(--board-min-size);
     border: 1px solid var(--color--board-frame-border);
@@ -19,16 +13,10 @@
     height: 100%;
 }
 .player-status {
-    position: absolute;
-    left: 0;
+    position: relative;
     display: flex;
     align-items: center;
-}
-.player-status--top {
-    top: -6.1rem;
-}
-.player-status--bottom {
-    bottom: -6.1rem;
+    height: var(--player-status-height);
 }
 .player-status-color {
     width: 2.1rem;
@@ -90,6 +78,9 @@
     background-size: cover;
 }
 @media (max-width: 900px) {
+    :root {
+        --board-size: 100vw;
+    }
     .board-frame {
         --board-gutter-width: 2rem;
         width: 100vw;
@@ -97,18 +88,11 @@
         min-width: 0;
         min-height: 0;
         border-radius: 0;
-        margin: 3.6rem 0;
     }
     .board-gutter-label {
         font-size: 1.4rem;
     }
     .player-status {
-        left: -1.6rem;
-    }
-    .player-status--top {
-        top: -4.9rem;
-    }
-    .player-status--bottom {
-        bottom: -4.9rem;
+        left: 1rem;
     }
 }

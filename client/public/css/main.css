@@ -1,3 +1,4 @@
+@import "./vars.css";
 @import "./typography.css";
 @import "./general.css";
 @import "./header.css";
@@ -13,18 +14,6 @@
     margin: 0;
     padding: 0;
     font-size: 62.5%;
-    --color--text: #999;
-    --color--orange: #d90;
-    --color--green--light: #bc3;
-    --color--green--medium: #783;
-    --color--red--light: #f66;
-    --color--red--medium: #f33;
-    --color--red--dark: #900;
-    --color--background: #111;
-    --font-family--defalt: Play, 'Helvetica Neue', Arial, sans-serif;
-    --font-family--script: 'Aguafina Script', serif;
-    --font-family--code: 'Share Tech Mono', Consolas, 'Courier New', monospace;
-    --main-content-height: calc(100vh - 18rem);
 }
 body {
     height: 100vh;
@@ -62,29 +51,25 @@ main {
     place-items: center;
 }
 .main-content {
+    height: var(--main-content-height);
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: 1fr;
     grid-column-gap: 3rem;
-    height: var(--main-content-height);
-    margin: 3.6rem 0;
     animation: fade-in-animation 1s;
 }
+.main-playing-area {
+    height: 100%;
+}
 @media (max-width: 900px) {
-    :root {
-        --main-content-height: calc(100vh - 8rem);
-    }
     .page-bg-img {
         display: none;
     }
-    .wrapper {
-        grid-template-rows: 1fr;
-    }
     .main-content {
-        height: 100vh;
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
-        grid-column-gap: 0;
-        margin: 0;
+    }
+    .main-playing-area {
+        height: calc(var(--board-size) + 2 * var(--player-status-height));
     }
 }

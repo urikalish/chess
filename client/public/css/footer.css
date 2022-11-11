@@ -1,7 +1,3 @@
-:root {
-    --color--footer-background: #000;
-    --footer-height: 5rem;
-}
 .footer-band {
     position: absolute;
     inset: auto 0 0 0;
@@ -14,10 +10,6 @@ footer {
 }
 @media (max-width: 900px) {
     :root {
-        --footer-height: 0;
-    }
-    .footer-band,
-    footer {
-        display: none;
+        --footer-height: 3rem;
     }
 }
