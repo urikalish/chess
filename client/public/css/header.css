@@ -1,5 +1,5 @@
 .header-band {
-    position: absolute;
+    position: fixed;
     inset: 0 0 auto 0;
     height: var(--header-height);
     background-color: var(--color--header-background);
