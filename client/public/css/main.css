@@ -65,7 +65,7 @@ main {
 @media (max-width: 900px) {
     :root {
         --main-playing-area-height: calc(var(--board-size) + 2 * var(--player-status-height));
-        --info-panel-height: calc(var(--main-content-height) - var(--main-playing-area-height) - 10rem);
+        --info-panel-height: calc(var(--main-content-height) - var(--main-playing-area-height) - 4rem);
     }
     .page-bg-img {
         display: none;
