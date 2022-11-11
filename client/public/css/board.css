@@ -1,6 +1,6 @@
 .board-frame {
-    width: var(--board-size);
-    height: var(--board-size);
+    width: var(--board-frame-size);
+    height: var(--board-frame-size);
     min-width: var(--board-min-size);
     min-height: var(--board-min-size);
     border: 1px solid var(--color--board-frame-border);
@@ -79,7 +79,7 @@
 }
 @media (max-width: 900px) {
     :root {
-        --board-size: 100vw;
+        --board-frame-size: 100vw;
     }
     .board-frame {
         --board-gutter-width: 2rem;

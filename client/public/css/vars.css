@@ -27,10 +27,11 @@
     --board-gutter-width: 3rem;
     --main-playing-area-height: 100%;
     --main-content-height: calc(100vh - var(--header-height) - var(--footer-height));
-    --board-size: calc(var(--main-content-height) - 2 * var(--player-status-height));
+    --board-frame-size: calc(var(--main-content-height) - 2 * var(--player-status-height));
     --board-min-size: 43rem;
 
     --info-panel-height: auto;
+    --extra-space-magic-number: 5.5rem;
 
     --color--info-panel-background: #222;
     --color--info-panel-border: #444;
