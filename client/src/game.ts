@@ -1,4 +1,4 @@
-import { ColorType, GameResult, MoveType, PieceType, PlayerType } from './types';
+import { ColorType, GameResult, MoveType, PieceType, PlayerGenderType, PlayerType } from './types';
 import { Fen } from './fen';
 import { Player } from './player';
 import { Piece } from './piece';
@@ -19,8 +19,17 @@ export class Game {
 	mover = new Mover();
 	results: Set<GameResult> = new Set();
 
-	constructor(player0Type: PlayerType, player0Name: string, player1Type: PlayerType, player1Name: string, fenStr: string, startTime: number) {
-		this.players = [new Player(0, player0Type, player0Name), new Player(1, player1Type, player1Name)];
+	constructor(
+		player0Type: PlayerType,
+		player0Gender: PlayerGenderType,
+		player0Name: string,
+		player1Type: PlayerType,
+		player1Gender: PlayerGenderType,
+		player1Name: string,
+		fenStr: string,
+		startTime: number,
+	) {
+		this.players = [new Player(0, player0Type, player0Gender, player0Name), new Player(1, player1Type, player1Gender, player1Name)];
 		this.armies = [new Army(0, player0Type), new Army(1, player1Type)];
 		this.board = new Board();
 		this.startTime = startTime;

@@ -74,32 +74,69 @@
                 </div>
             </div>
             <div id="welcome-panel" class="welcome-panel">
-                <div class="welcome-common-settings">
+                <div class="welcome-section">
+                    <span>Top Player</span>
+                </div>
+                <div class="welcome-data-line welcome-data-line-player-color">
+                    <label for="welcome-top-player-color" class="welcome-label">Color:</label>
+                    <select id="welcome-top-player-color" class="welcome-select">
+                        <option value="white">White</option>
+                        <option value="black" selected="selected">Black</option>
+                    </select>
+                </div>
+                <div class="welcome-data-line welcome-data-line-player-type">
+                    <label for="welcome-top-player-type" class="welcome-label">Type:</label>
+                    <select id="welcome-top-player-type" class="welcome-select">
+                        <option value="male">👨 Male</option>
+                        <option value="female" selected="selected">👩 Female</option>
+                        <option value="bot">🤖 Bot</option>
+                    </select>
+                </div>
+                <div class="welcome-data-line welcome-data-line-player-name">
+                    <label for="welcome-top-player-name" class="welcome-label">Name:</label>
+                    <input type="text" id="welcome-top-player-name" class="welcome-input" value="Top Player" />
+                </div>
+                <div class="welcome-section">
+                    <span>Bottom Player</span>
+                </div>
+                <div class="welcome-data-line welcome-data-line-player-color">
+                    <label for="welcome-bottom-player-color" class="welcome-label">Color:</label>
+                    <select id="welcome-bottom-player-color" class="welcome-select">
+                        <option value="white" selected="selected">White</option>
+                        <option value="black">Black</option>
+                    </select>
+                </div>
+                <div class="welcome-data-line welcome-data-line-player-type">
+                    <label for="welcome-bottom-player-type" class="welcome-label">Type:</label>
+                    <select id="welcome-bottom-player-type" class="welcome-select">
+                        <option value="male" selected="selected">👨 Male</option>
+                        <option value="female">👩 Female</option>
+                        <option value="bot">🤖 Bot</option>
+                    </select>
+                </div>
+                <div class="welcome-data-line welcome-data-line-player-name">
+                    <label for="welcome-bottom-player-name" class="welcome-label">Name:</label>
+                    <input type="text" id="welcome-bottom-player-name" class="welcome-input" value="Bottom Player" />
+                </div>
+                <div class="welcome-section">
+                    <span>Starting Position</span>
+                </div>
+                <div class="welcome-data-line welcome-data-line-fen">
                     <label for="welcome-fen-text" class="welcome-label">FEN:</label>
-                    <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-fen-text" />
+                    <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-input welcome-input-fen" value="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"/>
                 </div>
-                <div class="welcome-option human-vs-human">
-                    <div class="welcome-section-text">👨 - 👨</div>
-                    <label for="welcome-hvh-white-name-text" class="welcome-label">White Name:</label>
-                    <input type="text" id="welcome-hvh-white-name-text" spellcheck="false" class="welcome-player-name-text" value="Player1" />
-                    <label for="welcome-hvh-black-name-text" class="welcome-label">Black Name:</label>
-                    <input type="text" id="welcome-hvh-black-name-text" spellcheck="false" class="welcome-player-name-text" value="Player2" />
-                    <button id="welcome-hvh-start-button" class="welcome-start-button" autofocus>Start</button>
+                <div class="welcome-section">
+                    <span>Design</span>
                 </div>
-                <div class="welcome-option human-vs-machine">
-                    <div class="welcome-section-text">👨 - 🤖</div>
-                    <label for="welcome-hvm-player-name-text" class="welcome-label">Player Name:</label>
-                    <input type="text" id="welcome-hvm-player-name-text" spellcheck="false" class="welcome-player-name-text" value="Player1" />
-                    <div class="welcome-label">Player Color:</div>
-                    <div class="welcome-player-color-selection">
-                        <div id="welcome-hvm-player-color-selector-white" class="welcome-player-color-selector piece K selected"></div>
-                        <div id="welcome-hvm-player-color-selector-black" class="welcome-player-color-selector piece k"></div>
-                    </div>
-                    <button id="welcome-hvm-start-button" class="welcome-start-button">Start</button>
+                <div class="welcome-data-line welcome-data-line-piece-design">
+                    <label for="welcome-piece-design" class="welcome-label">Pieces:</label>
+                    <select id="welcome-piece-design" class="welcome-select">
+                        <option value="neo-wood" selected="selected">Neo-Wood</option>
+                        <option value="kosal">Kosal</option>
+                    </select>
                 </div>
-                <div class="welcome-option machine-vs-machine">
-                    <div class="welcome-section-text">🤖 - 🤖</div>
-                    <button id="welcome-mvm-start-button" class="welcome-start-button">Start</button>
+                <div class="welcome-action-buttons">
+                    <button id="welcome-start-button" class="welcome-action-button">Start</button>
                 </div>
             </div>
         </main>

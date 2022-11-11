@@ -1,11 +1,15 @@
 export enum PlayerType {
-	NA = '-',
 	HUMAN = 'human',
-	COMPUTER = 'computer',
+	BOT = 'bot',
+}
+
+export enum PlayerGenderType {
+	NA = '-',
+	MALE = 'male',
+	FEMALE = 'female',
 }
 
 export enum ColorType {
-	NA = '-',
 	WHITE = 'white',
 	BLACK = 'black',
 }
@@ -16,7 +20,6 @@ export enum SquareColor {
 }
 
 export enum PieceType {
-	NA = '-',
 	PAWN = 'p',
 	KNIGHT = 'n',
 	BISHOP = 'b',
@@ -26,7 +29,6 @@ export enum PieceType {
 }
 
 export enum PieceTypeCased {
-	NA = '-',
 	WHITE_PAWN = 'P',
 	WHITE_KNIGHT = 'N',
 	WHITE_BISHOP = 'B',

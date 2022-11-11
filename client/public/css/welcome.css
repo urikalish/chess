@@ -1,94 +1,65 @@
 .welcome-panel {
-    display: grid;
-    grid-template-columns: 26rem 29rem 29rem;
-    grid-template-rows: auto auto;
-    gap: 6rem 3rem;
-    background-color: var(--color--welcome-background);
-    border: 1px solid var(--color--welcome-border-color);
+    background-color: #222;
+    border: 1px solid #666;
     border-radius: 1rem;
-    padding: 3rem;
+    padding: 2rem;
+    font-size: 1.6rem;
     opacity: 0.9;
     user-select: none;
-
 }
-.welcome-common-settings {
-    grid-column: 1 / span 3;
+.welcome-section {
+    font-size: 2rem;
+    color: #fff;
+    margin : 3rem 0 1rem 0;
+}
+.welcome-section:nth-child(1) {
+    margin-top : 0;
+}
+.welcome-data-line {
     display: grid;
-    grid-template-columns: 5rem 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 8rem 16rem;
+    align-items: center;
+    margin-top : 0.4rem;
 }
-.welcome-option {
-    position: relative;
-    gap: 1rem 1rem;
-    padding-bottom: 12rem;
+.welcome-data-line:nth-child(1) {
+    margin-top : 0;
 }
-.welcome-option.human-vs-human {
-    display: grid;
-    grid-template-columns: 10rem 15rem;
-    grid-template-rows: 6rem 3rem 3rem;
-}
-.welcome-option.human-vs-machine {
-    display: grid;
-    grid-template-columns: 10rem 15rem;
-    grid-template-rows: 6rem 3rem 3rem;
-    padding-left: 3rem;
-    border-left: 1px solid #999;
-}
-.welcome-option.machine-vs-machine {
-    padding-left: 3rem;
-    border-left: 1px solid #999;
-}
-.welcome-section-text {
-    grid-column: 1 / span 2;
-    font-size: 3rem;
+.welcome-label,
+.welcome-select,
+.welcome-input {
+    border: none;
+    border-radius: 2px;
+    height: 2.5rem;
+    font-family: var(--font-family--defalt);
+    font-size: 1.6rem;
+    user-select: none;
 }
 .welcome-label {
-    margin: auto 0;
-    font-size: 1.6rem;
-    user-select: none;
+    margin-left: 2rem;
 }
-.welcome-fen-text,
-.welcome-player-name-text {
-    height: 3rem;
-    padding: 0.5rem;
-    font-family: var(--font-family--defalt);
-    font-size: 1.6rem;
-    border: 1px solid #666;
-    background-color: #222;
-}
-.welcome-fen-text {
-    color: #999;
-}
-.welcome-player-name-text {
-    color: #ccc;
-}
-.welcome-player-color-selection {
-    display: flex;
-}
-.welcome-player-color-selector {
-    background-size: cover;
-    height: 5rem;
-    width: 5rem;
-    border-radius: 0.4rem;
-    cursor: pointer;
-}
-.welcome-player-color-selector:nth-child(2) {
-    margin-left: 1rem;
-}
-.welcome-player-color-selector.selected {
-    background-color: #666;
-    pointer-events: none;
-}
-.welcome-start-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 10rem;
-    height: 4rem;
-    border-radius: 2rem;
+.welcome-select,
+.welcome-input {
     background-color: #ccc;
+}
+.welcome-input {
+    padding: 0 0.4rem;
+}
+.welcome-action-buttons {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+.welcome-action-button {
+    width: 10rem;
+    height: 3rem;
+    border-radius: 2rem;
+    border: none;
     font-size: 1.6rem;
     font-family: var(--font-family--defalt);
     cursor: pointer;
     user-select: none;
+    background-color: var(--color--green--medium);
+}
+.welcome-action-button:hover {
+    background-color: var(--color--green--light);
 }

@@ -3,7 +3,7 @@ import { Piece } from '../piece';
 import { Square } from '../square';
 import { Board } from '../board';
 import { UiHelper } from './ui-helper';
-import { PlayerType } from '../types';
+import { PlayerGenderType, PlayerType } from '../types';
 import { UiDesign } from './ui-design';
 import { UiLog } from './ui-log';
 
@@ -15,8 +15,20 @@ export class UiInit {
 		const nameElms = UiHelper.queryElms('.player-status-name');
 		nameElms[0].innerText = isBoardFlipped ? players[0].name : players[1].name;
 		nameElms[1].innerText = isBoardFlipped ? players[1].name : players[0].name;
-		nameElms[0].classList.add(players[isBoardFlipped ? 0 : 1].type === PlayerType.HUMAN ? 'player-human' : 'player-machine');
-		nameElms[1].classList.add(players[isBoardFlipped ? 1 : 0].type === PlayerType.HUMAN ? 'player-human' : 'player-machine');
+		nameElms[0].classList.add(
+			players[isBoardFlipped ? 0 : 1].type === PlayerType.BOT
+				? 'player-bot'
+				: players[isBoardFlipped ? 0 : 1].gender === PlayerGenderType.MALE
+				? 'player-male'
+				: 'player-female',
+		);
+		nameElms[1].classList.add(
+			players[isBoardFlipped ? 1 : 0].type === PlayerType.BOT
+				? 'player-bot'
+				: players[isBoardFlipped ? 1 : 0].gender === PlayerGenderType.MALE
+				? 'player-male'
+				: 'player-female',
+		);
 	}
 
 	createBoardGuttersUI(isBoardFlipped: boolean) {

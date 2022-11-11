@@ -28,10 +28,13 @@
     user-select: none;
     color: #ccc;
 }
-.player-status-name.player-human:before {
+.player-status-name.player-male:before {
     content: "👨";
 }
-.player-status-name.player-machine:before {
+.player-status-name.player-female:before {
+    content: "👩";
+}
+.player-status-name.player-bot:before {
     content: "🤖";
 }
 .board-gutter {

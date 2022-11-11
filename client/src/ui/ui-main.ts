@@ -1,4 +1,4 @@
-import { MoveType, PieceType, PlayerType } from '../types';
+import { MoveType, PieceType } from '../types';
 import { Move } from '../move';
 import { Game } from '../game';
 import { UiHelper } from './ui-helper';
@@ -119,8 +119,8 @@ export class UiMain {
 		this.checkGameEnded();
 	}
 
-	createGameUI() {
-		this.isBoardFlipped = this.game.players[0].type === PlayerType.COMPUTER && this.game.players[1].type === PlayerType.HUMAN;
+	createGameUI(isBoardFlipped: boolean) {
+		this.isBoardFlipped = isBoardFlipped;
 		const uiInit = new UiInit();
 		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
 		this.updateUI();
