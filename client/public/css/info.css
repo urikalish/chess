@@ -1,5 +1,6 @@
 .info-panel {
     width: var(--info-panel-width);
+    height: var(--info-panel-height);
     overflow: auto;
     margin: 4rem 0;
     background-color: var(--color--info-panel-background);
