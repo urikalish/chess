@@ -147,6 +147,8 @@
     .info-log-background,
     .info-actions {
         max-height: 0;
+        padding: 0;
+        margin: 0;
         overflow: hidden;
         display: none;
     }
