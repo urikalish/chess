@@ -142,16 +142,6 @@
         padding: 1rem;
         font-size: 14px;
     }
-    .info-fen,
-    .info-log-wrapper > .action-buttons,
-    .info-log-background,
-    .info-actions {
-        max-height: 0;
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-        display: none;
-    }
     .info-log {
         inset: 0;
     }
@@ -161,5 +151,16 @@
     }
     .info-log--move-part {
         margin-right: 0;
+    }
+    .info-fen,
+    .info-log-wrapper > .action-buttons,
+    .info-log-background,
+    .info-actions {
+        height: 0;
+        max-height: 0;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        display: none;
     }
 }
