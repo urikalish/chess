@@ -10,7 +10,7 @@ footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 0 0.8rem;
+    padding: 0 1.2rem;
 }
 .footer-text {
     color: var(--color--footer-text);
@@ -22,6 +22,9 @@ footer {
     :root {
         --footer-height: 3rem;
         --color--footer-background: #c33;
+    }
+    footer {
+        padding: 0 0.8rem;
     }
     .footer-text {
         font-size: 1.2rem;
