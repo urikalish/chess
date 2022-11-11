@@ -65,6 +65,9 @@ main {
     .page-bg-img {
         display: none;
     }
+    .wrapper {
+        inset: 0 0 3rem 0;
+    }
     .main-content {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;

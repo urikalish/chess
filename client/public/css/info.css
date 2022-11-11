@@ -133,10 +133,10 @@
         --info-panel-width: 100vw;
     }
     .info-panel {
+        margin: 0;
         inset: 0;
         border-radius: 0;
         overflow: hidden scroll;
-        margin: 0;
         padding: 1rem;
         font-size: 14px;
     }
