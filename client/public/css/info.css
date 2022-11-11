@@ -133,12 +133,14 @@
         --info-panel-width: 100vw;
     }
     .info-panel {
+        grid-template-rows: 1fr 0 0;
         margin: 0;
         inset: 0;
         border-radius: 0;
         overflow: hidden scroll;
         padding: 1rem;
         font-size: 14px;
+        border: 1px solid teal;
     }
     .info-fen,
     .info-log-wrapper > .action-buttons,
