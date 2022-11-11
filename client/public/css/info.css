@@ -141,7 +141,6 @@
         overflow: hidden scroll;
         padding: 1rem;
         font-size: 14px;
-        border: 1px solid var(--color--green--light);
     }
     .info-fen,
     .info-log-wrapper > .action-buttons,
