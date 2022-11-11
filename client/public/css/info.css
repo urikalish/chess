@@ -135,7 +135,7 @@
     }
     .info-panel {
         height: var(--info-panel-height);
-        grid-template-rows: 1fr auto auto;
+        grid-template-rows: 1fr;
         margin: 0;
         border-radius: 0;
         overflow: hidden auto;
