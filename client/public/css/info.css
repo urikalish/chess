@@ -133,6 +133,7 @@
         --info-panel-width: 100vw;
     }
     .info-panel {
+        inset: 0;
         border-radius: 0;
         overflow: hidden scroll;
         margin: 0;
