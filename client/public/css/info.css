@@ -138,7 +138,7 @@
         grid-template-rows: 1fr auto auto;
         margin: 0;
         border-radius: 0;
-        overflow: hidden scroll;
+        overflow: hidden auto;
         padding: 1rem;
         font-size: 14px;
     }
