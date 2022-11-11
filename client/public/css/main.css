@@ -65,12 +65,13 @@ main {
 @media (max-width: 900px) {
     :root {
         --main-playing-area-height: calc(var(--board-size) + 2 * var(--player-status-height));
+        --info-panel-height: calc(var(--main-content-height) - var(--main-playing-area-height));
     }
     .page-bg-img {
         display: none;
     }
     .main-content {
         grid-template-columns: 1fr;
-        grid-template-rows: var(--main-playing-area-height) 1fr;
+        grid-template-rows: var(--main-playing-area-height) var(--info-panel-height);
     }
 }

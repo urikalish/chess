@@ -30,6 +30,8 @@
     --board-size: calc(var(--main-content-height) - 2 * var(--player-status-height));
     --board-min-size: 43rem;
 
+    --info-panel-height: auto;
+
     --color--info-panel-background: #222;
     --color--info-panel-border: #444;
     --color--info-panel-scroll-background: #111;
