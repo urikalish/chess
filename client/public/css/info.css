@@ -132,7 +132,7 @@
 @media (max-width: 900px) {
     :root {
         --info-panel-width: 100vw;
-        --info-panel-height: calc(100vh - var(--main-playing-area-height));
+        --info-panel-height: calc(var(--doc-height) - var(--main-playing-area-height));
     }
     .info-panel {
         height: var(--info-panel-height);
