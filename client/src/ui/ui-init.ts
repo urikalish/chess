@@ -4,6 +4,7 @@ import { Square } from '../square';
 import { Board } from '../board';
 import { UiHelper } from './ui-helper';
 import { PlayerType } from '../types';
+import { UiLog } from './ui-log';
 
 export class UiInit {
 	createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
@@ -109,6 +110,7 @@ export class UiInit {
 		this.createBoardSquaresUI(isBoardFlipped, onClickSquare);
 		this.createAllPieceElms(board, isBoardFlipped, onclickPiece);
 		this.setUpActionButtons();
+		UiLog.setScrollListener();
 		const pageBgImageElm = UiHelper.getElm('page-bg-img');
 		const mainContentElm = UiHelper.getElm('main-content');
 		const welcomePanelElm = UiHelper.getElm('welcome-panel');

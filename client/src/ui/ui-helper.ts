@@ -30,4 +30,10 @@ export class UiHelper {
 	static getModifiedIndex(index: number, isBoardFlipped: boolean) {
 		return isBoardFlipped ? 63 - index : index;
 	}
+
+	static isElmVisible(elm, container = document.body) {
+		const { top, bottom, height } = elm.getBoundingClientRect();
+		const holderRect = container.getBoundingClientRect();
+		return top <= holderRect.top ? holderRect.top - top <= height : bottom - holderRect.bottom <= height;
+	}
 }

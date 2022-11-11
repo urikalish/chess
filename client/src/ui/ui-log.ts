@@ -115,4 +115,17 @@ export class UiLog {
 		panelElm.appendChild(fullMoveElm);
 		panelElm.scrollTo(0, panelElm.scrollHeight);
 	}
+
+	static setScrollListener() {
+		const panelElm = UiHelper.getElm('info-log');
+		if (!panelElm) {
+			return;
+		}
+		panelElm.addEventListener('scroll', () => {
+			const infoLogBackgroundElm = UiHelper.getElm('info-log-background');
+			if (infoLogBackgroundElm) {
+				infoLogBackgroundElm.classList.toggle('none', panelElm.scrollTop > 0);
+			}
+		});
+	}
 }
