@@ -60,17 +60,17 @@ main {
     animation: fade-in-animation 1s;
 }
 .main-playing-area {
-    height: 100%;
+    height: var(--main-playing-area-height);
 }
 @media (max-width: 900px) {
+    :root {
+        --main-playing-area-height: calc(var(--board-size) + 2 * var(--player-status-height));
+    }
     .page-bg-img {
         display: none;
     }
     .main-content {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
-    }
-    .main-playing-area {
-        height: calc(var(--board-size) + 2 * var(--player-status-height));
+        grid-template-rows: var(--main-playing-area-height) 1fr;
     }
 }
