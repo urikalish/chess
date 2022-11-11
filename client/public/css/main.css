@@ -71,7 +71,7 @@ main {
     :root {
         --main-content-height: var(--doc-height);
         --main-playing-area-height: calc(var(--board-frame-size) + 2 * var(--player-status-height));
-        --info-panel-height: calc(var(--main-content-height) - var(--main-playing-area-height) - var(--extra-space-magic-number));
+        --info-panel-height: calc(var(--main-content-height) - var(--main-playing-area-height));
     }
     .page-bg-img {
         display: none;
