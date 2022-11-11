@@ -135,7 +135,7 @@
     }
     .info-panel {
         height: var(--info-panel-height);
-        grid-template-rows: 1fr 0 0;
+        grid-template-rows: 1fr auto auto;
         margin: 0;
         border-radius: 0;
         overflow: hidden scroll;
@@ -152,15 +152,10 @@
     .info-log--move-part {
         margin-right: 0;
     }
-    .info-fen,
-    .info-log-wrapper > .action-buttons,
     .info-log-background,
+    .info-log-wrapper > .action-buttons,
+    .info-fen,
     .info-actions {
-        height: 0;
-        max-height: 0;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
         display: none;
     }
 }
