@@ -9,8 +9,8 @@ import { UiLog } from './ui-log';
 export class UiInit {
 	createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
 		const colorElms = UiHelper.queryElms('.player-status-color');
-		colorElms[0].style.backgroundColor = isBoardFlipped ? '#fff' : '#000';
-		colorElms[1].style.backgroundColor = isBoardFlipped ? '#000' : '#fff';
+		colorElms[0].style.backgroundColor = UiHelper.getUiPieceColor(isBoardFlipped ? 0 : 1);
+		colorElms[1].style.backgroundColor = UiHelper.getUiPieceColor(isBoardFlipped ? 1 : 0);
 		const nameElms = UiHelper.queryElms('.player-status-name');
 		nameElms[0].innerText = isBoardFlipped ? players[0].name : players[1].name;
 		nameElms[1].innerText = isBoardFlipped ? players[1].name : players[0].name;
