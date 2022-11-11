@@ -7,10 +7,23 @@
 }
 footer {
     height: var(--footer-height);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 0.8rem;
+}
+.footer-text {
+    color: var(--color--footer-text);
+    font-size: 2rem;
+    text-shadow: 2px 2px #000;
+    user-select: none;
 }
 @media (max-width: 900px) {
     :root {
         --footer-height: 3rem;
         --color--footer-background: #c33;
+    }
+    .footer-text {
+        font-size: 1.2rem;
     }
 }

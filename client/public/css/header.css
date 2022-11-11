@@ -11,8 +11,8 @@ header {
     align-items: center;
     padding: 0 0.8rem;
 }
-.page-title {
-    color: var(--color--page-title);
+.header-text {
+    color: var(--color--header-text);
     font-size: 3rem;
     text-shadow: 2px 2px #000;
     user-select: none;
@@ -21,7 +21,7 @@ header {
     :root {
         --header-height: 3rem;
     }
-    .page-title {
+    .header-text {
         font-size: 1.6rem;
     }
 }

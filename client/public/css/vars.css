@@ -12,10 +12,11 @@
     --font-family--code: 'Share Tech Mono', Consolas, 'Courier New', monospace;
 
     --color--header-background: #c33;
-    --color--page-title: #ddd;
+    --color--header-text: #ddd;
     --header-height: 5rem;
 
     --color--footer-background: #000;
+    --color--footer-text: #ddd;
     --footer-height: 5rem;
 
     --player-status-height: 4rem;
