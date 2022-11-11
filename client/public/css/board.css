@@ -83,8 +83,6 @@
     }
     .board-frame {
         --board-gutter-width: 2rem;
-        width: 100vw;
-        height: 100vw;
         min-width: 0;
         min-height: 0;
         border-radius: 0;
