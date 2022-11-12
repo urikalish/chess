@@ -6,6 +6,7 @@ import { UiInit } from './ui-init';
 import { UiFen } from './ui-fen';
 import { UiPromotion } from './ui-promotion';
 import { UiLog } from './ui-log';
+import { UiPieceDesign } from './ui-types';
 
 export class UiMain {
 	game: Game;
@@ -119,10 +120,10 @@ export class UiMain {
 		this.checkGameEnded();
 	}
 
-	createGameUI(isBoardFlipped: boolean) {
+	createGameUI(isBoardFlipped: boolean, pieceDesign: UiPieceDesign) {
 		this.isBoardFlipped = isBoardFlipped;
 		const uiInit = new UiInit();
-		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
+		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
 		this.updateUI();
 	}
 

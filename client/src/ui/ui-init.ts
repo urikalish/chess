@@ -6,6 +6,7 @@ import { UiHelper } from './ui-helper';
 import { PlayerGenderType, PlayerType } from '../types';
 import { UiDesign } from './ui-design';
 import { UiLog } from './ui-log';
+import { UiPieceDesign } from './ui-types';
 
 export class UiInit {
 	createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
@@ -117,7 +118,8 @@ export class UiInit {
 		}
 	}
 
-	createGameUI(players: Player[], board: Board, isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void, onclickPiece: (MouseEvent) => void) {
+	createGameUI(players: Player[], board: Board, isBoardFlipped: boolean, pieceDesign: UiPieceDesign, onClickSquare: (MouseEvent) => void, onclickPiece: (MouseEvent) => void) {
+		UiDesign.setPieceDesign(pieceDesign);
 		this.createPlayersInfoUI(players, isBoardFlipped);
 		this.createBoardGuttersUI(isBoardFlipped);
 		this.createBoardSquaresUI(isBoardFlipped, onClickSquare);

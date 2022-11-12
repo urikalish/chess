@@ -29,7 +29,7 @@ function handleDoneWelcomeDialog(
 	game = new Game(player0Type, player0Gender, player0Name, player1Type, player1Gender, player1Name, fenStr, startTime);
 	UiDesign.setPieceDesign(pieceDesign);
 	uiMain = new UiMain(game);
-	uiMain.createGameUI(isBoardFlipped);
+	uiMain.createGameUI(isBoardFlipped, pieceDesign);
 }
 
 function init() {
