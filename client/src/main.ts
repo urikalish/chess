@@ -3,7 +3,6 @@ import { UiLog } from './ui/ui-log';
 import { UiWelcome } from './ui/ui-welcome';
 import { UiMain } from './ui/ui-main';
 import { UiPieceDesign } from './ui/ui-types';
-import { UiDesign } from './ui/ui-design';
 import { PlayerGenderType, PlayerType } from './types';
 
 let game: Game | null = null;
@@ -27,7 +26,6 @@ function handleDoneWelcomeDialog(
 	const startTime = new Date().getTime();
 	UiLog.startTime = startTime;
 	game = new Game(player0Type, player0Gender, player0Name, player1Type, player1Gender, player1Name, fenStr, startTime);
-	UiDesign.setPieceDesign(pieceDesign);
 	uiMain = new UiMain(game);
 	uiMain.createGameUI(isBoardFlipped, pieceDesign);
 }
