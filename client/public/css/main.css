@@ -35,7 +35,7 @@ body {
 .page-bg-img {
     width: 100vw;
     height: var(--doc-height);
-    background-image: url("../img/bg.jpg");
+    background-image: url("../img/backgrounds/chess-board.jpg");
     background-size: cover;
     filter: blur(0) grayscale(0.5) brightness(0.5);
     transition: filter 1s ease-in-out;
