@@ -1,4 +1,4 @@
-import { MoveType, PieceType } from '../types';
+import { MoveType, PieceType, PlayerType } from '../types';
 import { Move } from '../move';
 import { Game } from '../game';
 import { UiHelper } from './ui-helper';
@@ -7,6 +7,7 @@ import { UiFen } from './ui-fen';
 import { UiPromotion } from './ui-promotion';
 import { UiLog } from './ui-log';
 import { UiPieceDesign } from './ui-types';
+import { Helper } from '../helper';
 
 export class UiMain {
 	game: Game;
@@ -125,6 +126,57 @@ export class UiMain {
 		const uiInit = new UiInit();
 		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
 		this.updateUI();
+		if (this.isBotTurn()) {
+			setTimeout(() => {
+				this.goBotTurn();
+			}, 1000);
+		}
+	}
+
+	isBotTurn() {
+		if (this.game.results.size > 0) {
+			return false;
+		}
+		const p = this.game.getCurPosition();
+		if (!p) {
+			return false;
+		}
+		return this.game.armies[p.armyIndex].playerType !== PlayerType.HUMAN;
+	}
+
+	goBotTurn() {
+		if (this.game.results.size > 0) {
+			return;
+		}
+		const p = this.game.getCurPosition();
+		if (!p) {
+			return;
+		}
+		const armyIndex = p.armyIndex;
+		if (this.game.armies[armyIndex].playerType === PlayerType.HUMAN) {
+			return;
+		}
+		const moves = this.game.mover.getAllPossibleMoves(p);
+		if (moves.length > 0) {
+			const m = moves[Helper.getRandomNumber(0, moves.length - 1)];
+			this.game.move(m);
+			UiLog.logMove(m);
+			this.selectedIndex = -1;
+			this.updateUI();
+			const p = this.game.getCurPosition();
+			if (!p) {
+				return;
+			}
+			const armyIndex = p.armyIndex;
+			if (this.game.armies[armyIndex].playerType === PlayerType.HUMAN) {
+				return;
+			}
+			if (this.isBotTurn()) {
+				setTimeout(() => {
+					this.goBotTurn();
+				}, 100);
+			}
+		}
 	}
 
 	handleUiSelection(newIndex: number) {
@@ -145,6 +197,11 @@ export class UiMain {
 				UiLog.logMove(m);
 				this.selectedIndex = -1;
 				this.updateUI();
+				if (this.isBotTurn()) {
+					setTimeout(() => {
+						this.goBotTurn();
+					}, 100);
+				}
 			} else if (moves.length === 4 && moves.every(m => m.types.has(MoveType.PROMOTION))) {
 				UiPromotion.showDialog(this.game.getCurPosition()?.armyIndex || 0, (promotionMoveType: MoveType) => {
 					const m = moves.find(m => m.types.has(promotionMoveType));
@@ -152,6 +209,11 @@ export class UiMain {
 					UiLog.logMove(m);
 					this.selectedIndex = -1;
 					this.updateUI();
+					if (this.isBotTurn()) {
+						setTimeout(() => {
+							this.goBotTurn();
+						}, 100);
+					}
 				});
 			}
 		} else {
