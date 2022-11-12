@@ -49,11 +49,11 @@
 }
 .welcome-action-buttons {
     position: absolute;
-    inset: auto 0 2rem 0;
+    inset: auto 2rem 2rem 2rem;
     grid-column: 1 / span 2;
     margin-top: 2rem;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 .welcome-action-button {
     width: 8rem;
@@ -65,9 +65,16 @@
     cursor: pointer;
     user-select: none;
     color: #000;
-    background-color: #783;
+    background-color: #ccc;
+    margin-left: 1rem;
 }
 .welcome-action-button:hover {
+    background-color: #ddd;
+}
+.welcome-start-button {
+    background-color: #783;
+}
+.welcome-start-button:hover {
     background-color: #894;
 }
 
@@ -78,9 +85,10 @@
     }
     .welcome-panel {
         border: none;
+        border-radius: 0;
     }
     .welcome-action-buttons {
-        inset: auto 0 5rem 0;
+        inset: auto 2rem 5rem 2rem;
     }
     .welcome-action-button {
         width: 10rem;
