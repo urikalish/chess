@@ -18,18 +18,20 @@
     content: "";
     position: absolute;
     border-radius: 50%;
-    background-color: #000;
-    opacity: 0.3;
 }
 .square.possible-to:not(.occupied):not(.en-passant-target)::after {
     left: 40%;
     top: 40%;
     width: 20%;
     height: 20%;
+    background-color: #000;
+    opacity: 0.3;
 }
 .square.possible-to.occupied::after,
 .square.possible-to.en-passant-target::after {
     inset: 0 0 0 0;
+    background-color: #933;
+    opacity: 0.8;
 }
 .square.checked-king {
     background-color: var(--color--red--dark);
