@@ -49,7 +49,7 @@
 }
 .welcome-action-buttons {
     position: absolute;
-    inset: auto 0 2rem 0;
+    inset: auto 0 3rem 0;
     grid-column: 1 / span 2;
     margin-top: 2rem;
     display: flex;
@@ -75,5 +75,8 @@
     :root {
         --welcome-panel-width: 100vw;
         --wecome-panel-height: var(--doc-height);
+    }
+    .welcome-panel {
+        border: none;
     }
 }
