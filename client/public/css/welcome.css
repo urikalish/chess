@@ -1,4 +1,6 @@
 .welcome-panel {
+    width: var(--welcome-panel-width);
+    height: var(--wecome-panel-height);
     background-color: #222;
     border: 1px solid #666;
     border-radius: 1rem;
@@ -6,6 +8,7 @@
     font-size: 1.6rem;
     opacity: 0.9;
     user-select: none;
+    position: relative;
 }
 .welcome-section {
     font-size: 2rem;
@@ -17,7 +20,7 @@
 }
 .welcome-data-line {
     display: grid;
-    grid-template-columns: 8rem 16rem;
+    grid-template-columns: 1fr 2fr;
     align-items: center;
     margin-top : 0.4rem;
 }
@@ -45,6 +48,9 @@
     padding: 0 0.4rem;
 }
 .welcome-action-buttons {
+    position: absolute;
+    inset: auto 0 2rem 0;
+    grid-column: 1 / span 2;
     margin-top: 2rem;
     display: flex;
     justify-content: center;
@@ -63,4 +69,11 @@
 }
 .welcome-action-button:hover {
     background-color: #894;
+}
+
+@media (max-width: 900px) {
+    :root {
+        --welcome-panel-width: 100vw;
+        --wecome-panel-height: var(--doc-height);
+    }
 }
