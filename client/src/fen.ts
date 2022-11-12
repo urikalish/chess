@@ -25,7 +25,14 @@ export class Fen {
 		return Position.createInstance(pd, parts[1] === 'w' ? 0 : 1, castlingOptions, epTargetIndex, Number(parts[4]), Number(parts[5]));
 	}
 
-	static getFenStr(p: Position | null, forRepetitionCheck = false) {
+	static getFenStr(
+		p: Position | null,
+		includeActivePlayer = true,
+		includeCastlingOptions = true,
+		includeEpTargetIndex = true,
+		includeHalfMoveClock = true,
+		includeFullMoveNum = true,
+	) {
 		if (!p) {
 			return '';
 		}
@@ -66,11 +73,19 @@ export class Fen {
 			castlingOptions += 'q';
 		}
 		parts[0] = pd.join('');
-		parts[1] = ['w', 'b'][p.armyIndex];
-		parts[2] = castlingOptions || '-';
-		parts[3] = p.epTargetIndex === -1 ? '-' : Square.getNameByIndex(p.epTargetIndex);
-		if (!forRepetitionCheck) {
+		if (includeActivePlayer) {
+			parts[1] = ['w', 'b'][p.armyIndex];
+		}
+		if (includeCastlingOptions) {
+			parts[2] = castlingOptions || '-';
+		}
+		if (includeEpTargetIndex) {
+			parts[3] = p.epTargetIndex === -1 ? '-' : Square.getNameByIndex(p.epTargetIndex);
+		}
+		if (includeHalfMoveClock) {
 			parts[4] = String(p.halfMoveClock);
+		}
+		if (includeFullMoveNum) {
 			parts[5] = String(p.fullMoveNum);
 		}
 		return parts.join(' ');

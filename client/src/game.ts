@@ -89,7 +89,7 @@ export class Game {
 		if (this.positions.length >= 8) {
 			const ps = {};
 			for (let i = this.positions.length - 1; i >= 0; i--) {
-				const str = Fen.getFenStr(this.positions[i], true);
+				const str = Fen.getFenStr(this.positions[i], true, true, true, false, false);
 				if (!ps[str]) {
 					ps[str] = 1;
 				} else {

@@ -4,6 +4,7 @@ import { UiWelcome } from './ui/ui-welcome';
 import { UiMain } from './ui/ui-main';
 import { UiPieceDesign } from './ui/ui-types';
 import { PlayerGenderType, PlayerType } from './types';
+// import { Tester } from './tester';
 
 let game: Game | null = null;
 let uiMain: UiMain | null = null;
@@ -35,5 +36,11 @@ function init() {
 	setDocHeight();
 	UiWelcome.showDialog(handleDoneWelcomeDialog);
 }
+
+// function test() {
+// 	setTimeout(() => {
+// 		Tester.test(game);
+// 	}, 1000);
+// }
 
 init();
