@@ -82,4 +82,8 @@
     .welcome-action-buttons {
         inset: auto 0 5rem 0;
     }
+    .welcome-action-button {
+        width: 10rem;
+        height: 4rem;
+    }
 }
