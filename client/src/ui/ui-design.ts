@@ -6,9 +6,9 @@ export class UiDesign {
 
 	static getUiPieceColor(index: number) {
 		if (UiDesign.uiPieceDesign === UiPieceDesign.NEO_WOOD) {
-			return index === 0 ? '#D8CBB9' : '#453E39';
-		} else if (UiDesign.uiPieceDesign === UiPieceDesign.KOSAL) {
-			return index === 0 ? '#fff' : '#000';
+			return index === 0 ? '#d8cbb9' : '#453e39';
+		} else if (UiDesign.uiPieceDesign === UiPieceDesign.GIOCO) {
+			return index === 0 ? '#ddd1c4' : '#62564d';
 		} else {
 			return index === 0 ? '#fff' : '#000';
 		}
