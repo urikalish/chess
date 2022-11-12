@@ -114,15 +114,15 @@
 .action-button:focus-visible,
 .action-button:active {
     background-color: #555;
+    color: #ddd;
 }
 .restart-button {
-    background-color: #966;
-    color: #000;
+    background-color: #844;
 }
 .restart-button:hover,
 .restart-button:focus-visible,
 .restart-button:active {
-    background-color: #a77;
+    background-color: #955;
 }
 .disabled-button {
     pointer-events: none;

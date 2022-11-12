@@ -47,10 +47,10 @@
 .welcome-action-buttons {
     margin-top: 2rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 .welcome-action-button {
-    width: 10rem;
+    width: 8rem;
     height: 3rem;
     border-radius: 2rem;
     border: none;
@@ -58,8 +58,9 @@
     font-family: var(--font-family--defalt);
     cursor: pointer;
     user-select: none;
-    background-color: var(--color--green--medium);
+    color: #000;
+    background-color: #783;
 }
 .welcome-action-button:hover {
-    background-color: var(--color--green--light);
+    background-color: #894;
 }
