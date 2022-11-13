@@ -27,8 +27,8 @@ function handleDoneWelcomeDialog(
 	const startTime = new Date().getTime();
 	UiLog.startTime = startTime;
 	game = new Game(player0Type, player0Gender, player0Name, player1Type, player1Gender, player1Name, fenStr, startTime);
-	uiMain = new UiMain(game);
-	uiMain.createGameUI(isBoardFlipped, pieceDesign);
+	uiMain = new UiMain(game, isBoardFlipped, pieceDesign);
+	uiMain.startGame();
 }
 
 function init() {

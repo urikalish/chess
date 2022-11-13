@@ -13,8 +13,19 @@ export class UiMain {
 	isBoardFlipped = false;
 	selectedIndex = -1;
 
-	constructor(game: Game) {
+	constructor(game: Game, isBoardFlipped: boolean, pieceDesign: UiPieceDesign) {
 		this.game = game;
+		this.isBoardFlipped = isBoardFlipped;
+		const uiInit = new UiInit();
+		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
+		this.selectedIndex = -1;
+		this.updateUI();
+	}
+
+	startGame() {
+		setTimeout(() => {
+			this.afterNewPosition();
+		}, 1000);
 	}
 
 	updateBoardSquaresUI() {
@@ -139,17 +150,6 @@ export class UiMain {
 				this.goBotTurn();
 			}, 100);
 		}
-	}
-
-	createGameUI(isBoardFlipped: boolean, pieceDesign: UiPieceDesign) {
-		this.isBoardFlipped = isBoardFlipped;
-		const uiInit = new UiInit();
-		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
-		this.selectedIndex = -1;
-		this.updateUI();
-		setTimeout(() => {
-			this.afterNewPosition();
-		}, 1000);
 	}
 
 	handleUiSelection(newIndex: number) {
