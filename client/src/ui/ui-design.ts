@@ -6,9 +6,13 @@ export class UiDesign {
 
 	static getUiPieceColor(index: number) {
 		if (UiDesign.uiPieceDesign === UiPieceDesign.NEO_WOOD) {
-			return index === 0 ? '#d8cbb9' : '#453e39';
+			return index === 0 ? '#d8cbb9' : '#3b3430';
+		} else if (UiDesign.uiPieceDesign === UiPieceDesign.KOSAL) {
+			return index === 0 ? '#fff' : '#010101';
 		} else if (UiDesign.uiPieceDesign === UiPieceDesign.GIOCO) {
 			return index === 0 ? '#ddd1c4' : '#62564d';
+		} else if (UiDesign.uiPieceDesign === UiPieceDesign.STAUNTY) {
+			return index === 0 ? '#f0f0f0' : '#5f5955';
 		} else {
 			return index === 0 ? '#fff' : '#000';
 		}
