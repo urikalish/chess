@@ -7,6 +7,7 @@ import { Board } from './board';
 import { Position } from './position';
 import { Move } from './move';
 import { Mover } from './mover';
+import { Helper } from './helper';
 
 export class Game {
 	players: Player[];
@@ -183,5 +184,27 @@ export class Game {
 		this.pushMove(m);
 		this.pushPosition(m.newPosition);
 		return m;
+	}
+
+	isBotTurn() {
+		const p = this.getCurPosition();
+		return p && this.results.size === 0 && this.armies[p.armyIndex].playerType === PlayerType.BOT;
+	}
+
+	isHumanTurn() {
+		const p = this.getCurPosition();
+		return p && this.results.size === 0 && this.armies[p.armyIndex].playerType === PlayerType.HUMAN;
+	}
+
+	getBotMove(): Move | null {
+		const p = this.getCurPosition();
+		if (!p) {
+			return null;
+		}
+		const moves = this.mover.getAllPossibleMoves(p);
+		if (moves.length === 0) {
+			return null;
+		}
+		return moves[Helper.getRandomNumber(0, moves.length - 1)];
 	}
 }

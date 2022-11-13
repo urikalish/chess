@@ -1,13 +1,12 @@
-import { MoveType, PieceType, PlayerType } from '../types';
+import { MoveType, PieceType } from '../types';
 import { Move } from '../move';
 import { Game } from '../game';
 import { UiHelper } from './ui-helper';
-import { UiInit } from './ui-init';
-import { UiFen } from './ui-fen';
-import { UiPromotion } from './ui-promotion';
 import { UiLog } from './ui-log';
 import { UiPieceDesign } from './ui-types';
-import { Helper } from '../helper';
+import { UiFen } from './ui-fen';
+import { UiInit } from './ui-init';
+import { UiPromotion } from './ui-promotion';
 
 export class UiMain {
 	game: Game;
@@ -47,7 +46,7 @@ export class UiMain {
 			if (lastMove && lastMove.to === index) {
 				squareElm.classList.add('last-move-to');
 			}
-			if (!this.isBotTurn() && this.game.possibleMoves.find(m => m.from === index)) {
+			if (this.game.isHumanTurn() && this.game.possibleMoves.find(m => m.from === index)) {
 				if (this.selectedIndex === -1) {
 					squareElm.classList.add('possible-from');
 				}
@@ -121,36 +120,25 @@ export class UiMain {
 		this.checkGameEnded();
 	}
 
-	isBotTurn() {
-		if (this.game.results.size > 0) {
-			return false;
+	goMove(m: Move | null | undefined) {
+		if (m) {
+			this.game.move(m);
+			UiLog.logMove(m);
+			this.afterNewPosition();
 		}
-		const p = this.game.getCurPosition();
-		if (!p) {
-			return false;
-		}
-		return this.game.armies[p.armyIndex].playerType !== PlayerType.HUMAN;
 	}
 
 	goBotTurn() {
-		const p = this.game.getCurPosition();
-		if (!p || this.game.results.size > 0 || this.game.armies[p.armyIndex].playerType === PlayerType.HUMAN) {
-			return;
+		const m = this.game.getBotMove();
+		if (m) {
+			this.goMove(m);
 		}
-		const moves = this.game.mover.getAllPossibleMoves(p);
-		if (moves.length === 0) {
-			return;
-		}
-		const m = moves[Helper.getRandomNumber(0, moves.length - 1)];
-		this.game.move(m);
-		UiLog.logMove(m);
-		this.afterNewPosition();
 	}
 
 	afterNewPosition() {
 		this.selectedIndex = -1;
 		this.updateUI();
-		if (this.isBotTurn()) {
+		if (this.game.isBotTurn()) {
 			setTimeout(() => {
 				this.goBotTurn();
 			}, 100);
@@ -181,16 +169,10 @@ export class UiMain {
 		} else if (this.game.possibleMoves.find(m => m.from === this.selectedIndex && m.to === newIndex)) {
 			const moves: Move[] = this.game.possibleMoves.filter(m => m.from === this.selectedIndex && m.to === newIndex);
 			if (moves.length === 1) {
-				const m = moves[0];
-				this.game.move(m);
-				UiLog.logMove(m);
-				this.afterNewPosition();
+				this.goMove(moves[0]);
 			} else if (moves.length === 4 && moves.every(m => m.types.has(MoveType.PROMOTION))) {
 				UiPromotion.showDialog(this.game.getCurPosition()?.armyIndex || 0, (promotionMoveType: MoveType) => {
-					const m = moves.find(m => m.types.has(promotionMoveType));
-					this.game.move(m);
-					UiLog.logMove(m);
-					this.afterNewPosition();
+					this.goMove(moves.find(m => m.types.has(promotionMoveType)));
 				});
 			}
 		} else {
