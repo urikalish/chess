@@ -47,7 +47,7 @@ export class UiMain {
 			if (lastMove && lastMove.to === index) {
 				squareElm.classList.add('last-move-to');
 			}
-			if (this.game.possibleMoves.find(m => m.from === index)) {
+			if (!this.isBotTurn() && this.game.possibleMoves.find(m => m.from === index)) {
 				if (this.selectedIndex === -1) {
 					squareElm.classList.add('possible-from');
 				}
