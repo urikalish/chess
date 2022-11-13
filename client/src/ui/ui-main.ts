@@ -107,17 +107,13 @@ export class UiMain {
 		});
 	}
 
-	checkGameEnded() {
-		if (this.game.results.size > 0) {
-			UiLog.logGameResult(this.game.results);
-		}
-	}
-
 	updateUI() {
 		this.updateBoardSquaresUI();
 		this.updateBoardPiecesUI();
 		UiFen.updateFenUI(this.game.getCurPosition());
-		this.checkGameEnded();
+		if (this.game.results.size > 0) {
+			UiLog.logGameResult(this.game.results);
+		}
 	}
 
 	goMove(m: Move | null | undefined) {
