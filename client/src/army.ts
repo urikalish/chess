@@ -15,7 +15,7 @@ export class Army {
 	}
 
 	static flipArmyIndex(armyIndex) {
-		return (armyIndex - 1) * -1;
+		return Math.abs(armyIndex - 1);
 	}
 
 	createAndAddPiece(pieceType: PieceType): Piece {
