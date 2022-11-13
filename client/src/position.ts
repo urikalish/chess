@@ -42,4 +42,15 @@ export class Position {
 	static hasAnyCastlingOptions(p: Position, armyIndex: number) {
 		return armyIndex === 0 ? p.castlingOptions[0][0] || p.castlingOptions[0][1] : p.castlingOptions[1][0] || p.castlingOptions[1][1];
 	}
+
+	static ProhibitCastingBasedOnPiecePosition(p: Position) {
+		p.castlingOptions[0][0] = p.castlingOptions[0][0] && p.pieceData[60] === 'K' && p.pieceData[63] === 'R';
+		p.castlingOptions[0][1] = p.castlingOptions[0][1] && p.pieceData[60] === 'K' && p.pieceData[56] === 'R';
+		p.castlingOptions[1][0] = p.castlingOptions[1][0] && p.pieceData[4] === 'k' && p.pieceData[7] === 'r';
+		p.castlingOptions[1][1] = p.castlingOptions[1][1] && p.pieceData[4] === 'k' && p.pieceData[0] === 'r';
+	}
+
+	static AssureTwoKings(p: Position) {
+		return p.pieceData.findIndex(pd => pd === 'K') > -1 && p.pieceData.findIndex(pd => pd === 'k') > -1;
+	}
 }

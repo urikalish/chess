@@ -73,6 +73,7 @@ export enum GameResult {
 	FIFTY_MOVES = 'fifty-moves',
 	SEVENTY_FIVE_MOVES = 'seventy-five-moves',
 	INSUFFICIENT_MATERIAL = 'insufficient-material',
+	INVALID_POSITION = 'invalid-position',
 
 	WHITE_RESIGNATION = 'white-resignation',
 	BLACK_RESIGNATION = 'black-resignation',

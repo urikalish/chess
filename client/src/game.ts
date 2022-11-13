@@ -128,9 +128,15 @@ export class Game {
 	}
 
 	applyFen(fenStr: string) {
-		const position = Fen.parseFenStr(fenStr);
+		const p = Fen.parseFenStr(fenStr);
+		if (!Position.AssureTwoKings(p)) {
+			this.results.add(GameResult.INVALID_POSITION);
+			console.log('Missing some kings...');
+			alert('Missing some kings...');
+		}
+		Position.ProhibitCastingBasedOnPiecePosition(p);
 		for (let i = 0; i < 64; i++) {
-			const char = position.pieceData[i];
+			const char = p.pieceData[i];
 			if (!char) {
 				continue;
 			}
@@ -139,7 +145,7 @@ export class Game {
 			const piece = this.armies[armyIndex].createAndAddPiece(char.toLowerCase() as PieceType);
 			this.board.placePiece(piece, i);
 		}
-		this.pushPosition(position);
+		this.pushPosition(p);
 	}
 
 	isInCheck() {
