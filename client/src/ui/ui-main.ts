@@ -121,18 +121,6 @@ export class UiMain {
 		this.checkGameEnded();
 	}
 
-	createGameUI(isBoardFlipped: boolean, pieceDesign: UiPieceDesign) {
-		this.isBoardFlipped = isBoardFlipped;
-		const uiInit = new UiInit();
-		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
-		this.updateUI();
-		if (this.isBotTurn()) {
-			setTimeout(() => {
-				this.goBotTurn();
-			}, 1000);
-		}
-	}
-
 	isBotTurn() {
 		if (this.game.results.size > 0) {
 			return false;
@@ -145,38 +133,39 @@ export class UiMain {
 	}
 
 	goBotTurn() {
-		if (this.game.results.size > 0) {
-			return;
-		}
 		const p = this.game.getCurPosition();
-		if (!p) {
-			return;
-		}
-		const armyIndex = p.armyIndex;
-		if (this.game.armies[armyIndex].playerType === PlayerType.HUMAN) {
+		if (!p || this.game.results.size > 0 || this.game.armies[p.armyIndex].playerType === PlayerType.HUMAN) {
 			return;
 		}
 		const moves = this.game.mover.getAllPossibleMoves(p);
-		if (moves.length > 0) {
-			const m = moves[Helper.getRandomNumber(0, moves.length - 1)];
-			this.game.move(m);
-			UiLog.logMove(m);
-			this.selectedIndex = -1;
-			this.updateUI();
-			const p = this.game.getCurPosition();
-			if (!p) {
-				return;
-			}
-			const armyIndex = p.armyIndex;
-			if (this.game.armies[armyIndex].playerType === PlayerType.HUMAN) {
-				return;
-			}
-			if (this.isBotTurn()) {
-				setTimeout(() => {
-					this.goBotTurn();
-				}, 100);
-			}
+		if (moves.length === 0) {
+			return;
 		}
+		const m = moves[Helper.getRandomNumber(0, moves.length - 1)];
+		this.game.move(m);
+		UiLog.logMove(m);
+		this.afterNewPosition();
+	}
+
+	afterNewPosition() {
+		this.selectedIndex = -1;
+		this.updateUI();
+		if (this.isBotTurn()) {
+			setTimeout(() => {
+				this.goBotTurn();
+			}, 100);
+		}
+	}
+
+	createGameUI(isBoardFlipped: boolean, pieceDesign: UiPieceDesign) {
+		this.isBoardFlipped = isBoardFlipped;
+		const uiInit = new UiInit();
+		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
+		this.selectedIndex = -1;
+		this.updateUI();
+		setTimeout(() => {
+			this.afterNewPosition();
+		}, 1000);
 	}
 
 	handleUiSelection(newIndex: number) {
@@ -195,25 +184,13 @@ export class UiMain {
 				const m = moves[0];
 				this.game.move(m);
 				UiLog.logMove(m);
-				this.selectedIndex = -1;
-				this.updateUI();
-				if (this.isBotTurn()) {
-					setTimeout(() => {
-						this.goBotTurn();
-					}, 100);
-				}
+				this.afterNewPosition();
 			} else if (moves.length === 4 && moves.every(m => m.types.has(MoveType.PROMOTION))) {
 				UiPromotion.showDialog(this.game.getCurPosition()?.armyIndex || 0, (promotionMoveType: MoveType) => {
 					const m = moves.find(m => m.types.has(promotionMoveType));
 					this.game.move(m);
 					UiLog.logMove(m);
-					this.selectedIndex = -1;
-					this.updateUI();
-					if (this.isBotTurn()) {
-						setTimeout(() => {
-							this.goBotTurn();
-						}, 100);
-					}
+					this.afterNewPosition();
 				});
 			}
 		} else {
