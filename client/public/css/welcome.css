@@ -1,4 +1,7 @@
 .welcome-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
     width: var(--welcome-panel-width);
     height: var(--wecome-panel-height);
     background-color: #222;
@@ -48,10 +51,6 @@
     padding: 0 0.4rem;
 }
 .welcome-action-buttons {
-    position: absolute;
-    inset: auto 2rem 2rem 2rem;
-    grid-column: 1 / span 2;
-    margin-top: 2rem;
     display: flex;
     justify-content: flex-end;
 }
