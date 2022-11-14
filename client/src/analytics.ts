@@ -1,9 +1,11 @@
 export enum AnalyticsCategory {
 	GAME_PHASE = 'game-phase',
+	UI_DESIGN = 'ui-design',
 }
 export enum AnalyticsAction {
-	GAME_STARTED = 'game-started',
-	GAME_ENDED = 'game-ended',
+	GAME_PHASE_GAME_STARTED = 'game-phase--game-started',
+	GAME_PHASE_GAME_ENDED = 'game-phase--game-ended',
+	UI_DESIGN_PIECES = 'ui-design--pieces',
 }
 
 export class Analytics {

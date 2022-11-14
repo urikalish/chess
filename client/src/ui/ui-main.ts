@@ -21,10 +21,11 @@ export class UiMain {
 		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
 		this.selectedIndex = -1;
 		this.updateUI();
+		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_PIECES, pieceDesign);
 	}
 
 	startGame() {
-		Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_STARTED, `${this.game.armies[0].playerType} vs. ${this.game.armies[1].playerType}`);
+		Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_PHASE_GAME_STARTED, `${this.game.armies[0].playerType} vs. ${this.game.armies[1].playerType}`);
 		setTimeout(() => {
 			this.afterNewPosition();
 		}, 1000);
@@ -153,7 +154,7 @@ export class UiMain {
 			}, 100);
 		}
 		if (this.game.resultStr) {
-			Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_ENDED, this.game.resultStr);
+			Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_PHASE_GAME_ENDED, this.game.resultStr);
 		}
 	}
 
