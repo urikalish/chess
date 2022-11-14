@@ -1,12 +1,13 @@
-import { Player } from '../player';
-import { Piece } from '../piece';
-import { Square } from '../square';
-import { Board } from '../board';
-import { UiHelper } from './ui-helper';
-import { PlayerGenderType, PlayerType } from '../types';
-import { UiDesign } from './ui-design';
-import { UiLog } from './ui-log';
-import { UiPieceDesign } from './ui-types';
+import {Player} from '../player';
+import {Piece} from '../piece';
+import {Square} from '../square';
+import {Board} from '../board';
+import {UiHelper} from './ui-helper';
+import {PlayerGenderType, PlayerType} from '../types';
+import {UiDesign} from './ui-design';
+import {UiLog} from './ui-log';
+import {UiPieceDesign} from './ui-types';
+import {Analytics, AnalyticsAction, AnalyticsCategory} from "../analytics";
 
 export class UiInit {
 	createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
@@ -96,6 +97,7 @@ export class UiInit {
 		const infoLogElm = UiHelper.getElm('info-log');
 		if (copyMovesButtonElm && infoLogElm) {
 			copyMovesButtonElm.addEventListener('click', () => {
+				Analytics.sendEvent(AnalyticsCategory.USER_ACTION, AnalyticsAction.USER_ACTION_COPY_MOVES);
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				navigator.clipboard.writeText(infoLogElm.innerText).then(() => {});
 			});
@@ -104,6 +106,7 @@ export class UiInit {
 		const infoFenTextElm = UiHelper.getElm('info-fen-text');
 		if (copyFenButtonElm && infoFenTextElm) {
 			copyFenButtonElm.addEventListener('click', () => {
+				Analytics.sendEvent(AnalyticsCategory.USER_ACTION, AnalyticsAction.USER_ACTION_COPY_FEN);
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
 				navigator.clipboard.writeText(infoFenTextElm.innerText).then(() => {});
 			});
@@ -112,6 +115,7 @@ export class UiInit {
 		if (restartButtonElm) {
 			restartButtonElm.addEventListener('click', () => {
 				if (confirm('Restart game?')) {
+					Analytics.sendEvent(AnalyticsCategory.USER_ACTION, AnalyticsAction.USER_ACTION_RESTART_GAME);
 					location.reload();
 				}
 			});
