@@ -9,7 +9,7 @@ export enum AnalyticsAction {
 	UI_DESIGN_PIECES = 'ui-design--pieces',
 	USER_ACTION_COPY_MOVES = 'user-action--copy-moves',
 	USER_ACTION_COPY_FEN = 'user-action--copy-fen',
-	USER_ACTION_RESTART_GAME = 'user-action--restart-game'
+	USER_ACTION_RESTART_GAME = 'user-action--restart-game',
 }
 
 export class Analytics {

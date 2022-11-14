@@ -1,13 +1,13 @@
-import {Player} from '../player';
-import {Piece} from '../piece';
-import {Square} from '../square';
-import {Board} from '../board';
-import {UiHelper} from './ui-helper';
-import {PlayerGenderType, PlayerType} from '../types';
-import {UiDesign} from './ui-design';
-import {UiLog} from './ui-log';
-import {UiPieceDesign} from './ui-types';
-import {Analytics, AnalyticsAction, AnalyticsCategory} from "../analytics";
+import { Player } from '../player';
+import { Piece } from '../piece';
+import { Square } from '../square';
+import { Board } from '../board';
+import { UiHelper } from './ui-helper';
+import { PlayerGenderType, PlayerType } from '../types';
+import { UiDesign } from './ui-design';
+import { UiLog } from './ui-log';
+import { UiPieceDesign } from './ui-types';
+import { Analytics, AnalyticsAction, AnalyticsCategory } from '../analytics';
 
 export class UiInit {
 	createPlayersInfoUI(players: Player[], isBoardFlipped: boolean) {
