@@ -52,7 +52,7 @@ export class Game {
 	}
 
 	isEnded() {
-		return !!this.resultStr;
+		return this.results.size > 0;
 	}
 
 	endGame(gameResults: GameResult[], resultStr: string) {
