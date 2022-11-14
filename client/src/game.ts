@@ -19,6 +19,7 @@ export class Game {
 	startTime = 0;
 	mover = new Mover();
 	results: Set<GameResult> = new Set();
+	resultStr = '';
 
 	constructor(
 		player0Type: PlayerType,
@@ -50,6 +51,18 @@ export class Game {
 		this.moves.push(m);
 	}
 
+	isEnded() {
+		return !!this.resultStr;
+	}
+
+	endGame(gameResults: GameResult[], resultStr: string) {
+		gameResults.forEach(gameResult => {
+			this.results.add(gameResult);
+		});
+		this.resultStr = resultStr;
+		console.log(resultStr);
+	}
+
 	checkForGameEnded() {
 		//no possible moves
 		if (this.possibleMoves.length === 0) {
@@ -59,30 +72,23 @@ export class Game {
 			}
 			if (m.types.has(MoveType.CHECKMATE)) {
 				//checkmate
-				this.results.add(GameResult.WIN);
-				this.results.add(GameResult.CHECKMATE);
 				if (m.armyIndex === 0) {
-					this.results.add(GameResult.WIN_BY_WHITE);
-					console.log('1-0 (checkmate by white)');
+					this.endGame([GameResult.WIN, GameResult.WIN_BY_WHITE, GameResult.CHECKMATE], '1-0 (checkmate by white)');
+					return;
 				} else {
-					this.results.add(GameResult.WIN_BY_BLACK);
-					console.log('0-1 (checkmate by black)');
+					this.endGame([GameResult.WIN, GameResult.WIN_BY_BLACK, GameResult.CHECKMATE], '0-1 (checkmate by black)');
+					return;
 				}
-				return;
 			}
 			//stalemate
-			this.results.add(GameResult.DRAW);
-			this.results.add(GameResult.STALEMATE);
-			console.log('½-½ (stalemate)');
+			this.endGame([GameResult.DRAW, GameResult.STALEMATE], '½-½ (stalemate)');
 			return;
 		}
 
 		//fifty moves
 		const p = this.getCurPosition();
 		if (p && p.halfMoveClock === 100) {
-			this.results.add(GameResult.DRAW);
-			this.results.add(GameResult.FIFTY_MOVES);
-			console.log('½-½ (fifty moves)');
+			this.endGame([GameResult.DRAW, GameResult.FIFTY_MOVES], '½-½ (fifty moves)');
 			return;
 		}
 
@@ -96,9 +102,7 @@ export class Game {
 				} else {
 					ps[str]++;
 					if (ps[str] === 3) {
-						this.results.add(GameResult.DRAW);
-						this.results.add(GameResult.THREEFOLD_REPETITION);
-						console.log('½-½ (threefold repetition)');
+						this.endGame([GameResult.DRAW, GameResult.THREEFOLD_REPETITION], '½-½ (threefold repetition)');
 						return;
 					}
 				}
@@ -112,9 +116,7 @@ export class Game {
 			this.board.onlyOnePieceLeft(PieceType.KNIGHT) ||
 			this.board.onlyTwoSameColorBishopsLeft()
 		) {
-			this.results.add(GameResult.DRAW);
-			this.results.add(GameResult.INSUFFICIENT_MATERIAL);
-			console.log('½-½ (insufficient material)');
+			this.endGame([GameResult.DRAW, GameResult.INSUFFICIENT_MATERIAL], '½-½ (insufficient material)');
 			return;
 		}
 	}

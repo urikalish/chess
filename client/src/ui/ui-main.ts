@@ -7,6 +7,7 @@ import { UiPieceDesign } from './ui-types';
 import { UiFen } from './ui-fen';
 import { UiInit } from './ui-init';
 import { UiPromotion } from './ui-promotion';
+import { Analytics, AnalyticsAction, AnalyticsCategory } from '../analytics';
 
 export class UiMain {
 	game: Game;
@@ -23,6 +24,7 @@ export class UiMain {
 	}
 
 	startGame() {
+		Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_STARTED, `${this.game.armies[0].playerType} vs. ${this.game.armies[1].playerType}`);
 		setTimeout(() => {
 			this.afterNewPosition();
 		}, 1000);
@@ -122,7 +124,7 @@ export class UiMain {
 		this.updateBoardSquaresUI();
 		this.updateBoardPiecesUI();
 		UiFen.updateFenUI(this.game.getCurPosition());
-		if (this.game.results.size > 0) {
+		if (this.game.isEnded()) {
 			UiLog.logGameResult(this.game.results);
 		}
 	}
@@ -150,10 +152,13 @@ export class UiMain {
 				this.goBotTurn();
 			}, 100);
 		}
+		if (this.game.resultStr) {
+			Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_ENDED, this.game.resultStr);
+		}
 	}
 
 	handleUiSelection(newIndex: number) {
-		if (this.game.results.size > 0) {
+		if (this.game.isEnded()) {
 			return;
 		}
 		if (this.selectedIndex === newIndex) {
