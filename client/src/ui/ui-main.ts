@@ -24,11 +24,13 @@ export class UiMain {
 		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_PIECES, pieceDesign);
 	}
 
-	startGame() {
-		Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_PHASE_GAME_STARTED, `${this.game.armies[0].playerType} vs. ${this.game.armies[1].playerType}`);
+	startGame(startTime: number) {
+		UiLog.startTime = startTime;
+		this.game.startGame(startTime);
 		setTimeout(() => {
 			this.afterNewPosition();
 		}, 1000);
+		Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_PHASE_GAME_STARTED, `${this.game.armies[0].playerType} vs. ${this.game.armies[1].playerType}`);
 	}
 
 	updateBoardSquaresUI() {

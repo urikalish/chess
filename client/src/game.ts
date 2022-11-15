@@ -29,13 +29,15 @@ export class Game {
 		player1Gender: PlayerGenderType,
 		player1Name: string,
 		fenStr: string,
-		startTime: number,
 	) {
 		this.players = [new Player(0, player0Type, player0Gender, player0Name), new Player(1, player1Type, player1Gender, player1Name)];
 		this.armies = [new Army(0, player0Type), new Army(1, player1Type)];
 		this.board = new Board();
-		this.startTime = startTime;
 		this.applyFen(fenStr);
+	}
+
+	startGame(startTime: number) {
+		this.startTime = startTime;
 	}
 
 	getCurPosition(): Position | null {
@@ -47,7 +49,7 @@ export class Game {
 	}
 
 	pushMove(m: Move) {
-		console.log(m.name);
+		//console.log(m.name);
 		this.moves.push(m);
 	}
 
@@ -60,7 +62,7 @@ export class Game {
 			this.results.add(gameResult);
 		});
 		this.resultStr = resultStr;
-		console.log(resultStr);
+		//console.log(resultStr);
 	}
 
 	checkForGameEnded() {
@@ -122,7 +124,7 @@ export class Game {
 	}
 
 	pushPosition(p: Position) {
-		console.log(Fen.getFenStr(p));
+		//console.log(Fen.getFenStr(p));
 		this.positions.push(p);
 		//const startTime = Date.now();
 		this.possibleMoves = this.mover.getAllPossibleMoves(p);
@@ -134,7 +136,7 @@ export class Game {
 		const p = Fen.parseFenStr(fenStr);
 		if (!Position.AssureTwoKings(p)) {
 			this.results.add(GameResult.INVALID_POSITION);
-			console.log('Missing some kings...');
+			//console.log('Missing some kings...');
 			alert('Missing some kings...');
 		}
 		Position.ProhibitCastingBasedOnPiecePosition(p);
@@ -190,12 +192,12 @@ export class Game {
 
 	isBotTurn() {
 		const p = this.getCurPosition();
-		return p && this.results.size === 0 && this.armies[p.armyIndex].playerType === PlayerType.BOT;
+		return p && !this.isEnded() && this.armies[p.armyIndex].playerType === PlayerType.BOT;
 	}
 
 	isHumanTurn() {
 		const p = this.getCurPosition();
-		return p && this.results.size === 0 && this.armies[p.armyIndex].playerType === PlayerType.HUMAN;
+		return p && !this.isEnded() && this.armies[p.armyIndex].playerType === PlayerType.HUMAN;
 	}
 
 	getBotMove(): Move | null {
