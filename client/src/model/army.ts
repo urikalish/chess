@@ -1,15 +1,15 @@
-import { PlayerType, ColorType, PieceType } from './types';
-import { Piece } from './piece';
+import { PlayerType } from './player';
+import { PieceType, PieceColor, Piece } from './piece';
 
 export class Army {
 	index: number;
-	color: ColorType;
+	color: PieceColor;
 	playerType: PlayerType;
 	pieces: Piece[];
 
 	constructor(armyIndex: number, playerType: PlayerType) {
 		this.index = armyIndex;
-		this.color = armyIndex === 0 ? ColorType.WHITE : ColorType.BLACK;
+		this.color = armyIndex === 0 ? PieceColor.WHITE : PieceColor.BLACK;
 		this.playerType = playerType;
 		this.pieces = [];
 	}

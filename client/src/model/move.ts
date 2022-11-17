@@ -1,5 +1,22 @@
-import { MoveType } from './types';
 import { Position } from './position';
+
+export enum MoveType {
+	NA = '-',
+	NORMAL = 'normal',
+	CAPTURE = 'capture',
+	PAWN_DOUBLE_START = 'pawn-double-start',
+	PROMOTION = 'promotion',
+	PROMOTION_TO_Q = 'promotion-to-q',
+	PROMOTION_TO_R = 'promotion-to-r',
+	PROMOTION_TO_B = 'promotion-to-b',
+	PROMOTION_TO_N = 'promotion-to-n',
+	EN_PASSANT = 'en-passant',
+	CASTLING = 'castling',
+	CASTLING_KS = 'castling-ks',
+	CASTLING_QS = 'castling-qs',
+	CHECK = 'check',
+	CHECKMATE = 'checkmate',
+}
 
 export class Move {
 	types: Set<MoveType> = new Set();

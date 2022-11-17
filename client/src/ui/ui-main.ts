@@ -1,13 +1,13 @@
-import { MoveType, PieceType } from '../types';
-import { Move } from '../move';
-import { Game } from '../game';
+import { PieceType } from '../model/piece';
+import { Move, MoveType } from '../model/move';
+import { Game } from '../model/game';
+import { Analytics, AnalyticsAction, AnalyticsCategory } from '../services/analytics';
 import { UiHelper } from './ui-helper';
-import { UiLog } from './ui-log';
-import { UiPieceDesign } from './ui-types';
 import { UiFen } from './ui-fen';
-import { UiInit } from './ui-init';
+import { UiPieceDesign } from './ui-design';
+import { UiLog } from './ui-log';
 import { UiPromotion } from './ui-promotion';
-import { Analytics, AnalyticsAction, AnalyticsCategory } from '../analytics';
+import { UiInit } from './ui-init';
 
 export class UiMain {
 	game: Game;

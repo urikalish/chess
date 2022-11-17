@@ -1,5 +1,3 @@
-import { Army } from './army';
-
 export class Position {
 	pieceData: string[] = [];
 	armyIndex = 0;
@@ -28,7 +26,7 @@ export class Position {
 	static createNextPosition(p: Position) {
 		return Position.createInstance(
 			[...p.pieceData],
-			Army.flipArmyIndex(p.armyIndex),
+			Math.abs(p.armyIndex - 1),
 			[
 				[p.castlingOptions[0][0], p.castlingOptions[0][1]],
 				[p.castlingOptions[1][0], p.castlingOptions[1][1]],

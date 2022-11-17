@@ -1,13 +1,30 @@
-import { ColorType, GameResult, MoveType, PieceType, PlayerGenderType, PlayerType } from './types';
 import { Fen } from './fen';
-import { Player } from './player';
-import { Piece } from './piece';
+import { PieceColor, PieceType, Piece } from './piece';
 import { Army } from './army';
-import { Board } from './board';
 import { Position } from './position';
-import { Move } from './move';
+import { Board } from './board';
+import { MoveType, Move } from './move';
 import { Mover } from './mover';
-import { Helper } from './helper';
+import { Player, PlayerGenderType, PlayerType } from './player';
+
+export enum GameResult {
+	WIN = 'win',
+	WIN_BY_WHITE = 'checkmate-by-white',
+	WIN_BY_BLACK = 'checkmate-by-black',
+	CHECKMATE = 'checkmate',
+	DRAW = 'draw',
+	STALEMATE = 'stalemate',
+	THREEFOLD_REPETITION = 'threefold-repetition',
+	FIVEFOLD_REPETITION = 'fivefold-repetition',
+	FIFTY_MOVES = 'fifty-moves',
+	SEVENTY_FIVE_MOVES = 'seventy-five-moves',
+	INSUFFICIENT_MATERIAL = 'insufficient-material',
+	INVALID_POSITION = 'invalid-position',
+
+	WHITE_RESIGNATION = 'white-resignation',
+	BLACK_RESIGNATION = 'black-resignation',
+	MUTUAL_AGREEMENT = 'mutual-agreement',
+}
 
 export class Game {
 	players: Player[];
@@ -145,8 +162,8 @@ export class Game {
 			if (!char) {
 				continue;
 			}
-			const color = char === char.toUpperCase() ? ColorType.WHITE : ColorType.BLACK;
-			const armyIndex = color === ColorType.WHITE ? 0 : 1;
+			const color = char === char.toUpperCase() ? PieceColor.WHITE : PieceColor.BLACK;
+			const armyIndex = color === PieceColor.WHITE ? 0 : 1;
 			const piece = this.armies[armyIndex].createAndAddPiece(char.toLowerCase() as PieceType);
 			this.board.placePiece(piece, i);
 		}
@@ -177,7 +194,15 @@ export class Game {
 		}
 		this.board.movePiece(piece, m.from, m.to);
 		if (m.types.has(MoveType.PROMOTION)) {
-			Piece.promoteByMoveType(piece, m.types);
+			if (m.types.has(MoveType.PROMOTION_TO_Q)) {
+				Piece.promote(piece, PieceType.QUEEN);
+			} else if (m.types.has(MoveType.PROMOTION_TO_R)) {
+				Piece.promote(piece, PieceType.ROOK);
+			} else if (m.types.has(MoveType.PROMOTION_TO_B)) {
+				Piece.promote(piece, PieceType.BISHOP);
+			} else if (m.types.has(MoveType.PROMOTION_TO_N)) {
+				Piece.promote(piece, PieceType.KNIGHT);
+			}
 		}
 		if (m.additionalMove) {
 			const additionalMovePiece = this.board.squares[m.additionalMove.from].piece;
@@ -209,6 +234,6 @@ export class Game {
 		if (moves.length === 0) {
 			return null;
 		}
-		return moves[Helper.getRandomNumber(0, moves.length - 1)];
+		return moves[Math.floor(Math.random() * moves.length)];
 	}
 }

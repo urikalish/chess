@@ -1,5 +1,5 @@
+import { MoveType } from '../model/move';
 import { UiHelper } from './ui-helper';
-import { MoveType } from '../types';
 
 export class UiPromotion {
 	static showDialog(armyIndex: number, onPromotionDialogDone: (MoveType) => void) {

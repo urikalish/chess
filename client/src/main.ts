@@ -1,10 +1,10 @@
-import { Game } from './game';
+import { Fen } from './model/fen';
+import { Game, GameResult } from './model/game';
 import { UiLog } from './ui/ui-log';
 import { UiWelcome } from './ui/ui-welcome';
 import { UiMain } from './ui/ui-main';
-import { UiPieceDesign } from './ui/ui-types';
-import { GameResult, PlayerGenderType, PlayerType } from './types';
-import { Fen } from './fen';
+import { UiPieceDesign } from './ui/ui-design';
+import { PlayerGenderType, PlayerType } from './model/player';
 
 let game: Game | null = null;
 let uiMain: UiMain | null = null;
@@ -40,7 +40,7 @@ function goBotVsBotSingleGame(numOfMatches: number, matchNumber: number, result:
 		result[1] += 0.5;
 	}
 	const gameDurationMs = endTime - startTime;
-	console.log(`[${i}]\t[${gameDurationMs}ms]\t[${game.resultStr}]\t[BotA wins: ${((result[0] / matchNumber) * 100).toFixed(2)}%]`);
+	console.log(`[${i < 10 ? '0' : ''}${i}]\t[${gameDurationMs}ms]\t[${result[0]}-${result[1]}]\t[${game.resultStr}]`);
 	if (matchNumber < numOfMatches) {
 		setTimeout(() => {
 			goBotVsBotSingleGame(numOfMatches, matchNumber + 1, result);

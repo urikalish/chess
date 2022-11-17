@@ -1,13 +1,21 @@
-import { Helper } from '../helper';
-import { Move } from '../move';
+import { Move, MoveType } from '../model/move';
 import { UiHelper } from './ui-helper';
-import { GameResult, MoveType } from '../types';
+import { GameResult } from '../model/game';
 
 export class UiLog {
 	static startTime = 0;
 
 	static getTimeStr() {
-		return `${Helper.getTimeStr(new Date().getTime() - UiLog.startTime)}`;
+		const time = new Date().getTime() - UiLog.startTime;
+		const totalSecs = Math.trunc(time / 1000);
+		const hours = Math.trunc(totalSecs / 3600);
+		const totalMinutes = totalSecs - hours * 3600;
+		const minutes = Math.trunc(totalMinutes / 60);
+		const secs = totalMinutes - minutes * 60;
+		const hh = hours >= 10 ? hours : '0' + hours;
+		const mm = minutes >= 10 ? minutes : '0' + minutes;
+		const ss = secs >= 10 ? secs : '0' + secs;
+		return `${hh}:${mm}:${ss}`;
 	}
 
 	static classNames = {

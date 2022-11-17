@@ -1,6 +1,5 @@
-import { Square } from './square';
-import { Piece } from './piece';
-import { PieceType, PieceTypeCased, SquareColor } from './types';
+import { PieceType, PieceTypeCased, Piece } from './piece';
+import { SquareColor, Square } from './square';
 
 export class Board {
 	squares: Square[];

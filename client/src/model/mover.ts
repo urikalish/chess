@@ -1,8 +1,7 @@
-import { MoveType, PieceType } from './types';
-import { Piece } from './piece';
+import { PieceType, Piece } from './piece';
 import { Army } from './army';
-import { Move } from './move';
 import { Position } from './position';
+import { MoveType, Move } from './move';
 
 export class Mover {
 	//region Helper Methods

@@ -1,7 +1,7 @@
-import { PlayerGenderType, PlayerType } from '../types';
-import { Fen } from '../fen';
+import { Fen } from '../model/fen';
+import { PlayerGenderType, PlayerType } from '../model/player';
 import { UiHelper } from './ui-helper';
-import { UiPieceDesign } from './ui-types';
+import { UiPieceDesign } from './ui-design';
 
 export class UiWelcome {
 	static topPlayerColorElm = UiHelper.getElm('welcome-top-player-color') as HTMLSelectElement;

@@ -1,5 +1,10 @@
 import { Piece } from './piece';
 
+export enum SquareColor {
+	LIGHT = 'light',
+	DARK = 'dark',
+}
+
 export class Square {
 	index: number;
 	name: string;

@@ -1,5 +1,11 @@
-import { UiPieceDesign } from './ui-types';
 import { UiHelper } from './ui-helper';
+
+export enum UiPieceDesign {
+	NEO_WOOD = 'neo-wood',
+	STAUNTY = 'staunty',
+	GIOCO = 'gioco',
+	KOSAL = 'kosal',
+}
 
 export class UiDesign {
 	static uiPieceDesign: UiPieceDesign = UiPieceDesign.NEO_WOOD;
