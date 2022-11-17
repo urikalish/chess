@@ -14,27 +14,25 @@ function setDocHeight() {
 }
 
 function goBotVsBotSingleGame(numOfMatches: number, matchNumber: number, result: number[]) {
-	let game;
 	const i = matchNumber - 1;
 	const startTime = new Date().getTime();
-	if (i % 2 === 0) {
-		game = new Game(PlayerType.BOT, PlayerGenderType.NA, 'BotA', PlayerType.BOT, PlayerGenderType.NA, 'Bot B', Fen.default);
-	} else {
-		game = new Game(PlayerType.BOT, PlayerGenderType.NA, 'BotB', PlayerType.BOT, PlayerGenderType.NA, 'Bot A', Fen.default);
-	}
+	const game = new Game(PlayerType.BOT, PlayerGenderType.NA, 'bot0', PlayerType.BOT, PlayerGenderType.NA, 'bot1', Fen.default);
 	game.startGame(startTime);
 	while (!game.isEnded()) {
+		const p = game.getCurPosition();
+		if (!p) {
+			break;
+		}
 		const m = game.getBotMove();
 		if (m) {
 			game.move(m);
 		}
 	}
 	const endTime = new Date().getTime();
-	const indexes = [i % 2 === 0 ? 0 : 1, i % 2 === 0 ? 1 : 0];
 	if (game.results.has(GameResult.WIN_BY_WHITE)) {
-		result[indexes[0]]++;
+		result[0]++;
 	} else if (game.results.has(GameResult.WIN_BY_BLACK)) {
-		result[indexes[1]]++;
+		result[1]++;
 	} else {
 		result[0] += 0.5;
 		result[1] += 0.5;

@@ -6,6 +6,7 @@ import { Board } from './board';
 import { MoveType, Move } from './move';
 import { Mover } from './mover';
 import { Player, PlayerGenderType, PlayerType } from './player';
+import { Bot } from '../bots/bot';
 
 export enum GameResult {
 	WIN = 'win',
@@ -230,10 +231,6 @@ export class Game {
 		if (!p) {
 			return null;
 		}
-		const moves = this.mover.getAllPossibleMoves(p);
-		if (moves.length === 0) {
-			return null;
-		}
-		return moves[Math.floor(Math.random() * moves.length)];
+		return Bot.getBotMove(`bot${p.armyIndex}`, p);
 	}
 }
