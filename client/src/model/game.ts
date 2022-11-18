@@ -66,6 +66,11 @@ export class Game {
 		return this.moves.length ? this.moves[this.moves.length - 1] : null;
 	}
 
+	getCurPlayer(): Player | null {
+		const p = this.getCurPosition();
+		return p ? this.players[p.armyIndex] : null;
+	}
+
 	pushMove(m: Move) {
 		//console.log(m.name);
 		this.moves.push(m);
@@ -228,9 +233,10 @@ export class Game {
 
 	getBotMove(): Move | null {
 		const p = this.getCurPosition();
-		if (!p) {
+		const playerName = this.getCurPlayer()?.name || '';
+		if (!p || !playerName) {
 			return null;
 		}
-		return Bot.getBotMove(`bot${p.armyIndex}`, p);
+		return Bot.getBotMove(playerName, p);
 	}
 }
