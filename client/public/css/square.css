@@ -6,20 +6,22 @@
     background-color: var(--color--orange);
     opacity: 0.5;
 }
-.square.possible-from {
+.board-squares.mark-possible-moves > .square.possible-from {
     background-color: var(--color--green--medium);
     opacity: 0.5;
 }
 .square.possible-to {
-    position: relative;
     cursor: pointer;
 }
-.square.possible-to::after {
+.board-squares.mark-possible-moves > .square.possible-to {
+    position: relative;
+}
+.board-squares.mark-possible-moves > .square.possible-to::after {
     content: "";
     position: absolute;
     border-radius: 50%;
 }
-.square.possible-to:not(.occupied):not(.en-passant-target)::after {
+.board-squares.mark-possible-moves > .square.possible-to:not(.occupied):not(.en-passant-target)::after {
     left: 40%;
     top: 40%;
     width: 20%;
@@ -27,8 +29,8 @@
     background-color: #000;
     opacity: 0.3;
 }
-.square.possible-to.occupied::after,
-.square.possible-to.en-passant-target::after {
+.board-squares.mark-possible-moves > .square.possible-to.occupied::after,
+.board-squares.mark-possible-moves > .square.possible-to.en-passant-target::after {
     inset: 0 0 0 0;
     background-color: #933;
     opacity: 0.8;
