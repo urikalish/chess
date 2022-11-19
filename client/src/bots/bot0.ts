@@ -60,6 +60,12 @@ export class Bot0 {
 	sortMoves(moves: Move[]) {
 		BotHelper.randomOrder(moves);
 		moves.sort((a, b) => {
+			if (a.newPosition.halfMoveClock < 100 && b.newPosition.halfMoveClock >= 100) {
+				return -1;
+			}
+			if (b.newPosition.halfMoveClock < 100 && a.newPosition.halfMoveClock >= 100) {
+				return 1;
+			}
 			if (a.types.has(MoveType.PROMOTION) && !b.types.has(MoveType.PROMOTION)) {
 				return -1;
 			}
