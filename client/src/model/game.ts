@@ -157,12 +157,12 @@ export class Game {
 
 	applyFen(fenStr: string) {
 		const p = Fen.parseFenStr(fenStr);
-		if (!Position.AssureTwoKings(p)) {
+		if (!Position.assureTwoKings(p)) {
 			this.results.add(GameResult.INVALID_POSITION);
 			//console.log('Missing some kings...');
 			alert('Missing some kings...');
 		}
-		Position.ProhibitCastingBasedOnPiecePosition(p);
+		Position.prohibitCastingBasedOnPiecePosition(p);
 		for (let i = 0; i < 64; i++) {
 			const char = p.pieceData[i];
 			if (!char) {

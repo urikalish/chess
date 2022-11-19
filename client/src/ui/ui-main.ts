@@ -153,7 +153,7 @@ export class UiMain {
 		if (this.game.isBotTurn()) {
 			setTimeout(() => {
 				this.goBotTurn();
-			}, 100);
+			}, 200);
 		}
 		if (this.game.resultStr) {
 			Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_PHASE_GAME_ENDED, this.game.resultStr);
