@@ -22,8 +22,8 @@ export class UiWelcome {
 
 	setDefaultValues() {
 		this.topPlayerColorElm.value = 'black';
-		this.topPlayerTypeElm.value = 'female';
-		this.topPlayerNameElm.value = UiHelper.getRandomName(false);
+		this.topPlayerTypeElm.value = 'bot';
+		this.topPlayerNameElm.value = 'bot0';
 		this.bottomPlayerColorElm.value = 'white';
 		this.bottomPlayerTypeElm.value = 'male';
 		this.bottomPlayerNameElm.value = UiHelper.getRandomName(true);
