@@ -71,7 +71,8 @@ function handleDoneWelcomeDialog(
 function init() {
 	window.addEventListener('resize', setDocHeight);
 	setDocHeight();
-	UiWelcome.showDialog(handleDoneWelcomeDialog);
+	const uiWelcome = new UiWelcome();
+	uiWelcome.showDialog(handleDoneWelcomeDialog);
 }
 
 init();

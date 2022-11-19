@@ -175,7 +175,8 @@ export class UiMain {
 			if (moves.length === 1) {
 				this.goMove(moves[0]);
 			} else if (moves.length === 4 && moves.every(m => m.types.has(MoveType.PROMOTION))) {
-				UiPromotion.showDialog(this.game.getCurPosition()?.armyIndex || 0, (promotionMoveType: MoveType) => {
+				const uiPromotion = new UiPromotion();
+				uiPromotion.showDialog(this.game.getCurPosition()?.armyIndex || 0, (promotionMoveType: MoveType) => {
 					this.goMove(moves.find(m => m.types.has(promotionMoveType)));
 				});
 			}

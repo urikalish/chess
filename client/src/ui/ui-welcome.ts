@@ -4,122 +4,105 @@ import { UiHelper } from './ui-helper';
 import { UiPieceDesign } from './ui-design';
 
 export class UiWelcome {
-	static topPlayerColorElm = UiHelper.getElm('welcome-top-player-color') as HTMLSelectElement;
-	static topPlayerTypeElm = UiHelper.getElm('welcome-top-player-type') as HTMLSelectElement;
-	static topPlayerNameElm = UiHelper.getElm('welcome-top-player-name') as HTMLInputElement;
-	static bottomPlayerColorElm = UiHelper.getElm('welcome-bottom-player-color') as HTMLSelectElement;
-	static bottomPlayerTypeElm = UiHelper.getElm('welcome-bottom-player-type') as HTMLSelectElement;
-	static bottomPlayerNameElm = UiHelper.getElm('welcome-bottom-player-name') as HTMLInputElement;
-	static fenTextElm = UiHelper.getElm('welcome-fen-text') as HTMLInputElement;
-	static pieceDesignElm = UiHelper.getElm('welcome-piece-design') as HTMLSelectElement;
-	static resetButtonElm = UiHelper.getElm('welcome-reset-button') as HTMLButtonElement;
-	static startButtonElm = UiHelper.getElm('welcome-start-button') as HTMLButtonElement;
+	topPlayerColorElm: HTMLSelectElement = UiHelper.getElm('welcome-top-player-color') as HTMLSelectElement;
+	topPlayerTypeElm: HTMLSelectElement = UiHelper.getElm('welcome-top-player-type') as HTMLSelectElement;
+	topPlayerNameElm: HTMLInputElement = UiHelper.getElm('welcome-top-player-name') as HTMLInputElement;
+	bottomPlayerColorElm: HTMLSelectElement = UiHelper.getElm('welcome-bottom-player-color') as HTMLSelectElement;
+	bottomPlayerTypeElm: HTMLSelectElement = UiHelper.getElm('welcome-bottom-player-type') as HTMLSelectElement;
+	bottomPlayerNameElm: HTMLInputElement = UiHelper.getElm('welcome-bottom-player-name') as HTMLInputElement;
+	fenTextElm: HTMLInputElement = UiHelper.getElm('welcome-fen-text') as HTMLInputElement;
+	pieceDesignElm: HTMLSelectElement = UiHelper.getElm('welcome-piece-design') as HTMLSelectElement;
+	resetButtonElm: HTMLButtonElement = UiHelper.getElm('welcome-reset-button') as HTMLButtonElement;
+	startButtonElm: HTMLButtonElement = UiHelper.getElm('welcome-start-button') as HTMLButtonElement;
 
-	static getRandomName(isMale: boolean) {
-		const maleNames = ['Liam', 'Noah', 'Oliver', 'Elijah', 'James', 'William', 'Benjamin', 'Lucas', 'Henry', 'Theodore'];
-		const femaleNames = ['Olivia', 'Emma', 'Charlotte', 'Amelia', 'Ava', 'Sophia', 'Isabella', 'Mia', 'Evelyn', 'Harper'];
-		return isMale ? maleNames[Math.trunc(Math.random() * maleNames.length)] : femaleNames[Math.trunc(Math.random() * femaleNames.length)];
+	enableOrDisablePlayerNameElms() {
+		this.topPlayerNameElm.disabled = this.topPlayerTypeElm.value === 'bot';
+		this.bottomPlayerNameElm.disabled = this.bottomPlayerTypeElm.value === 'bot';
 	}
 
-	static setDefaultValues() {
-		UiWelcome.topPlayerColorElm.value = 'black';
-		UiWelcome.topPlayerTypeElm.value = 'female';
-		UiWelcome.topPlayerNameElm.value = UiWelcome.getRandomName(false);
-		UiWelcome.bottomPlayerColorElm.value = 'white';
-		UiWelcome.bottomPlayerTypeElm.value = 'male';
-		UiWelcome.bottomPlayerNameElm.value = UiWelcome.getRandomName(true);
-		UiWelcome.fenTextElm.value = Fen.default;
-		UiWelcome.pieceDesignElm.value = 'neo-wood';
+	setDefaultValues() {
+		this.topPlayerColorElm.value = 'black';
+		this.topPlayerTypeElm.value = 'female';
+		this.topPlayerNameElm.value = UiHelper.getRandomName(false);
+		this.bottomPlayerColorElm.value = 'white';
+		this.bottomPlayerTypeElm.value = 'male';
+		this.bottomPlayerNameElm.value = UiHelper.getRandomName(true);
+		this.fenTextElm.value = Fen.default;
+		this.pieceDesignElm.value = 'neo-wood';
+		this.enableOrDisablePlayerNameElms();
 	}
 
-	static showDialog(onWelcomeDone) {
-		UiWelcome.topPlayerColorElm.addEventListener('change', () => {
-			UiWelcome.bottomPlayerColorElm.value = UiWelcome.topPlayerColorElm.value === 'white' ? 'black' : 'white';
+	showDialog(onWelcomeDone) {
+		this.topPlayerColorElm.addEventListener('change', () => {
+			this.bottomPlayerColorElm.value = this.topPlayerColorElm.value === 'white' ? 'black' : 'white';
 		});
-		UiWelcome.topPlayerTypeElm.addEventListener('change', () => {
-			UiWelcome.topPlayerNameElm.value = UiWelcome.topPlayerTypeElm.value === 'bot' ? 'bot0' : UiWelcome.getRandomName(UiWelcome.topPlayerTypeElm.value === 'male');
-			UiWelcome.topPlayerNameElm.disabled = UiWelcome.topPlayerTypeElm.value === 'bot';
+		this.topPlayerTypeElm.addEventListener('change', () => {
+			this.topPlayerNameElm.value = this.topPlayerTypeElm.value === 'bot' ? 'bot0' : UiHelper.getRandomName(this.topPlayerTypeElm.value === 'male');
+			this.enableOrDisablePlayerNameElms();
 		});
-		UiWelcome.bottomPlayerColorElm.addEventListener('change', () => {
-			UiWelcome.topPlayerColorElm.value = UiWelcome.bottomPlayerColorElm.value === 'white' ? 'black' : 'white';
+		this.bottomPlayerColorElm.addEventListener('change', () => {
+			this.topPlayerColorElm.value = this.bottomPlayerColorElm.value === 'white' ? 'black' : 'white';
 		});
-		UiWelcome.bottomPlayerTypeElm.addEventListener('change', () => {
-			UiWelcome.bottomPlayerNameElm.value = UiWelcome.bottomPlayerTypeElm.value === 'bot' ? 'bot0' : UiWelcome.getRandomName(UiWelcome.bottomPlayerTypeElm.value === 'male');
-			UiWelcome.bottomPlayerNameElm.disabled = UiWelcome.bottomPlayerTypeElm.value === 'bot';
+		this.bottomPlayerTypeElm.addEventListener('change', () => {
+			this.bottomPlayerNameElm.value = this.bottomPlayerTypeElm.value === 'bot' ? 'bot0' : UiHelper.getRandomName(this.bottomPlayerTypeElm.value === 'male');
+			this.enableOrDisablePlayerNameElms();
 		});
-		UiWelcome.startButtonElm.addEventListener('click', () => {
-			UiWelcome.saveToLocalStorage(
-				UiWelcome.topPlayerColorElm,
-				UiWelcome.topPlayerTypeElm,
-				UiWelcome.topPlayerNameElm,
-				UiWelcome.bottomPlayerColorElm,
-				UiWelcome.bottomPlayerTypeElm,
-				UiWelcome.bottomPlayerNameElm,
-				UiWelcome.fenTextElm,
-				UiWelcome.pieceDesignElm,
+		this.startButtonElm.addEventListener('click', () => {
+			this.saveToLocalStorage(
+				this.topPlayerColorElm,
+				this.topPlayerTypeElm,
+				this.topPlayerNameElm,
+				this.bottomPlayerColorElm,
+				this.bottomPlayerTypeElm,
+				this.bottomPlayerNameElm,
+				this.fenTextElm,
+				this.pieceDesignElm,
 			);
-			if (UiWelcome.bottomPlayerColorElm.value === 'white') {
+			if (this.bottomPlayerColorElm.value === 'white') {
 				onWelcomeDone(
-					UiWelcome.bottomPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
-					UiWelcome.bottomPlayerTypeElm.value === 'bot'
-						? PlayerGenderType.NA
-						: UiWelcome.bottomPlayerTypeElm.value === 'male'
-						? PlayerGenderType.MALE
-						: PlayerGenderType.FEMALE,
-					UiWelcome.bottomPlayerNameElm.value.trim() || 'Bottom Player',
-					UiWelcome.topPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
-					UiWelcome.topPlayerTypeElm.value === 'bot'
-						? PlayerGenderType.NA
-						: UiWelcome.topPlayerTypeElm.value === 'male'
-						? PlayerGenderType.MALE
-						: PlayerGenderType.FEMALE,
-					UiWelcome.topPlayerNameElm.value.trim() || 'Top Player',
-					UiWelcome.fenTextElm.value.trim() || Fen.default,
-					UiWelcome.pieceDesignElm.value as UiPieceDesign,
+					this.bottomPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
+					this.bottomPlayerTypeElm.value === 'bot' ? PlayerGenderType.NA : this.bottomPlayerTypeElm.value === 'male' ? PlayerGenderType.MALE : PlayerGenderType.FEMALE,
+					this.bottomPlayerNameElm.value.trim() || 'Bottom Player',
+					this.topPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
+					this.topPlayerTypeElm.value === 'bot' ? PlayerGenderType.NA : this.topPlayerTypeElm.value === 'male' ? PlayerGenderType.MALE : PlayerGenderType.FEMALE,
+					this.topPlayerNameElm.value.trim() || 'Top Player',
+					this.fenTextElm.value.trim() || Fen.default,
+					this.pieceDesignElm.value as UiPieceDesign,
 					false,
 				);
 			} else {
 				onWelcomeDone(
-					UiWelcome.topPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
-					UiWelcome.topPlayerTypeElm.value === 'bot'
-						? PlayerGenderType.NA
-						: UiWelcome.topPlayerTypeElm.value === 'male'
-						? PlayerGenderType.MALE
-						: PlayerGenderType.FEMALE,
-					UiWelcome.topPlayerNameElm.value.trim() || 'Top Player',
-					UiWelcome.bottomPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
-					UiWelcome.bottomPlayerTypeElm.value === 'bot'
-						? PlayerGenderType.NA
-						: UiWelcome.bottomPlayerTypeElm.value === 'male'
-						? PlayerGenderType.MALE
-						: PlayerGenderType.FEMALE,
-					UiWelcome.bottomPlayerNameElm.value.trim() || 'Bottom Player',
-					UiWelcome.fenTextElm.value.trim() || Fen.default,
-					UiWelcome.pieceDesignElm.value as UiPieceDesign,
+					this.topPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
+					this.topPlayerTypeElm.value === 'bot' ? PlayerGenderType.NA : this.topPlayerTypeElm.value === 'male' ? PlayerGenderType.MALE : PlayerGenderType.FEMALE,
+					this.topPlayerNameElm.value.trim() || 'Top Player',
+					this.bottomPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
+					this.bottomPlayerTypeElm.value === 'bot' ? PlayerGenderType.NA : this.bottomPlayerTypeElm.value === 'male' ? PlayerGenderType.MALE : PlayerGenderType.FEMALE,
+					this.bottomPlayerNameElm.value.trim() || 'Bottom Player',
+					this.fenTextElm.value.trim() || Fen.default,
+					this.pieceDesignElm.value as UiPieceDesign,
 					true,
 				);
 			}
 		});
-		UiWelcome.resetButtonElm.addEventListener('click', () => {
-			UiWelcome.setDefaultValues();
+		this.resetButtonElm.addEventListener('click', () => {
+			this.setDefaultValues();
 		});
 
-		UiWelcome.setDefaultValues();
-		UiWelcome.loadFromLocalStorage(
-			UiWelcome.topPlayerColorElm,
-			UiWelcome.topPlayerTypeElm,
-			UiWelcome.topPlayerNameElm,
-			UiWelcome.bottomPlayerColorElm,
-			UiWelcome.bottomPlayerTypeElm,
-			UiWelcome.bottomPlayerNameElm,
-			UiWelcome.fenTextElm,
-			UiWelcome.pieceDesignElm,
+		this.setDefaultValues();
+		this.loadFromLocalStorage(
+			this.topPlayerColorElm,
+			this.topPlayerTypeElm,
+			this.topPlayerNameElm,
+			this.bottomPlayerColorElm,
+			this.bottomPlayerTypeElm,
+			this.bottomPlayerNameElm,
+			this.fenTextElm,
+			this.pieceDesignElm,
 		);
-		UiWelcome.topPlayerNameElm.disabled = UiWelcome.topPlayerTypeElm.value === 'bot';
-		UiWelcome.bottomPlayerNameElm.disabled = UiWelcome.bottomPlayerTypeElm.value === 'bot';
+		this.enableOrDisablePlayerNameElms();
 	}
 
-	static loadFromLocalStorage(...elms) {
+	loadFromLocalStorage(...elms) {
 		elms.forEach(elm => {
 			const value = localStorage.getItem(elm.id);
 			if (value) {
@@ -128,7 +111,7 @@ export class UiWelcome {
 		});
 	}
 
-	static saveToLocalStorage(...elms) {
+	saveToLocalStorage(...elms) {
 		elms.forEach(elm => {
 			localStorage.setItem(elm.id, elm.value.trim());
 		});
