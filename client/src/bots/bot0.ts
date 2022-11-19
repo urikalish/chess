@@ -46,7 +46,7 @@ export class Bot0 {
 			let value = Number.POSITIVE_INFINITY;
 			for (let i = 0; i < moves.length; i++) {
 				value = Math.min(value, this.alphaBeta(moves[i].newPosition, depth - 1, a, b, true, myIndex));
-				if (value >= a) {
+				if (value <= a) {
 					break;
 				}
 				b = Math.min(b, value);
@@ -87,7 +87,7 @@ export class Bot0 {
 		let score;
 		let bestMoveIndex = 0;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
-		const DEPTH = 3;
+		const DEPTH = 4;
 		moves.forEach((m, i) => {
 			score = this.alphaBeta(m.newPosition, DEPTH, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, true, p.armyIndex);
 			if (score > bestMoveScore) {
