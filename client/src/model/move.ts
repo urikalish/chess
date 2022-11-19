@@ -29,7 +29,6 @@ export class Move {
 	additionalMove: { from: number; to: number } | null = null;
 	oldPosition: Position = new Position();
 	newPosition: Position = new Position();
-	score = 0;
 
 	static createInstance(
 		fullMoveNum: number,

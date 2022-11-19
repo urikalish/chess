@@ -6,9 +6,11 @@ import { PieceType } from '../model/piece';
 
 export class Bot0 {
 	mover: Mover = new Mover();
+	context: { myArmyIndex: number; baseMove: Move } = { myArmyIndex: 0, baseMove: new Move() };
 
-	score(p: Position, myIndex: number): number {
+	score(p: Position): number {
 		let score = 0;
+		const myIndex = this.context.myArmyIndex;
 		const enemyIndex = Math.abs(myIndex - 1);
 		const pieceCount = Position.getAllPieceCount(p);
 		score += pieceCount[myIndex][PieceType.PAWN];
@@ -24,18 +26,18 @@ export class Bot0 {
 		return score;
 	}
 
-	alphaBeta(moveName: string, p: Position, depth: number, a: number, b: number, maximizingPlayer: boolean, context: { myArmyIndex: number; baseMove: Move }) {
+	alphaBeta(p: Position, depth: number, a: number, b: number, maximizingPlayer: boolean) {
 		if (depth === 0) {
-			return this.score(p, context.myArmyIndex);
+			return this.score(p);
 		}
 		const moves = this.mover.getAllPossibleMoves(p);
 		if (moves.length === 0) {
-			return this.score(p, context.myArmyIndex);
+			return this.score(p);
 		}
 		if (maximizingPlayer) {
 			let value = Number.NEGATIVE_INFINITY;
 			for (let i = 0; i < moves.length; i++) {
-				value = Math.max(value, this.alphaBeta(moves[i].name, moves[i].newPosition, depth - 1, a, b, false, context));
+				value = Math.max(value, this.alphaBeta(moves[i].newPosition, depth - 1, a, b, false));
 				if (value >= b) {
 					break;
 				}
@@ -45,7 +47,7 @@ export class Bot0 {
 		} else {
 			let value = Number.POSITIVE_INFINITY;
 			for (let i = 0; i < moves.length; i++) {
-				value = Math.min(value, this.alphaBeta(moves[i].name, moves[i].newPosition, depth - 1, a, b, true, context));
+				value = Math.min(value, this.alphaBeta(moves[i].newPosition, depth - 1, a, b, true));
 				if (value <= a) {
 					break;
 				}
@@ -79,6 +81,9 @@ export class Bot0 {
 		if (moves.length === 0) {
 			return null;
 		}
+		if (moves.length === 1) {
+			return moves[0];
+		}
 		const m = moves.find(m => m.types.has(MoveType.CHECKMATE));
 		if (m) {
 			return m;
@@ -89,11 +94,9 @@ export class Bot0 {
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
 		const DEPTH = 3;
 		moves.forEach((m, i) => {
-			const context: { myArmyIndex: number; baseMove: Move } = {
-				myArmyIndex: p.armyIndex,
-				baseMove: m,
-			};
-			score = this.alphaBeta(m.name, m.newPosition, DEPTH, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false, context);
+			this.context.myArmyIndex = p.armyIndex;
+			this.context.baseMove = m;
+			score = this.alphaBeta(m.newPosition, DEPTH, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
 			if (score > bestMoveScore) {
 				bestMoveIndex = i;
 				bestMoveScore = score;
