@@ -24,18 +24,18 @@ export class Bot0 {
 		return score;
 	}
 
-	alphaBeta(p: Position, depth: number, a: number, b: number, maximizingPlayer: boolean, myIndex: number) {
+	alphaBeta(moveName: string, p: Position, depth: number, a: number, b: number, maximizingPlayer: boolean, context: { myArmyIndex: number; baseMove: Move }) {
 		if (depth === 0) {
-			return this.score(p, myIndex);
+			return this.score(p, context.myArmyIndex);
 		}
 		const moves = this.mover.getAllPossibleMoves(p);
 		if (moves.length === 0) {
-			return this.score(p, myIndex);
+			return this.score(p, context.myArmyIndex);
 		}
 		if (maximizingPlayer) {
 			let value = Number.NEGATIVE_INFINITY;
 			for (let i = 0; i < moves.length; i++) {
-				value = Math.max(value, this.alphaBeta(moves[i].newPosition, depth - 1, a, b, false, myIndex));
+				value = Math.max(value, this.alphaBeta(moves[i].name, moves[i].newPosition, depth - 1, a, b, false, context));
 				if (value >= b) {
 					break;
 				}
@@ -45,7 +45,7 @@ export class Bot0 {
 		} else {
 			let value = Number.POSITIVE_INFINITY;
 			for (let i = 0; i < moves.length; i++) {
-				value = Math.min(value, this.alphaBeta(moves[i].newPosition, depth - 1, a, b, true, myIndex));
+				value = Math.min(value, this.alphaBeta(moves[i].name, moves[i].newPosition, depth - 1, a, b, true, context));
 				if (value <= a) {
 					break;
 				}
@@ -87,9 +87,13 @@ export class Bot0 {
 		let score;
 		let bestMoveIndex = 0;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
-		const DEPTH = 4;
+		const DEPTH = 3;
 		moves.forEach((m, i) => {
-			score = this.alphaBeta(m.newPosition, DEPTH, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, true, p.armyIndex);
+			const context: { myArmyIndex: number; baseMove: Move } = {
+				myArmyIndex: p.armyIndex,
+				baseMove: m,
+			};
+			score = this.alphaBeta(m.name, m.newPosition, DEPTH, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false, context);
 			if (score > bestMoveScore) {
 				bestMoveIndex = i;
 				bestMoveScore = score;
