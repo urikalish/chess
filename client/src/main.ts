@@ -56,8 +56,9 @@ function handleDoneWelcomeDialog(
 	fenStr: string,
 	pieceDesign: UiPieceDesign,
 	isBoardFlipped: boolean,
+	botsMatch: boolean,
 ) {
-	if (player0Type === PlayerType.BOT && player1Type === PlayerType.BOT) {
+	if (botsMatch && player0Type === PlayerType.BOT && player1Type === PlayerType.BOT) {
 		goBotVsBotSingleGame(100, 1, [0, 0]);
 	} else {
 		const startTime = new Date().getTime();
