@@ -86,14 +86,14 @@
                     <div class="welcome-section">
                         <span>Top Player</span>
                     </div>
-                    <div class="welcome-data-line welcome-data-line-player-color">
+                    <div class="welcome-data-line">
                         <label for="welcome-top-player-color" class="welcome-label">Color:</label>
                         <select id="welcome-top-player-color" class="welcome-select">
                             <option value="white">White</option>
                             <option value="black" selected="selected">Black</option>
                         </select>
                     </div>
-                    <div class="welcome-data-line welcome-data-line-player-type">
+                    <div class="welcome-data-line">
                         <label for="welcome-top-player-type" class="welcome-label">Type:</label>
                         <select id="welcome-top-player-type" class="welcome-select">
                             <option value="male">👨 Male</option>
@@ -101,21 +101,28 @@
                             <option value="bot">🤖 Bot</option>
                         </select>
                     </div>
-                    <div class="welcome-data-line welcome-data-line-player-name">
+                    <div id="welcome-data-line-top-player-name" class="welcome-data-line none">
                         <label for="welcome-top-player-name" class="welcome-label">Name:</label>
                         <input type="text" id="welcome-top-player-name" class="welcome-input" value="Top Player" />
+                    </div>
+                    <div id="welcome-data-line-top-bot-name" class="welcome-data-line">
+                        <label for="welcome-top-bot-name" class="welcome-label">Bot:</label>
+                        <select id="welcome-top-bot-name" class="welcome-select">
+                            <option value="bot0" selected="selected">bot0</option>
+                            <option value="bot1">bot1</option>
+                        </select>
                     </div>
                     <div class="welcome-section">
                         <span>Bottom Player</span>
                     </div>
-                    <div class="welcome-data-line welcome-data-line-player-color">
+                    <div class="welcome-data-line">
                         <label for="welcome-bottom-player-color" class="welcome-label">Color:</label>
                         <select id="welcome-bottom-player-color" class="welcome-select">
                             <option value="white" selected="selected">White</option>
                             <option value="black">Black</option>
                         </select>
                     </div>
-                    <div class="welcome-data-line welcome-data-line-player-type">
+                    <div class="welcome-data-line">
                         <label for="welcome-bottom-player-type" class="welcome-label">Type:</label>
                         <select id="welcome-bottom-player-type" class="welcome-select">
                             <option value="male" selected="selected">👨 Male</option>
@@ -123,21 +130,28 @@
                             <option value="bot">🤖 Bot</option>
                         </select>
                     </div>
-                    <div class="welcome-data-line welcome-data-line-player-name">
+                    <div id="welcome-data-line-bottom-player-name" class="welcome-data-line">
                         <label for="welcome-bottom-player-name" class="welcome-label">Name:</label>
                         <input type="text" id="welcome-bottom-player-name" class="welcome-input" value="Bottom Player" />
+                    </div>
+                    <div id="welcome-data-line-bottom-bot-name" class="welcome-data-line none">
+                        <label for="welcome-bottom-bot-name" class="welcome-label">Bot:</label>
+                        <select id="welcome-bottom-bot-name" class="welcome-select">
+                            <option value="bot0" selected="selected">bot0</option>
+                            <option value="bot1">bot1</option>
+                        </select>
                     </div>
                     <div class="welcome-section">
                         <span>Starting Position</span>
                     </div>
-                    <div class="welcome-data-line welcome-data-line-fen">
+                    <div class="welcome-data-line">
                         <label for="welcome-fen-text" class="welcome-label">FEN:</label>
-                        <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-input welcome-input-fen" value="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"/>
+                        <input type="text" id="welcome-fen-text" spellcheck="false" class="welcome-input" value="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"/>
                     </div>
                     <div class="welcome-section">
                         <span>Design</span>
                     </div>
-                    <div class="welcome-data-line welcome-data-line-piece-design">
+                    <div class="welcome-data-line">
                         <label for="welcome-piece-design" class="welcome-label">Pieces:</label>
                         <select id="welcome-piece-design" class="welcome-select">
                             <option value="neo-wood" selected="selected">Neo-Wood</option>
