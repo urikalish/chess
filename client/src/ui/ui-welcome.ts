@@ -82,7 +82,6 @@ export class UiWelcome {
 					this.fenTextElm.value.trim() || Fen.default,
 					this.pieceDesignElm.value as UiPieceDesign,
 					false,
-					false,
 				);
 			} else {
 				onWelcomeDone(
@@ -95,7 +94,6 @@ export class UiWelcome {
 					this.fenTextElm.value.trim() || Fen.default,
 					this.pieceDesignElm.value as UiPieceDesign,
 					true,
-					false,
 				);
 			}
 		});
