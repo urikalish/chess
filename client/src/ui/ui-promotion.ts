@@ -1,3 +1,4 @@
+import { PieceType } from '../model/piece';
 import { MoveType } from '../model/move';
 import { UiHelper } from './ui-helper';
 
@@ -11,27 +12,13 @@ export class UiPromotion {
 		promotionOptionElms.forEach(elm => {
 			elm.addEventListener('click', event => {
 				promotionPanel.classList.add('none');
-				switch (event.target.dataset.pieceType) {
-					case 'q': {
-						onPromotionDialogDone(MoveType.PROMOTION_TO_Q);
-						break;
-					}
-					case 'r': {
-						onPromotionDialogDone(MoveType.PROMOTION_TO_R);
-						break;
-					}
-					case 'b': {
-						onPromotionDialogDone(MoveType.PROMOTION_TO_B);
-						break;
-					}
-					case 'n': {
-						onPromotionDialogDone(MoveType.PROMOTION_TO_N);
-						break;
-					}
-					default: {
-						onPromotionDialogDone(MoveType.NA);
-					}
-				}
+				const promotions = {
+					[PieceType.QUEEN]: MoveType.PROMOTION_TO_Q,
+					[PieceType.ROOK]: MoveType.PROMOTION_TO_R,
+					[PieceType.BISHOP]: MoveType.PROMOTION_TO_B,
+					[PieceType.KNIGHT]: MoveType.PROMOTION_TO_N,
+				};
+				onPromotionDialogDone(promotions[event.target.dataset.pieceType]);
 			});
 		});
 		promotionPanel.classList.toggle('promotion-panel--white', armyIndex === 0);
