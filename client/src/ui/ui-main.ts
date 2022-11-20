@@ -127,8 +127,10 @@ export class UiMain {
 	updatePlayersUi() {
 		const p = this.game.getCurPosition();
 		const playerNameElms = UiHelper.queryElms('.player-status-name');
-		playerNameElms[0].classList.toggle('player-active', !!p && !this.game.isEnded() && this.game.getCurPlayer()?.index === 1);
-		playerNameElms[1].classList.toggle('player-active', !!p && !this.game.isEnded() && this.game.getCurPlayer()?.index === 0);
+		const activePlayerIndex = this.game.getCurPlayer()?.index || 0;
+		const actives = this.isBoardFlipped ? [activePlayerIndex === 0, activePlayerIndex === 1] : [activePlayerIndex === 1, activePlayerIndex === 0];
+		playerNameElms[0].classList.toggle('player-active', !!p && !this.game.isEnded() && actives[0]);
+		playerNameElms[1].classList.toggle('player-active', !!p && !this.game.isEnded() && actives[1]);
 	}
 
 	updateUI() {
