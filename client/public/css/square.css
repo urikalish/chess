@@ -40,7 +40,7 @@
     opacity: 0.8 !important;
 }
 .square.selected-square {
-    background-color: var(--color--green--medium);
-    opacity: 0.8;
+    background-color: var(--color--green--medium) !important;
+    opacity: 0.8 !important;
     cursor: pointer;
 }
