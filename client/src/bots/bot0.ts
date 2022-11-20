@@ -41,20 +41,20 @@ export class Bot0 {
 			let value = Number.NEGATIVE_INFINITY;
 			for (let i = 0; i < nextMoves.length; i++) {
 				value = Math.max(value, this.alphaBeta(nextMoves[i], depth - 1, a, b, false));
+				a = Math.max(a, value);
 				if (value >= b) {
 					break;
 				}
-				a = Math.max(a, value);
 			}
 			return value;
 		} else {
 			let value = Number.POSITIVE_INFINITY;
 			for (let i = 0; i < nextMoves.length; i++) {
 				value = Math.min(value, this.alphaBeta(nextMoves[i], depth - 1, a, b, true));
+				b = Math.min(b, value);
 				if (value <= a) {
 					break;
 				}
-				b = Math.min(b, value);
 			}
 			return value;
 		}
