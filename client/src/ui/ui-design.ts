@@ -11,17 +11,13 @@ export class UiDesign {
 	static uiPieceDesign: UiPieceDesign = UiPieceDesign.NEO_WOOD;
 
 	static getUiPieceColor(index: number) {
-		if (UiDesign.uiPieceDesign === UiPieceDesign.NEO_WOOD) {
-			return index === 0 ? '#d8cbb9' : '#3b3430';
-		} else if (UiDesign.uiPieceDesign === UiPieceDesign.KOSAL) {
-			return index === 0 ? '#fff' : '#010101';
-		} else if (UiDesign.uiPieceDesign === UiPieceDesign.GIOCO) {
-			return index === 0 ? '#ddd1c4' : '#62564d';
-		} else if (UiDesign.uiPieceDesign === UiPieceDesign.STAUNTY) {
-			return index === 0 ? '#f0f0f0' : '#5f5955';
-		} else {
-			return index === 0 ? '#fff' : '#000';
-		}
+		const colors = {
+			[UiPieceDesign.GIOCO]: ['#ddd1c4', '#62564d'],
+			[UiPieceDesign.NEO_WOOD]: ['#d8cbb9', '#3b3430'],
+			[UiPieceDesign.KOSAL]: ['#fff', '#010101'],
+			[UiPieceDesign.STAUNTY]: ['#f0f0f0', '#5f5955'],
+		};
+		return colors[UiDesign.uiPieceDesign][index];
 	}
 
 	static setPieceDesign(design: UiPieceDesign) {
