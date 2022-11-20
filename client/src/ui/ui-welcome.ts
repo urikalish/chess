@@ -39,7 +39,7 @@ export class UiWelcome {
 		this.bottomPlayerNameElm.value = UiHelper.getRandomName(true);
 		this.bottomBotNameElm.value = defaultBot;
 		this.fenTextElm.value = Fen.default;
-		this.pieceDesignElm.value = 'neo-wood';
+		this.pieceDesignElm.value = 'gioco';
 		this.showOrHideElms();
 	}
 

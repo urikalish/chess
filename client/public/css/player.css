@@ -5,8 +5,8 @@
     height: var(--player-status-height);
 }
 .player-status-color {
-    width: 2.1rem;
-    height: 2.1rem;
+    min-width: 2.1rem;
+    min-height: 2.1rem;
     border: 1px solid #666;
 }
 .player-status-name {
