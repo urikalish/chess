@@ -37,7 +37,8 @@ export class Game {
 	mover = new Mover();
 	results: Set<GameResult> = new Set();
 	resultStr = '';
-	botWorker: Worker = new Worker('js/bot-worker.js');
+	botWorker: Worker = new Worker('js/bot-worker.min.js');
+	// botWorker: Worker = new Worker('js/bot-worker.js');
 	onBotWorkerProgress: ((number, string) => void) | null = null;
 
 	constructor(

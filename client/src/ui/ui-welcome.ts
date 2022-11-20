@@ -30,7 +30,7 @@ export class UiWelcome {
 	}
 
 	setDefaultValues() {
-		const defaultBot = 'bot0';
+		const defaultBot = 'bot3';
 		this.topPlayerColorElm.value = 'black';
 		this.topPlayerTypeElm.value = 'bot';
 		this.topBotNameElm.value = defaultBot;

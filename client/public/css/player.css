@@ -1,17 +1,3 @@
-@keyframes thinking-animation {
-    0% {
-        content: "";
-    }
-    25% {
-        content: ".";
-    }
-    50% {
-        content: "..";
-    }
-    75% {
-        content: "...";
-    }
-}
 .player-status {
     position: relative;
     display: flex;
@@ -24,7 +10,8 @@
     border: 1px solid #666;
 }
 .player-status-name {
-    margin-left: 0.2rem;
+    margin: 0 1rem 0.2rem 0;
+    white-space: nowrap;
     user-select: none;
     color: #999;
 }
@@ -40,9 +27,10 @@
 .player-status-name.player-bot:before {
     content: "🤖";
 }
-.player-status-name.player-active::after {
-    content: "";
-    animation: 3s infinite thinking-animation;
+.player-status-progress {
+    flex: 1 1 100%;
+    height: 1px;
+    background: linear-gradient(to right, var(--color--green--light) var(--player-status-progress), #444 var(--player-status-progress) 100%);
 }
 
 @media (max-width: 900px) {

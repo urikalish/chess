@@ -8,6 +8,7 @@ import { UiPieceDesign } from './ui-design';
 import { UiLog } from './ui-log';
 import { UiPromotion } from './ui-promotion';
 import { UiInit } from './ui-init';
+import { PlayerType } from '../model/player';
 
 export class UiMain {
 	game: Game;
@@ -128,9 +129,15 @@ export class UiMain {
 		const p = this.game.getCurPosition();
 		const playerNameElms = UiHelper.queryElms('.player-status-name');
 		const activePlayerIndex = this.game.getCurPlayer()?.index || 0;
-		const actives = this.isBoardFlipped ? [activePlayerIndex === 0, activePlayerIndex === 1] : [activePlayerIndex === 1, activePlayerIndex === 0];
-		playerNameElms[0].classList.toggle('player-active', !!p && !this.game.isEnded() && actives[0]);
-		playerNameElms[1].classList.toggle('player-active', !!p && !this.game.isEnded() && actives[1]);
+		const topActive = (activePlayerIndex === 0 && this.isBoardFlipped) || (activePlayerIndex === 1 && !this.isBoardFlipped);
+		const bottomActive = (activePlayerIndex === 0 && !this.isBoardFlipped) || (activePlayerIndex === 1 && this.isBoardFlipped);
+		playerNameElms[0].classList.toggle('player-active', !!p && topActive && !this.game.isEnded());
+		playerNameElms[1].classList.toggle('player-active', !!p && bottomActive && !this.game.isEnded());
+		const playerProgressElms = UiHelper.queryElms('.player-status-progress');
+		const isActivePlayerBot = this.game.getCurPlayer()?.type === PlayerType.BOT;
+		this.setBotComputeProgress(0);
+		playerProgressElms[0].classList.toggle('hidden', !topActive || !isActivePlayerBot);
+		playerProgressElms[1].classList.toggle('hidden', !bottomActive || !isActivePlayerBot);
 	}
 
 	updateUI() {
@@ -151,18 +158,26 @@ export class UiMain {
 		}
 	}
 
+	setBotComputeProgress(progress: number) {
+		document.documentElement.style.setProperty('--player-status-progress', `${(progress * 100).toFixed(2)}%`);
+	}
+
 	goBotTurn() {
+		this.setBotComputeProgress(0);
 		this.game.goComputeBotWorkerMove();
 	}
 
 	handleBotWorkerProgress(progress: number, moveName: string) {
 		if (moveName) {
+			this.setBotComputeProgress(1);
 			const m = this.game.possibleMoves.find(move => move.name === moveName);
 			if (m) {
-				this.goMove(m);
+				setTimeout(() => {
+					this.goMove(m);
+				}, 100);
 			}
 		} else {
-			console.log(`${(progress * 100).toFixed(2)}%`);
+			this.setBotComputeProgress(progress);
 		}
 	}
 
@@ -172,7 +187,7 @@ export class UiMain {
 		if (this.game.isBotTurn()) {
 			setTimeout(() => {
 				this.goBotTurn();
-			}, 200);
+			}, 100);
 		}
 		if (this.game.resultStr) {
 			Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_PHASE_GAME_ENDED, this.game.resultStr);

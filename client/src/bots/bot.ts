@@ -93,6 +93,7 @@ export class Bot {
 	}
 
 	goComputeMove(p: Position) {
+		this.onProgress(0, '');
 		const moves = this.mover.getAllPossibleMoves(p);
 		if (moves.length === 0) {
 			this.onProgress(1, '');
