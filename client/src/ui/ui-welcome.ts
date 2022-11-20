@@ -12,7 +12,7 @@ export class UiWelcome {
 	bottomPlayerTypeElm: HTMLSelectElement = UiHelper.getElm('welcome-bottom-player-type') as HTMLSelectElement;
 	bottomPlayerNameElm: HTMLInputElement = UiHelper.getElm('welcome-bottom-player-name') as HTMLInputElement;
 	bottomBotNameElm: HTMLSelectElement = UiHelper.getElm('welcome-bottom-bot-name') as HTMLSelectElement;
-	fenTextElm: HTMLInputElement = UiHelper.getElm('welcome-fen-text') as HTMLInputElement;
+	fenTextElm: HTMLTextAreaElement = UiHelper.getElm('welcome-fen-text') as HTMLTextAreaElement;
 	pieceDesignElm: HTMLSelectElement = UiHelper.getElm('welcome-piece-design') as HTMLSelectElement;
 	resetButtonElm: HTMLButtonElement = UiHelper.getElm('welcome-reset-button') as HTMLButtonElement;
 	startButtonElm: HTMLButtonElement = UiHelper.getElm('welcome-start-button') as HTMLButtonElement;
