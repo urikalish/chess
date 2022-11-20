@@ -40,7 +40,7 @@
                             <div class="board-gutter"></div>
                             <div class="board-gutter"></div>
                         </div>
-                        <div id="board-squares" class="board-squares dont-mark-possible-moves"></div>
+                        <div id="board-squares" class="board-squares"></div>
                         <div id="board-pieces" class="board-pieces"></div>
                         <div id="promotion-panel" class="promotion-panel none">
                             <div class="promotion-options promotion-options--white">
@@ -166,6 +166,13 @@
                             <option value="neo-wood">Neo-Wood</option>
                             <option value="kosal">Kosal</option>
                             <option value="staunty">Staunty</option>
+                        </select>
+                    </div>
+                    <div class="welcome-data-line">
+                        <label for="welcome-mark-possible-moves" class="welcome-label">Moves:</label>
+                        <select id="welcome-mark-possible-moves" class="welcome-select">
+                            <option value="show">Show available</option>
+                            <option value="hide" selected="selected">Hide available</option>
                         </select>
                     </div>
                 </div>

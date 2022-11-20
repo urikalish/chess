@@ -15,12 +15,20 @@ export class UiMain {
 	isBoardFlipped = false;
 	selectedIndex = -1;
 
-	constructor(game: Game, isBoardFlipped: boolean, pieceDesign: UiPieceDesign) {
+	constructor(game: Game, isBoardFlipped: boolean, pieceDesign: UiPieceDesign, shouldMarkPossibleMoves: boolean) {
 		this.game = game;
 		this.game.onBotWorkerProgress = this.handleBotWorkerProgress.bind(this);
 		this.isBoardFlipped = isBoardFlipped;
 		const uiInit = new UiInit();
-		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
+		uiInit.createGameUI(
+			this.game.players,
+			this.game.board,
+			this.isBoardFlipped,
+			pieceDesign,
+			shouldMarkPossibleMoves,
+			this.handleClickSquareElm.bind(this),
+			this.handleClickPieceElm.bind(this),
+		);
 		this.selectedIndex = -1;
 		this.updateUI();
 		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_PIECES, pieceDesign);

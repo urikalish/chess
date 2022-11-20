@@ -44,11 +44,12 @@ export class UiInit {
 		}
 	}
 
-	createBoardSquaresUI(isBoardFlipped: boolean, onClickSquare: (MouseEvent) => void) {
+	createBoardSquaresUI(isBoardFlipped: boolean, shouldMarkPossibleMoves: boolean, onClickSquare: (MouseEvent) => void) {
 		const boardSquaresElm = UiHelper.getElm('board-squares');
 		if (!boardSquaresElm) {
 			return;
 		}
+		boardSquaresElm.classList.toggle('mark-possible-moves', shouldMarkPossibleMoves);
 		for (let index = 0; index < 64; index++) {
 			const modifiedIndex = UiHelper.getModifiedIndex(index, isBoardFlipped);
 			const squareName = Square.getNameByIndex(modifiedIndex);
@@ -120,11 +121,19 @@ export class UiInit {
 		}
 	}
 
-	createGameUI(players: Player[], board: Board, isBoardFlipped: boolean, pieceDesign: UiPieceDesign, onClickSquare: (MouseEvent) => void, onclickPiece: (MouseEvent) => void) {
+	createGameUI(
+		players: Player[],
+		board: Board,
+		isBoardFlipped: boolean,
+		pieceDesign: UiPieceDesign,
+		shouldMarkPossibleMoves: boolean,
+		onClickSquare: (MouseEvent) => void,
+		onclickPiece: (MouseEvent) => void,
+	) {
 		UiDesign.setPieceDesign(pieceDesign);
 		this.createPlayersInfoUI(players, isBoardFlipped);
 		this.createBoardGuttersUI(isBoardFlipped);
-		this.createBoardSquaresUI(isBoardFlipped, onClickSquare);
+		this.createBoardSquaresUI(isBoardFlipped, shouldMarkPossibleMoves, onClickSquare);
 		this.createAllPieceElms(board, isBoardFlipped, onclickPiece);
 		this.setUpActionButtons();
 		UiLog.setScrollListener();

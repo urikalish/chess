@@ -14,9 +14,9 @@ export class UiWelcome {
 	bottomBotNameElm: HTMLSelectElement = UiHelper.getElm('welcome-bottom-bot-name') as HTMLSelectElement;
 	fenTextElm: HTMLTextAreaElement = UiHelper.getElm('welcome-fen-text') as HTMLTextAreaElement;
 	pieceDesignElm: HTMLSelectElement = UiHelper.getElm('welcome-piece-design') as HTMLSelectElement;
+	markPossibleMovesElm: HTMLSelectElement = UiHelper.getElm('welcome-mark-possible-moves') as HTMLSelectElement;
 	resetButtonElm: HTMLButtonElement = UiHelper.getElm('welcome-reset-button') as HTMLButtonElement;
 	startButtonElm: HTMLButtonElement = UiHelper.getElm('welcome-start-button') as HTMLButtonElement;
-
 	dataLineTopPlayerName: HTMLDivElement = UiHelper.getElm('welcome-data-line-top-player-name') as HTMLDivElement;
 	dataLineTopBotName: HTMLDivElement = UiHelper.getElm('welcome-data-line-top-bot-name') as HTMLDivElement;
 	dataLineBottomPlayerName: HTMLDivElement = UiHelper.getElm('welcome-data-line-bottom-player-name') as HTMLDivElement;
@@ -40,6 +40,7 @@ export class UiWelcome {
 		this.bottomBotNameElm.value = defaultBot;
 		this.fenTextElm.value = Fen.default;
 		this.pieceDesignElm.value = 'gioco';
+		this.markPossibleMovesElm.value = 'hide';
 		this.showOrHideElms();
 	}
 
@@ -70,6 +71,7 @@ export class UiWelcome {
 				this.bottomBotNameElm,
 				this.fenTextElm,
 				this.pieceDesignElm,
+				this.markPossibleMovesElm,
 			);
 			if (this.bottomPlayerColorElm.value === 'white') {
 				onWelcomeDone(
@@ -81,6 +83,7 @@ export class UiWelcome {
 					this.topPlayerTypeElm.value === 'bot' ? this.topBotNameElm.value : this.topPlayerNameElm.value.trim() || 'Top Player',
 					this.fenTextElm.value.trim() || Fen.default,
 					this.pieceDesignElm.value as UiPieceDesign,
+					this.markPossibleMovesElm.value === 'show',
 					false,
 				);
 			} else {
@@ -93,6 +96,7 @@ export class UiWelcome {
 					this.bottomPlayerTypeElm.value === 'bot' ? this.bottomBotNameElm.value : this.bottomPlayerNameElm.value.trim() || 'Bottom Player',
 					this.fenTextElm.value.trim() || Fen.default,
 					this.pieceDesignElm.value as UiPieceDesign,
+					this.markPossibleMovesElm.value === 'show',
 					true,
 				);
 			}
@@ -113,6 +117,7 @@ export class UiWelcome {
 			this.bottomBotNameElm,
 			this.fenTextElm,
 			this.pieceDesignElm,
+			this.markPossibleMovesElm,
 		);
 		this.showOrHideElms();
 	}

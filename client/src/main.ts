@@ -54,6 +54,7 @@ function handleDoneWelcomeDialog(
 	player1Name: string,
 	fenStr: string,
 	pieceDesign: UiPieceDesign,
+	shouldMarkPossibleMoves: boolean,
 	isBoardFlipped: boolean,
 	// botsMatch: boolean,
 ) {
@@ -63,7 +64,7 @@ function handleDoneWelcomeDialog(
 	const startTime = new Date().getTime();
 	UiLog.startTime = startTime;
 	game = new Game(player0Type, player0Gender, player0Name, player1Type, player1Gender, player1Name, fenStr);
-	uiMain = new UiMain(game, isBoardFlipped, pieceDesign);
+	uiMain = new UiMain(game, isBoardFlipped, pieceDesign, shouldMarkPossibleMoves);
 	uiMain.startGame(startTime);
 	// }
 }
