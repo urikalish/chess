@@ -4,9 +4,16 @@ import { Mover } from '../model/mover';
 import { BotHelper } from './bot-helper';
 import { PieceType } from '../model/piece';
 
-export class Bot4 {
+export class Bot {
 	mover: Mover = new Mover();
 	context: { myArmyIndex: number; baseMove: Move } = { myArmyIndex: 0, baseMove: new Move() };
+	depth = 0;
+	onProgress: (progress: number, moveName: string) => void;
+
+	constructor(depth: number, onProgress: (progress: number, moveName: string) => void) {
+		this.depth = depth;
+		this.onProgress = onProgress;
+	}
 
 	score(m: Move, isMyMove: boolean): number {
 		let score = 0;
@@ -85,32 +92,33 @@ export class Bot4 {
 		});
 	}
 
-	getMove(p: Position): Move | null {
+	goComputeMove(p: Position) {
 		const moves = this.mover.getAllPossibleMoves(p);
 		if (moves.length === 0) {
-			return null;
+			this.onProgress(1, '');
 		}
 		if (moves.length === 1) {
+			this.onProgress(1, moves[0].name);
 			return moves[0];
 		}
 		const m = moves.find(m => m.types.has(MoveType.CHECKMATE));
 		if (m) {
-			return m;
+			this.onProgress(1, m.name);
 		}
 		this.sortMoves(moves);
 		let score;
 		let bestMoveIndex = 0;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
-		const DEPTH = 4;
 		moves.forEach((m, i) => {
 			this.context.myArmyIndex = p.armyIndex;
 			this.context.baseMove = m;
-			score = this.alphaBeta(m, DEPTH, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
+			score = this.alphaBeta(m, this.depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
 			if (score > bestMoveScore) {
 				bestMoveIndex = i;
 				bestMoveScore = score;
 			}
+			this.onProgress((i + 1) / moves.length, '');
 		});
-		return moves[bestMoveIndex];
+		this.onProgress(1, moves[bestMoveIndex].name);
 	}
 }

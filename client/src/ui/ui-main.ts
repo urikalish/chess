@@ -16,7 +16,7 @@ export class UiMain {
 
 	constructor(game: Game, isBoardFlipped: boolean, pieceDesign: UiPieceDesign) {
 		this.game = game;
-		this.game.onBotWorkerDone = this.handleBotWorkerDone.bind(this);
+		this.game.onBotWorkerProgress = this.handleBotWorkerProgress.bind(this);
 		this.isBoardFlipped = isBoardFlipped;
 		const uiInit = new UiInit();
 		uiInit.createGameUI(this.game.players, this.game.board, this.isBoardFlipped, pieceDesign, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
@@ -153,12 +153,14 @@ export class UiMain {
 		this.game.goComputeBotWorkerMove();
 	}
 
-	handleBotWorkerDone(moveName: string) {
+	handleBotWorkerProgress(progress: number, moveName: string) {
 		if (moveName) {
 			const m = this.game.possibleMoves.find(move => move.name === moveName);
 			if (m) {
 				this.goMove(m);
 			}
+		} else {
+			console.log(`${(progress * 100).toFixed(2)}%`);
 		}
 	}
 

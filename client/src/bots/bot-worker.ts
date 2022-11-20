@@ -1,27 +1,25 @@
-import { Bot0 } from './bot0';
 import { Position } from '../model/position';
 import { Move } from '../model/move';
-import { Bot1 } from './bot1';
-import { Bot2 } from './bot2';
-import { Bot3 } from './bot3';
-import { Bot4 } from './bot4';
+import { Bot } from './bot';
 
 export class BotWorker {
 	static bots = {
-		bot0: new Bot0(),
-		bot1: new Bot1(),
-		bot2: new Bot2(),
-		bot3: new Bot3(),
-		bot4: new Bot4(),
+		bot0: new Bot(0, BotWorker.handleBotProgress),
+		bot1: new Bot(1, BotWorker.handleBotProgress),
+		bot2: new Bot(2, BotWorker.handleBotProgress),
+		bot3: new Bot(3, BotWorker.handleBotProgress),
+		bot4: new Bot(4, BotWorker.handleBotProgress),
 	};
 
-	static getMove(botName: string, p: Position): Move | null {
-		return BotWorker.bots[botName].getMove(p);
+	static goComputeMove(botName: string, p: Position): Move | null {
+		return BotWorker.bots[botName].goComputeMove(p);
+	}
+
+	static handleBotProgress(progress: number, moveName: string) {
+		postMessage({ progress, moveName });
 	}
 }
 
 onmessage = e => {
-	const [botName, position] = e.data;
-	const m = BotWorker.getMove(botName, position);
-	postMessage({ name: m?.name || '' });
+	BotWorker.goComputeMove(e.data.botName, e.data.position);
 };

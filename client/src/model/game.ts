@@ -37,8 +37,8 @@ export class Game {
 	mover = new Mover();
 	results: Set<GameResult> = new Set();
 	resultStr = '';
-	botWorker: Worker = new Worker('js/bot-worker.min.js');
-	onBotWorkerDone: ((string) => void) | null = null;
+	botWorker: Worker = new Worker('js/bot-worker.js');
+	onBotWorkerProgress: ((number, string) => void) | null = null;
 
 	constructor(
 		player0Type: PlayerType,
@@ -239,13 +239,12 @@ export class Game {
 		if (!p || !botName) {
 			return null;
 		}
-		this.botWorker.postMessage([botName, this.getCurPosition()]);
+		this.botWorker.postMessage({ botName, position: this.getCurPosition() });
 	}
 
-	handleBotWorkerMessage(e) {
-		const { name } = e.data;
-		if (this.onBotWorkerDone) {
-			this.onBotWorkerDone(name);
+	handleBotWorkerMessage(e: object) {
+		if (this.onBotWorkerProgress) {
+			this.onBotWorkerProgress(e['data']['progress'], e['data']['moveName']);
 		}
 	}
 }
