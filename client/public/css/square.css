@@ -36,8 +36,8 @@
     opacity: 0.8;
 }
 .square.checked-king {
-    background-color: var(--color--red--dark);
-    opacity: 0.8;
+    background-color: var(--color--red--dark) !important;
+    opacity: 0.8 !important;
 }
 .square.selected-square {
     background-color: var(--color--green--medium);
