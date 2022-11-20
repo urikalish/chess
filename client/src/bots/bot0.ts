@@ -8,8 +8,11 @@ export class Bot0 {
 	mover: Mover = new Mover();
 	context: { myArmyIndex: number; baseMove: Move } = { myArmyIndex: 0, baseMove: new Move() };
 
-	score(m: Move): number {
+	score(m: Move, isMyMove: boolean): number {
 		let score = 0;
+		if (m.types.has(MoveType.CHECKMATE)) {
+			return isMyMove ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+		}
 		const myIndex = this.context.myArmyIndex;
 		const enemyIndex = Math.abs(myIndex - 1);
 		const pieceCount = Position.getAllPieceCount(m.newPosition);
@@ -28,16 +31,16 @@ export class Bot0 {
 
 	alphaBeta(m: Move, depth: number, a: number, b: number, maximizingPlayer: boolean) {
 		if (depth === 0) {
-			return this.score(m);
+			return this.score(m, !maximizingPlayer);
 		}
-		const moves = this.mover.getAllPossibleMoves(m.newPosition);
-		if (moves.length === 0) {
-			return this.score(m);
+		const nextMoves = this.mover.getAllPossibleMoves(m.newPosition);
+		if (nextMoves.length === 0) {
+			return this.score(m, !maximizingPlayer);
 		}
 		if (maximizingPlayer) {
 			let value = Number.NEGATIVE_INFINITY;
-			for (let i = 0; i < moves.length; i++) {
-				value = Math.max(value, this.alphaBeta(moves[i], depth - 1, a, b, false));
+			for (let i = 0; i < nextMoves.length; i++) {
+				value = Math.max(value, this.alphaBeta(nextMoves[i], depth - 1, a, b, false));
 				if (value >= b) {
 					break;
 				}
@@ -46,8 +49,8 @@ export class Bot0 {
 			return value;
 		} else {
 			let value = Number.POSITIVE_INFINITY;
-			for (let i = 0; i < moves.length; i++) {
-				value = Math.min(value, this.alphaBeta(moves[i], depth - 1, a, b, true));
+			for (let i = 0; i < nextMoves.length; i++) {
+				value = Math.min(value, this.alphaBeta(nextMoves[i], depth - 1, a, b, true));
 				if (value <= a) {
 					break;
 				}
