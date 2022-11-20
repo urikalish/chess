@@ -30,14 +30,14 @@ export class UiWelcome {
 	}
 
 	setDefaultValues() {
+		const defaultBot = 'bot0';
 		this.topPlayerColorElm.value = 'black';
 		this.topPlayerTypeElm.value = 'bot';
-		this.topPlayerNameElm.value = 'bot0';
-		this.topBotNameElm.value = 'bot0';
+		this.topBotNameElm.value = defaultBot;
 		this.bottomPlayerColorElm.value = 'white';
 		this.bottomPlayerTypeElm.value = 'male';
 		this.bottomPlayerNameElm.value = UiHelper.getRandomName(true);
-		this.bottomBotNameElm.value = 'bot0';
+		this.bottomBotNameElm.value = defaultBot;
 		this.fenTextElm.value = Fen.default;
 		this.pieceDesignElm.value = 'neo-wood';
 		this.showOrHideElms();

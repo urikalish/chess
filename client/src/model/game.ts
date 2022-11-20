@@ -6,7 +6,6 @@ import { Board } from './board';
 import { MoveType, Move } from './move';
 import { Mover } from './mover';
 import { Player, PlayerGenderType, PlayerType } from './player';
-import { Bot } from '../bots/bot';
 
 export enum GameResult {
 	WIN = 'win',
@@ -38,6 +37,8 @@ export class Game {
 	mover = new Mover();
 	results: Set<GameResult> = new Set();
 	resultStr = '';
+	botWorker: Worker = new Worker('js/bot-worker.min.js');
+	onBotWorkerDone: ((string) => void) | null = null;
 
 	constructor(
 		player0Type: PlayerType,
@@ -52,6 +53,7 @@ export class Game {
 		this.armies = [new Army(0, player0Type), new Army(1, player1Type)];
 		this.board = new Board();
 		this.applyFen(fenStr);
+		this.botWorker.onmessage = this.handleBotWorkerMessage.bind(this);
 	}
 
 	startGame(startTime: number) {
@@ -231,12 +233,19 @@ export class Game {
 		return p && !this.isEnded() && this.armies[p.armyIndex].playerType === PlayerType.HUMAN;
 	}
 
-	getBotMove(): Move | null {
+	goComputeBotWorkerMove() {
 		const p = this.getCurPosition();
-		const playerName = this.getCurPlayer()?.name || '';
-		if (!p || !playerName) {
+		const botName = this.getCurPlayer()?.name || '';
+		if (!p || !botName) {
 			return null;
 		}
-		return Bot.getBotMove(playerName, p);
+		this.botWorker.postMessage([botName, this.getCurPosition()]);
+	}
+
+	handleBotWorkerMessage(e) {
+		const { name } = e.data;
+		if (this.onBotWorkerDone) {
+			this.onBotWorkerDone(name);
+		}
 	}
 }

@@ -101,7 +101,7 @@ export class Bot0 {
 		let score;
 		let bestMoveIndex = 0;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
-		const DEPTH = 3;
+		const DEPTH = 0;
 		moves.forEach((m, i) => {
 			this.context.myArmyIndex = p.armyIndex;
 			this.context.baseMove = m;

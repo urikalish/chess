@@ -4,7 +4,7 @@ import { Mover } from '../model/mover';
 import { BotHelper } from './bot-helper';
 import { PieceType } from '../model/piece';
 
-export class Bot1 {
+export class Bot2 {
 	mover: Mover = new Mover();
 	context: { myArmyIndex: number; baseMove: Move } = { myArmyIndex: 0, baseMove: new Move() };
 
@@ -101,7 +101,7 @@ export class Bot1 {
 		let score;
 		let bestMoveIndex = 0;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
-		const DEPTH = 1;
+		const DEPTH = 2;
 		moves.forEach((m, i) => {
 			this.context.myArmyIndex = p.armyIndex;
 			this.context.baseMove = m;

@@ -1,5 +1,8 @@
 /.idea
 /node_modules
+/public/js/bot-worker.js
+/public/js/bot-worker.min.js
+/public/js/bot-worker.min.js.map
 /public/js/main.js
 /public/js/main.min.js
 /public/js/main.min.js.map

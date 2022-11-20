@@ -60,11 +60,11 @@ function handleDoneWelcomeDialog(
 	// if (botsMatch && player0Type === PlayerType.BOT && player1Type === PlayerType.BOT) {
 	// 	goBotVsBotSingleGame(100, 1, [0, 0]);
 	// } else {
-		const startTime = new Date().getTime();
-		UiLog.startTime = startTime;
-		game = new Game(player0Type, player0Gender, player0Name, player1Type, player1Gender, player1Name, fenStr);
-		uiMain = new UiMain(game, isBoardFlipped, pieceDesign);
-		uiMain.startGame(startTime);
+	const startTime = new Date().getTime();
+	UiLog.startTime = startTime;
+	game = new Game(player0Type, player0Gender, player0Name, player1Type, player1Gender, player1Name, fenStr);
+	uiMain = new UiMain(game, isBoardFlipped, pieceDesign);
+	uiMain.startGame(startTime);
 	// }
 }
 
