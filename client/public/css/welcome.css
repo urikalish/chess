@@ -50,12 +50,16 @@
 .welcome-input {
     padding: 0 0.4rem;
 }
+.welcome-data-line-fen {
+    align-items: flex-start;
+}
 .welcome-fen-text {
     border: none;
     border-radius: 2px;
     font-family: var(--font-family--defalt);
     font-size: 1.6rem;
     background-color: #ccc;
+    padding: 0.4rem;
     resize: none;
 }
 .welcome-action-buttons {
