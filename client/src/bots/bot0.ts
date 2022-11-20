@@ -8,11 +8,11 @@ export class Bot0 {
 	mover: Mover = new Mover();
 	context: { myArmyIndex: number; baseMove: Move } = { myArmyIndex: 0, baseMove: new Move() };
 
-	score(p: Position): number {
+	score(m: Move): number {
 		let score = 0;
 		const myIndex = this.context.myArmyIndex;
 		const enemyIndex = Math.abs(myIndex - 1);
-		const pieceCount = Position.getAllPieceCount(p);
+		const pieceCount = Position.getAllPieceCount(m.newPosition);
 		score += pieceCount[myIndex][PieceType.PAWN];
 		score += pieceCount[myIndex][PieceType.KNIGHT] * 3;
 		score += pieceCount[myIndex][PieceType.BISHOP] * 3.5;
@@ -26,18 +26,18 @@ export class Bot0 {
 		return score;
 	}
 
-	alphaBeta(p: Position, depth: number, a: number, b: number, maximizingPlayer: boolean) {
+	alphaBeta(m: Move, depth: number, a: number, b: number, maximizingPlayer: boolean) {
 		if (depth === 0) {
-			return this.score(p);
+			return this.score(m);
 		}
-		const moves = this.mover.getAllPossibleMoves(p);
+		const moves = this.mover.getAllPossibleMoves(m.newPosition);
 		if (moves.length === 0) {
-			return this.score(p);
+			return this.score(m);
 		}
 		if (maximizingPlayer) {
 			let value = Number.NEGATIVE_INFINITY;
 			for (let i = 0; i < moves.length; i++) {
-				value = Math.max(value, this.alphaBeta(moves[i].newPosition, depth - 1, a, b, false));
+				value = Math.max(value, this.alphaBeta(moves[i], depth - 1, a, b, false));
 				if (value >= b) {
 					break;
 				}
@@ -47,7 +47,7 @@ export class Bot0 {
 		} else {
 			let value = Number.POSITIVE_INFINITY;
 			for (let i = 0; i < moves.length; i++) {
-				value = Math.min(value, this.alphaBeta(moves[i].newPosition, depth - 1, a, b, true));
+				value = Math.min(value, this.alphaBeta(moves[i], depth - 1, a, b, true));
 				if (value <= a) {
 					break;
 				}
@@ -102,7 +102,7 @@ export class Bot0 {
 		moves.forEach((m, i) => {
 			this.context.myArmyIndex = p.armyIndex;
 			this.context.baseMove = m;
-			score = this.alphaBeta(m.newPosition, DEPTH, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
+			score = this.alphaBeta(m, DEPTH, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
 			if (score > bestMoveScore) {
 				bestMoveIndex = i;
 				bestMoveScore = score;
