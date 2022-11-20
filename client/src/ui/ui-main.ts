@@ -123,10 +123,18 @@ export class UiMain {
 		});
 	}
 
+	updatePlayersUi() {
+		const p = this.game.getCurPosition();
+		const playerNameElms = UiHelper.queryElms('.player-status-name');
+		playerNameElms[0].classList.toggle('player-active', !!p && !this.game.isEnded() && this.game.getCurPlayer()?.index === 1);
+		playerNameElms[1].classList.toggle('player-active', !!p && !this.game.isEnded() && this.game.getCurPlayer()?.index === 0);
+	}
+
 	updateUI() {
 		this.updateBoardSquaresUI();
 		this.updateBoardPiecesUI();
 		UiFen.updateFenUI(this.game.getCurPosition());
+		this.updatePlayersUi();
 		if (this.game.isEnded()) {
 			UiLog.logGameResult(this.game.results);
 		}

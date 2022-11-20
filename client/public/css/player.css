@@ -1,3 +1,17 @@
+@keyframes thinking-animation {
+    0% {
+        content: "";
+    }
+    25% {
+        content: ".";
+    }
+    50% {
+        content: "..";
+    }
+    75% {
+        content: "...";
+    }
+}
 .player-status {
     position: relative;
     display: flex;
@@ -12,7 +26,10 @@
 .player-status-name {
     margin-left: 0.2rem;
     user-select: none;
-    color: #ccc;
+    color: #999;
+}
+.player-status-name.player-active {
+    color: var(--color--green--light);
 }
 .player-status-name.player-male:before {
     content: "👨";
@@ -23,6 +40,11 @@
 .player-status-name.player-bot:before {
     content: "🤖";
 }
+.player-status-name.player-active::after {
+    content: "";
+    animation: 3s infinite thinking-animation;
+}
+
 @media (max-width: 900px) {
     .player-status {
         left: 0.8rem;

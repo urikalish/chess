@@ -76,7 +76,7 @@ export class Game {
 		this.moves.push(m);
 	}
 
-	isEnded() {
+	isEnded(): boolean {
 		return this.results.size > 0;
 	}
 
