@@ -29,6 +29,7 @@ export class UiMain {
 			this.handleClickSquareElm.bind(this),
 			this.handleClickPieceElm.bind(this),
 		);
+		UiPromotion.init();
 		this.selectedIndex = -1;
 		this.updateUI();
 		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_PIECES, pieceDesign);
@@ -217,8 +218,7 @@ export class UiMain {
 			if (moves.length === 1) {
 				this.goMove(moves[0]);
 			} else if (moves.length === 4 && moves.every(m => m.types.has(MoveType.PROMOTION))) {
-				const uiPromotion = new UiPromotion();
-				uiPromotion.showDialog(this.game.getCurPosition()?.armyIndex || 0, (promotionMoveType: MoveType) => {
+				UiPromotion.showDialog(this.game.getCurPosition()?.armyIndex || 0, (promotionMoveType: MoveType) => {
 					this.goMove(moves.find(m => m.types.has(promotionMoveType)));
 				});
 			}
