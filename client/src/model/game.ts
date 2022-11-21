@@ -15,15 +15,9 @@ export enum GameResult {
 	DRAW = 'draw',
 	STALEMATE = 'stalemate',
 	THREEFOLD_REPETITION = 'threefold-repetition',
-	FIVEFOLD_REPETITION = 'fivefold-repetition',
 	FIFTY_MOVES = 'fifty-moves',
-	SEVENTY_FIVE_MOVES = 'seventy-five-moves',
 	INSUFFICIENT_MATERIAL = 'insufficient-material',
 	INVALID_POSITION = 'invalid-position',
-
-	WHITE_RESIGNATION = 'white-resignation',
-	BLACK_RESIGNATION = 'black-resignation',
-	MUTUAL_AGREEMENT = 'mutual-agreement',
 }
 
 export class Game {
@@ -75,7 +69,6 @@ export class Game {
 	}
 
 	pushMove(m: Move) {
-		//console.log(m.name);
 		this.moves.push(m);
 	}
 
@@ -88,7 +81,6 @@ export class Game {
 			this.results.add(gameResult);
 		});
 		this.resultStr = resultStr;
-		//console.log(resultStr);
 	}
 
 	checkForGameEnded() {
@@ -150,19 +142,15 @@ export class Game {
 	}
 
 	pushPosition(p: Position) {
-		//console.log(Fen.getFenStr(p));
 		this.positions.push(p);
-		//const startTime = Date.now();
 		this.possibleMoves = this.mover.getAllPossibleMoves(p);
 		this.checkForGameEnded();
-		//console.log(`${Date.now() - startTime}ms`);
 	}
 
 	applyFen(fenStr: string) {
 		const p = Fen.parseFenStr(fenStr);
 		if (!Position.assureTwoKings(p)) {
 			this.results.add(GameResult.INVALID_POSITION);
-			//console.log('Missing some kings...');
 			alert('Missing some kings...');
 		}
 		Position.prohibitCastingBasedOnPiecePosition(p);
