@@ -120,6 +120,9 @@ export class Bot {
 			}
 			this.onProgress((i + 1) / moves.length, '');
 		});
-		this.onProgress(1, moves[bestMoveIndex].name);
+		this.onProgress(1, '');
+		setTimeout(() => {
+			this.onProgress(1, moves[bestMoveIndex].name);
+		}, 100);
 	}
 }
