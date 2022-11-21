@@ -145,8 +145,8 @@ export class UiMain {
 		const playerProgressElms = UiHelper.queryElms('.player-status-progress');
 		const isActivePlayerBot = this.game.getCurPlayer()?.type === PlayerType.BOT;
 		this.setBotComputeProgress(0);
-		playerProgressElms[0].classList.toggle('hidden', !topActive || !isActivePlayerBot);
-		playerProgressElms[1].classList.toggle('hidden', !bottomActive || !isActivePlayerBot);
+		playerProgressElms[0].classList.toggle('transparent', !topActive || !isActivePlayerBot);
+		playerProgressElms[1].classList.toggle('transparent', !bottomActive || !isActivePlayerBot);
 	}
 
 	updateUI() {

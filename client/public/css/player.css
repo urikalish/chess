@@ -34,6 +34,7 @@
     height: 1px;
     background: linear-gradient(to right, var(--color--green--light) var(--player-status-progress), #444 var(--player-status-progress) 100%);
     margin-left: 1rem;
+    transition: opacity 0.5s ease-in-out;
 }
 
 @media (max-width: 900px) {
