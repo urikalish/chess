@@ -32,11 +32,15 @@
 .player-status-progress {
     flex: 1 1 100%;
     height: 1px;
-    background: linear-gradient(to right, var(--color--green--light) var(--player-status-progress), #444 var(--player-status-progress) 100%);
     margin-left: 1rem;
-    transition: opacity 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
-
+.player-status-progress-top {
+    background: linear-gradient(to right, var(--color--green--light) var(--player-status-progress-top), #444 var(--player-status-progress-top) 100%);
+}
+.player-status-progress-bottom {
+    background: linear-gradient(to right, var(--color--green--light) var(--player-status-progress-bottom), #444 var(--player-status-progress-bottom) 100%);
+}
 @media (max-width: 900px) {
     .player-status {
         left: 0.8rem;

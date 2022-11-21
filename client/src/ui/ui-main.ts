@@ -165,7 +165,9 @@ export class UiMain {
 	}
 
 	setBotComputeProgress(progress: number) {
-		document.documentElement.style.setProperty('--player-status-progress', `${(progress * 100).toFixed(2)}%`);
+		const index = this.game.getCurPlayer()?.index || 0;
+		const topOrBottom = this.isBoardFlipped ? (index === 0 ? 'top' : 'bottom') : index === 0 ? 'bottom' : 'top';
+		document.documentElement.style.setProperty(`--player-status-progress-${topOrBottom}`, `${(progress * 100).toFixed(2)}%`);
 	}
 
 	goBotTurn() {

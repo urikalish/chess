@@ -29,7 +29,8 @@
     --color--board-frame-shadow: #000;
     --color--board-frame-text: #999;
     --player-status-height: 4rem;
-    --player-status-progress: 0%;
+    --player-status-progress-top: 0%;
+    --player-status-progress-bottom: 0%;
     --board-gutter-width: 3rem;
     --main-playing-area-height: 100%;
     --main-content-height: calc(var(--doc-height) - var(--header-height) - var(--footer-height));
