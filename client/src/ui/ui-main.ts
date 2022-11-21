@@ -178,9 +178,7 @@ export class UiMain {
 			this.setBotComputeProgress(1);
 			const m = this.game.possibleMoves.find(move => move.name === moveName);
 			if (m) {
-				setTimeout(() => {
-					this.goMove(m);
-				}, 100);
+				this.goMove(m);
 			}
 		} else {
 			this.setBotComputeProgress(progress);
@@ -190,14 +188,11 @@ export class UiMain {
 	afterNewPosition() {
 		this.selectedIndex = -1;
 		this.updateUI();
-		if (this.game.isBotTurn()) {
-			setTimeout(() => {
-				this.goBotTurn();
-			}, 100);
-		}
 		if (this.game.isEnded()) {
 			UiLog.logGameResult(this.game.results);
 			Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_PHASE_GAME_ENDED, this.game.resultStr);
+		} else if (this.game.isBotTurn()) {
+			this.goBotTurn();
 		}
 	}
 
