@@ -154,9 +154,6 @@ export class UiMain {
 		this.updateBoardPiecesUI();
 		UiFen.updateFenUI(this.game.getCurPosition());
 		this.updatePlayersUi();
-		if (this.game.isEnded()) {
-			UiLog.logGameResult(this.game.results);
-		}
 	}
 
 	goMove(m: Move | null | undefined) {
@@ -198,7 +195,8 @@ export class UiMain {
 				this.goBotTurn();
 			}, 100);
 		}
-		if (this.game.resultStr) {
+		if (this.game.isEnded()) {
+			UiLog.logGameResult(this.game.results);
 			Analytics.sendEvent(AnalyticsCategory.GAME_PHASE, AnalyticsAction.GAME_PHASE_GAME_ENDED, this.game.resultStr);
 		}
 	}
