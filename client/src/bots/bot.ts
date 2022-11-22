@@ -44,6 +44,7 @@ export class Bot {
 		if (nextMoves.length === 0) {
 			return this.score(m, !maximizingPlayer);
 		}
+		this.sortMoves(nextMoves);
 		if (maximizingPlayer) {
 			let value = Number.NEGATIVE_INFINITY;
 			for (let i = 0; i < nextMoves.length; i++) {
