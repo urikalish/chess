@@ -8,6 +8,7 @@ export class BotWorker {
 		bot1: new Bot(1, BotWorker.handleBotProgress),
 		bot2: new Bot(2, BotWorker.handleBotProgress),
 		bot3: new Bot(3, BotWorker.handleBotProgress),
+		bot4: new Bot(4, BotWorker.handleBotProgress),
 	};
 
 	static goComputeMove(botName: string, p: Position): Move | null {
