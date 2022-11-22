@@ -23,16 +23,23 @@ export class Bot {
 		const myIndex = this.context.myArmyIndex;
 		const enemyIndex = Math.abs(myIndex - 1);
 		const pieceCount = Position.getAllPieceCount(m.newPosition);
-		score += pieceCount[myIndex][PieceType.PAWN];
-		score += pieceCount[myIndex][PieceType.KNIGHT] * 3;
-		score += pieceCount[myIndex][PieceType.BISHOP] * 3.5;
-		score += pieceCount[myIndex][PieceType.ROOK] * 5;
-		score += pieceCount[myIndex][PieceType.QUEEN] * 9;
-		score -= pieceCount[enemyIndex][PieceType.PAWN];
-		score -= pieceCount[enemyIndex][PieceType.KNIGHT] * 3;
-		score -= pieceCount[enemyIndex][PieceType.BISHOP] * 3.5;
-		score -= pieceCount[enemyIndex][PieceType.ROOK] * 5;
-		score -= pieceCount[enemyIndex][PieceType.QUEEN] * 9;
+		const pieceWorth = {
+			[PieceType.PAWN]: 1,
+			[PieceType.KNIGHT]: 3.05,
+			[PieceType.BISHOP]: 3.33,
+			[PieceType.ROOK]: 5.63,
+			[PieceType.QUEEN]: 9.5,
+		};
+		score += pieceCount[myIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
+		score += pieceCount[myIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
+		score += pieceCount[myIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
+		score += pieceCount[myIndex][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
+		score += pieceCount[myIndex][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
+		score -= pieceCount[enemyIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
+		score -= pieceCount[enemyIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
+		score -= pieceCount[enemyIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
+		score -= pieceCount[enemyIndex][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
+		score -= pieceCount[enemyIndex][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
 		return score;
 	}
 
@@ -71,12 +78,6 @@ export class Bot {
 	sortMoves(moves: Move[]) {
 		BotHelper.randomOrder(moves);
 		moves.sort((a, b) => {
-			if (a.newPosition.halfMoveClock < 100 && b.newPosition.halfMoveClock >= 100) {
-				return -1;
-			}
-			if (b.newPosition.halfMoveClock < 100 && a.newPosition.halfMoveClock >= 100) {
-				return 1;
-			}
 			if (a.types.has(MoveType.PROMOTION) && !b.types.has(MoveType.PROMOTION)) {
 				return -1;
 			}
@@ -87,6 +88,12 @@ export class Bot {
 				return -1;
 			}
 			if (b.types.has(MoveType.CAPTURE) && !a.types.has(MoveType.CAPTURE)) {
+				return 1;
+			}
+			if (a.types.has(MoveType.CASTLING) && !b.types.has(MoveType.CASTLING)) {
+				return -1;
+			}
+			if (b.types.has(MoveType.CASTLING) && !a.types.has(MoveType.CASTLING)) {
 				return 1;
 			}
 			return 0;
