@@ -17,12 +17,6 @@ export class Bot {
 
 	score(m: Move, isMyMove: boolean): number {
 		let score = 0;
-		if (m.types.has(MoveType.CHECKMATE)) {
-			return isMyMove ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
-		}
-		const myIndex = this.context.myArmyIndex;
-		const enemyIndex = Math.abs(myIndex - 1);
-		const pieceCount = Position.getAllPieceCount(m.newPosition);
 		const pieceWorth = {
 			[PieceType.PAWN]: 1,
 			[PieceType.KNIGHT]: 3.05,
@@ -30,6 +24,16 @@ export class Bot {
 			[PieceType.ROOK]: 5.63,
 			[PieceType.QUEEN]: 9.5,
 		};
+		const CHECK_SCORE = 0.5;
+		if (m.types.has(MoveType.CHECKMATE)) {
+			return isMyMove ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+		}
+		if (m.types.has(MoveType.CHECK)) {
+			score += isMyMove ? CHECK_SCORE : -1 * CHECK_SCORE;
+		}
+		const myIndex = this.context.myArmyIndex;
+		const enemyIndex = Math.abs(myIndex - 1);
+		const pieceCount = Position.getAllPieceCount(m.newPosition);
 		score += pieceCount[myIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
 		score += pieceCount[myIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
 		score += pieceCount[myIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
@@ -88,6 +92,12 @@ export class Bot {
 				return -1;
 			}
 			if (b.types.has(MoveType.CAPTURE) && !a.types.has(MoveType.CAPTURE)) {
+				return 1;
+			}
+			if (a.types.has(MoveType.CHECK) && !b.types.has(MoveType.CHECK)) {
+				return -1;
+			}
+			if (b.types.has(MoveType.CHECK) && !a.types.has(MoveType.CHECK)) {
 				return 1;
 			}
 			if (a.types.has(MoveType.CASTLING) && !b.types.has(MoveType.CASTLING)) {
