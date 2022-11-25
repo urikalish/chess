@@ -2,7 +2,7 @@ import { Position } from '../model/position';
 import { Move, MoveType } from '../model/move';
 import { Mover } from '../model/mover';
 import { BotHelper } from './bot-helper';
-import { PieceType } from '../model/piece';
+import { calculateScore } from '../functions/calculate-score';
 
 export class Bot {
 	mover: Mover = new Mover();
@@ -17,13 +17,6 @@ export class Bot {
 
 	score(m: Move, isMyMove: boolean): number {
 		let score = 0;
-		const pieceWorth = {
-			[PieceType.PAWN]: 1,
-			[PieceType.KNIGHT]: 3.05,
-			[PieceType.BISHOP]: 3.33,
-			[PieceType.ROOK]: 5.63,
-			[PieceType.QUEEN]: 9.5,
-		};
 		const CHECK_SCORE = 0.5;
 		if (m.types.has(MoveType.CHECKMATE)) {
 			return isMyMove ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
@@ -33,18 +26,14 @@ export class Bot {
 		}
 		const myIndex = this.context.myArmyIndex;
 		const enemyIndex = Math.abs(myIndex - 1);
-		const pieceCount = Position.getAllPieceCount(m.newPosition);
-		score += pieceCount[myIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
-		score += pieceCount[myIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
-		score += pieceCount[myIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
-		score += pieceCount[myIndex][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
-		score += pieceCount[myIndex][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
-		score -= pieceCount[enemyIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
-		score -= pieceCount[enemyIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
-		score -= pieceCount[enemyIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
-		score -= pieceCount[enemyIndex][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
-		score -= pieceCount[enemyIndex][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
-		return score;
+		const pieceCount: {
+			p: number;
+			n: number;
+			b: number;
+			r: number;
+			q: number;
+		}[] = Position.getAllPieceCount(m.newPosition);
+		return calculateScore(score, pieceCount, myIndex, enemyIndex);
 	}
 
 	alphaBeta(m: Move, depth: number, a: number, b: number, maximizingPlayer: boolean) {
