@@ -7,7 +7,7 @@ import { PieceType } from '../model/piece';
 export class Bot {
 	mover: Mover = new Mover();
 	context: { myArmyIndex: number; baseMove: Move } = { myArmyIndex: 0, baseMove: new Move() };
-	depth = 0;
+	depth = 1;
 	onProgress: (progress: number, moveName: string) => void;
 
 	constructor(depth: number, onProgress: (progress: number, moveName: string) => void) {
