@@ -36,17 +36,27 @@
     white-space: nowrap;
     user-select: none;
 }
-.player-status-progress {
+.player-status-progress-container {
+    position: relative;
     flex: 1 1 100%;
     height: 1px;
+    background-color: #444;
     margin-left: 1rem;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.5s linear;
+}
+.player-status-progress {
+    height: 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color--green--light);
+    transition: all 0.2s linear;
 }
 .player-status-progress-top {
-    background: linear-gradient(to right, var(--color--green--light) var(--player-status-progress-top), #444 var(--player-status-progress-top) 100%);
+    width: var(--player-status-progress-top);
 }
 .player-status-progress-bottom {
-    background: linear-gradient(to right, var(--color--green--light) var(--player-status-progress-bottom), #444 var(--player-status-progress-bottom) 100%);
+    width: var(--player-status-progress-bottom);
 }
 @media (max-width: 900px) {
     .player-status {

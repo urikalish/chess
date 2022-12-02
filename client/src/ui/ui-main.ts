@@ -155,7 +155,7 @@ export class UiMain {
 			playerStatusAdvantageElms[leadingUiIndex].innerText = `+${Math.abs(score)}`;
 			playerStatusAdvantageElms[Math.abs(leadingUiIndex - 1)].innerText = `-${Math.abs(score)}`;
 		}
-		const playerProgressElms = UiHelper.queryElms('.player-status-progress');
+		const playerProgressElms = UiHelper.queryElms('.player-status-progress-container');
 		const isActivePlayerBot = this.game.getCurPlayer()?.type === PlayerType.BOT;
 		this.setBotComputeProgress(0);
 		playerProgressElms[0].classList.toggle('transparent', !topActive || !isActivePlayerBot || this.game.isEnded());
@@ -181,6 +181,12 @@ export class UiMain {
 		const index = this.game.getCurPlayer()?.index || 0;
 		const topOrBottom = this.isBoardFlipped ? (index === 0 ? 'top' : 'bottom') : index === 0 ? 'bottom' : 'top';
 		document.documentElement.style.setProperty(`--player-status-progress-${topOrBottom}`, `${(progress * 100).toFixed(2)}%`);
+		if (progress === 1) {
+			setTimeout(() => {
+				document.documentElement.style.setProperty(`--player-status-progress-top`, `0%`);
+				document.documentElement.style.setProperty(`--player-status-progress-bottom`, `0%`);
+			}, 500);
+		}
 	}
 
 	goBotTurn() {
