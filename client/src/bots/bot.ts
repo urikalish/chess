@@ -110,19 +110,28 @@ export class Bot {
 		});
 	}
 
+	notifyMove(moveName: string) {
+		this.onProgress(1, '');
+		setTimeout(() => {
+			this.onProgress(1, moveName);
+		}, 100);
+	}
+
 	goComputeMove(p: Position) {
 		this.onProgress(0, '');
 		const moves = this.mover.getAllPossibleMoves(p);
 		if (moves.length === 0) {
-			this.onProgress(1, '');
+			this.notifyMove('');
+			return;
 		}
 		if (moves.length === 1) {
-			this.onProgress(1, moves[0].name);
-			return moves[0];
+			this.notifyMove(moves[0].name);
+			return;
 		}
 		const m = moves.find(m => m.types.has(MoveType.CHECKMATE));
 		if (m) {
-			this.onProgress(1, m.name);
+			this.notifyMove(m.name);
+			return;
 		}
 		this.sortMoves(moves);
 		let score;
@@ -138,9 +147,7 @@ export class Bot {
 			}
 			this.onProgress((i + 1) / moves.length, '');
 		});
-		this.onProgress(1, '');
-		setTimeout(() => {
-			this.onProgress(1, moves[bestMoveIndex].name);
-		}, 100);
+		this.notifyMove(moves[bestMoveIndex].name);
+		return;
 	}
 }
