@@ -3,11 +3,13 @@ import { Move, MoveType } from '../model/move';
 import { Mover } from '../model/mover';
 import { BotHelper } from './bot-helper';
 import { PieceType } from '../model/piece';
+import { Fen } from '../model/fen';
 
 export class Bot {
 	mover: Mover = new Mover();
-	context: { myArmyIndex: number; baseMove: Move } = { myArmyIndex: 0, baseMove: new Move() };
 	depth = 0;
+	myArmyIndex = 0;
+	context: { baseMove: Move; positionScores: object } = { baseMove: new Move(), positionScores: {} };
 	onProgress: (progress: number, moveName: string) => void;
 
 	constructor(depth: number, onProgress: (progress: number, moveName: string) => void) {
@@ -15,7 +17,21 @@ export class Bot {
 		this.onProgress = onProgress;
 	}
 
+	hash(str) {
+		let hash = 0;
+		let i;
+		let l;
+		for (i = 0, l = str.length; i < l; i++) {
+			hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+		}
+		return hash;
+	}
+
 	score(m: Move, isMyMove: boolean): number {
+		const key = this.hash(Fen.getFenStr(m.newPosition, false, false, false, false, false));
+		if (this.context.positionScores[key]) {
+			return this.context.positionScores[key];
+		}
 		let score = 0;
 		const pieceWorth = {
 			[PieceType.PAWN]: 1,
@@ -31,19 +47,19 @@ export class Bot {
 		if (m.types.has(MoveType.CHECK)) {
 			score += isMyMove ? CHECK_SCORE : -1 * CHECK_SCORE;
 		}
-		const myIndex = this.context.myArmyIndex;
-		const enemyIndex = Math.abs(myIndex - 1);
+		const enemyArmyIndex = Math.abs(this.myArmyIndex - 1);
 		const pieceCount = Position.getAllPieceCount(m.newPosition);
-		score += pieceCount[myIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
-		score += pieceCount[myIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
-		score += pieceCount[myIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
-		score += pieceCount[myIndex][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
-		score += pieceCount[myIndex][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
-		score -= pieceCount[enemyIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
-		score -= pieceCount[enemyIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
-		score -= pieceCount[enemyIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
-		score -= pieceCount[enemyIndex][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
-		score -= pieceCount[enemyIndex][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
+		score += pieceCount[this.myArmyIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
+		score += pieceCount[this.myArmyIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
+		score += pieceCount[this.myArmyIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
+		score += pieceCount[this.myArmyIndex][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
+		score += pieceCount[this.myArmyIndex][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
+		score -= pieceCount[enemyArmyIndex][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
+		score -= pieceCount[enemyArmyIndex][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
+		score -= pieceCount[enemyArmyIndex][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
+		score -= pieceCount[enemyArmyIndex][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
+		score -= pieceCount[enemyArmyIndex][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
+		this.context.positionScores[key] = score;
 		return score;
 	}
 
@@ -133,12 +149,13 @@ export class Bot {
 			this.notifyMove(m.name);
 			return;
 		}
-		this.sortMoves(moves);
+		this.myArmyIndex = p.armyIndex;
+		this.context.positionScores = {};
 		let score;
 		let bestMoveIndex = 0;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
+		this.sortMoves(moves);
 		moves.forEach((m, i) => {
-			this.context.myArmyIndex = p.armyIndex;
 			this.context.baseMove = m;
 			score = this.alphaBeta(m, this.depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
 			if (score > bestMoveScore) {
@@ -147,6 +164,7 @@ export class Bot {
 			}
 			this.onProgress((i + 1) / moves.length, '');
 		});
+		this.context.positionScores = {};
 		this.notifyMove(moves[bestMoveIndex].name);
 		return;
 	}
