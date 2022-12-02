@@ -363,13 +363,15 @@ export class Mover {
 	getCastlingMoves(p: Position): Move[] {
 		const moves: Move[] = [];
 		let np;
-		if (p.armyIndex === 0 
-&& p.castlingOptions[0][0] 
-&& p.pieceData[60] === 'K' 
-&& p.pieceData[63] === 'R' 
-&& !p.pieceData[61] 
-&& !p.pieceData[62] 
-&& !this.areSomeSquareAttacked(p, [60, 61, 62], 1)) {
+		if (
+			p.armyIndex === 0 &&
+			p.castlingOptions[0][0] &&
+			p.pieceData[60] === 'K' &&
+			p.pieceData[63] === 'R' &&
+			!p.pieceData[61] &&
+			!p.pieceData[62] &&
+			!this.areSomeSquareAttacked(p, [60, 61, 62], 1)
+		) {
 			np = Position.createNextPosition(p);
 			np.pieceData[60] = '';
 			np.pieceData[61] = 'R';
@@ -379,14 +381,16 @@ export class Mover {
 			np.castlingOptions[0][1] = false;
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 60, 62, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 63, to: 61 }, p, np));
 		}
-		if (p.armyIndex === 0 
-&& p.castlingOptions[0][1]
-&& p.pieceData[60] === 'K' 
-&& p.pieceData[56] === 'R'
-&& !p.pieceData[57] 
-&& !p.pieceData[58] 
-&& !p.pieceData[59] 
-&& !this.areSomeSquareAttacked(p, [58, 59, 60], 1)) {
+		if (
+			p.armyIndex === 0 &&
+			p.castlingOptions[0][1] &&
+			p.pieceData[60] === 'K' &&
+			p.pieceData[56] === 'R' &&
+			!p.pieceData[57] &&
+			!p.pieceData[58] &&
+			!p.pieceData[59] &&
+			!this.areSomeSquareAttacked(p, [58, 59, 60], 1)
+		) {
 			np = Position.createNextPosition(p);
 			np.pieceData[56] = '';
 			np.pieceData[58] = 'K';
@@ -396,13 +400,15 @@ export class Mover {
 			np.castlingOptions[0][1] = false;
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 60, 58, new Set([MoveType.CASTLING, MoveType.CASTLING_QS]), `O-O-O`, -1, { from: 56, to: 59 }, p, np));
 		}
-		if (p.armyIndex === 1 
-&& p.castlingOptions[1][0]
-&& p.pieceData[4] === 'k' 
-&& p.pieceData[7] === 'r'
-&& !p.pieceData[5] 
-&& !p.pieceData[6] 
-&& !this.areSomeSquareAttacked(p, [4, 5, 6], 0)) {
+		if (
+			p.armyIndex === 1 &&
+			p.castlingOptions[1][0] &&
+			p.pieceData[4] === 'k' &&
+			p.pieceData[7] === 'r' &&
+			!p.pieceData[5] &&
+			!p.pieceData[6] &&
+			!this.areSomeSquareAttacked(p, [4, 5, 6], 0)
+		) {
 			np = Position.createNextPosition(p);
 			np.pieceData[4] = '';
 			np.pieceData[5] = 'r';
@@ -412,14 +418,16 @@ export class Mover {
 			np.castlingOptions[1][1] = false;
 			moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, 4, 6, new Set([MoveType.CASTLING, MoveType.CASTLING_KS]), `O-O`, -1, { from: 7, to: 5 }, p, np));
 		}
-		if (p.armyIndex === 1 
-&& p.castlingOptions[1][1]
-&& p.pieceData[4] === 'k' 
-&& p.pieceData[0] === 'r'
-&& !p.pieceData[1] 
-&& !p.pieceData[2] 
-&& !p.pieceData[3] 
-&& !this.areSomeSquareAttacked(p, [2, 3, 4], 0)) {
+		if (
+			p.armyIndex === 1 &&
+			p.castlingOptions[1][1] &&
+			p.pieceData[4] === 'k' &&
+			p.pieceData[0] === 'r' &&
+			!p.pieceData[1] &&
+			!p.pieceData[2] &&
+			!p.pieceData[3] &&
+			!this.areSomeSquareAttacked(p, [2, 3, 4], 0)
+		) {
 			np = Position.createNextPosition(p);
 			np.pieceData[0] = '';
 			np.pieceData[2] = 'k';
