@@ -49,11 +49,11 @@ export class Bot {
 
 	alphaBeta(m: Move, depth: number, a: number, b: number, maximizingPlayer: boolean) {
 		if (depth === 0) {
-			return this.score(m, !maximizingPlayer);
+			return this.score(m, maximizingPlayer);
 		}
 		const nextMoves = this.mover.getAllPossibleMoves(m.newPosition);
 		if (nextMoves.length === 0) {
-			return this.score(m, !maximizingPlayer);
+			return this.score(m, maximizingPlayer);
 		}
 		this.sortMoves(nextMoves);
 		if (maximizingPlayer) {
