@@ -78,4 +78,27 @@ export class Position {
 			},
 		];
 	}
+
+	static getStandardScore(p: Position) {
+		let score = 0;
+		const pieceWorth = {
+			[PieceType.PAWN]: 1,
+			[PieceType.KNIGHT]: 3,
+			[PieceType.BISHOP]: 3,
+			[PieceType.ROOK]: 5,
+			[PieceType.QUEEN]: 9,
+		};
+		const pieceCount = Position.getAllPieceCount(p);
+		score += pieceCount[0][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
+		score += pieceCount[0][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
+		score += pieceCount[0][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
+		score += pieceCount[0][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
+		score += pieceCount[0][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
+		score -= pieceCount[1][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
+		score -= pieceCount[1][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
+		score -= pieceCount[1][PieceType.BISHOP] * pieceWorth[PieceType.BISHOP];
+		score -= pieceCount[1][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
+		score -= pieceCount[1][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
+		return score;
+	}
 }

@@ -1,4 +1,5 @@
 import { PieceType } from '../model/piece';
+import { Position } from '../model/position';
 import { Move, MoveType } from '../model/move';
 import { Game } from '../model/game';
 import { Analytics, AnalyticsAction, AnalyticsCategory } from '../services/analytics';
@@ -136,12 +137,24 @@ export class UiMain {
 
 	updatePlayersUi() {
 		const p = this.game.getCurPosition();
+		if (!p) {
+			return;
+		}
 		const playerNameElms = UiHelper.queryElms('.player-status-name');
 		const activePlayerIndex = this.game.getCurPlayer()?.index || 0;
 		const topActive = (activePlayerIndex === 0 && this.isBoardFlipped) || (activePlayerIndex === 1 && !this.isBoardFlipped);
 		const bottomActive = (activePlayerIndex === 0 && !this.isBoardFlipped) || (activePlayerIndex === 1 && this.isBoardFlipped);
 		playerNameElms[0].classList.toggle('player-active', !!p && topActive && !this.game.isEnded());
 		playerNameElms[1].classList.toggle('player-active', !!p && bottomActive && !this.game.isEnded());
+		const score = Position.getStandardScore(p);
+		const playerStatusAdvantageElms = UiHelper.queryElms('.player-status-advantage');
+		playerStatusAdvantageElms[0].innerText = '';
+		playerStatusAdvantageElms[1].innerText = '';
+		if (score !== 0) {
+			const leadingUiIndex = (this.isBoardFlipped && score > 0) || (!this.isBoardFlipped && score < 0) ? 0 : 1;
+			playerStatusAdvantageElms[leadingUiIndex].innerText = `+${Math.abs(score)}`;
+			// playerStatusAdvantageElms[Math.abs(leadingUiIndex - 1)].innerText = `-${Math.abs(score)}`;
+		}
 		const playerProgressElms = UiHelper.queryElms('.player-status-progress');
 		const isActivePlayerBot = this.game.getCurPlayer()?.type === PlayerType.BOT;
 		this.setBotComputeProgress(0);

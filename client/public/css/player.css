@@ -29,6 +29,10 @@
 .player-status-name.player-bot:before {
     content: "🤖";
 }
+.player-status-advantage {
+    margin-left: 0.5rem;
+    color: var(--color--orange);
+}
 .player-status-progress {
     flex: 1 1 100%;
     height: 1px;
