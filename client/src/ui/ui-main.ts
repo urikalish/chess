@@ -153,7 +153,7 @@ export class UiMain {
 		if (score !== 0) {
 			const leadingUiIndex = (this.isBoardFlipped && score > 0) || (!this.isBoardFlipped && score < 0) ? 0 : 1;
 			playerStatusAdvantageElms[leadingUiIndex].innerText = `+${Math.abs(score)}`;
-			// playerStatusAdvantageElms[Math.abs(leadingUiIndex - 1)].innerText = `-${Math.abs(score)}`;
+			playerStatusAdvantageElms[Math.abs(leadingUiIndex - 1)].innerText = `-${Math.abs(score)}`;
 		}
 		const playerProgressElms = UiHelper.queryElms('.player-status-progress');
 		const isActivePlayerBot = this.game.getCurPlayer()?.type === PlayerType.BOT;
