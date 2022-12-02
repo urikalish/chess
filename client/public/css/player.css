@@ -31,7 +31,11 @@
 }
 .player-status-advantage {
     margin-left: 0.5rem;
+    position: relative;
+    top: -1px;
     color: var(--color--orange);
+    white-space: nowrap;
+    user-select: none;
 }
 .player-status-progress {
     flex: 1 1 100%;
