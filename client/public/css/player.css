@@ -30,7 +30,8 @@
 }
 .player-status-advantage {
     height: 2.1rem;
-    margin: 0.4rem 0 0 0.6rem;
+    margin-top: 0.4rem;
+    margin-left: 0.6rem;
     color: var(--color--orange);
     white-space: nowrap;
     user-select: none;
@@ -51,6 +52,9 @@
     .player-status {
         left: 0.8rem;
         padding-right: 2rem;
+    }
+    .player-status-advantage {
+        margin-top: 0;
     }
 }
 
