@@ -83,6 +83,15 @@ export class Openings {
 		{ name: `King's Gambit`, moves: `e4 e5 f4 Bc5 Nf3 d6 Nc3 Nf6 Bc4 Nc6 d3 a6` },
 		{ name: `King's Gambit`, moves: `e4 e5 f4 Bc5 Nf3 d6 c3 Nf6 d4 exd4 cxd4 Bb6` },
 		{ name: `King's Gambit`, moves: `e4 e5 f4 Bc5 Nf3 d6 Bc4 Nf6 Nc3 Nc6 d3 Bg4 Na4 Bb6 Nxb6 axb6` },
-		
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Nxd4` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Nf6 Nc3 Bb4 Nxc6 bxc6 Bd3 d5 exd5 cxd5 O-O O-O Bg5 c6` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Nf6 Nc3 Bb4 Nxc6 bxc6 Bd3 O-O O-O d5 exd5 cxd5 Bg5 c6` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Nf6 Nxc6 bxc6 e5 Qe7 Qe2 Nd5 c4 Ba6 b3 g6` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Bc5 Be3 Qf6 c3 Nge7 Bc4 Ne5 Be2 Qg6 O-O d6 f3 O-O` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Bc5 Nxc6 Qf6 Qd2 dxc6 Nc3 Be6 Na4 Rd8 Bd3 Bd4 O-O b5` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Nxd4 Bc5 Nb3 Bb6 Nc3 Nf6 Qe2` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Bc4 Nf6 e5 d5 Bb5 Ne4 Nxd4 Bd7 Bxc6 bxc6 O-O Bc5 f3 Ng5` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Bc4 Nf6 O-O Nxe4 Re1 d5 Bxd5 Qxd5 Nc3 Qa5 Nxe4 Be6 Neg5 O-O-O` },
+		{ name: `Scotch`, moves: `e4 e5 Nf3 Nc6 d4 exd4 Bc4 Nf6 e5 d5 Bb5 Ne4 Nxd4 Bd7 Bxc6 bxc6 O-O Bc5 f3 Ng5` },
 	];
 }
