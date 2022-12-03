@@ -144,7 +144,7 @@ export class Bot {
 		const possibleOpenings: string[] = [];
 		Openings.goodOpenings.forEach(opening => {
 			if (opening.moves.startsWith(movesStr)) {
-				const nextMoveName = opening.moves.substring(movesStr.length + 1).split(' ')[0];
+				const nextMoveName = opening.moves.substring(moveStr ? movesStr.length + 1 : 0).split(' ')[0];
 				if (nextMoveName) {
 					possibleOpenings.push(nextMoveName);
 				}
