@@ -4,16 +4,19 @@ import { Mover } from '../model/mover';
 import { BotHelper } from './bot-helper';
 import { PieceType } from '../model/piece';
 import { Fen } from '../model/fen';
+import { Openings } from './openings';
 
 export class Bot {
 	mover: Mover = new Mover();
 	depth = 0;
+	useOpenings = false;
 	myArmyIndex = 0;
 	context: { baseMove: Move; positionScores: object } = { baseMove: new Move(), positionScores: {} };
 	onProgress: (progress: number, moveName: string) => void;
 
-	constructor(depth: number, onProgress: (progress: number, moveName: string) => void) {
+	constructor(depth: number, useOpenings: boolean, onProgress: (progress: number, moveName: string) => void) {
 		this.depth = depth;
+		this.useOpenings = useOpenings;
 		this.onProgress = onProgress;
 	}
 
@@ -130,10 +133,27 @@ export class Bot {
 		this.onProgress(1, '');
 		setTimeout(() => {
 			this.onProgress(1, moveName);
-		}, 100);
+		}, 0);
 	}
 
-	goComputeMove(p: Position) {
+	getCannedMoveName(p: Position, moveNames: string[]): string {
+		if (p.fullMoveNum > 10) {
+			return '';
+		}
+		const movesStr = moveNames.join(' ');
+		const possibleOpenings: string[] = [];
+		Openings.goodOpenings.forEach(opening => {
+			if (opening.moves.startsWith(movesStr)) {
+				const nextMoveName = opening.moves.substring(movesStr.length + 1).split(' ')[0];
+				if (nextMoveName) {
+					possibleOpenings.push(nextMoveName);
+				}
+			}
+		});
+		return possibleOpenings.length === 0 ? '' : possibleOpenings[Math.trunc(Math.random() * possibleOpenings.length)];
+	}
+
+	goComputeMove(p: Position, moveNames: string[]) {
 		this.onProgress(0, '');
 		const moves = this.mover.getAllPossibleMoves(p);
 		if (moves.length === 0) {
@@ -144,10 +164,18 @@ export class Bot {
 			this.notifyMove(moves[0].name);
 			return;
 		}
-		const m = moves.find(m => m.types.has(MoveType.CHECKMATE));
+		let m = moves.find(m => m.types.has(MoveType.CHECKMATE));
 		if (m) {
 			this.notifyMove(m.name);
 			return;
+		}
+		const cannedMoveName = this.getCannedMoveName(p, moveNames);
+		if (cannedMoveName) {
+			m = moves.find(m => m.name === cannedMoveName);
+			if (m) {
+				this.notifyMove(m.name);
+				return;
+			}
 		}
 		this.myArmyIndex = p.armyIndex;
 		this.context.positionScores = {};

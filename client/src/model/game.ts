@@ -63,6 +63,14 @@ export class Game {
 		return this.moves.length ? this.moves[this.moves.length - 1] : null;
 	}
 
+	getMoveNames(): string[] {
+		const moveNames: string[] = [];
+		this.moves.forEach(m => {
+			moveNames.push(m.name);
+		});
+		return moveNames;
+	}
+
 	getCurPlayer(): Player | null {
 		const p = this.getCurPosition();
 		return p ? this.players[p.armyIndex] : null;
@@ -228,7 +236,7 @@ export class Game {
 		if (!p || !botName) {
 			return null;
 		}
-		this.botWorker.postMessage({ botName, position: this.getCurPosition() });
+		this.botWorker.postMessage({ botName, position: this.getCurPosition(), moveNames: this.getMoveNames() });
 	}
 
 	handleBotWorkerMessage(e: object) {
