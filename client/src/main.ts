@@ -12,6 +12,10 @@ function setDocHeight() {
 	document.documentElement.style.setProperty('--doc-height', `${window.innerHeight}px`);
 }
 
+// async function lockScreenOrientation() {
+// 	await screen.orientation.lock('portrait-primary');
+// }
+
 // function goBotVsBotSingleGame(numOfMatches: number, matchNumber: number, result: number[]) {
 // 	const i = matchNumber - 1;
 // 	const startTime = new Date().getTime();
@@ -69,11 +73,13 @@ function handleDoneWelcomeDialog(
 	// }
 }
 
-function init() {
+async function init() {
 	window.addEventListener('resize', setDocHeight);
+	// await lockScreenOrientation();
 	setDocHeight();
 	const uiWelcome = new UiWelcome();
 	uiWelcome.showDialog(handleDoneWelcomeDialog);
 }
 
-init();
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+init().then(() => {});
