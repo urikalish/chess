@@ -37,13 +37,13 @@ export class Bot {
 		}
 		let score = 0;
 		const pieceWorth = {
-			[PieceType.PAWN]: 1,
-			[PieceType.KNIGHT]: 3.05,
-			[PieceType.BISHOP]: 3.33,
-			[PieceType.ROOK]: 5.63,
-			[PieceType.QUEEN]: 9.5,
+			[PieceType.PAWN]: 100,
+			[PieceType.KNIGHT]: 305,
+			[PieceType.BISHOP]: 333,
+			[PieceType.ROOK]: 563,
+			[PieceType.QUEEN]: 950,
 		};
-		const CHECK_SCORE = 0.5;
+		const CHECK_SCORE = 50;
 		if (m.types.has(MoveType.CHECKMATE)) {
 			return isMyMove ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
 		}
@@ -186,6 +186,7 @@ export class Bot {
 		moves.forEach((m, i) => {
 			this.context.baseMove = m;
 			score = this.alphaBeta(m, this.depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
+			// console.log(`${m.name} ${score}`);
 			if (score > bestMoveScore) {
 				bestMoveIndex = i;
 				bestMoveScore = score;
