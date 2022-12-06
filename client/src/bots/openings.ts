@@ -32,7 +32,7 @@ export class Openings {
 		{ name: `Bird's`, moves: `f4`, games: 10207 },
 		{ name: `London`, moves: `d4 d5 Nf3 Nf6 Bf4`, games: 9523 },
 		{ name: `King's Gambit`, moves: `e4 e5 f4`, games: 8454 },
-		{ name: `Polish`, moves: `b4`, games: 2845 },
-		{ name: `Grob `, moves: `g4`, games: 316 },
+		// { name: `Polish`, moves: `b4`, games: 2845 },
+		// { name: `Grob `, moves: `g4`, games: 316 },
 	];
 }
