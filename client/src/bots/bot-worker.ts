@@ -4,9 +4,9 @@ import { Bot } from './bot';
 
 export class BotWorker {
 	static bots = {
-		bot1: new Bot(1, false, BotWorker.handleBotProgress),
-		bot2: new Bot(2, false, BotWorker.handleBotProgress),
-		bot3: new Bot(3, false, BotWorker.handleBotProgress),
+		bot1: new Bot(1, true, BotWorker.handleBotProgress),
+		bot2: new Bot(2, true, BotWorker.handleBotProgress),
+		bot3: new Bot(3, true, BotWorker.handleBotProgress),
 		bot4: new Bot(4, true, BotWorker.handleBotProgress),
 	};
 
