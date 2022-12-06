@@ -8,7 +8,7 @@ export class Openings {
 		{ name: `French`, moves: `e4 e6`, games: 181280 },
 		{ name: `Ruy López`, moves: `e4 e5 Nf3 Nc6 Bb5`, games: 141714 },
 		{ name: `Caro-Kann`, moves: `e4 c6`, games: 110006 },
-		{ name: `Slav Defense`, moves: `d4 d5 c4 c6`, games: 100889 },
+		{ name: `Slav`, moves: `d4 d5 c4 c6`, games: 100889 },
 		{ name: `Nimzo-Indian Defense`, moves: `d4 Nf6 c4 e6 Nc3 Bb4`, games: 80776 },
 		{ name: `Closed Sicilian`, moves: `e4 c5 Nc3`, games: 55612 },
 		{ name: `Pirc`, moves: `e4 d6 d4 Nf6`, games: 52716 },
@@ -29,10 +29,10 @@ export class Openings {
 		{ name: `Benko Gambit`, moves: `d4 Nf6 c4 c5 d5 b5`, games: 20562 },
 		{ name: `Nimzowitsch-Larsen`, moves: `b3`, games: 13355 },
 		{ name: `Vienna`, moves: `e4 e5 Nc3`, games: 12489 },
-		{ name: `Bird's`, moves: `f4`, games: 10207 },
+		{ name: `Bird`, moves: `f4`, games: 10207 },
 		{ name: `London`, moves: `d4 d5 Nf3 Nf6 Bf4`, games: 9523 },
 		{ name: `King's Gambit`, moves: `e4 e5 f4`, games: 8454 },
 		// { name: `Polish`, moves: `b4`, games: 2845 },
-		// { name: `Grob `, moves: `g4`, games: 316 },
+		// { name: `Gro `, moves: `g4`, games: 316 },
 	];
 }
