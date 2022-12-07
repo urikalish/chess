@@ -143,7 +143,7 @@ export class Bot {
 		}
 		const movesStr = moveNames.join(' ');
 		const possibleOpenings: string[] = [];
-		Openings.commonOpenings.forEach(opening => {
+		Openings.openings[this.myArmyIndex].forEach(opening => {
 			if (opening.moves.startsWith(movesStr)) {
 				const nextMoveName = opening.moves.substring(movesStr ? movesStr.length + 1 : 0).split(' ')[0];
 				if (nextMoveName) {
