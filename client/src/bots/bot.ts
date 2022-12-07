@@ -3,7 +3,6 @@ import { Move, MoveType } from '../model/move';
 import { Mover } from '../model/mover';
 import { PieceType } from '../model/piece';
 import { Fen } from '../model/fen';
-import { BotHelper } from './bot-helper';
 import { Openings } from './openings';
 
 export class Bot {
@@ -102,7 +101,6 @@ export class Bot {
 	}
 
 	sortMoves(moves: Move[]) {
-		BotHelper.randomOrder(moves);
 		moves.sort((a, b) => {
 			if (a.types.has(MoveType.PROMOTION) && !b.types.has(MoveType.PROMOTION)) {
 				return -1;
@@ -140,7 +138,7 @@ export class Bot {
 	}
 
 	getCannedMoveName(p: Position, moveNames: string[]): string {
-		if (!this.config.useOpenings || p.fullMoveNum > 3) {
+		if (!this.config.useOpenings || p.fullMoveNum > 5) {
 			return '';
 		}
 		const movesStr = moveNames.join(' ');
@@ -183,21 +181,22 @@ export class Bot {
 		this.myArmyIndex = p.armyIndex;
 		this.context.positionScores = {};
 		let score;
-		let bestMoveIndex = 0;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
+		let bestMoves: Move[] = [];
 		this.sortMoves(moves);
 		moves.forEach((m, i) => {
 			this.context.baseMove = m;
 			score = this.alphaBeta(m, this.config.depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
-			// console.log(`${m.name} ${score}`);
-			if (score > bestMoveScore) {
-				bestMoveIndex = i;
+			if (score === bestMoveScore) {
+				bestMoves.push(m);
+			} else if (score > bestMoveScore) {
+				bestMoves = [m];
 				bestMoveScore = score;
 			}
 			this.onProgress((i + 1) / moves.length, '');
 		});
 		this.context.positionScores = {};
-		this.notifyMove(moves[bestMoveIndex].name);
+		this.notifyMove(bestMoves[Math.trunc(Math.random() * bestMoves.length)].name);
 		return;
 	}
 }
