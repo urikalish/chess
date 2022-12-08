@@ -60,6 +60,7 @@ export class Openings {
 			{ moves: 'e4 e5 Nf3 Nc6 Bb5 Nf6', name: `Berlin` },
 			{ moves: 'e4 e5 Nf3 Nf6 Nxe5 d6', name: `King's Pawn Game` },
 			{ moves: 'e4 e5 Nf3 Nf6 Nxe5 Nc6 Nxc6 dxc6 d3 Bc5 Be2 h5 O-O Ng4 h3 Qd6', name: `Stafford Gambit` },
+			{ moves: 'e4 e5 Nf3 Nf6 Nxe5 Nc6 Nxc6 dxc6 d3 Bc5 Be2 h5 O-O Ng4 Bxg4 hxg4 h3 Qd6', name: `Stafford Gambit` },
 			{ moves: 'e4 e5 Nc3 Nf6 g3 d5', name: `Vienna` },
 			{ moves: 'e4 e5 Bc4 Nf6 d3 Nc6', name: `Bishop Berlin Defence` },
 			{ moves: 'e4 e6 d4 d5 Nc3 Bb4', name: `French` },
