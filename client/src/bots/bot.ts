@@ -41,7 +41,7 @@ export class Bot {
 	}
 
 	score(m: Move, isMyMove: boolean): number {
-		const key = this.hash(Fen.getFenStr(m.newPosition, false, false, false, false, false));
+		const key = this.hash(Fen.getFenStr(m.newPosition, true, false, false, false, false));
 		if (this.context.positionScores[key]) {
 			return this.context.positionScores[key];
 		}
