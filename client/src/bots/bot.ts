@@ -138,7 +138,7 @@ export class Bot {
 	}
 
 	getCannedMoveName(p: Position, moveNames: string[]): string {
-		if (!this.config.useOpenings || p.fullMoveNum > 5) {
+		if (!this.config.useOpenings || p.fullMoveNum > 8) {
 			return '';
 		}
 		const movesStr = moveNames.join(' ');
