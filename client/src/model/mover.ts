@@ -58,6 +58,14 @@ export class Mover {
 		if (pieceType === PieceType.KNIGHT) return MoveType.PROMOTION_TO_N;
 		return MoveType.NA;
 	}
+	getCapturedPieceType(p: Position, i: number): MoveType {
+		if (p.pieceData[i].toLowerCase() === PieceType.PAWN) return MoveType.CAPTURED_P;
+		if (p.pieceData[i].toLowerCase() === PieceType.KNIGHT) return MoveType.CAPTURED_N;
+		if (p.pieceData[i].toLowerCase() === PieceType.BISHOP) return MoveType.CAPTURED_B;
+		if (p.pieceData[i].toLowerCase() === PieceType.ROOK) return MoveType.CAPTURED_R;
+		if (p.pieceData[i].toLowerCase() === PieceType.QUEEN) return MoveType.CAPTURED_Q;
+		return MoveType.NA;
+	}
 
 	//endregion
 
@@ -111,7 +119,7 @@ export class Mover {
 
 	getPawnMoves(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		let np, fromFile, to, toX, toY, toFile, toRank, epTargetIndex;
+		let np, fromFile, to, toX, toY, toFile, toRank, epTargetIndex, capturedPieceMoveType;
 		const [x, y] = this.getXAndY(i);
 		const fw = this.getForwardDirection(p.armyIndex);
 
@@ -177,11 +185,25 @@ export class Mover {
 				if (this.getRank(i) !== (p.armyIndex === 0 ? 7 : 2)) {
 					if (to !== p.epTargetIndex) {
 						//pawn simple capture
+						capturedPieceMoveType = this.getCapturedPieceType(p, to);
 						np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
 						np.halfMoveClock = 0;
-						moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${fromFile}x${toFile}${toRank}`, to, null, p, np));
+						moves.push(
+							Move.createInstance(
+								p.fullMoveNum,
+								p.armyIndex,
+								i,
+								to,
+								new Set([MoveType.CAPTURE, capturedPieceMoveType]),
+								`${fromFile}x${toFile}${toRank}`,
+								to,
+								null,
+								p,
+								np,
+							),
+						);
 					} else {
 						//pawn en passant capture
 						const epCaptureIndex = p.epTargetIndex - 8 * fw;
@@ -196,7 +218,7 @@ export class Mover {
 								p.armyIndex,
 								i,
 								to,
-								new Set([MoveType.CAPTURE, MoveType.EN_PASSANT]),
+								new Set([MoveType.CAPTURE, MoveType.CAPTURED_P, MoveType.EN_PASSANT]),
 								`${fromFile}x${toFile}${toRank} e.p.`,
 								epCaptureIndex,
 								null,
@@ -207,6 +229,7 @@ export class Mover {
 					}
 				} else {
 					//pawn capture with promotion
+					capturedPieceMoveType = this.getCapturedPieceType(p, to);
 					[PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT].forEach(pieceType => {
 						np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
@@ -218,7 +241,7 @@ export class Mover {
 								p.armyIndex,
 								i,
 								to,
-								new Set([MoveType.CAPTURE, MoveType.PROMOTION, this.getPromotionMoveType(pieceType)]),
+								new Set([MoveType.CAPTURE, capturedPieceMoveType, MoveType.PROMOTION, this.getPromotionMoveType(pieceType)]),
 								`${fromFile}x${toFile}${toRank}=${pieceType.toUpperCase()}`,
 								to,
 								null,
@@ -236,7 +259,7 @@ export class Mover {
 
 	getPieceMoves(p: Position, i: number): Move[] {
 		const moves: Move[] = [];
-		let np, to, toX, toY, toFile, toRank;
+		let np, to, toX, toY, toFile, toRank, capturedPieceMoveType;
 		const [x, y] = this.getXAndY(i);
 		const pieceType = p.pieceData[i].toLowerCase() as PieceType;
 		const directions: number[][] = Piece.getDirections(pieceType);
@@ -263,12 +286,24 @@ export class Mover {
 						);
 					} else if (this.belongsToArmy(p.pieceData, to, Army.flipArmyIndex(p.armyIndex))) {
 						//piece capture
+						capturedPieceMoveType = this.getCapturedPieceType(p, to);
 						np = Position.createNextPosition(p);
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 						np.halfMoveClock = 0;
 						moves.push(
-							Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.CAPTURE]), `${pieceType.toUpperCase()}x${toFile}${toRank}`, to, null, p, np),
+							Move.createInstance(
+								p.fullMoveNum,
+								p.armyIndex,
+								i,
+								to,
+								new Set([MoveType.CAPTURE, capturedPieceMoveType]),
+								`${pieceType.toUpperCase()}x${toFile}${toRank}`,
+								to,
+								null,
+								p,
+								np,
+							),
 						);
 						stop = true;
 					}
