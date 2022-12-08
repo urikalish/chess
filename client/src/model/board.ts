@@ -76,11 +76,7 @@ export class Board {
 
 	getSquareColor(i): SquareColor {
 		const [x, y] = [i % 8, Math.trunc(i / 8)];
-		if (y % 2 === 0) {
-			return x % 2 === 0 ? SquareColor.LIGHT : SquareColor.DARK;
-		} else {
-			return x % 2 === 0 ? SquareColor.DARK : SquareColor.LIGHT;
-		}
+		return (x + y) % 2 === 0 ? SquareColor.LIGHT : SquareColor.DARK;
 	}
 
 	onlyTwoSameColorBishopsLeft() {
