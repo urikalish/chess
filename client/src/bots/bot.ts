@@ -170,6 +170,7 @@ export class Bot {
 			this.notifyMove(m.name);
 			return;
 		}
+		this.myArmyIndex = p.armyIndex;
 		const cannedMoveName = this.getCannedMoveName(p, moveNames);
 		if (cannedMoveName) {
 			m = moves.find(m => m.name === cannedMoveName);
@@ -178,7 +179,6 @@ export class Bot {
 				return;
 			}
 		}
-		this.myArmyIndex = p.armyIndex;
 		this.context.positionScores = {};
 		let score;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
