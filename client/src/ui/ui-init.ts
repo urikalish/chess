@@ -113,7 +113,8 @@ export class UiInit {
 		const restartButtonElm = UiHelper.getElm('restart-button');
 		if (restartButtonElm) {
 			restartButtonElm.addEventListener('click', () => {
-				if (confirm('Restart game?')) {
+				const shouldRestart = !window['game'].hasMoves() || window['game'].isEnded() || confirm('Restart game?');
+				if (shouldRestart) {
 					Analytics.sendEvent(AnalyticsCategory.USER_ACTION, AnalyticsAction.USER_ACTION_RESTART_GAME);
 					location.reload();
 				}

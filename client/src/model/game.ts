@@ -80,6 +80,10 @@ export class Game {
 		this.moves.push(m);
 	}
 
+	hasMoves(): boolean {
+		return this.moves.length > 0;
+	}
+
 	isEnded(): boolean {
 		return this.results.size > 0;
 	}
