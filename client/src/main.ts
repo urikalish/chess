@@ -15,10 +15,10 @@ function setDocHeight() {
 async function lockScreenOrientation() {
 	try {
 const doc = document.documentElement;
-if (doc.requestFullscreen) {
-doc.requestFullscreen();
-} else if (doc.webkitRequestFullscreen) {
-doc.webkitRequestFullscreen();
+if (doc['requestFullscreen']) {
+doc['requestFullscreen']();
+} else if (doc['webkitRequestFullscreen']) {
+doc['webkitRequestFullscreen']();
 }	
 await screen.orientation.lock('portrait-primary');
 	} catch (err) {
