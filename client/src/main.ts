@@ -16,7 +16,7 @@ async function lockScreenOrientation() {
 	try {
 		await screen.orientation.lock('portrait-primary');
 	} catch (err) {
-		alert.log(err);
+		alert(err);
 	}
 }
 
