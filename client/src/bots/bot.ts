@@ -134,7 +134,7 @@ export class Bot {
 		this.onProgress(1, '');
 		setTimeout(() => {
 			this.onProgress(1, moveName);
-		}, 0);
+		}, 100);
 	}
 
 	getCannedMoveName(p: Position, moveNames: string[]): string {
@@ -180,6 +180,7 @@ export class Bot {
 			}
 		}
 		this.context.positionScores = {};
+		// const piecesWorthScore = this.scorePiecesWorth(p);
 		let score;
 		let bestMoveScore = Number.NEGATIVE_INFINITY;
 		let bestMoves: Move[] = [];

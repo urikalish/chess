@@ -1,5 +1,6 @@
 .square {
     background-repeat: no-repeat;
+    transition: all 150ms linear;
 }
 .square.last-move-from,
 .square.last-move-to {

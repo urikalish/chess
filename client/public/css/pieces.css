@@ -5,7 +5,7 @@
     left: 0;
     top: 0;
     transform: translate(350%, 350%);
-    transition: all 0.1s linear;
+    transition: transform 150ms linear;
     background-size: contain;
 }
 .board-pieces > .piece.clickable {
