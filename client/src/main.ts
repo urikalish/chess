@@ -22,7 +22,7 @@ doc['webkitRequestFullscreen']();
 }	
 await screen.orientation.lock('portrait-primary');
 	} catch (err) {
-		alert(err);
+		console.log(err);
 	}
 }
 
