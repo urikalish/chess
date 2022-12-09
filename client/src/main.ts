@@ -12,6 +12,14 @@ function setDocHeight() {
 	document.documentElement.style.setProperty('--doc-height', `${window.innerHeight}px`);
 }
 
+async function lockScreenOrientation() {
+	try {
+		await screen.orientation.lock('portrait-primary');
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 // async function lockScreenOrientation() {
 // 	await screen.orientation.lock('portrait-primary');
 // }
@@ -76,7 +84,9 @@ function handleDoneWelcomeDialog(
 
 async function init() {
 	window.addEventListener('resize', setDocHeight);
-	// await lockScreenOrientation();
+	if (window.innerWidth <= 900) {
+		await lockScreenOrientation();
+	}
 	setDocHeight();
 	const uiWelcome = new UiWelcome();
 	uiWelcome.showDialog(handleDoneWelcomeDialog);
