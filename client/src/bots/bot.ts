@@ -6,11 +6,10 @@ import { Fen } from '../model/fen';
 import { Openings } from './openings';
 
 export class Bot {
-	mover: Mover = new Mover();
-	myArmyIndex = 0;
-	context: { baseMove: Move; positionScores: object } = { baseMove: new Move(), positionScores: {} };
+	mover: Mover;
+	myArmyIndex: number;
+	context: { baseMove: Move; positionScores: object };
 	onProgress: (progress: number, moveName: string) => void;
-
 	config = {
 		depth: 0,
 		useOpenings: false,
@@ -24,7 +23,10 @@ export class Bot {
 		checkScore: 50,
 	};
 
-	constructor(depth: number, useOpenings: boolean, onProgress: (progress: number, moveName: string) => void) {
+	constructor(armyIndex: number, depth: number, useOpenings: boolean, onProgress: (progress: number, moveName: string) => void) {
+		this.mover = new Mover();
+		this.myArmyIndex = armyIndex;
+		this.context = { baseMove: new Move(), positionScores: {} };
 		this.config.depth = depth;
 		this.config.useOpenings = useOpenings;
 		this.onProgress = onProgress;
@@ -163,7 +165,6 @@ export class Bot {
 	goComputeMove(p: Position, moveNames: string[]) {
 		this.onProgress(0, '');
 		this.context.positionScores = {};
-		this.myArmyIndex = p.armyIndex;
 		const moves = this.mover.getAllPossibleMoves(p);
 		if (moves.length === 0) {
 			this.notifyMove('');

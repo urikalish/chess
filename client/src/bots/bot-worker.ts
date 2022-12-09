@@ -4,7 +4,7 @@ import { Bot } from './bot';
 export class BotWorker {
 	static goComputeMove(botName: string, p: Position, moveNames: string[]) {
 		const depth = Number(botName.substring(3));
-		const bot = new Bot(depth, true, BotWorker.handleBotProgress);
+		const bot = new Bot(p.armyIndex, depth, true, BotWorker.handleBotProgress);
 		bot.goComputeMove(p, moveNames);
 	}
 
