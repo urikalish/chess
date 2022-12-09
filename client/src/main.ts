@@ -24,20 +24,7 @@ function handleDoneWelcomeDialog(
 	shouldMarkPossibleMoves: boolean,
 	isBoardFlipped: boolean,
 ) {
-	if (window.innerWidth <= 900) {
-		const doc = document.documentElement;
-		const requestFullScreenFunc = doc.requestFullscreen || doc['webkitRequestFullscreen'] || doc['mozRequestFullScreen'] || doc['msFullscreenEnabled'];
-		if (requestFullScreenFunc) {
-			try {
-				requestFullScreenFunc();
-				screen.orientation.lock('portrait-primary').then(() => {
-					setDocHeight();
-				});
-			} catch (err) {
-				console.log(err);
-			}
-		}
-	}
+	setDocHeight();
 	const startTime = new Date().getTime();
 	UiLog.startTime = startTime;
 	game = new Game(player0Type, player0Gender, player0Name, player1Type, player1Gender, player1Name, fenStr);

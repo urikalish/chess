@@ -73,6 +73,19 @@ export class UiWelcome {
 				this.pieceDesignElm,
 				this.markPossibleMovesElm,
 			);
+			// if (window.innerWidth <= 900) {
+			// 	const doc = document.documentElement;
+			// 	const requestFullScreenFunc = doc.requestFullscreen || doc['webkitRequestFullscreen'] || doc['mozRequestFullScreen'] || doc['msFullscreenEnabled'];
+			// 	if (requestFullScreenFunc) {
+			// 		try {
+			// 			requestFullScreenFunc();
+			// 			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			// 			screen.orientation.lock('portrait-primary').then(() => {});
+			// 		} catch (err) {
+			// 			console.log(err);
+			// 		}
+			// 	}
+			// }
 			if (this.bottomPlayerColorElm.value === 'white') {
 				onWelcomeDone(
 					this.bottomPlayerTypeElm.value === 'bot' ? PlayerType.BOT : PlayerType.HUMAN,
