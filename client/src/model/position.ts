@@ -1,4 +1,4 @@
-import { PieceType, PieceTypeCased } from './piece';
+import { Piece, PieceType, PieceTypeCased } from './piece';
 
 export class Position {
 	pieceData: string[] = [];
@@ -79,15 +79,8 @@ export class Position {
 		];
 	}
 
-	static getStandardScore(p: Position) {
+	static getPositionScore(p: Position, pieceWorth: object) {
 		let score = 0;
-		const pieceWorth = {
-			[PieceType.PAWN]: 1,
-			[PieceType.KNIGHT]: 3,
-			[PieceType.BISHOP]: 3,
-			[PieceType.ROOK]: 5,
-			[PieceType.QUEEN]: 9,
-		};
 		const pieceCount = Position.getAllPieceCount(p);
 		score += pieceCount[0][PieceType.PAWN] * pieceWorth[PieceType.PAWN];
 		score += pieceCount[0][PieceType.KNIGHT] * pieceWorth[PieceType.KNIGHT];
@@ -100,5 +93,13 @@ export class Position {
 		score -= pieceCount[1][PieceType.ROOK] * pieceWorth[PieceType.ROOK];
 		score -= pieceCount[1][PieceType.QUEEN] * pieceWorth[PieceType.QUEEN];
 		return score;
+	}
+
+	static getStandardScore(p: Position) {
+		return Position.getPositionScore(p, Piece.StandardPieceWorth);
+	}
+
+	static getAZScore(p: Position) {
+		return Position.getPositionScore(p, Piece.AZPieceWorth);
 	}
 }
