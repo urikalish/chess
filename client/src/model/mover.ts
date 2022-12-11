@@ -133,7 +133,7 @@ export class Mover {
 				np.pieceData[i] = '';
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
 				np.halfMoveClock = 0;
-				moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${toFile}${toRank}`, -1, null, p, np));
+				moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.REGULAR]), `${toFile}${toRank}`, -1, null, p, np));
 			} else {
 				//pawn normal promotion
 				[PieceType.QUEEN, PieceType.ROOK, PieceType.BISHOP, PieceType.KNIGHT].forEach(pieceType => {
@@ -147,7 +147,7 @@ export class Mover {
 							p.armyIndex,
 							i,
 							to,
-							new Set([MoveType.NORMAL, MoveType.PROMOTION, this.getPromotionMoveType(pieceType)]),
+							new Set([MoveType.REGULAR, MoveType.PROMOTION, this.getPromotionMoveType(pieceType)]),
 							`${toFile}${toRank}=${pieceType.toUpperCase()}`,
 							-1,
 							null,
@@ -170,7 +170,7 @@ export class Mover {
 				np.pieceData[to] = this.getCasedPieceType(p, PieceType.PAWN);
 				np.epTargetIndex = epTargetIndex;
 				np.halfMoveClock = 0;
-				moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL, MoveType.PAWN_DOUBLE_START]), `${toFile}${toRank}`, -1, null, p, np));
+				moves.push(Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.REGULAR, MoveType.PAWN_DOUBLE_START]), `${toFile}${toRank}`, -1, null, p, np));
 			}
 		}
 
@@ -282,7 +282,7 @@ export class Mover {
 						np.pieceData[i] = '';
 						np.pieceData[to] = this.getCasedPieceType(p, pieceType);
 						moves.push(
-							Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.NORMAL]), `${pieceType.toUpperCase()}${toFile}${toRank}`, -1, null, p, np),
+							Move.createInstance(p.fullMoveNum, p.armyIndex, i, to, new Set([MoveType.REGULAR]), `${pieceType.toUpperCase()}${toFile}${toRank}`, -1, null, p, np),
 						);
 					} else if (this.belongsToArmy(p.pieceData, to, Army.flipArmyIndex(p.armyIndex))) {
 						//piece capture
