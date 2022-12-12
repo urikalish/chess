@@ -147,5 +147,13 @@ export class UiInit {
 		pageBgImageElm.classList.add('game-on');
 		mainContentElm.classList.remove('none');
 		welcomePanelElm.classList.add('none');
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_TYPE, players[0].type);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_GENDER, players[0].gender);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_NAME, players[0].name);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_TYPE, players[1].type);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_GENDER, players[1].gender);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_NAME, players[1].name);
+		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_PIECES, pieceDesign);
+		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_SHOW_MOVES, String(shouldMarkPossibleMoves));
 	}
 }

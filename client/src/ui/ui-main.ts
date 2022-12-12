@@ -33,7 +33,6 @@ export class UiMain {
 		UiPromotion.init();
 		this.selectedIndex = -1;
 		this.updateUI();
-		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_PIECES, pieceDesign);
 	}
 
 	startGame(startTime: number) {
