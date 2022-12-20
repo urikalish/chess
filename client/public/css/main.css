@@ -1,88 +1,88 @@
-@import "./vars.css";
-@import "./typography.css";
-@import "./general.css";
-@import "./header.css";
-@import "./welcome.css";
-@import "./player.css";
-@import "./board.css";
-@import "./square.css";
-@import "./pieces.css";
-@import "./info.css";
-@import "./promotion.css";
-@import "./footer.css";
+@import './vars.css';
+@import './typography.css';
+@import './general.css';
+@import './header.css';
+@import './welcome.css';
+@import './player.css';
+@import './board.css';
+@import './square.css';
+@import './pieces.css';
+@import './info.css';
+@import './promotion.css';
+@import './footer.css';
 
 :root {
-    font-size: 62.5%;
+	font-size: 62.5%;
 }
 html,
 body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
 }
 html {
-    height: var(--doc-height);
+	height: var(--doc-height);
 }
 body {
-    height: var(--doc-height);
-    overflow: hidden;
-    position: relative;
-    background-color: var(--color--background);
-    color: var(--color--text);
-    font-family: var(--font-family--defalt);
-    font-size: 1.6rem;
-    animation: fade-in-animation 1s;
+	height: var(--doc-height);
+	overflow: hidden;
+	position: relative;
+	background-color: var(--color--background);
+	color: var(--color--text);
+	font-family: var(--font-family--defalt);
+	font-size: 1.6rem;
+	animation: fade-in-animation 1s;
 }
 .page-bg-img {
-    width: 100vw;
-    height: var(--doc-height);
-    background-image: url("../img/backgrounds/chess-board.jpg");
-    background-size: cover;
-    filter: blur(0) grayscale(0.5) brightness(0.5);
-    transition: filter 1s ease-in-out;
+	width: 100vw;
+	height: var(--doc-height);
+	background-image: url('../img/backgrounds/chess-board.jpg');
+	background-size: cover;
+	filter: blur(0) grayscale(0.5) brightness(0.5);
+	transition: filter 1s ease-in-out;
 }
 .page-bg-img.game-on {
-    filter: blur(0) grayscale(1) brightness(0.5);
+	filter: blur(0) grayscale(1) brightness(0.5);
 }
 .wrapper {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: var(--header-height) 1fr var(--footer-height);
+	position: fixed;
+	inset: 0;
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: var(--header-height) 1fr var(--footer-height);
 }
 main {
-    height: var(--main-content-height);
-    display: grid;
-    place-items: center;
+	height: var(--main-content-height);
+	display: grid;
+	place-items: center;
 }
 .main-content {
-    height: var(--main-content-height);
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: 1fr;
-    grid-column-gap: 3rem;
-    animation: fade-in-animation 1s;
+	height: var(--main-content-height);
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-template-rows: 1fr;
+	grid-column-gap: 3rem;
+	animation: fade-in-animation 1s;
 }
 .main-playing-area {
-    height: var(--main-playing-area-height);
+	height: var(--main-playing-area-height);
 }
 @media (max-width: 900px) {
-    :root {
-        --main-content-height: var(--doc-height);
-        --main-playing-area-height: calc(var(--board-frame-size) + 2 * var(--player-status-height));
-        --info-panel-height: calc(var(--main-content-height) - var(--main-playing-area-height));
-    }
-    .page-bg-img {
-        display: none;
-    }
-    .wrapper {
-        grid-template-rows: 1fr;
-    }
-    .main-content {
-        height: var(--doc-height);
-        grid-template-columns: 1fr;
-        grid-template-rows: var(--main-playing-area-height) var(--info-panel-height);
-    }
+	:root {
+		--main-content-height: var(--doc-height);
+		--main-playing-area-height: calc(var(--board-frame-size) + 2 * var(--player-status-height));
+		--info-panel-height: calc(var(--main-content-height) - var(--main-playing-area-height));
+	}
+	.page-bg-img {
+		display: none;
+	}
+	.wrapper {
+		grid-template-rows: 1fr;
+	}
+	.main-content {
+		height: var(--doc-height);
+		grid-template-columns: 1fr;
+		grid-template-rows: var(--main-playing-area-height) var(--info-panel-height);
+	}
 }

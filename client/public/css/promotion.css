@@ -1,47 +1,47 @@
 .promotion-panel {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    border-radius: 1rem;
-    padding: 2rem;
-    opacity: 0.9;
-    user-select: none;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto auto;
+	border-radius: 1rem;
+	padding: 2rem;
+	opacity: 0.9;
+	user-select: none;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 .promotion-panel--white {
-    background-color: #333;
-    border: 1px solid #999;
+	background-color: #333;
+	border: 1px solid #999;
 }
 .promotion-panel--black {
-    background-color: #ccc;
-    border: 1px solid #666;
+	background-color: #ccc;
+	border: 1px solid #666;
 }
 .promotion-options {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
+	display: grid;
+	grid-template-columns: repeat(4, auto);
 }
 .promotion-panel--white > .promotion-options--white {
-    display: grid;
+	display: grid;
 }
 .promotion-panel--white > .promotion-options--black {
-    display: none;
+	display: none;
 }
 .promotion-panel--black > .promotion-options--black {
-    display: grid;
+	display: grid;
 }
 .promotion-panel--black > .promotion-options--white {
-    display: none;
+	display: none;
 }
 .promotion-option {
-    background-size: cover;
-    height: 5rem;
-    width: 5rem;
-    border-radius: 0.4rem;
-    cursor: pointer;
+	background-size: cover;
+	height: 5rem;
+	width: 5rem;
+	border-radius: 0.4rem;
+	cursor: pointer;
 }
 .promotion-option:hover {
-    background-color: #666;
+	background-color: #666;
 }

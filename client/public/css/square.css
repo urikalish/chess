@@ -1,47 +1,47 @@
 .square {
-    background-repeat: no-repeat;
-    transition: all 150ms linear;
+	background-repeat: no-repeat;
+	transition: all 150ms linear;
 }
 .square.last-move-from,
 .square.last-move-to {
-    background-color: var(--color--orange);
-    opacity: 0.5;
+	background-color: var(--color--orange);
+	opacity: 0.5;
 }
 .board-squares.mark-possible-moves > .square.possible-from {
-    background-color: var(--color--green--medium);
-    opacity: 0.5;
+	background-color: var(--color--green--medium);
+	opacity: 0.5;
 }
 .square.possible-to {
-    cursor: pointer;
+	cursor: pointer;
 }
 .board-squares.mark-possible-moves > .square.possible-to {
-    position: relative;
+	position: relative;
 }
 .board-squares.mark-possible-moves > .square.possible-to::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
+	content: '';
+	position: absolute;
+	border-radius: 50%;
 }
 .board-squares.mark-possible-moves > .square.possible-to:not(.occupied):not(.en-passant-target)::after {
-    left: 40%;
-    top: 40%;
-    width: 20%;
-    height: 20%;
-    background-color: #000;
-    opacity: 0.3;
+	left: 40%;
+	top: 40%;
+	width: 20%;
+	height: 20%;
+	background-color: #000;
+	opacity: 0.3;
 }
 .board-squares.mark-possible-moves > .square.possible-to.occupied::after,
 .board-squares.mark-possible-moves > .square.possible-to.en-passant-target::after {
-    inset: 0 0 0 0;
-    background-color: #933;
-    opacity: 0.8;
+	inset: 0 0 0 0;
+	background-color: #933;
+	opacity: 0.8;
 }
 .square.checked-king {
-    background-color: var(--color--red--dark) !important;
-    opacity: 0.8 !important;
+	background-color: var(--color--red--dark) !important;
+	opacity: 0.8 !important;
 }
 .square.selected-square {
-    background-color: var(--color--green--medium) !important;
-    opacity: 0.8 !important;
-    cursor: pointer;
+	background-color: var(--color--green--medium) !important;
+	opacity: 0.8 !important;
+	cursor: pointer;
 }

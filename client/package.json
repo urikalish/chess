@@ -15,7 +15,7 @@
   "scripts": {
     "post-checkout": "yarn && yarn build",
     "post-merge": "yarn && yarn build",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"**/*.{html,css,ts}\"",
     "lint": "eslint --fix src/**/*.ts",
     "clean": "rimraf public/js && rimraf tsc",
     "compile": "tsc",

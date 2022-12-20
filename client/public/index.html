@@ -1,197 +1,199 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DDELEM2MSD"></script>
-    <script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-DDELEM2MSD');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="#">
-    <title>Chess</title>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="shortcut icon" href="img/icons/favicon.png" type="image/png">
-</head>
-<body>
-    <div id="page-bg-img" class="page-bg-img"></div>
-    <div class="header-band"></div>
-    <div class="footer-band"></div>
-    <div class="wrapper">
-        <header>
-            <div class="header-text">Chess</div>
-        </header>
-        <main id="main" class="main neo-wood">
-            <div id="main-content" class="main-content none">
-                <div class="main-playing-area">
-                    <div class="player-status player-status--top">
-                        <div class="player-status-color"></div>
-                        <div class="player-status-name"></div>
-                        <div class="player-status-advantage"></div>
-                        <div class="player-status-progress-container transparent">
-                            <div class="player-status-progress player-status-progress-top"></div>
-                        </div>
-                    </div>
-                    <div id="board-frame" class="board-frame">
-                        <div class="board">
-                        <div id="board-gutters">
-                            <div class="board-gutter"></div>
-                            <div class="board-gutter"></div>
-                            <div class="board-gutter"></div>
-                            <div class="board-gutter"></div>
-                        </div>
-                        <div id="board-squares" class="board-squares"></div>
-                        <div id="board-pieces" class="board-pieces"></div>
-                        <div id="promotion-panel" class="promotion-panel none">
-                            <div class="promotion-options promotion-options--white">
-                                <div data-piece-type="q" class="promotion-option piece white Q"></div>
-                                <div data-piece-type="r" class="promotion-option piece white R"></div>
-                                <div data-piece-type="b" class="promotion-option piece white B"></div>
-                                <div data-piece-type="n" class="promotion-option piece white N"></div>
-                            </div>
-                            <div class="promotion-options promotion-options--black">
-                                <div data-piece-type="q" class="promotion-option piece black q"></div>
-                                <div data-piece-type="r" class="promotion-option piece black r"></div>
-                                <div data-piece-type="b" class="promotion-option piece black b"></div>
-                                <div data-piece-type="n" class="promotion-option piece black n"></div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="player-status player-status--bottom">
-                        <div class="player-status-color"></div>
-                        <div class="player-status-name"></div>
-                        <div class="player-status-advantage"></div>
-                        <div class="player-status-progress-container transparent">
-                            <div class="player-status-progress player-status-progress-bottom"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-panel">
-                    <div class="info-log-wrapper">
-                        <div id="info-log-background" class="info-log-background"></div>
-                        <div id="info-log" class="info-log"></div>
-                        <div class="action-buttons">
-                            <button id="copy-moves-button" class="action-button copy-moves-button disabled-button">Copy moves</button>
-                        </div>
-                    </div>
-                    <div id="info-fen" class="info-fen">
-                        <div id="info-fen-text" class="info-fen-text"></div>
-                        <div class="action-buttons">
-                            <button id="copy-fen-button" class="action-button copy-fen-button">Copy FEN</button>
-                        </div>
-                    </div>
-                    <div class="info-actions">
-                        <button id="restart-button" class="action-button restart-button">Restart</button>
-                    </div>
-                </div>
-            </div>
-            <div id="welcome-panel" class="welcome-panel">
-                <div class="welcome-form">
-                    <div class="welcome-section">
-                        <span>Top Player</span>
-                    </div>
-                    <div class="welcome-data-line">
-                        <label for="welcome-top-player-color" class="welcome-label">Color:</label>
-                        <select id="welcome-top-player-color" class="welcome-select">
-                            <option value="white">White</option>
-                            <option value="black" selected="selected">Black</option>
-                        </select>
-                    </div>
-                    <div class="welcome-data-line">
-                        <label for="welcome-top-player-type" class="welcome-label">Type:</label>
-                        <select id="welcome-top-player-type" class="welcome-select">
-                            <option value="male">👨 Male</option>
-                            <option value="female" selected="selected">👩 Female</option>
-                            <option value="bot">🤖 Bot</option>
-                        </select>
-                    </div>
-                    <div id="welcome-data-line-top-player-name" class="welcome-data-line none">
-                        <label for="welcome-top-player-name" class="welcome-label">Name:</label>
-                        <input type="text" id="welcome-top-player-name" class="welcome-input" value="Top Player" />
-                    </div>
-                    <div id="welcome-data-line-top-bot-name" class="welcome-data-line">
-                        <label for="welcome-top-bot-name" class="welcome-label">Bot:</label>
-                        <select id="welcome-top-bot-name" class="welcome-select">
-                            <option value="bot1">bot1</option>
-                            <option value="bot2">bot2</option>
-                            <option value="bot3" selected="selected">bot3</option>
-                            <option value="bot4">bot4</option>
-                        </select>
-                    </div>
-                    <div class="welcome-section">
-                        <span>Bottom Player</span>
-                    </div>
-                    <div class="welcome-data-line">
-                        <label for="welcome-bottom-player-color" class="welcome-label">Color:</label>
-                        <select id="welcome-bottom-player-color" class="welcome-select">
-                            <option value="white" selected="selected">White</option>
-                            <option value="black">Black</option>
-                        </select>
-                    </div>
-                    <div class="welcome-data-line">
-                        <label for="welcome-bottom-player-type" class="welcome-label">Type:</label>
-                        <select id="welcome-bottom-player-type" class="welcome-select">
-                            <option value="male" selected="selected">👨 Male</option>
-                            <option value="female">👩 Female</option>
-                            <option value="bot">🤖 Bot</option>
-                        </select>
-                    </div>
-                    <div id="welcome-data-line-bottom-player-name" class="welcome-data-line">
-                        <label for="welcome-bottom-player-name" class="welcome-label">Name:</label>
-                        <input type="text" id="welcome-bottom-player-name" class="welcome-input" value="Bottom Player" />
-                    </div>
-                    <div id="welcome-data-line-bottom-bot-name" class="welcome-data-line none">
-                        <label for="welcome-bottom-bot-name" class="welcome-label">Bot:</label>
-                        <select id="welcome-bottom-bot-name" class="welcome-select">
-                            <option value="bot1">bot1</option>
-                            <option value="bot2">bot2</option>
-                            <option value="bot3" selected="selected">bot3</option>
-                            <option value="bot4">bot4</option>
-                        </select>
-                    </div>
-                    <div class="welcome-section">
-                        <span>Starting Position</span>
-                    </div>
-                    <div class="welcome-data-line welcome-data-line-fen">
-                        <label for="welcome-fen-text" class="welcome-label">FEN:</label>
-                        <textarea id="welcome-fen-text" spellcheck="false" rows="3" class="welcome-fen-text"></textarea>
-                    </div>
-                    <div class="welcome-section">
-                        <span>UI Design</span>
-                    </div>
-                    <div class="welcome-data-line">
-                        <label for="welcome-piece-design" class="welcome-label">Pieces:</label>
-                        <select id="welcome-piece-design" class="welcome-select">
-                            <option value="gioco" selected="selected">Gioco</option>
-                            <option value="neo-wood">Neo-Wood</option>
-                            <option value="kosal">Kosal</option>
-                            <option value="staunty">Staunty</option>
-                        </select>
-                    </div>
-                    <div class="welcome-data-line">
-                        <label for="welcome-mark-possible-moves" class="welcome-label">Moves:</label>
-                        <select id="welcome-mark-possible-moves" class="welcome-select">
-                            <option value="show">Show available</option>
-                            <option value="hide" selected="selected">Hide available</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="welcome-action-buttons">
-                    <button id="welcome-reset-button" class="welcome-action-button welcome-reset-button">Reset</button>
-                    <button id="welcome-start-button" class="welcome-action-button welcome-start-button">Start</button>
-                </div>
-            </div>
-        </main>
-        <footer>
-            <div class="footer-text">by Uri Kalish</div>
-        </footer>
-    </div>
-    <script type="module" src="js/main.min.js"></script>
-<!--    <script type="module" src="js/main.js"></script>-->
-</body>
+	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-DDELEM2MSD"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'G-DDELEM2MSD');
+		</script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="shortcut icon" href="#" />
+		<title>Chess</title>
+		<link rel="stylesheet" href="css/main.css" />
+		<link rel="shortcut icon" href="img/icons/favicon.png" type="image/png" />
+	</head>
+	<body>
+		<div id="page-bg-img" class="page-bg-img"></div>
+		<div class="header-band"></div>
+		<div class="footer-band"></div>
+		<div class="wrapper">
+			<header>
+				<div class="header-text">Chess</div>
+			</header>
+			<main id="main" class="main neo-wood">
+				<div id="main-content" class="main-content none">
+					<div class="main-playing-area">
+						<div class="player-status player-status--top">
+							<div class="player-status-color"></div>
+							<div class="player-status-name"></div>
+							<div class="player-status-advantage"></div>
+							<div class="player-status-progress-container transparent">
+								<div class="player-status-progress player-status-progress-top"></div>
+							</div>
+						</div>
+						<div id="board-frame" class="board-frame">
+							<div class="board">
+								<div id="board-gutters">
+									<div class="board-gutter"></div>
+									<div class="board-gutter"></div>
+									<div class="board-gutter"></div>
+									<div class="board-gutter"></div>
+								</div>
+								<div id="board-squares" class="board-squares"></div>
+								<div id="board-pieces" class="board-pieces"></div>
+								<div id="promotion-panel" class="promotion-panel none">
+									<div class="promotion-options promotion-options--white">
+										<div data-piece-type="q" class="promotion-option piece white Q"></div>
+										<div data-piece-type="r" class="promotion-option piece white R"></div>
+										<div data-piece-type="b" class="promotion-option piece white B"></div>
+										<div data-piece-type="n" class="promotion-option piece white N"></div>
+									</div>
+									<div class="promotion-options promotion-options--black">
+										<div data-piece-type="q" class="promotion-option piece black q"></div>
+										<div data-piece-type="r" class="promotion-option piece black r"></div>
+										<div data-piece-type="b" class="promotion-option piece black b"></div>
+										<div data-piece-type="n" class="promotion-option piece black n"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="player-status player-status--bottom">
+							<div class="player-status-color"></div>
+							<div class="player-status-name"></div>
+							<div class="player-status-advantage"></div>
+							<div class="player-status-progress-container transparent">
+								<div class="player-status-progress player-status-progress-bottom"></div>
+							</div>
+						</div>
+					</div>
+					<div class="info-panel">
+						<div class="info-log-wrapper">
+							<div id="info-log-background" class="info-log-background"></div>
+							<div id="info-log" class="info-log"></div>
+							<div class="action-buttons">
+								<button id="copy-moves-button" class="action-button copy-moves-button disabled-button">Copy moves</button>
+							</div>
+						</div>
+						<div id="info-fen" class="info-fen">
+							<div id="info-fen-text" class="info-fen-text"></div>
+							<div class="action-buttons">
+								<button id="copy-fen-button" class="action-button copy-fen-button">Copy FEN</button>
+							</div>
+						</div>
+						<div class="info-actions">
+							<button id="restart-button" class="action-button restart-button">Restart</button>
+						</div>
+					</div>
+				</div>
+				<div id="welcome-panel" class="welcome-panel">
+					<div class="welcome-form">
+						<div class="welcome-section">
+							<span>Top Player</span>
+						</div>
+						<div class="welcome-data-line">
+							<label for="welcome-top-player-color" class="welcome-label">Color:</label>
+							<select id="welcome-top-player-color" class="welcome-select">
+								<option value="white">White</option>
+								<option value="black" selected="selected">Black</option>
+							</select>
+						</div>
+						<div class="welcome-data-line">
+							<label for="welcome-top-player-type" class="welcome-label">Type:</label>
+							<select id="welcome-top-player-type" class="welcome-select">
+								<option value="male">👨 Male</option>
+								<option value="female" selected="selected">👩 Female</option>
+								<option value="bot">🤖 Bot</option>
+							</select>
+						</div>
+						<div id="welcome-data-line-top-player-name" class="welcome-data-line none">
+							<label for="welcome-top-player-name" class="welcome-label">Name:</label>
+							<input type="text" id="welcome-top-player-name" class="welcome-input" value="Top Player" />
+						</div>
+						<div id="welcome-data-line-top-bot-name" class="welcome-data-line">
+							<label for="welcome-top-bot-name" class="welcome-label">Bot:</label>
+							<select id="welcome-top-bot-name" class="welcome-select">
+								<option value="bot1">bot1</option>
+								<option value="bot2">bot2</option>
+								<option value="bot3" selected="selected">bot3</option>
+								<option value="bot4">bot4</option>
+							</select>
+						</div>
+						<div class="welcome-section">
+							<span>Bottom Player</span>
+						</div>
+						<div class="welcome-data-line">
+							<label for="welcome-bottom-player-color" class="welcome-label">Color:</label>
+							<select id="welcome-bottom-player-color" class="welcome-select">
+								<option value="white" selected="selected">White</option>
+								<option value="black">Black</option>
+							</select>
+						</div>
+						<div class="welcome-data-line">
+							<label for="welcome-bottom-player-type" class="welcome-label">Type:</label>
+							<select id="welcome-bottom-player-type" class="welcome-select">
+								<option value="male" selected="selected">👨 Male</option>
+								<option value="female">👩 Female</option>
+								<option value="bot">🤖 Bot</option>
+							</select>
+						</div>
+						<div id="welcome-data-line-bottom-player-name" class="welcome-data-line">
+							<label for="welcome-bottom-player-name" class="welcome-label">Name:</label>
+							<input type="text" id="welcome-bottom-player-name" class="welcome-input" value="Bottom Player" />
+						</div>
+						<div id="welcome-data-line-bottom-bot-name" class="welcome-data-line none">
+							<label for="welcome-bottom-bot-name" class="welcome-label">Bot:</label>
+							<select id="welcome-bottom-bot-name" class="welcome-select">
+								<option value="bot1">bot1</option>
+								<option value="bot2">bot2</option>
+								<option value="bot3" selected="selected">bot3</option>
+								<option value="bot4">bot4</option>
+							</select>
+						</div>
+						<div class="welcome-section">
+							<span>Starting Position</span>
+						</div>
+						<div class="welcome-data-line welcome-data-line-fen">
+							<label for="welcome-fen-text" class="welcome-label">FEN:</label>
+							<textarea id="welcome-fen-text" spellcheck="false" rows="3" class="welcome-fen-text"></textarea>
+						</div>
+						<div class="welcome-section">
+							<span>UI Design</span>
+						</div>
+						<div class="welcome-data-line">
+							<label for="welcome-piece-design" class="welcome-label">Pieces:</label>
+							<select id="welcome-piece-design" class="welcome-select">
+								<option value="gioco" selected="selected">Gioco</option>
+								<option value="neo-wood">Neo-Wood</option>
+								<option value="kosal">Kosal</option>
+								<option value="staunty">Staunty</option>
+							</select>
+						</div>
+						<div class="welcome-data-line">
+							<label for="welcome-mark-possible-moves" class="welcome-label">Moves:</label>
+							<select id="welcome-mark-possible-moves" class="welcome-select">
+								<option value="show">Show available</option>
+								<option value="hide" selected="selected">Hide available</option>
+							</select>
+						</div>
+					</div>
+					<div class="welcome-action-buttons">
+						<button id="welcome-reset-button" class="welcome-action-button welcome-reset-button">Reset</button>
+						<button id="welcome-start-button" class="welcome-action-button welcome-start-button">Start</button>
+					</div>
+				</div>
+			</main>
+			<footer>
+				<div class="footer-text">by Uri Kalish</div>
+			</footer>
+		</div>
+		<script type="module" src="js/main.min.js"></script>
+		<!--    <script type="module" src="js/main.js"></script>-->
+	</body>
 </html>

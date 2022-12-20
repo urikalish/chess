@@ -1,70 +1,69 @@
 .player-status {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: var(--player-status-height);
+	position: relative;
+	display: flex;
+	align-items: center;
+	height: var(--player-status-height);
 }
 .player-status-color {
-    min-width: 2.1rem;
-    min-height: 2.1rem;
-    border: 1px solid #666;
+	min-width: 2.1rem;
+	min-height: 2.1rem;
+	border: 1px solid #666;
 }
 .player-status-name {
-    height: 2.1rem;
-    margin-left: 0.2rem;
-    white-space: nowrap;
-    user-select: none;
-    color: #999;
+	height: 2.1rem;
+	margin-left: 0.2rem;
+	white-space: nowrap;
+	user-select: none;
+	color: #999;
 }
 .player-status-name.player-active {
-    color: var(--color--green--light);
+	color: var(--color--green--light);
 }
 .player-status-name.player-male:before {
-    content: "👨";
+	content: '👨';
 }
 .player-status-name.player-female:before {
-    content: "👩";
+	content: '👩';
 }
 .player-status-name.player-bot:before {
-    content: "🤖";
+	content: '🤖';
 }
 .player-status-advantage {
-    height: 2.1rem;
-    margin-top: 0.4rem;
-    margin-left: 0.6rem;
-    color: var(--color--orange);
-    white-space: nowrap;
-    user-select: none;
+	height: 2.1rem;
+	margin-top: 0.4rem;
+	margin-left: 0.6rem;
+	color: var(--color--orange);
+	white-space: nowrap;
+	user-select: none;
 }
 .player-status-progress-container {
-    position: relative;
-    flex: 1 1 100%;
-    height: 1px;
-    background-color: #444;
-    margin-left: 1rem;
-    transition: all 0.5s linear;
+	position: relative;
+	flex: 1 1 100%;
+	height: 1px;
+	background-color: #444;
+	margin-left: 1rem;
+	transition: all 0.5s linear;
 }
 .player-status-progress {
-    height: 1px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--color--green--light);
-    transition: all 0.2s linear;
+	height: 1px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: var(--color--green--light);
+	transition: all 0.2s linear;
 }
 .player-status-progress-top {
-    width: var(--player-status-progress-top);
+	width: var(--player-status-progress-top);
 }
 .player-status-progress-bottom {
-    width: var(--player-status-progress-bottom);
+	width: var(--player-status-progress-bottom);
 }
 @media (max-width: 900px) {
-    .player-status {
-        left: 0.8rem;
-        padding-right: 2rem;
-    }
-    .player-status-advantage {
-        margin-top: 0;
-    }
+	.player-status {
+		left: 0.8rem;
+		padding-right: 2rem;
+	}
+	.player-status-advantage {
+		margin-top: 0;
+	}
 }
-

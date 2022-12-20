@@ -1,166 +1,165 @@
 .info-panel {
-    width: var(--info-panel-width);
-    height: var(--info-panel-height);
-    overflow: auto;
-    margin: 4rem 0;
-    background-color: var(--color--info-panel-background);
-    border: 1px solid var(--color--info-panel-border);
-    border-radius: 1rem;
-    padding: 2rem;
-    opacity: 0.9;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto auto;
-    font-size: 1.6rem;
+	width: var(--info-panel-width);
+	height: var(--info-panel-height);
+	overflow: auto;
+	margin: 4rem 0;
+	background-color: var(--color--info-panel-background);
+	border: 1px solid var(--color--info-panel-border);
+	border-radius: 1rem;
+	padding: 2rem;
+	opacity: 0.9;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr auto auto;
+	font-size: 1.6rem;
 }
 .info-log-wrapper {
-    overflow: hidden;
-    position: relative;
+	overflow: hidden;
+	position: relative;
 }
 .info-log-background {
-    position: absolute;
-    inset: 0.3rem 0 4rem 0;
-    background: linear-gradient( to bottom, #222, #222 95%, #333 95%, #333);
-    background-size: 100% 2.4rem;
+	position: absolute;
+	inset: 0.3rem 0 4rem 0;
+	background: linear-gradient(to bottom, #222, #222 95%, #333 95%, #333);
+	background-size: 100% 2.4rem;
 }
 .info-log {
-    position: absolute;
-    inset: 0 0 4rem 0;
-    overflow: auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: start;
+	position: absolute;
+	inset: 0 0 4rem 0;
+	overflow: auto;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: start;
 }
 .info-log::-webkit-scrollbar {
-    width: 12px;
+	width: 12px;
 }
 .info-log::-webkit-scrollbar-track {
-    background-color: var(--color--info-panel-scroll-background);
+	background-color: var(--color--info-panel-scroll-background);
 }
 .info-log::-webkit-scrollbar-thumb {
-    border-radius: 12px;
-    background-color: #666;
-    border: 2px solid var(--color--info-panel-scroll-background);
+	border-radius: 12px;
+	background-color: #666;
+	border: 2px solid var(--color--info-panel-scroll-background);
 }
 .info-log::-webkit-scrollbar-thumb:hover {
-    background-color: #777;
+	background-color: #777;
 }
 .info-log--full-move {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    margin-top: 0.5rem;
-    margin-right: 1rem;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	margin-top: 0.5rem;
+	margin-right: 1rem;
 }
 .info-log--move-part {
-    margin-right: 0.2rem;
-    cursor: default;
+	margin-right: 0.2rem;
+	cursor: default;
 }
 .info-log--move-number {
-    color: #666;
+	color: #666;
 }
 .info-log--move-name {
-    color: #ccc;
+	color: #ccc;
 }
 .info-log--move-type-capture,
 .info-log--move-type-promotion {
-    color: var(--color--orange);
+	color: var(--color--orange);
 }
 .info-log--move-type-check {
-    color: var(--color--red--medium);
+	color: var(--color--red--medium);
 }
 .info-log-game-result {
-    color: var(--color--green--light);
+	color: var(--color--green--light);
 }
 .info-fen {
-    margin-top: 0.5rem;
-    border-top: 1px solid #666;
-    padding-top: 1rem;
+	margin-top: 0.5rem;
+	border-top: 1px solid #666;
+	padding-top: 1rem;
 }
 .info-fen-text {
-    word-break: break-all;
-    color: #999;
+	word-break: break-all;
+	color: #999;
 }
 .info-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-    border-top: 1px solid #666;
-    padding-top: 1rem;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 0.5rem;
+	border-top: 1px solid #666;
+	padding-top: 1rem;
 }
 .action-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin: 0.5rem 0;
+	display: flex;
+	justify-content: flex-end;
+	margin: 0.5rem 0;
 }
 .info-log-wrapper > .action-buttons {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
 .action-button {
-    cursor: pointer;
-    width: 10rem;
-    height: 2.4rem;
-    background-color: #444;
-    color: #ccc;
-    border: none;
-    border-radius: 0.5rem;
-    margin-left: 0.5rem;
-    font-size: 1.4rem;
-    font-family: inherit;
-    user-select: none;
+	cursor: pointer;
+	width: 10rem;
+	height: 2.4rem;
+	background-color: #444;
+	color: #ccc;
+	border: none;
+	border-radius: 0.5rem;
+	margin-left: 0.5rem;
+	font-size: 1.4rem;
+	font-family: inherit;
+	user-select: none;
 }
 .action-button:hover,
 .action-button:focus-visible,
 .action-button:active {
-    background-color: #555;
-    color: #ddd;
+	background-color: #555;
+	color: #ddd;
 }
 .restart-button {
-    background-color: #844;
+	background-color: #844;
 }
 .restart-button:hover,
 .restart-button:focus-visible,
 .restart-button:active {
-    background-color: #955;
+	background-color: #955;
 }
 .disabled-button {
-    pointer-events: none;
-    color: #777;
-
+	pointer-events: none;
+	color: #777;
 }
 @media (max-width: 900px) {
-    :root {
-        --info-panel-width: 100vw;
-        --info-panel-height: calc(var(--doc-height) - var(--main-playing-area-height));
-    }
-    .info-panel {
-        height: var(--info-panel-height);
-        grid-template-rows: 1fr;
-        margin: 0;
-        border-radius: 0;
-        overflow: hidden auto;
-        padding: 1rem;
-        font-size: 14px;
-    }
-    .info-log {
-        inset: 0;
-    }
-    .info-log--full-move {
-        margin-top: 0;
-        margin-right: 0.8rem;
-    }
-    .info-log--move-part {
-        margin-right: 0;
-    }
-    .info-log-background {
-        inset: 0;
-        background-size: 100% 1.6rem;
-    }
-    .info-log-wrapper > .action-buttons,
-    .info-fen,
-    .info-actions {
-        display: none;
-    }
+	:root {
+		--info-panel-width: 100vw;
+		--info-panel-height: calc(var(--doc-height) - var(--main-playing-area-height));
+	}
+	.info-panel {
+		height: var(--info-panel-height);
+		grid-template-rows: 1fr;
+		margin: 0;
+		border-radius: 0;
+		overflow: hidden auto;
+		padding: 1rem;
+		font-size: 14px;
+	}
+	.info-log {
+		inset: 0;
+	}
+	.info-log--full-move {
+		margin-top: 0;
+		margin-right: 0.8rem;
+	}
+	.info-log--move-part {
+		margin-right: 0;
+	}
+	.info-log-background {
+		inset: 0;
+		background-size: 100% 1.6rem;
+	}
+	.info-log-wrapper > .action-buttons,
+	.info-fen,
+	.info-actions {
+		display: none;
+	}
 }

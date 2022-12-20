@@ -1,71 +1,71 @@
 .board-frame {
-    width: var(--board-frame-size);
-    height: var(--board-frame-size);
-    min-width: var(--board-min-size);
-    min-height: var(--board-min-size);
-    border: 1px solid var(--color--board-frame-border);
-    border-radius: 1rem;
-    background-color: var(--color--board-frame-background);
-    padding: var(--board-gutter-width);
+	width: var(--board-frame-size);
+	height: var(--board-frame-size);
+	min-width: var(--board-min-size);
+	min-height: var(--board-min-size);
+	border: 1px solid var(--color--board-frame-border);
+	border-radius: 1rem;
+	background-color: var(--color--board-frame-background);
+	padding: var(--board-gutter-width);
 }
 .board {
-    position: relative;
-    height: 100%;
+	position: relative;
+	height: 100%;
 }
 .board-gutter {
-    position: absolute;
-    display: grid;
-    user-select: none;
+	position: absolute;
+	display: grid;
+	user-select: none;
 }
 .board-gutter:nth-child(1) {
-    inset: calc(-1 * var(--board-gutter-width)) 0 auto 0;
-    height: var(--board-gutter-width);
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: 1fr;
+	inset: calc(-1 * var(--board-gutter-width)) 0 auto 0;
+	height: var(--board-gutter-width);
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: 1fr;
 }
 .board-gutter:nth-child(2) {
-    inset: 0 calc(-1 * var(--board-gutter-width)) 0 auto;
-    width: var(--board-gutter-width);
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(8, 1fr);
+	inset: 0 calc(-1 * var(--board-gutter-width)) 0 auto;
+	width: var(--board-gutter-width);
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(8, 1fr);
 }
 .board-gutter:nth-child(3) {
-    inset: auto 0 calc(-1 * var(--board-gutter-width)) 0;
-    height: var(--board-gutter-width);
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: 1fr;
+	inset: auto 0 calc(-1 * var(--board-gutter-width)) 0;
+	height: var(--board-gutter-width);
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: 1fr;
 }
 .board-gutter:nth-child(4) {
-    inset: 0 auto 0 calc(-1 * var(--board-gutter-width));
-    width: var(--board-gutter-width);
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(8, 1fr);
+	inset: 0 auto 0 calc(-1 * var(--board-gutter-width));
+	width: var(--board-gutter-width);
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(8, 1fr);
 }
 .board-gutter-label {
-    margin: auto;
-    font-size: 1.6rem;
-    color: var(--color--board-frame-text);
+	margin: auto;
+	font-size: 1.6rem;
+	color: var(--color--board-frame-text);
 }
 .board-squares {
-    position: relative;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(8, 12.5%);
-    grid-template-rows: repeat(8, 12.5%);
-    background-image: url("../img/boards/board1.png");
-    background-size: cover;
+	position: relative;
+	height: 100%;
+	display: grid;
+	grid-template-columns: repeat(8, 12.5%);
+	grid-template-rows: repeat(8, 12.5%);
+	background-image: url('../img/boards/board1.png');
+	background-size: cover;
 }
 @media (max-width: 900px) {
-    :root {
-        --board-frame-size: 100vw;
-    }
-    .board-frame {
-        --board-gutter-width: 2rem;
-        min-width: 0;
-        min-height: 0;
-        border-radius: 0;
-    }
-    .board-gutter-label {
-        font-size: 1.4rem;
-    }
+	:root {
+		--board-frame-size: 100vw;
+	}
+	.board-frame {
+		--board-gutter-width: 2rem;
+		min-width: 0;
+		min-height: 0;
+		border-radius: 0;
+	}
+	.board-gutter-label {
+		font-size: 1.4rem;
+	}
 }
