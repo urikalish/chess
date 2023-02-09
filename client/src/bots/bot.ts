@@ -194,7 +194,7 @@ export class Bot {
 		this.sortMoves(moves);
 		moves.forEach((m, i) => {
 			this.context.baseMove = m;
-			score = this.alphaBeta(m, this.config.depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
+			score = this.alphaBeta(m, this.config.depth - 1, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false);
 			if (score === bestMoveScore) {
 				bestMoves.push(m);
 			} else if (score > bestMoveScore) {
