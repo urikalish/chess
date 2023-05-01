@@ -9,7 +9,7 @@ export enum AnalyticsAction {
 	GAME_PHASE_GAME_ENDED = 'game-phase--game-ended',
 	UI_DESIGN_PIECES = 'ui-design--pieces',
 	UI_DESIGN_SHOW_MOVES = 'ui-design--show-moves',
-	USER_ACTION_COPY_MOVES = 'user-action--copy-moves',
+	USER_ACTION_COPY_PGN = 'user-action--copy-pgn',
 	USER_ACTION_COPY_FEN = 'user-action--copy-fen',
 	USER_ACTION_RESTART_GAME = 'user-action--restart-game',
 	PLAYER_IDENTITY_PLAYER_TYPE = 'player-identity--player-type',

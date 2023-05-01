@@ -21,15 +21,7 @@ export class UiMain {
 		this.game.onBotWorkerProgress = this.handleBotWorkerProgress.bind(this);
 		this.isBoardFlipped = isBoardFlipped;
 		const uiInit = new UiInit();
-		uiInit.createGameUI(
-			this.game.players,
-			this.game.board,
-			this.isBoardFlipped,
-			pieceDesign,
-			shouldMarkPossibleMoves,
-			this.handleClickSquareElm.bind(this),
-			this.handleClickPieceElm.bind(this),
-		);
+		uiInit.createGameUI(this.game, this.isBoardFlipped, pieceDesign, shouldMarkPossibleMoves, this.handleClickSquareElm.bind(this), this.handleClickPieceElm.bind(this));
 		UiPromotion.init();
 		this.selectedIndex = -1;
 		this.updateUI();

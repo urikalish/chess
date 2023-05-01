@@ -2,6 +2,8 @@ import { Player, PlayerGenderType, PlayerType } from '../model/player';
 import { Piece } from '../model/piece';
 import { Square } from '../model/square';
 import { Board } from '../model/board';
+import { Game } from '../model/game';
+import { Pgn } from '../model/pgn';
 import { UiHelper } from './ui-helper';
 import { UiDesign, UiPieceDesign } from './ui-design';
 import { UiLog } from './ui-log';
@@ -91,14 +93,14 @@ export class UiInit {
 		}
 	}
 
-	setUpActionButtons() {
-		const copyMovesButtonElm = UiHelper.getElm('copy-moves-button');
+	setUpActionButtons(game: Game) {
+		const copyPgnButtonElm = UiHelper.getElm('copy-pgn-button');
 		const infoLogElm = UiHelper.getElm('info-log');
-		if (copyMovesButtonElm && infoLogElm) {
-			copyMovesButtonElm.addEventListener('click', () => {
-				Analytics.sendEvent(AnalyticsCategory.USER_ACTION, AnalyticsAction.USER_ACTION_COPY_MOVES);
+		if (copyPgnButtonElm && infoLogElm) {
+			copyPgnButtonElm.addEventListener('click', () => {
+				Analytics.sendEvent(AnalyticsCategory.USER_ACTION, AnalyticsAction.USER_ACTION_COPY_PGN);
 				// eslint-disable-next-line @typescript-eslint/no-empty-function
-				navigator.clipboard.writeText(infoLogElm.innerText).then(() => {});
+				navigator.clipboard.writeText(Pgn.getPgnStr(game, infoLogElm.innerText)).then(() => {});
 			});
 		}
 		const copyFenButtonElm = UiHelper.getElm('copy-fen-button');
@@ -123,8 +125,7 @@ export class UiInit {
 	}
 
 	createGameUI(
-		players: Player[],
-		board: Board,
+		game: Game,
 		isBoardFlipped: boolean,
 		pieceDesign: UiPieceDesign,
 		shouldMarkPossibleMoves: boolean,
@@ -132,11 +133,11 @@ export class UiInit {
 		onclickPiece: (MouseEvent) => void,
 	) {
 		UiDesign.setPieceDesign(pieceDesign);
-		this.createPlayersInfoUI(players, isBoardFlipped);
+		this.createPlayersInfoUI(game.players, isBoardFlipped);
 		this.createBoardGuttersUI(isBoardFlipped);
 		this.createBoardSquaresUI(isBoardFlipped, shouldMarkPossibleMoves, onClickSquare);
-		this.createAllPieceElms(board, isBoardFlipped, onclickPiece);
-		this.setUpActionButtons();
+		this.createAllPieceElms(game.board, isBoardFlipped, onclickPiece);
+		this.setUpActionButtons(game);
 		UiLog.setScrollListener();
 		const pageBgImageElm = UiHelper.getElm('page-bg-img');
 		const mainContentElm = UiHelper.getElm('main-content');
@@ -147,12 +148,12 @@ export class UiInit {
 		pageBgImageElm.classList.add('game-on');
 		mainContentElm.classList.remove('none');
 		welcomePanelElm.classList.add('none');
-		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_TYPE, players[0].type);
-		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_GENDER, players[0].gender);
-		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_NAME, players[0].name);
-		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_TYPE, players[1].type);
-		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_GENDER, players[1].gender);
-		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_NAME, players[1].name);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_TYPE, game.players[0].type);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_GENDER, game.players[0].gender);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_NAME, game.players[0].name);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_TYPE, game.players[1].type);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_GENDER, game.players[1].gender);
+		Analytics.sendEvent(AnalyticsCategory.PLAYER_IDENTITY, AnalyticsAction.PLAYER_IDENTITY_PLAYER_NAME, game.players[1].name);
 		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_PIECES, pieceDesign);
 		Analytics.sendEvent(AnalyticsCategory.UI_DESIGN, AnalyticsAction.UI_DESIGN_SHOW_MOVES, String(shouldMarkPossibleMoves));
 	}

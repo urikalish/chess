@@ -83,9 +83,9 @@ export class UiLog {
 			fullMoveElm.appendChild(blackMoveElm);
 		}
 		panelElm.scrollTo(0, panelElm.scrollHeight);
-		const copyMovesButtonElm = UiHelper.getElm('copy-moves-button');
-		if (copyMovesButtonElm) {
-			copyMovesButtonElm.classList.remove('disabled-button');
+		const copyPgnButtonElm = UiHelper.getElm('copy-pgn-button');
+		if (copyPgnButtonElm) {
+			copyPgnButtonElm.classList.remove('disabled-button');
 		}
 	}
 
